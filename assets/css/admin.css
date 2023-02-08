@@ -1,0 +1,22 @@
+/* ADMIN CSS */
+
+.admin-region {
+    background-color: #fff;
+    padding: 2rem 0 2rem;
+    position: relative;
+}
+
+.admin-region:before {
+    top: 0;
+}
+
+.admin-region:before, .admin-region:after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: yellow;
+    background-image: url('../images/svg/strip1_black50_12.svg');
+}
