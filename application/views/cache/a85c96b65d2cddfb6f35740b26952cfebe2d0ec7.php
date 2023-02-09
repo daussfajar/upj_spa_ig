@@ -1,20 +1,20 @@
-@extends('layouts.user')
 
-@section('title', 'Hibah - Buat Pencairan')
 
-@section('page-title')
-    <a href="{{ base_url('app/hibah/pencairan') }}"><i class="mdi mdi-arrow-left"></i></a> Buat Pencairan
-@endsection
+<?php $__env->startSection('title', 'Hibah - Buat Pencairan'); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery-ui.custom-for-signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery.signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/daterangepicker.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-datepicker.min.css') }}">
+<?php $__env->startSection('page-title'); ?>
+    <a href="<?php echo e(base_url('app/hibah/pencairan')); ?>"><i class="mdi mdi-arrow-left"></i></a> Buat Pencairan
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery-ui.custom-for-signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery.signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/daterangepicker.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-datepicker.min.css')); ?>">
 <style>
     .kbw-signature { width: 300px; height: 300px;}
     #ttd canvas{
@@ -22,16 +22,16 @@
         height: auto;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
-<li class="breadcrumb-item"><a href="{{ base_url('app/hibah') }}"><i class="mdi mdi-briefcase-outline"></i> Hibah</a></li>
-<li class="breadcrumb-item active"><a href="{{ base_url('app/hibah/pencairan') }}"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
-<li class="breadcrumb-item"><a href="{{ base_url('app/hibah/pencairan/v_detail/' . $CI->uri->segment(5)) }}"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
+<?php $__env->startSection('breadcrumb'); ?>
+<li class="breadcrumb-item"><a href="<?php echo e(base_url('app/hibah')); ?>"><i class="mdi mdi-briefcase-outline"></i> Hibah</a></li>
+<li class="breadcrumb-item active"><a href="<?php echo e(base_url('app/hibah/pencairan')); ?>"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
+<li class="breadcrumb-item"><a href="<?php echo e(base_url('app/hibah/pencairan/v_detail/' . $CI->uri->segment(5))); ?>"><b><i class="mdi mdi-file-document-outline"></i> <?php echo e($data->kode_uraian); ?></a></b></li>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-clipboard-file-outline"></i> Buat Pencairan</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-md-12">
         <div class="card-box">
             <h4 class="header-title"><i class="mdi mdi-clipboard-file-outline"></i> Buat Pencairan</h4>
@@ -39,7 +39,8 @@
                 Silakan lengkapi form dibawah ini untuk melakukan pencairan.
             </p>
 
-            {!! form_open('app/hibah/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form')) !!}
+            <?php echo form_open('app/hibah/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form')); ?>
+
                 <input type="hidden" name="periode" value="<?= encrypt($data->periode) ?>">
                 <div>
                     <h3>Step 1</h3>
@@ -47,19 +48,19 @@
                         <div class="form-group row">
                             <label class="col-lg-2 control-label " for="">Kode Uraian </label>
                             <div class="col-lg-10">
-                                <input class="form-control" id="kode_uraian" name="kode_uraian" type="text" value="{{ $data->kode_uraian }}" readonly required>
+                                <input class="form-control" id="kode_uraian" name="kode_uraian" type="text" value="<?php echo e($data->kode_uraian); ?>" readonly required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-2 control-label " for="">Kode Pencairan </label>
                             <div class="col-lg-10">
-                                <input class="form-control" id="kode_pencairan" name="kode_pencairan" type="text" value="{{ $data->kode_pencairan }}" readonly required>
+                                <input class="form-control" id="kode_pencairan" name="kode_pencairan" type="text" value="<?php echo e($data->kode_pencairan); ?>" readonly required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-2 control-label " for="password2"> Nama Kegiatan *</label>
                             <div class="col-lg-10">
-                                <textarea name="nama_kegiatan" id="nama_kegiatan" class="form-control" cols="3" rows="3" readonly required>{{ $data->nama_hibah_sponsorship }}</textarea>
+                                <textarea name="nama_kegiatan" id="nama_kegiatan" class="form-control" cols="3" rows="3" readonly required><?php echo e($data->nama_hibah_sponsorship); ?></textarea>
                                 <span class="help-block"><small>Masukan nama kegiatan.</small></span>
                             </div>
                         </div>
@@ -82,7 +83,7 @@
                         <div class="form-group row">
                             <label class="col-lg-2 control-label" for="name2"> KPI *</label>
                             <div class="col-lg-10">
-                                <textarea name="kpi" id="kpi" class="form-control" cols="3" rows="3" readonly required>{{ $data->kpi }}</textarea>
+                                <textarea name="kpi" id="kpi" class="form-control" cols="3" rows="3" readonly required><?php echo e($data->kpi); ?></textarea>
                                 <span class="help-block"><small>Masukan KPI.</small></span>
                             </div>
                         </div>
@@ -92,15 +93,15 @@
                             <div class="col-lg-10">
                                 <select name="pelaksana" id="pelaksana" class="form-control select2" style="width:100%;" required>
                                     <option value="">Pilih Pelaksana</option>
-                                    @foreach ($unit->result() as $item)
-                                        <optgroup label="{{ $item->nama_unit }}">
-                                            @foreach ($pelaksana->result() as $ky)
-                                                @if ($item->kode_unit == $ky->kode_unit)
-                                                    <option value="{{ $ky->nik }}">{{ $ky->nama_lengkap }}</option>
-                                                @endif
-                                            @endforeach
+                                    <?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <optgroup label="<?php echo e($item->nama_unit); ?>">
+                                            <?php $__currentLoopData = $pelaksana->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ky): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php if($item->kode_unit == $ky->kode_unit): ?>
+                                                    <option value="<?php echo e($ky->nik); ?>"><?php echo e($ky->nama_lengkap); ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </optgroup>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <option value="">Pilih Pelaksana Kegiatan</option>                                    
                                 </select>
                                 <span class="help-block"><small>Tentukan pelaksana kegiatan.</small></span>
@@ -141,7 +142,7 @@
                             <label class="col-lg-2 control-label " for="address2">Total Anggaran *</label>
                             <div class="col-lg-10">
                                 <input type="text" name="total_anggaran" id="total_anggaran" class="form-control" readonly required>
-                                <span class="help-block"><small>Tentukan total anggaran kegiatan (max: {{ rupiah($sisa) }}).</small></span>
+                                <span class="help-block"><small>Tentukan total anggaran kegiatan (max: <?php echo e(rupiah($sisa)); ?>).</small></span>
                             </div>
                         </div>
                         <div class="row">
@@ -173,25 +174,26 @@
 
                     </section>-->
                 </div>
-            {!! form_close() !!}
+            <?php echo form_close(); ?>
+
         </div>                
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<script src="{{ base_url('assets/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ base_url('assets/js/daterangepicker.js') }}"></script>
-<script src="{{ base_url('assets/js/select2.min.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-datepicker.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/daterangepicker.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
 
-<script src="{{ base_url('assets/js/jquery.signature.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.signature.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.ui.touch-punch.min.js')); ?>"></script>
 
-<script src="{{ base_url('assets/js/jquery.steps.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.validate.min.js') }}"></script>
-<script src="{{ base_url('assets/js/form-wizard.init.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.steps.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.validate.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/form-wizard.init.js')); ?>"></script>
 <script>
     $(document).ready(function(){        
 
@@ -246,4 +248,5 @@
         })
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/hibah/buat_pencairan.blade.php ENDPATH**/ ?>

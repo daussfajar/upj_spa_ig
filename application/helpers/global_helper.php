@@ -163,4 +163,32 @@ if(!function_exists('get_client_ip')){
     }
 }
 
+if (!function_exists('check_base64_image')) {
+    function check_base64_image($data)
+    {
+        try {
+            $binary = base64_decode(explode(',', $data)[1]);
+            $data = getimagesizefromstring($binary);
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $allowed = ['image/jpeg', 'image/png', 'image/jpg'];
+
+        if (!$data) {
+            return false;
+        }
+
+        $extension = explode('/', $data['mime']);
+
+        if (!empty($data[0]) && !empty($data[0]) && !empty($data['mime'])) {
+            if (in_array($data['mime'], $allowed)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
 ?>

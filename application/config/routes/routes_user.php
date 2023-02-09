@@ -35,7 +35,7 @@ $route['app/hibah/pencairan/v_detail/(:any)/actbud/(:any)/upload-dokumen-penduku
 $route['app/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-dokumen-pendukung']['POST'] = 'User/PencairanHibah/hapus_dokumen_pendukung';
 $route['app/hibah/pencairan/v_detail/(:any)/actbud/(:any)/buat-rincian-kegiatan']['POST'] = 'User/PencairanHibah/buat_rincian_kegiatan';
 $route['app/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-rincian-kegiatan']['POST'] = 'User/PencairanHibah/hapus_rincian_kegiatan';
-$route['app/hibah/pencairan/v_detail/(:any)/actbud/(:any)/submit']['POST'] = 'User/PencairanHibah/submit_actbud';
+$route['app/hibah/pencairan/v_detail/(:any)/actbud/(:any)/submit']['POST'] = 'User/PencairanHibah/submit_actbud/$1/$2';
 
 $route['app/hibah/status_pencairan/v_detail/(:any)/actbud/(:any)'] = 'User/PencairanHibah/v_detail_actbud';
 $route['app/realisasi_anggaran/history/v_detail/(:any)/actbud/(:any)'] = 'User/PencairanHibah/v_detail_actbud';

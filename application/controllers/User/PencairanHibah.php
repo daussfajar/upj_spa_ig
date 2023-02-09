@@ -98,9 +98,9 @@ class PencairanHibah extends CI_Controller {
 		$this->form_validation->set_rules('total_anggaran', 'Total Anggaran', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);
-		$this->form_validation->set_rules('tanda_tangan', 'Tanda Tangan', 'trim|required', [
-			'required' => '%s tidak boleh kosong.'
-		]);
+		// $this->form_validation->set_rules('tanda_tangan', 'Tanda Tangan', 'trim|required', [
+		// 	'required' => '%s tidak boleh kosong.'
+		// ]);
 		$this->form_validation->set_rules('accept_terms', 'Accept Terms', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);
@@ -110,8 +110,8 @@ class PencairanHibah extends CI_Controller {
 			$decrypted_id = !decrypt($id) ? show_404() : decrypt($id);
 			$hibah = $this->Hibah_model->get_data_hibah_by_id($decrypted_id);		
 			$agr = $this->Hibah_model->cek_anggaran_digunakan_sementara($decrypted_id);			
-			$image_parts = explode(";base64,", $_POST['tanda_tangan']);               
-            $image_base64_encode = $image_parts[1];
+			// $image_parts = explode(";base64,", $_POST['tanda_tangan']);               
+            // $image_base64_encode = $image_parts[1];
 			// OLD $kode_unit = $_SESSION['user_sessions']['kode_unit'];
             $kode_unit = $hibah->kode_unit;
                         
@@ -142,6 +142,7 @@ class PencairanHibah extends CI_Controller {
 				]);
 				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
 			} else {
+				$periode = !decrypt($this->input->post('periode', true)) ? show_error("Unauthorized!") : decrypt($this->input->post('periode', true));
 				$data = [
 					'id_uraian' => $decrypted_id,
 					'kode_uraian' => $this->input->post('kode_uraian', true),
@@ -156,7 +157,7 @@ class PencairanHibah extends CI_Controller {
 					'jenis_anggaran' => 'hibah',
 					'tgl_mulai' => $this->input->post('tgl_mulai', true),
 					'tgl_selesai' => $this->input->post('tgl_selesai', true),
-					'periode' => $this->input->post('periode', true),
+					'periode' => $periode,
 					'tahun' => date('Y'),
 					'tanggal_pembuatan' => date('Y-m-d H:i:s'),
 					'agr' => $total_agr,
@@ -685,24 +686,63 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function submit_actbud(){
-		$id = !decrypt($this->uri->segment(7)) ? show_404() : decrypt($this->uri->segment(7));
-		$id_uraian = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));
+	public function submit_actbud(string $id_uraian, string $id){
+		$id = !decrypt($id) ? show_404() : decrypt($id);
+		$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
 		$pre_approval = $this->input->post('pre_approval', true);
 
-		$this->db->where('id', $id);
-		$this->db->update('ig_tbl_actbud', [
-			'status' => 'submitted',
-			'lock_editing' => 'Y',
-			'sign' => $pre_approval
+		$this->form_validation->set_rules('signature', 'Tanda Tangan', 'trim|required', [
+			'required' => '%s tidak boleh kosong.'
 		]);
+		
+		if($_REQUEST['pre_approval'] != ""){
+			$this->form_validation->set_rules('pre_approval', 'Pre-Approval', 'trim|required|numeric', [
+				'required' => '%s tidak boleh kosong.'
+			]);
+		}
 
-		$this->session->set_flashdata('alert', [
-			'message' => 'Berhasil submit kegiatan',
-			'type'    => 'success',	
-			'title'   => ''
-		]);
-		return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+		if ($this->form_validation->run() === TRUE) {			
+			// ttd
+			$signature = $this->input->post('signature');
+			
+			if(substr($signature, -5) == "CYII=") {
+				$this->session->set_flashdata('alert', [
+					'message' => 'Tanda tangan tidak boleh kosong.',
+					'type'    => 'error',
+					'title'   => ''
+				]);
+				return redirect($_SERVER['HTTP_REFERER']);
+			}
+
+			if (check_base64_image($signature) === false) {
+				return show_error("Tanda tangan invalid!");
+			}
+
+			$signature = str_replace('data:image/png;base64,', '', $signature);
+			$signature = str_replace(' ', '+', $signature);
+			
+			// OLD $kode_unit = $_SESSION['user_sessions']['kode_unit'];
+			$this->db->where('id', $id);
+			$this->db->update('ig_tbl_actbud', [
+				'status' => 'submitted',
+				'lock_editing' => 'Y',
+				'sign' => $pre_approval,
+				'ttd_pic' => $signature
+			]);
+
+			$this->session->set_flashdata('alert', [
+				'message' => 'Berhasil submit kegiatan',
+				'type'    => 'success',
+				'title'   => ''
+			]);
+			return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+		} else {
+			$error = [
+				'form_error' => validation_errors_array()
+			];
+			$this->session->set_flashdata('error_validation', $error);
+			return redirect($_SERVER['HTTP_REFERER']);
+		}
 	}
 
 	public function cetak_form_actbud(){

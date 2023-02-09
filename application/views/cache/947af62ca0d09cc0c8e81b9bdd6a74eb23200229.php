@@ -5,22 +5,22 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>{{ APP_NAME }} | @yield('title')</title>    
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ base_url('assets/images/favicon') }}/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ base_url('assets/images/favicon') }}/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ base_url('assets/images/favicon') }}/favicon-16x16.png">
-    <link rel="manifest" href="{{ base_url('assets/images/favicon') }}/site.webmanifest">
-    <link rel="mask-icon" href="{{ base_url('assets/images/favicon') }}/safari-pinned-tab.svg" color="#5bbad5">
+	<title><?php echo e(APP_NAME); ?> | <?php echo $__env->yieldContent('title'); ?></title>    
+    <link rel="apple-touch-icon" sizes="76x76" href="<?php echo e(base_url('assets/images/favicon')); ?>/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(base_url('assets/images/favicon')); ?>/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(base_url('assets/images/favicon')); ?>/favicon-16x16.png">
+    <link rel="manifest" href="<?php echo e(base_url('assets/images/favicon')); ?>/site.webmanifest">
+    <link rel="mask-icon" href="<?php echo e(base_url('assets/images/favicon')); ?>/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">    
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ base_url('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/css/icons.min.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/css/app.min.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/css/toastr.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/icons.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/app.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/toastr.min.css')); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.6.96/css/materialdesignicons.min.css">
-    @yield('css')
+    <?php echo $__env->yieldContent('css'); ?>
     <style>
         .left-side-menu-light .navbar-custom .topnav-menu .nav-link {
             padding: 0 15px;
@@ -36,16 +36,16 @@
         <div class="navbar-custom">
             <ul class="list-unstyled topnav-menu float-right mb-0">
 
-                @include('layouts.user_notification')                
+                <?php echo $__env->make('layouts.user_notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>                
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="{{ base_url('assets/images/logo/logo.png') }}" alt="user-image" class="rounded-circle">
-                        <span class="d-none d-sm-inline-block ml-1" style="font-weight: bold;">{{ strtoupper($CI->session->userdata('user_sessions')['nama_lengkap']) }}</span>
+                        <img src="<?php echo e(base_url('assets/images/logo/logo.png')); ?>" alt="user-image" class="rounded-circle">
+                        <span class="d-none d-sm-inline-block ml-1" style="font-weight: bold;"><?php echo e(strtoupper($CI->session->userdata('user_sessions')['nama_lengkap'])); ?></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">                                           
                         <!-- item-->
-                        <a href="{{ base_url('app/profil_saya') }}" class="dropdown-item notify-item">
+                        <a href="<?php echo e(base_url('app/profil_saya')); ?>" class="dropdown-item notify-item">
                             <i class="mdi mdi-account-circle"></i>
                             <span>Profil Saya</span>
                         </a>
@@ -61,14 +61,14 @@
 
             <!-- LOGO -->
             <div class="logo-box">
-                <a href="{{ base_url('app/dashboard') }}" class="logo text-center">
+                <a href="<?php echo e(base_url('app/dashboard')); ?>" class="logo text-center">
                     <span class="logo-lg">
-                        <img src="{{ base_url('assets/images/logo/upj-logo-text-white.png') }}" alt="" class="mt-1" height="45">
+                        <img src="<?php echo e(base_url('assets/images/logo/upj-logo-text-white.png')); ?>" alt="" class="mt-1" height="45">
                         <!-- <span class="logo-lg-text-light">SPA-IG</span> -->
                     </span>
                     <span class="logo-sm">
                         <!-- <span class="logo-sm-text-dark">S</span> -->
-                        <img src="{{ base_url('assets/images/logo/upj-logo-text-white.png') }}" alt="" height="24">
+                        <img src="<?php echo e(base_url('assets/images/logo/upj-logo-text-white.png')); ?>" alt="" height="24">
                     </span>
                 </a>
             </div>
@@ -84,7 +84,7 @@
         <!-- end Topbar --> 
         
         <!-- ========== Left Sidebar Start ========== -->
-        @include('layouts.user_sidebar_menu')
+        <?php echo $__env->make('layouts.user_sidebar_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Left Sidebar End -->
 
         <!-- ============================================================== -->
@@ -103,18 +103,18 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);"><b>{{ APP_NAME }}</b></a></li>                                        
-                                        @yield('breadcrumb')
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);"><b><?php echo e(APP_NAME); ?></b></a></li>                                        
+                                        <?php echo $__env->yieldContent('breadcrumb'); ?>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">@yield('page-title')</h4>
+                                <h4 class="page-title"><?php echo $__env->yieldContent('page-title'); ?></h4>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
 
                     <div class="row">
-                        @yield('content')
+                        <?php echo $__env->yieldContent('content'); ?>
                     </div>
                     <!-- end row -->
 
@@ -146,7 +146,8 @@
     <!-- END wrapper -->    
 
     <!-- Modal Logout -->
-    {!! form_open('app/logout') !!}
+    <?php echo form_open('app/logout'); ?>
+
     <div id="modal-logout" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -168,25 +169,26 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    {!! form_close() !!}
+    <?php echo form_close(); ?>
+
     <!-- End Modal Logout -->
 
     <!-- end page -->
     <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     
-    <script src="{{ base_url('assets/js/vendor.min.js') }}"></script>    
-    <script src="{{ base_url('assets/js/toastr.min.js') }}"></script>    
+    <script src="<?php echo e(base_url('assets/js/vendor.min.js')); ?>"></script>    
+    <script src="<?php echo e(base_url('assets/js/toastr.min.js')); ?>"></script>    
     <script>
         $(document).ready(function(){
-            @if ($CI->session->flashdata('alert'))
-                toastr["{{ $CI->session->flashdata('alert')['type'] }}"]("{{ $CI->session->flashdata('alert')['message'] }}", "{{ $CI->session->flashdata('alert')['title'] }}")                		
-            @endif
+            <?php if($CI->session->flashdata('alert')): ?>
+                toastr["<?php echo e($CI->session->flashdata('alert')['type']); ?>"]("<?php echo e($CI->session->flashdata('alert')['message']); ?>", "<?php echo e($CI->session->flashdata('alert')['title']); ?>")                		
+            <?php endif; ?>
 
-            @if ($CI->session->flashdata('error_validation'))
-                @foreach ($CI->session->flashdata('error_validation')['form_error'] as $r)            
+            <?php if($CI->session->flashdata('error_validation')): ?>
+                <?php $__currentLoopData = $CI->session->flashdata('error_validation')['form_error']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>            
                     toastr["error"]("<?= $r ?>", "")                
-                @endforeach        		
-            @endif
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>        		
+            <?php endif; ?>
 
             $('form.myForm').submit(function(){
                 $('button[type="submit"]')
@@ -197,7 +199,7 @@
         })
     </script>
 
-    <script src="{{ base_url('assets/js/app.min.js') }}"></script>   
-    @yield('js') 
+    <script src="<?php echo e(base_url('assets/js/app.min.js')); ?>"></script>   
+    <?php echo $__env->yieldContent('js'); ?> 
 </body>
-</html>
+</html><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/layouts/user.blade.php ENDPATH**/ ?>
