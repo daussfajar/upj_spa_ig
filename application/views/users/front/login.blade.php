@@ -41,7 +41,7 @@
             margin-left: .25em;
         }
         .body-spa_ig{
-            background: linear-gradient(180deg, rgba(100, 192, 239, 0.32) 0%, rgb(0 0 0 / 54%) 53.6%, #00000082 100%), url('<?= site_url('assets/images/bg/upj4.jpg') ?>') !important;
+            /*background: linear-gradient(180deg, rgba(100, 192, 239, 0.32) 0%, rgb(0 0 0 / 54%) 53.6%, #00000082 100%), url('<?= site_url('assets/images/bg/upj4.jpg') ?>') !important;*/
             background-size: cover!important;
             background-position: center;
             background-repeat: no-repeat;
@@ -65,7 +65,7 @@
 </head>
 
 <body class="body-spa_ig" g_id="{{ encrypt('gfjhui') }}">
-	<div class="account-pages mt-5 mb-5">
+	<div class="account-pages mt-5">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-8 col-lg-6 col-xl-5">                    
@@ -158,26 +158,28 @@
 			this.classList.toggle('mdi-eye-off')
 		})
 
-        $('button[name="LogIn"]').click(function(){ 			
-            setTimeout((e) => {
-				//$('#loginForm').submit()
-				let email = $('input[name="email"]').val()
-				let password = $('input[name="password"]').val()
-				//const captchaResponse = window.grecaptcha.getResponse()
+        $('form#loginForm').submit(function(){
+            $('button[name="LogIn"]')
+                .addClass('disabled')
+                .attr('disabled', true)
+                .html('<i class="mdi mdi-spin mdi-loading"></i>')            
+            //$('#loginForm').submit()
+            let email = $('input[name="email"]').val()
+            let password = $('input[name="password"]').val()
+            //const captchaResponse = window.grecaptcha.getResponse()
 
-				if(email == ""){
-					toastr["error"]("Email tidak boleh kosong", "")
-					$('#email').focus()
-					return false
-				} 								
-															
-				if(password == ""){
-					toastr["error"]("Password tidak boleh kosong", "");
-					$('#password').focus()					
-					return false
-				} 
-				$('#loginForm').submit()
-			}, 200)
+            if(email == ""){
+                toastr["error"]("Email tidak boleh kosong", "")
+                $('#email').focus()
+                return false
+            } 								
+                                                        
+            if(password == ""){
+                toastr["error"]("Password tidak boleh kosong", "");
+                $('#password').focus()					
+                return false
+            }                 
+            $('#loginForm').submit()			
         })
 
         $('#btnSignWithMicrosoft').click(function(){

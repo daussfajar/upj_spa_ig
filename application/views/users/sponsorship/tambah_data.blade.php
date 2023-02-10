@@ -35,7 +35,7 @@
                 Silakan lengkapi form dibawah ini untuk membuat kegiatan Sponsorship.
             </p>
 
-            {!! form_open('app/sponsorship/buat_kegiatan/submit', array('id' => 'wizard-validation-form')) !!}
+            {!! form_open('app/sponsorship/buat_kegiatan/submit', array('id' => 'wizard-validation-form', 'class' => 'myForm')) !!}
                 <div>
                     <h3>Step 1</h3>
                     <section>

@@ -102,7 +102,7 @@
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle"><?php echo e($no); ?></th>
                                     <th style="vertical-align: middle;">
-                                        <span class="badge bg-secondary">
+                                        <span class="badge bg-secondary p-2">
                                             <?php echo e($row['kode_pencairan']); ?>
 
                                         </span>
@@ -125,7 +125,7 @@
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <span class="badge bg-warning">
+                                        <span class="badge bg-warning p-2">
                                             <?php switch($row['periode']):
                                                 case (1): ?>
                                                     <?php echo e("Ganjil"); ?>
@@ -151,23 +151,23 @@
                                             $getSumOut = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_keluar FROM 
                                             ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
                                             AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();
-                                            echo '<span class="badge bg-success">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                            echo '<span class="badge bg-success p-2">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
                                         ?>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <span class="badge bg-teal">
+                                        <span class="badge bg-teal p-2">
                                             <?php echo e(rupiah($getSum->digunakan)); ?>
 
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <?php                                                                                        								
-                                            echo '<span class="badge bg-primary">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                            echo '<span class="badge bg-primary p-2">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
                                         ?>
                                     </td>
                                     
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="<?php echo e(base_url('app/hibah/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan')); ?>" class="badge bg-primary btn-sm">Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="<?php echo e(base_url('app/hibah/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan')); ?>" class="badge bg-primary p-2 btn-sm">Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

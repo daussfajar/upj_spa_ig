@@ -89,12 +89,12 @@
                             <tr>
                                 <th class="text-center" style="vertical-align: middle;">{{ $no }}</th>
                                 <th style="vertical-align: middle;font-weight:bold;" title="Tanggal Pembuatan: {{ $row['tanggal_pembuatan'] }}">
-                                    <a href="{{ base_url('app/realisasi_anggaran/history/v_detail/' . encrypt($row['id_uraian']) . '/actbud/' . encrypt($row['id'])) }}" class="badge bg-primary">
+                                    <a href="{{ base_url('app/realisasi_anggaran/history/v_detail/' . encrypt($row['id_uraian']) . '/actbud/' . encrypt($row['id'])) }}" class="badge bg-primary p-2">
                                         <i class="mdi mdi-file"></i> {{ $row['jenis_actbud'] . '/' . $row['id'] }}
                                     </a>
                                 </th>
                                 <td style="vertical-align: middle;">
-                                    <span class="text-info" style="font-size: 14px;">
+                                    <span style="font-size: 14px;font-weight:bold;">
                                         {!! $row['nama_kegiatan'] !!}
                                     </span>
                                     <hr class="mt-0 mb-0">
@@ -110,27 +110,27 @@
                                         @endphp
                                     </span>
                                     
-                                    <span class="badge bg-secondary">
-                                        <i class="mdi mdi-calendar"></i> {{ $row['tgl_mulai'] . ' s/d ' . $row['tgl_selesai'] }}
+                                    <span class="badge bg-secondary p-2">
+                                        <i class="mdi mdi-calendar"></i> {{ tanggal_indo($row['tgl_mulai']) . ' s/d ' . tanggal_indo($row['tgl_selesai']) }}
                                     </span>
                                 </td>
                                 <td class="text-center" style="vertical-align: middle;">
-                                    <small>Diajukan : </small>
-                                    <span class="badge bg-success">
+                                    <span style="font-weight:bold;font-size:13px;">Diajukan : </span>
+                                    <span class="badge bg-success p-2">
                                         {{ rupiah($row['agr']) }}
                                     </span>
                                     <hr class="mt-1 mb-1">
-                                    <small>Realisasi : </small>
+                                    <span style="font-weight:bold;font-size:13px;">Realisasi : </span>
                                     @php
                                         $agr_realisasi = $CI->db->query("SELECT SUM(a.total_anggaran_realisasi) total FROM ig_t_j_b_act a 
                                         WHERE a.id_actbud = '$row[id]' AND a.status = 'Aktif'")->row();
                                     @endphp
-                                    <span class="badge {{ $row['realisasi'] == 'Y' ? 'bg-primary' : 'bg-danger' }}">
+                                    <span class="badge {{ $row['realisasi'] == 'Y' ? 'bg-primary' : 'bg-danger' }} p-2">
                                         {{ rupiah($agr_realisasi->total) }} {{ $row['realisasi'] == 'Y' ? '' : '(Belum Finalisasi)' }}
                                     </span>
                                 </td>
                                 <th class="text-center" style="vertical-align: middle;">
-                                    <span class="badge bg-purple">
+                                    <span class="badge bg-purple p-2">
                                         {{ $row['kode_pencairan'] }}
                                     </span>
                                     <hr class="mt-1 mb-0">

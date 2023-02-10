@@ -435,7 +435,7 @@
         @endif
     </div>
     
-    {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data')) !!}
+    {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
     <div class="card card-border card-purple" id="card-chat">
         <div class="card-header border-purple bg-transparent">
             <h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
@@ -605,7 +605,7 @@
                 <br>
             </div>
         @else
-            {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/submit', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data')) !!}
+            {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/submit', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
                 <div class="card-box">
                     <div class="alert alert-info">
                         <p class="mb-0"><i class="mdi mdi-information-variant"></i> Sebelum submit, pastikan anda sudah mengisi detail biaya dengan benar.</p>                        
@@ -681,7 +681,7 @@
 </div>
 
 @if ($data->status !== 'cancel' && $data->status !== 'approved')
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-pesan') !!}
+{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-pesan', 'class' => 'myForm') !!}
     <!-- modal hapus pesan -->
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -725,7 +725,7 @@
 
 @if ($data->status == 'ongoing')
     <!--  Modal buat kegiatan -->
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat-rincian-kegiatan') !!}
+{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat-rincian-kegiatan', 'class' => 'myForm') !!}
 <div class="modal fade" id="modal-buat-kegiatan" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -765,7 +765,7 @@
 {!! form_close() !!}
 
 <!-- Modal ubah actbud -->
-<!--{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/ubah-actbud') !!}
+<!--{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/ubah-actbud', 'class' => 'myForm') !!}
 <div id="modal-ubah-actbud" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -850,7 +850,7 @@
 </div>
 {!! form_close() !!}-->
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/upload-dokumen-pendukung', array('enctype' => 'multipart/form-data')) !!}
+{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/upload-dokumen-pendukung', array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
     <!-- modal upload dokumen pendukung -->
     <div id="modal-upload-dokumen-pendukung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -885,7 +885,7 @@
     <!-- /.modal -->
 {!! form_close() !!}
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/batalkan-actbud') !!}
+{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/batalkan-actbud', 'class' => 'myForm') !!}
     <!-- modal batalkan actbud -->
     <div id="modal-batalkan-actbud" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -911,7 +911,7 @@
     <!-- /.modal -->
 {!! form_close() !!}
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-dokumen-pendukung') !!}
+{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-dokumen-pendukung', 'class' => 'myForm') !!}
     <!-- modal hapus dokumen pendukung -->
     <div id="modal-hapus-dokumen-pendukung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -939,7 +939,7 @@
     <!-- /.modal -->
 {!! form_close() !!}
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-rincian-kegiatan') !!}
+{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-rincian-kegiatan', 'class' => 'myForm') !!}
     <!-- modal hapus dokumen pendukung -->
     <div id="modal-hapus-rincian-kegiatan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

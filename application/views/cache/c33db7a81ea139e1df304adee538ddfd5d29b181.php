@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'Status Pencairan Hibah'); ?>
+<?php $__env->startSection('title', 'Status Pencairan Sponsorship'); ?>
 
 <?php $__env->startSection('page-title'); ?>
     <i class="mdi mdi-clipboard-list-outline"></i> Status Pencairan
@@ -12,7 +12,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-<li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Hibah</a></li>
+<li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-clipboard-list-outline"></i> Status Pencairan</a></li>
 <?php $__env->stopSection(); ?>
 
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="<?php echo e(base_url('app/hibah/status_pencairan')); ?>" method="GET" accept-charset="utf-8" autocomplete="off">                        
+                    <form action="<?php echo e(base_url('app/sponsorship/status_pencairan')); ?>" method="GET" accept-charset="utf-8" autocomplete="off">                        
                         <div class="input-group">
                             <input type="search" id="q" value="<?php echo e(!empty($_GET['q']) ? $_GET['q'] : ''); ?>" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">
@@ -99,7 +99,7 @@
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle"><?php echo e($no); ?></th>
                                     <th style="vertical-align: middle;">
-                                        <span class="badge bg-purple p-2">
+                                        <span class="badge bg-purple">
                                             <?php echo e($row['jns_agr'] . '/' . $row['id_actbud'] . '/' . $row['kode_pencairan']); ?>
 
                                         </span>
@@ -109,8 +109,8 @@
                                             <?php echo $row['nama_kegiatan']; ?>
 
                                         </span>
-                                        <hr class="mt-1 mb-2">
-                                        <span class="badge bg-secondary p-2">
+                                        <hr class="mt-0 mb-0">
+                                        <span class="badge bg-secondary">
                                             <i class="mdi mdi-calendar"></i> 
                                             <?php echo e(tanggal_indo($row['tgl_mulai']).' - '.tanggal_indo($row['tgl_selesai'])); ?>
 
@@ -118,17 +118,17 @@
                                     </td>
                                     <!--<td style="vertical-align: middle;"><?php echo e($row['keterangan']); ?></td>-->
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <span class="badge bg-success p-2">
+                                        <span class="badge bg-success">
                                             <?php echo e(rupiah($row['agr'])); ?>
 
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="<?php echo e(base_url('app/hibah/status_pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']))); ?>" class="badge bg-info p-2">Lihat</a>
+                                        <a href="<?php echo e(base_url('app/sponsorship/status_pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']))); ?>" class="badge bg-info">Lihat</a>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <?php if($row['status_actbud'] == 'approved'): ?>
-                                            <a href="javascript:void(0)" onclick="window.open('<?php echo e(base_url('app/hibah/pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']).'/cetak_form_actbud?pdf=true')); ?>', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-sm text-white"><i class="mdi mdi-printer"></i></a>
+                                            <a href="javascript:void(0)" onclick="window.open('<?php echo e(base_url('app/sponsorship/pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']).'/cetak_form_actbud?pdf=true')); ?>', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-xs text-white"><i class="mdi mdi-printer"></i></a>
                                         <?php else: ?>
                                         -
                                         <?php endif; ?>
@@ -158,4 +158,4 @@
     })
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/hibah/v_status_pencairan.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/sponsorship/v_status_pencairan.blade.php ENDPATH**/ ?>

@@ -1,6 +1,7 @@
 <?php
     $unit = $_SESSION['user_sessions']['kode_unit'];
     $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
+    error_reporting(0);
 ?>
 
 
@@ -154,16 +155,16 @@
             <div class="float-right">
                 <?php switch($data->status):
                     case ('cancel'): ?>
-                        <span class="badge badge-danger">Ditolak</span>
+                        <span class="badge badge-danger p-2">Ditolak</span>
                         <?php break; ?>
                     <?php case ('ongoing'): ?>
-                        <span class="badge badge-warning">Dalam Perencanaan</span>
+                        <span class="badge badge-warning p-2">Dalam Perencanaan</span>
                         <?php break; ?>
                     <?php case ('submitted'): ?>
-                        <span class="badge badge-info">Sedang Berlangsung</span>
+                        <span class="badge badge-info p-2">Sedang Berlangsung</span>
                         <?php break; ?>
                     <?php case ('approved'): ?>
-                        <span class="badge badge-success"><i class="mdi mdi-check-bold"></i> Actbud Disetujui</span>
+                        <span class="badge badge-success p-2"><i class="mdi mdi-check-bold"></i> Actbud Disetujui</span>
                         <?php break; ?>
                     <?php default: ?>
                         
@@ -231,7 +232,7 @@
                     <div class="form-group">
                         <label for="">Tanggal Pelaksanaan</label>
                         <p class="form-control-static">
-                            <span class="badge bg-secondary">
+                            <span class="badge bg-secondary p-2">
                                 <i class="mdi mdi-calendar"></i> <?php echo e(tanggal_indo($data->tgl_mulai) . ' s/d ' . tanggal_indo($data->tgl_selesai)); ?>
 
                             </span>
@@ -242,7 +243,7 @@
                     <div class="form-group">
                         <label for="">Periode</label>
                         <p class="form-control-static">
-                            <span class="badge bg-warning">
+                            <span class="badge bg-warning p-2">
                             <?php switch($data->periode):
                                 case (1): ?>
                                     Ganjil
@@ -261,7 +262,7 @@
                     <div class="form-group">
                         <label for="">Total Anggaran</label>
                         <p class="form-control-static">
-                            <span class="badge bg-purple">
+                            <span class="badge bg-purple p-2">
                                 <?php echo e(rupiah($data->agr)); ?>
 
                             </span>
@@ -273,7 +274,7 @@
                         <label for="">Tanggal Pengajuan</label>
                         <p class="form-control-static">
                             <?php if(!empty($data->tanggal_pembuatan)): ?>
-                                <span class="badge bg-light text-muted">
+                                <span class="badge bg-dark p-2 text-white">
                                     <i class="mdi mdi-clock-check-outline"></i> <?php echo e(substr($data->tanggal_pembuatan, 0, 16)); ?>
 
                                 </span>
@@ -339,7 +340,7 @@
         </div>
     </div>
 
-    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data')); ?>
+    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
 
     <div class="card card-border card-purple" id="card-chat">
         <div class="card-header border-purple bg-transparent">
@@ -508,7 +509,7 @@
             </div>
             <div class="float-right">
                 <?php if($data->realisasi == 'Y'): ?>
-                    <span class="badge badge-primary"><i class="mdi mdi-check-bold"></i> Finalisasi</span>
+                    <span class="badge badge-primary p-2"><i class="mdi mdi-check-bold"></i> Finalisasi</span>
                 <?php endif; ?>
             </div>
         </div>
@@ -535,24 +536,30 @@
 
                                     </span>
                                     <hr class="mt-0 mb-0">
-                                    <span style="font-size: 11px;">
+                                    <span style="font-size: 12px;">
                                         <?php echo e($item->keterangan); ?>
 
                                     </span>
-                                    <br>
-                                    <span class="badge bg-secondary">
-                                        <i class="mdi mdi-calendar"></i> <?php echo e($item->tanggal_buat); ?>
-
+                                    <hr class="mt-2 mb-2">
+                                    <span class="badge bg-secondary p-2">
+                                        Tanggal buat : <i class="mdi mdi-calendar"></i>
+                                        <?php 
+                                        $tgl_buat = $item->tanggal_buat;
+                                        $ex_tgl_buat = explode(' ', $tgl_buat);
+                                        if(!empty($ex_tgl_buat)){
+                                            echo tanggal_indo($ex_tgl_buat[0], true) . ', ' . $ex_tgl_buat[1];
+                                        }
+                                        ?>
                                     </span>
                                 </td>                                                          
                                 <td style="vertical-align: middle;" class="text-center">
-                                    <span class="badge bg-purple">
+                                    <span class="badge bg-purple p-2">
                                         <?php echo e(rupiah($item->total_anggaran)); ?>
 
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
-                                    <a href="javascript:void(0)" class="badge bg-primary <?php echo e($data->realisasi == 'N' ? 'btn-ubah_realisasi_anggaran' : ''); ?>" 
+                                    <a href="javascript:void(0)" class="badge bg-primary p-2 <?php echo e($data->realisasi == 'N' ? 'btn-ubah_realisasi_anggaran' : ''); ?>" 
                                     data-id="<?php echo e(encrypt($item->id)); ?>" data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>" 
                                     data-keterangan="<?php echo e($item->keterangan); ?>" data-anggaran_disetujui="<?php echo e(rupiah($item->total_anggaran)); ?>" 
                                     data-anggaran_realisasi="<?php echo e(rupiah($item->total_anggaran_realisasi)); ?>">
@@ -564,7 +571,7 @@
                                     <?php if((($data->kode_unit == $unit && ($jabatan == 22 || $jabatan == 7))) || $jabatan == 0): ?>                                                                            
                                         <?php if($item->catatan_disetujui == ""): ?>
                                             <?php if($data->realisasi == 'N'): ?>                                                                                    
-                                            <a href="javascript:void(0)" class="badge bg-info btn-buat_catatan" 
+                                            <a href="javascript:void(0)" class="badge bg-info p-2 btn-buat_catatan" 
                                             data-id="<?php echo e(encrypt($item->id)); ?>" data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>" 
                                             data-keterangan="<?php echo e($item->keterangan); ?>" data-anggaran_disetujui="<?php echo e(rupiah($item->total_anggaran)); ?>" 
                                             data-anggaran_realisasi="<?php echo e(rupiah($item->total_anggaran_realisasi)); ?>">
@@ -593,9 +600,9 @@
                                                 echo '<span style="font-size:12px;">'.implode(' ', $s_ctn).$t_ctn.'</span>';
                                             ?>
 
-                                            <?php if($data->realisasi == 'N'): ?>                                                                                    
-                                                <br>
-                                                <a href="javascript:void(0)" class="badge bg-secondary btn-ubah_catatan"
+                                            <?php if($data->realisasi == 'N'): ?>
+                                                <br><br>
+                                                <a href="javascript:void(0)" class="badge bg-secondary p-2 btn-ubah_catatan"
                                                 data-id="<?php echo e(encrypt($item->id)); ?>" data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>" 
                                                 data-keterangan="<?php echo e($item->keterangan); ?>" data-anggaran_disetujui="<?php echo e(rupiah($item->total_anggaran)); ?>" 
                                                 data-anggaran_realisasi="<?php echo e(rupiah($item->total_anggaran_realisasi)); ?>" 
@@ -604,7 +611,7 @@
                                                 </a>
 
                                                 <?php if($item->catatan_disetujui != ""): ?>                                                
-                                                    <a href="<?php echo e(base_url('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_catatan_pic?id=' . encrypt('upj2022') . '-' . encrypt($item->id) . '-' . encrypt('jaya'))); ?>" class="badge bg-danger" onclick="return confirm('Apakah anda yakin?')">
+                                                    <a href="<?php echo e(base_url('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_catatan_pic?id=' . encrypt('upj2022') . '-' . encrypt($item->id) . '-' . encrypt('jaya'))); ?>" class="badge bg-danger p-2" onclick="return confirm('Apakah anda yakin?')">
                                                         <i class="mdi mdi-trash-can"></i> Hapus
                                                     </a>
                                                 <?php endif; ?>
@@ -625,12 +632,12 @@
                                         <?php if($data->realisasi == 'N'): ?>
 
                                             <?php if($item->lampiran != ""): ?>
-                                            <a href="<?php echo e(base_url('app-data/bukti-realisasi-anggaran/' . $item->lampiran)); ?>" class="badge bg-primary" download="<?php echo e($item->nama_file); ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Klik mengunduh lampiran">
+                                            <a href="<?php echo e(base_url('app-data/bukti-realisasi-anggaran/' . $item->lampiran)); ?>" class="badge bg-primary p-2" download="<?php echo e($item->nama_file); ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Klik mengunduh lampiran">
                                                 <i class="mdi mdi-download"></i> Unduh
                                             </a>
                                             <?php endif; ?>
 
-                                            <a href="javascript:void(0)" class="badge bg-secondary btn-upload_bukti" 
+                                            <a href="javascript:void(0)" class="badge bg-secondary btn-upload_bukti p-2" 
                                             data-id="<?php echo e(encrypt($item->id)); ?>" data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>" 
                                             data-keterangan="<?php echo e($item->keterangan); ?>" data-anggaran_disetujui="<?php echo e(rupiah($item->total_anggaran)); ?>" 
                                             data-anggaran_realisasi="<?php echo e(rupiah($item->total_anggaran_realisasi)); ?>" 
@@ -644,7 +651,7 @@
                                             </a>
 
                                             <?php if($item->lampiran != ""): ?>
-                                            <a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>" data-file_name="<?php echo e($item->nama_file); ?>" data-file="<?php echo e(encrypt($item->lampiran)); ?>" class="badge bg-danger btn-hapus_file_catatan_pic">
+                                            <a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>" data-file_name="<?php echo e($item->nama_file); ?>" data-file="<?php echo e(encrypt($item->lampiran)); ?>" class="badge bg-danger p-2 btn-hapus_file_catatan_pic">
                                                 <i class="mdi mdi-trash-can"></i> Hapus
                                             </a>
                                             <?php endif; ?>
@@ -675,7 +682,7 @@
 
                                         <?php if($item->catatan_disetujui_keu == ""): ?>
                                             <?php if($data->realisasi == 'N'): ?>                                                                                    
-                                            <a href="javascript:void(0)" class="badge bg-info btn-buat_catatan_keu" 
+                                            <a href="javascript:void(0)" class="badge bg-info p-2 btn-buat_catatan_keu" 
                                             data-id="<?php echo e(encrypt($item->id)); ?>" data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>" 
                                             data-keterangan="<?php echo e($item->keterangan); ?>" data-anggaran_disetujui="<?php echo e(rupiah($item->total_anggaran)); ?>" 
                                             data-anggaran_realisasi="<?php echo e(rupiah($item->total_anggaran_realisasi)); ?>">
@@ -707,7 +714,7 @@
 
                                             <?php if($data->realisasi == 'N'): ?>                                                                                    
                                                 <br>
-                                                <a href="javascript:void(0)" class="badge bg-secondary btn-buat_catatan_keu"
+                                                <a href="javascript:void(0)" class="badge bg-secondary p-2 btn-buat_catatan_keu"
                                                 data-id="<?php echo e(encrypt($item->id)); ?>" data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>" 
                                                 data-keterangan="<?php echo e($item->keterangan); ?>" data-anggaran_disetujui="<?php echo e(rupiah($item->total_anggaran)); ?>" 
                                                 data-anggaran_realisasi="<?php echo e(rupiah($item->total_anggaran_realisasi)); ?>" 
@@ -716,7 +723,7 @@
                                                 </a>
                                                 
                                                 <?php if($item->catatan_disetujui_keu != ""): ?>                                                
-                                                    <a href="<?php echo e(base_url('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_catatan_keu?id=' . encrypt('upj2022') . '-' . encrypt($item->id) . '-' . encrypt('jaya'))); ?>" class="badge bg-danger" onclick="return confirm('Apakah anda yakin?')">
+                                                    <a href="<?php echo e(base_url('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_catatan_keu?id=' . encrypt('upj2022') . '-' . encrypt($item->id) . '-' . encrypt('jaya'))); ?>" class="badge bg-danger p-2" onclick="return confirm('Apakah anda yakin?')">
                                                         <i class="mdi mdi-trash-can"></i> Hapus
                                                     </a>
                                                 <?php endif; ?>
@@ -738,12 +745,12 @@
                                         <?php if($data->realisasi == 'N'): ?>
 
                                             <?php if($item->lampiran_keu != ""): ?>
-                                            <a href="<?php echo e(base_url('app-data/bukti-realisasi-anggaran/' . $item->lampiran_keu)); ?>" class="badge bg-primary" download="<?php echo e($item->nama_file); ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Klik mengunduh lampiran">
+                                            <a href="<?php echo e(base_url('app-data/bukti-realisasi-anggaran/' . $item->lampiran_keu)); ?>" class="badge bg-primary p-2" download="<?php echo e($item->nama_file); ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Klik mengunduh lampiran">
                                                 <i class="mdi mdi-download"></i> Unduh
                                             </a>
                                             <?php endif; ?>
 
-                                            <a href="javascript:void(0)" class="badge bg-secondary btn-upload_bukti_keu" 
+                                            <a href="javascript:void(0)" class="badge bg-secondary p-2 btn-upload_bukti_keu" 
                                             data-id="<?php echo e(encrypt($item->id)); ?>" data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>" 
                                             data-keterangan="<?php echo e($item->keterangan); ?>" data-anggaran_disetujui="<?php echo e(rupiah($item->total_anggaran)); ?>" 
                                             data-anggaran_realisasi="<?php echo e(rupiah($item->total_anggaran_realisasi)); ?>" 
@@ -757,7 +764,7 @@
                                             </a>
 
                                             <?php if($item->lampiran_keu != ""): ?>
-                                            <a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>" data-file_name="<?php echo e($item->nama_file_keu); ?>" data-file="<?php echo e(encrypt($item->lampiran_keu)); ?>" class="badge bg-danger btn-hapus_file_catatan_keu">
+                                            <a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>" data-file_name="<?php echo e($item->nama_file_keu); ?>" data-file="<?php echo e(encrypt($item->lampiran_keu)); ?>" class="badge bg-danger p-2 btn-hapus_file_catatan_keu">
                                                 <i class="mdi mdi-trash-can"></i> Hapus
                                             </a>
                                             <?php endif; ?>
@@ -791,13 +798,13 @@
                         <tr>
                             <th colspan="2" class="text-right" style="vertical-align: middle;">Total :</th>
                             <td style="vertical-align: middle;" class="text-center">
-                                <span class="badge bg-purple">
+                                <span class="badge bg-purple p-2">
                                     <?php echo e(rupiah($anggaran_disetujui->total)); ?>
 
                                 </span>
                             </td>
                             <td style="vertical-align: middle;" class="text-center">
-                                <span class="badge bg-primary">
+                                <span class="badge bg-primary p-2">
                                     <?php echo e(rupiah($anggaran_realisasi->total)); ?>                                    
                                 </span>                                
                             </td>
@@ -827,7 +834,7 @@
         </div>
     </div>
 
-    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/finalisasi-penyesuaian-anggaran?_r='.uniqid()); ?>
+    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/finalisasi-penyesuaian-anggaran?_r='.uniqid(), array('class' => 'myForm')); ?>
 
     <div id="modal-finalisasi" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -860,7 +867,7 @@
 
 <?php if($data->realisasi == 'N'): ?>
 
-<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_catatan'); ?>
+<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_catatan', array('class' => 'myForm')); ?>
 
 <div id="modal-buat-catatan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -892,8 +899,8 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="javascript:void(0)" data-dismiss="modal" class="btn btn-danger btn-xs">Tutup</a>
-                    <button type="submit" class="btn btn-primary btn-xs">Simpan Catatan</button>
+                    <a href="javascript:void(0)" data-dismiss="modal" class="btn btn-secondary btn-sm">Tutup</a>
+                    <button type="submit" class="btn btn-primary btn-sm">Simpan Catatan</button>
                 </div>
             </div>
         </div>
@@ -904,7 +911,7 @@
 
 <?php if($jabatan == 0 || ($unit == '002')): ?>
 
-    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_catatan_keu'); ?>
+    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_catatan_keu', array('class' => 'myForm')); ?>
 
     <div id="modal-buat-catatan-keu" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -936,8 +943,8 @@
                 </div>
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0)" data-dismiss="modal" class="btn btn-danger btn-xs">Tutup</a>
-                        <button type="submit" class="btn btn-primary btn-xs">Simpan Catatan</button>
+                        <a href="javascript:void(0)" data-dismiss="modal" class="btn btn-secondary btn-sm">Tutup</a>
+                        <button type="submit" class="btn btn-primary btn-sm">Simpan Catatan</button>
                     </div>
                 </div>
             </div>
@@ -945,7 +952,7 @@
     </div>
     <?php echo form_close(); ?>    
 
-    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/unggah_bukti_keu', array('enctype' => 'multipart/form-data')); ?>
+    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/unggah_bukti_keu', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
 
     <div id="modal-unggah-lampiran-keu" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -979,8 +986,8 @@
                 </div>
                 <div class="modal-footer">
                     <div class="float-right">
-                        <a href="javascript:void(0)" class="btn btn-danger btn-xs" data-dismiss="modal">Tutup</a>
-                        <button type="submit" class="btn btn-primary btn-xs">Simpan</button>
+                        <a href="javascript:void(0)" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</a>
+                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
                     </div>
                 </div>
             </div>
@@ -989,7 +996,7 @@
     <?php echo form_close(); ?>
 
 
-    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_lampiran_keu?', array('enctype' => 'multipart/form-data')); ?>
+    <?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_lampiran_keu?', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
 
     <div id="modal-hapus-file-ct-keu" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -1016,7 +1023,7 @@
 
 <?php endif; ?>
 
-<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_realisasi_anggaran'); ?>
+<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/buat_realisasi_anggaran', array('class' => 'myForm')); ?>
 
 <div id="modal-realisasi-anggaran" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -1044,7 +1051,7 @@
                 <div class="form-group">
                     <label for="">Anggaran Disetujui</label>
                     <p class="form-control-static">
-                        <span class="anggaran_disetujui badge bg-purple"></span>                        
+                        <span class="anggaran_disetujui badge bg-purple p-2"></span>                        
                     </p>
                 </div>
                 <div class="form-group">
@@ -1054,8 +1061,8 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="javascript:void(0)" data-dismiss="modal" class="btn btn-danger btn-xs">Tutup</a>
-                    <button type="submit" class="btn btn-primary btn-xs">Simpan</button>
+                    <a href="javascript:void(0)" data-dismiss="modal" class="btn btn-secondary btn-sm">Tutup</a>
+                    <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
                 </div>
             </div>
         </div>
@@ -1064,7 +1071,7 @@
 <?php echo form_close(); ?>
 
 
-<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/unggah_bukti', array('enctype' => 'multipart/form-data')); ?>
+<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/unggah_bukti', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
 
 <div id="modal-unggah-lampiran" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -1098,8 +1105,8 @@
             </div>
             <div class="modal-footer">
                 <div class="float-right">
-                    <a href="javascript:void(0)" class="btn btn-danger btn-xs" data-dismiss="modal">Tutup</a>
-                    <button type="submit" class="btn btn-primary btn-xs">Simpan</button>
+                    <a href="javascript:void(0)" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</a>
+                    <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
                 </div>
             </div>
         </div>
@@ -1108,7 +1115,7 @@
 <?php echo form_close(); ?>
 
 
-<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus-pesan'); ?>
+<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus-pesan', array('class' => 'myForm')); ?>
 
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -1147,7 +1154,7 @@
 <?php echo form_close(); ?>
 
 
-<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_lampiran_pic?', array('enctype' => 'multipart/form-data')); ?>
+<?php echo form_open('app/realisasi_anggaran/actbud/' . $CI->uri->segment(4) . '/' . $CI->uri->segment(5) . '/hapus_lampiran_pic?', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
 
     <div id="modal-hapus-file-ct-pic" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

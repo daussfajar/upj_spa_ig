@@ -1,18 +1,18 @@
-@extends('layouts.user')
 
-@section('title', 'Sponsorship')
 
-@section('page-title')
+<?php $__env->startSection('title', 'Sponsorship'); ?>
+
+<?php $__env->startSection('page-title'); ?>
     <i class="mdi mdi-briefcase-outline"></i> Data Sponsorship
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery-ui.custom-for-signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery.signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery-ui.custom-for-signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery.signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
 <style>
 	.kbw-signature {
 		width: 300px;
@@ -25,19 +25,19 @@
 	}
 
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-md-12">        
         <div class="card-box mt-2">
             <div class="row mb-3">                    
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <div class="float-left">
-                        <a href="{{ base_url('app/sponsorship/buat_kegiatan') }}" class="btn btn-success btn-sm"><i class="mdi mdi-plus"></i> Tambah Data</a>
+                        <a href="<?php echo e(base_url('app/sponsorship/buat_kegiatan')); ?>" class="btn btn-success btn-sm"><i class="mdi mdi-plus"></i> Tambah Data</a>
                     </div>
                     <div class="float-right">                        
                         <a href="javascript:void(0)" id="btn-upload" class="btn btn-info btn-sm"><i class="mdi mdi-upload"></i> Upload</a>
@@ -45,9 +45,9 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="{{ base_url('app/sponsorship') }}" method="GET" accept-charset="utf-8" autocomplete="off">                        
+                    <form action="<?php echo e(base_url('app/sponsorship')); ?>" method="GET" accept-charset="utf-8" autocomplete="off">                        
                         <div class="input-group">
-                            <input type="search" id="q" value="{{ !empty($_GET['q']) ? $_GET['q'] : '' }}" name="q" class="form-control" placeholder="Cari data...">
+                            <input type="search" id="q" value="<?php echo e(!empty($_GET['q']) ? $_GET['q'] : ''); ?>" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">
                                 <button type="submit" class="btn waves-effect waves-light btn-primary btn-sm"><i class="mdi mdi-magnify mdi-18px"></i></button>
                             </span>
@@ -55,10 +55,10 @@
                     </form>
                 </div>
             </div> 
-            @if (isset($_GET['q']) && $CI->input->get('q', true) !== "")
-                @if (empty($data['data']))
+            <?php if(isset($_GET['q']) && $CI->input->get('q', true) !== ""): ?>
+                <?php if(empty($data['data'])): ?>
                     <div class="alert alert-info">
-                        <p class="mb-0">Pencarian anda <b>- {{ $CI->input->get('q', true) }} -</b> tidak ada dalam data.</p>
+                        <p class="mb-0">Pencarian anda <b>- <?php echo e($CI->input->get('q', true)); ?> -</b> tidak ada dalam data.</p>
                         <p class="mb-0">
                             Saran:
                             <ul class="mb-0">
@@ -68,12 +68,12 @@
                             </ul>
                         </p>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="alert alert-info">
-                        <p class="mb-0"><i class="mdi mdi-magnify"></i> Hasil pencarian dari: "<b>{{ $CI->input->get('q', true) }}</b>"</p>                    
+                        <p class="mb-0"><i class="mdi mdi-magnify"></i> Hasil pencarian dari: "<b><?php echo e($CI->input->get('q', true)); ?></b>"</p>                    
                     </div>
-                @endif
-            @endif
+                <?php endif; ?>
+            <?php endif; ?>
             <div class="table-responsive">
                 <table id="tb_data_hibah" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="bg-purple text-white">
@@ -90,36 +90,38 @@
                         </tr>
                     </thead>
                     <tbody id="tb-hibah">
-                        @if (empty($data['data']))
+                        <?php if(empty($data['data'])): ?>
                             <tr>
                                 <th colspan="9" class="text-center">Tidak ada data</th>
                             </tr>
-                        @else
-                        @php
+                        <?php else: ?>
+                        <?php
                             $no = (empty($CI->uri->segment(3)) ? 0 : $CI->uri->segment(3) + 0);
-                        @endphp
-                            @foreach ($data['data'] as $row)
-                                @php
+                        ?>
+                            <?php $__currentLoopData = $data['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php
                                     $no++
-                                @endphp
+                                ?>
                                 <tr>
-                                    <th class="text-center" style="vertical-align: middle">{{ $no }}</th>
+                                    <th class="text-center" style="vertical-align: middle"><?php echo e($no); ?></th>
                                     <th style="vertical-align: middle;">
-                                        <a href="{{ base_url('app/sponsorship/v_detail/'.encrypt($row['id'])) }}" class="badge bg-purple">{{ $row['kode_uraian'] }}</a>
+                                        <a href="<?php echo e(base_url('app/sponsorship/v_detail/'.encrypt($row['id']))); ?>" class="badge bg-purple"><?php echo e($row['kode_uraian']); ?></a>
                                     </th>
                                     <th style="vertical-align: middle;">
                                         <span class="badge bg-primary">
-                                            {{ $row['kode_pencairan'] }}
+                                            <?php echo e($row['kode_pencairan']); ?>
+
                                         </span>
                                     </th>                                    
                                     <td style="vertical-align: middle;">
                                         <span class="" style="font-size: 14px;">
-                                            {{ $row['nama_hibah_sponsorship'] }}
+                                            <?php echo e($row['nama_hibah_sponsorship']); ?>
+
                                         </span>
                                     </td>                                    
                                     <td style="vertical-align: middle;">
                                         <span class="" style="font-size: 14px;">
-                                            @php
+                                            <?php
                                             $deskripsi_kegiatan = $row['uraian_kegiatan'];
                                             $pecah = explode(' ', $deskripsi_kegiatan);
                                             $potong = array_slice($pecah, 0, 20);
@@ -128,54 +130,58 @@
                                             } else {
                                                 echo implode(' ', $potong);
                                             }
-                                        @endphp
+                                        ?>
                                         </span>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <span class="" style="font-size: 14px;">
-                                            {{ $row['nama_lengkap'] }} ({{ $row['pic'] }})
+                                            <?php echo e($row['nama_lengkap']); ?> (<?php echo e($row['pic']); ?>)
                                         </span>
                                         <hr class="mt-1 mb-0">
-                                        <a href="javascript:void(0)" data-id="{{ encrypt($row['id']) }}" 
-							                data-kode_uraian="{{ $row['kode_uraian'] }}" data-pic="{{ $row['pic'] }}" 
-							                data-kode_pencairan="{{ $row['kode_pencairan'] }}" 
-							                data-nama_hibah="{{ $row['nama_hibah_sponsorship'] }}" class="badge bg-secondary text-white btn-set_pic">{{ $row['nama_lengkap'] == '' ? 'Tentukan' : 'Ubah' }} PIC</a>
+                                        <a href="javascript:void(0)" data-id="<?php echo e(encrypt($row['id'])); ?>" 
+							                data-kode_uraian="<?php echo e($row['kode_uraian']); ?>" data-pic="<?php echo e($row['pic']); ?>" 
+							                data-kode_pencairan="<?php echo e($row['kode_pencairan']); ?>" 
+							                data-nama_hibah="<?php echo e($row['nama_hibah_sponsorship']); ?>" class="badge bg-secondary text-white btn-set_pic"><?php echo e($row['nama_lengkap'] == '' ? 'Tentukan' : 'Ubah'); ?> PIC</a>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <span class="badge bg-warning">
-                                            @switch($row['periode'])
-                                                @case(1)
-                                                    {{ "Ganjil" }}
-                                                @break
-                                                @case(2)
-                                                    {{ "Genap" }}
-                                                @break
-                                                @default
-                                                {{ "Unknown" }}
-                                            @endswitch
+                                            <?php switch($row['periode']):
+                                                case (1): ?>
+                                                    <?php echo e("Ganjil"); ?>
+
+                                                <?php break; ?>
+                                                <?php case (2): ?>
+                                                    <?php echo e("Genap"); ?>
+
+                                                <?php break; ?>
+                                                <?php default: ?>
+                                                <?php echo e("Unknown"); ?>
+
+                                            <?php endswitch; ?>
                                         </span>
                                     </td>
-                                    <!--<td class="text-center" style="vertical-align: middle;">{{ substr($row['tanggal_buat'], 0, 16) }}</td>
+                                    <!--<td class="text-center" style="vertical-align: middle;"><?php echo e(substr($row['tanggal_buat'], 0, 16)); ?></td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        {{ rupiah($row['total_agr']) }}
+                                        <?php echo e(rupiah($row['total_agr'])); ?>
+
                                     </td>-->
                                     <td class="text-center" style="vertical-align: middle;">
-                                        @if ($row['finalisasi'] == 'N')
-                                            <a href="javascript:void(0)" data-id="{{ encrypt($row['id']) }}" data-kode_uraian="{{ $row['kode_uraian'] }}" class="badge bg-danger batalkan-data col-12"><i
+                                        <?php if($row['finalisasi'] == 'N'): ?>
+                                            <a href="javascript:void(0)" data-id="<?php echo e(encrypt($row['id'])); ?>" data-kode_uraian="<?php echo e($row['kode_uraian']); ?>" class="badge bg-danger batalkan-data col-12"><i
                                                     class="mdi mdi-trash-can"></i> Batalkan</a>
-                                            <a href="javascript:void(0)" data-id="{{ encrypt($row['id']) }}"
-                                                data-nama_hibah="{{ $row['nama_hibah_sponsorship'] }}"
-                                                data-deskripsi="{{ $row['uraian_kegiatan'] }}" data-kpi="{{ $row['kpi'] }}"
-                                                data-cara_ukur="{{ $row['cara_ukur'] }}" data-base_line="{{ $row['base_line'] }}"
-                                                data-target="{{ $row['target'] }}" data-output="{{ $row['output'] }}"
-                                                data-periode="{{ $row['periode'] }}" data-unit="{{ $row['kode_unit'] }}" data-pic="{{ $row['pic'] }}" data-kode_pencairan="{{ $row['kode_pencairan'] }}"
-                                                data-total_anggaran="{{ $row['total_agr'] }}" data-ttd_pic="{{ $row['ttd_pic'] }}"
-                                                data-kode_sub_aktivitas="{{ $row['kode_sub_aktivitas'] }}" data-indikator_kerja_umum="{{ $row['indikator_kerja_umum'] }}"
+                                            <a href="javascript:void(0)" data-id="<?php echo e(encrypt($row['id'])); ?>"
+                                                data-nama_hibah="<?php echo e($row['nama_hibah_sponsorship']); ?>"
+                                                data-deskripsi="<?php echo e($row['uraian_kegiatan']); ?>" data-kpi="<?php echo e($row['kpi']); ?>"
+                                                data-cara_ukur="<?php echo e($row['cara_ukur']); ?>" data-base_line="<?php echo e($row['base_line']); ?>"
+                                                data-target="<?php echo e($row['target']); ?>" data-output="<?php echo e($row['output']); ?>"
+                                                data-periode="<?php echo e($row['periode']); ?>" data-unit="<?php echo e($row['kode_unit']); ?>" data-pic="<?php echo e($row['pic']); ?>" data-kode_pencairan="<?php echo e($row['kode_pencairan']); ?>"
+                                                data-total_anggaran="<?php echo e($row['total_agr']); ?>" data-ttd_pic="<?php echo e($row['ttd_pic']); ?>"
+                                                data-kode_sub_aktivitas="<?php echo e($row['kode_sub_aktivitas']); ?>" data-indikator_kerja_umum="<?php echo e($row['indikator_kerja_umum']); ?>"
                                                 class="badge bg-secondary ubah-data col-12"><i class="mdi mdi-pencil"></i> Ubah</a>
-                                            <a href="javascript:void(0)" data-kode_uraian="{{ $row['kode_uraian'] }}" data-id="{{ encrypt($row['id']) }}"
+                                            <a href="javascript:void(0)" data-kode_uraian="<?php echo e($row['kode_uraian']); ?>" data-id="<?php echo e(encrypt($row['id'])); ?>"
                                                 class="badge bg-primary col-12 finalisasi"><i class="mdi mdi-content-save"></i> Finalisasi</a>
-                                        @elseif($row['finalisasi'] == 'Y')
-                                            @php
+                                        <?php elseif($row['finalisasi'] == 'Y'): ?>
+                                            <?php
                                                 $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
                                                 ig_tbl_actbud a WHERE a.id_uraian = '%u' 
                                                 AND a.status_act = 'send' AND (a.status != 'cancel')", $row['id']))->row();
@@ -186,22 +192,24 @@
                                                 ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
                                                 AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();									
                                                 echo '<span class="badge bg-primary">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
-                                            @endphp
-                                        @endif
+                                            ?>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
-                            @endforeach
-                        @endif
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
 
-            <span class="badge badge-info">Total Data: {{ $data['total_rows'] }}</span>
-            {!! $data['pagination'] !!}
+            <span class="badge badge-info">Total Data: <?php echo e($data['total_rows']); ?></span>
+            <?php echo $data['pagination']; ?>
+
         </div>
     </div>
 
-    {!! form_open('', array('id' => 'form-set_pic', 'class' => 'myForm')) !!}
+    <?php echo form_open('', array('id' => 'form-set_pic', 'class' => 'myForm')); ?>
+
     <div id="modal-set_pic" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -228,15 +236,15 @@
 						<div class="col-lg-10">
 							<select name="pic" id="pic3" class="form-control select2" style="width:100%;" required>
 								<option value="">Pilih</option>
-								@foreach ($unit->result() as $item)
-									<optgroup label="{{ $item->nama_unit }}">
-										@foreach ($karyawan->result() as $ky)
-											@if ($item->kode_unit == $ky->kode_unit)
-												<option value="{{ $ky->nik }}">{{ $ky->nama_lengkap }}</option>
-											@endif
-										@endforeach
+								<?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<optgroup label="<?php echo e($item->nama_unit); ?>">
+										<?php $__currentLoopData = $karyawan->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ky): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<?php if($item->kode_unit == $ky->kode_unit): ?>
+												<option value="<?php echo e($ky->nik); ?>"><?php echo e($ky->nama_lengkap); ?></option>
+											<?php endif; ?>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									</optgroup>
-								@endforeach								
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>								
 							</select>							
 						</div>
 					</div>
@@ -251,9 +259,11 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    {!! form_close() !!}
+    <?php echo form_close(); ?>
+
     
-    {!! form_open('app/sponsorship/preview_upload', array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+    <?php echo form_open('app/sponsorship/preview_upload', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
+
     <div id="modal-upload" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -273,9 +283,9 @@
                         <label for="">Unit/Prodi</label>
                         <select name="unit_prodi" id="unit_prodi" class="form-control pl-0" required>
                             <option value="">Pilih Unit/Prodi</option>
-                            @foreach ($unit->result() as $item)
-                                <option value="{{ $item->kode_unit }}">{{ $item->nama_unit }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item->kode_unit); ?>"><?php echo e($item->nama_unit); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group mb-0 mt-3">
@@ -293,9 +303,11 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    {!! form_close() !!}
+    <?php echo form_close(); ?>
 
-    {!! form_open('', array('id' => 'form-batalkan', 'class' => 'myForm')) !!}
+
+    <?php echo form_open('', array('id' => 'form-batalkan', 'class' => 'myForm')); ?>
+
     <div id="modal-batalkan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -319,10 +331,12 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-{!! form_close() !!}
+<?php echo form_close(); ?>
+
 
 <!--  Modal edit -->
-{!! form_open('', array('id' => 'form-ubah', 'class' => 'myForm')) !!}
+<?php echo form_open('', array('id' => 'form-ubah', 'class' => 'myForm')); ?>
+
 <div class="modal fade bs-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true"
 	style="display: none;">
 	<div class="modal-dialog modal-lg">
@@ -419,16 +433,16 @@
 					<div class="col-lg-10">
 						<select name="pic" id="pic" class="form-control select2" style="width:100%;" required>
                             <option value="" id="ubah-pic">Pilih PIC Kegiatan</option>
-							@foreach ($unit->result() as $item)
-							<optgroup label="{{ $item->nama_unit }}">
-								@foreach ($karyawan->result() as $ky)
-								@if ($ky->kode_unit == $item->kode_unit)
-								<option value="{{ $ky->nik }}" data-nama_lengkap="{{ $ky->nama_lengkap }}">
-									{{ $ky->nama_lengkap }}</option>
-								@endif
-								@endforeach
+							<?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<optgroup label="<?php echo e($item->nama_unit); ?>">
+								<?php $__currentLoopData = $karyawan->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ky): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+								<?php if($ky->kode_unit == $item->kode_unit): ?>
+								<option value="<?php echo e($ky->nik); ?>" data-nama_lengkap="<?php echo e($ky->nama_lengkap); ?>">
+									<?php echo e($ky->nama_lengkap); ?></option>
+								<?php endif; ?>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</optgroup>
-							@endforeach
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</select>
 						<span class="help-block"><small>Tentukan pic.</small></span>
 					</div>
@@ -439,11 +453,12 @@
 					<div class="col-lg-10">
 						<select name="unit" id="unit" class="form-control select2" style="width:100%;" required>
                             <option value="" id="ubah-unit">Pilih PIC Kegiatan</option>
-							@foreach ($unit->result() as $item)
-							<option value="{{ $item->kode_unit }}" data-nama_unit="{{ $item->nama_unit }}">
-								{{ $item->nama_unit }}
+							<?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<option value="<?php echo e($item->kode_unit); ?>" data-nama_unit="<?php echo e($item->nama_unit); ?>">
+								<?php echo e($item->nama_unit); ?>
+
 							</option>
-							@endforeach
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</select>
 						<span class="help-block"><small>Tentukan unit.</small></span>
 					</div>
@@ -474,9 +489,11 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-{!! form_close() !!}
+<?php echo form_close(); ?>
 
-{!! form_open('', array('id' => 'form-finalisasi', 'class' => 'myForm')) !!}
+
+<?php echo form_open('', array('id' => 'form-finalisasi', 'class' => 'myForm')); ?>
+
     <div id="modal-finalisasi" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -503,20 +520,21 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-{!! form_close() !!}
-@endsection
+<?php echo form_close(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/select2.min.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="{{ base_url('assets/js/jquery.signature.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-filestyle.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.signature.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.ui.touch-punch.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-filestyle.min.js')); ?>"></script>
 
 <script>
     $(document).ready(function(){        
@@ -658,4 +676,5 @@
 
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/sponsorship/index.blade.php ENDPATH**/ ?>

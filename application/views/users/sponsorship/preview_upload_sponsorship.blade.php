@@ -48,7 +48,7 @@ $unit_all = $CI->db->get('tbl_unit')->result();
                 <label for="">Unit :</label>
                 <span class="badge bg-info">{{ $unit->nama_unit }}</span>
             </div>
-            {!! form_open('app/sponsorship/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8')) !!}
+            {!! form_open('app/sponsorship/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8', 'class' => 'myForm')) !!}
             <div class="table-responsive mt-3">
                 <table class="table table-bordered">
                     <thead class="bg-primary text-white">

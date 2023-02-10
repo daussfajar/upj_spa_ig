@@ -1,16 +1,16 @@
-@extends('layouts.user')
 
-@section('title', 'Buat Kredit Saldo')
 
-@section('page-title')
-   <a href="{{ base_url('app/kredit_saldo') }}" class=""><i class="mdi mdi-arrow-left"></i></a> Buat Kredit Saldo
-@endsection
+<?php $__env->startSection('title', 'Buat Kredit Saldo'); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery-ui.custom-for-signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery.signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
+<?php $__env->startSection('page-title'); ?>
+   <a href="<?php echo e(base_url('app/kredit_saldo')); ?>" class=""><i class="mdi mdi-arrow-left"></i></a> Buat Kredit Saldo
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery-ui.custom-for-signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery.signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
 <style>
     .kbw-signature { width: 300px; height: 300px;}
     #ttd canvas{
@@ -18,16 +18,17 @@
         height: auto;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);">Kredit Saldo</a></li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);">Buat Kredit Saldo</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="col-md-12">    
-    {!! form_open('app/kredit_saldo/buat_kredit/save', array('enctype' => 'multipart/form-data')) !!}
+    <?php echo form_open('app/kredit_saldo/buat_kredit/save', array('enctype' => 'multipart/form-data')); ?>
+
 	<div class="card card-border card-primary">
         <div class="card-header border-primary bg-transparent">
             <h3 class="card-title text-primary mb-0">Form Kredit Saldo</h3>
@@ -39,22 +40,24 @@
                         <label for="" class="col-4">Saldo Asal</label>
                         <select name="saldo_asal" id="saldo_asal" class="form-control select2 col-7" required>
                             <option value="">Pilih Kegiatan</option>
-                            @foreach ($kegiatan as $item)
-                                <option value="{{ $item->kode_uraian }}" data-kode_pencairan="{{ $item->kode_pencairan }}">
-                                    {{ $item->kode_uraian }} - {{ $item->nama_lengkap . ' ('.$item->nama_unit.')' }} - {{ $item->nama_hibah_sponsorship }}
+                            <?php $__currentLoopData = $kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item->kode_uraian); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>">
+                                    <?php echo e($item->kode_uraian); ?> - <?php echo e($item->nama_lengkap . ' ('.$item->nama_unit.')'); ?> - <?php echo e($item->nama_hibah_sponsorship); ?>
+
                                 </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group row">
                         <label for="" class="col-4">Saldo Tujuan</label>
                         <select name="saldo_tujuan" id="saldo_tujuan" class="form-control select2 col-7" required>
                             <option value="">Pilih Kegiatan</option>
-                            @foreach ($kegiatan as $item)
-                                <option value="{{ $item->kode_uraian }}" data-kode_pencairan="{{ $item->kode_pencairan }}">
-                                    {{ $item->kode_uraian }} - {{ $item->nama_lengkap . ' ('.$item->nama_unit.')' }} - {{ $item->nama_hibah_sponsorship }}
+                            <?php $__currentLoopData = $kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item->kode_uraian); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>">
+                                    <?php echo e($item->kode_uraian); ?> - <?php echo e($item->nama_lengkap . ' ('.$item->nama_unit.')'); ?> - <?php echo e($item->nama_hibah_sponsorship); ?>
+
                                 </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group row">
@@ -84,21 +87,22 @@
             </div>
         </div>
     </div>
-    {!! form_close() !!}
-</div>
-@endsection
+    <?php echo form_close(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/select2.min.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="{{ base_url('assets/js/jquery.signature.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.signature.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.ui.touch-punch.min.js')); ?>"></script>
 
-<script src="{{ base_url('assets/js/jquery.steps.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.validate.min.js') }}"></script>
-<script src="{{ base_url('assets/js/form-wizard.init.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.steps.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.validate.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/form-wizard.init.js')); ?>"></script>
 <script>
     $(document).ready(function(){
 
@@ -132,4 +136,5 @@
         })
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/kredit_saldo/buat_kredit.blade.php ENDPATH**/ ?>

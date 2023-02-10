@@ -1,9 +1,9 @@
 
 
-<?php $__env->startSection('title', 'Status Pencairan Hibah'); ?>
+<?php $__env->startSection('title', 'Pencairan Sponsorship'); ?>
 
 <?php $__env->startSection('page-title'); ?>
-    <i class="mdi mdi-clipboard-list-outline"></i> Status Pencairan
+    <i class="mdi mdi-clipboard-list-outline"></i> Pencairan
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -12,8 +12,8 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-<li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Hibah</a></li>
-<li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-clipboard-list-outline"></i> Status Pencairan</a></li>
+<li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
+<li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-clipboard-list-outline"></i> Pencairan</a></li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="<?php echo e(base_url('app/hibah/status_pencairan')); ?>" method="GET" accept-charset="utf-8" autocomplete="off">                        
+                    <form action="<?php echo e(base_url('app/sponsorship/pencairan')); ?>" method="GET" accept-charset="utf-8" autocomplete="off">                        
                         <div class="input-group">
                             <input type="search" id="q" value="<?php echo e(!empty($_GET['q']) ? $_GET['q'] : ''); ?>" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">
@@ -73,12 +73,16 @@
                 <table id="tb_data_hibah" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="bg-purple text-white">
                         <tr>
-                            <th width=50 class="text-center" style="vertical-align: middle;">No</th>                            
+                            <th width=50 class="text-center" style="vertical-align: middle;">No</th>
+                            <!--<th width=200 style="vertical-align: middle;">Kode Uraian</th>-->
                             <th class="text-center" style="vertical-align: middle;">Kode Pencairan</th>
-                            <th style="vertical-align: middle;">Nama Kegiatan</th>
-                            <!--<th style="vertical-align: middle;">Keterangan</th>-->
-                            <th class="text-center" style="vertical-align: middle;">Anggaran Diajukan</th>
-                            <th class="text-center" width=200 style="vertical-align: middle;">Status Approval</th>
+                            <th class="text-center" style="vertical-align: middle;">PIC</th>
+                            <th style="vertical-align: middle;">Nama Sponsorship</th>
+                            <th style="vertical-align: middle;">Deskripsi Kegiatan</th>
+                            <th class="text-center" style="vertical-align: middle;">Periode</th>
+                            <th class="text-center" style="vertical-align: middle;">Anggaran</th>
+                            <th class="text-center" style="vertical-align: middle;">Realisasi</th>
+                            <th class="text-center" style="vertical-align: middle;">Sisa</th>
                             <!--<th class="text-center" width="250" style="vertical-align: middle;">Tanggal Buat</th>-->
                             <th class="text-center" style="vertical-align: middle;">Aksi</th>
                         </tr>
@@ -86,7 +90,7 @@
                     <tbody>                        
                         <?php if(empty($data['data'])): ?>
                             <tr>
-                                <th colspan="6" class="text-center">Tidak ada data</th>
+                                <th colspan="8" class="text-center">Tidak ada data</th>
                             </tr>
                         <?php else: ?>
                         <?php
@@ -98,40 +102,73 @@
                                 ?>
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle"><?php echo e($no); ?></th>
+                                    <!--<th style="vertical-align: middle;"><a href="<?php echo e(base_url('app/hibah/pencairan/detail_hibah/' . encrypt($row['id']))); ?>"><?php echo e($row['kode_uraian']); ?></a></th>-->
                                     <th style="vertical-align: middle;">
-                                        <span class="badge bg-purple p-2">
-                                            <?php echo e($row['jns_agr'] . '/' . $row['id_actbud'] . '/' . $row['kode_pencairan']); ?>
+                                        <span class="badge bg-secondary">
+                                            <?php echo e($row['kode_pencairan']); ?>
 
                                         </span>
                                     </th>
                                     <td style="vertical-align: middle;">
+                                        <span class="" style="font-size: 14px;">
+                                            <?php echo e($row['nama_karyawan']); ?> (<?php echo e($row['pic']); ?>)
+                                        </span>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <span class="" style="font-size: 14px;">
+                                            <?php echo e($row['nama_hibah_sponsorship']); ?>
+
+                                        </span>
+                                    </td>      
+                                    <td style="vertical-align: middle;">
                                         <span style="font-size: 14px;">
-                                            <?php echo $row['nama_kegiatan']; ?>
+                                            <?php echo e($row['uraian_kegiatan']); ?>
 
                                         </span>
-                                        <hr class="mt-1 mb-2">
-                                        <span class="badge bg-secondary p-2">
-                                            <i class="mdi mdi-calendar"></i> 
-                                            <?php echo e(tanggal_indo($row['tgl_mulai']).' - '.tanggal_indo($row['tgl_selesai'])); ?>
+                                    </td>                              
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <span class="badge bg-warning">
+                                            <?php switch($row['periode']):
+                                                case (1): ?>
+                                                    <?php echo e("Ganjil"); ?>
+
+                                                    <?php break; ?>
+                                                <?php case (2): ?>
+                                                    <?php echo e("Genap"); ?>
+
+                                                    <?php break; ?>
+                                                <?php default: ?>
+                                                    <?php echo e("Unknown"); ?>                                            
+                                            <?php endswitch; ?>
+                                        </span>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <?php
+                                            $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
+                                            ig_tbl_actbud a WHERE a.id_uraian = '%u' 
+                                            AND a.status_act = 'send' AND (a.status != 'cancel')", $row['id']))->row();
+                                            $getSumIn = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_masuk FROM 
+                                            ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
+                                            AND b.disetujui = 'Y' AND b.jenis_kredit = 'in'", $row['kode_uraian']))->row();
+                                            $getSumOut = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_keluar FROM 
+                                            ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
+                                            AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();									
+                                            echo '<span class="badge bg-success">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                        ?>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <span class="badge bg-teal">
+                                            <?php echo e(rupiah($getSum->digunakan)); ?>
 
                                         </span>
                                     </td>
-                                    <!--<td style="vertical-align: middle;"><?php echo e($row['keterangan']); ?></td>-->
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <span class="badge bg-success p-2">
-                                            <?php echo e(rupiah($row['agr'])); ?>
-
-                                        </span>
+                                        <?php                                                                                        								
+                                            echo '<span class="badge bg-primary">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                        ?>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="<?php echo e(base_url('app/hibah/status_pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']))); ?>" class="badge bg-info p-2">Lihat</a>
-                                    </td>
-                                    <td class="text-center" style="vertical-align: middle;">
-                                        <?php if($row['status_actbud'] == 'approved'): ?>
-                                            <a href="javascript:void(0)" onclick="window.open('<?php echo e(base_url('app/hibah/pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']).'/cetak_form_actbud?pdf=true')); ?>', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-sm text-white"><i class="mdi mdi-printer"></i></a>
-                                        <?php else: ?>
-                                        -
-                                        <?php endif; ?>
+                                        <a href="<?php echo e(base_url('app/sponsorship/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan')); ?>" class="badge bg-primary btn-sm">Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -158,4 +195,4 @@
     })
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/hibah/v_status_pencairan.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/sponsorship/v_data_pencairan.blade.php ENDPATH**/ ?>

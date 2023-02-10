@@ -99,7 +99,7 @@
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle">{{ $no }}</th>
                                     <th style="vertical-align: middle;">
-                                        <span class="badge bg-purple">
+                                        <span class="badge bg-purple p-2">
                                             {{ $row['jns_agr'] . '/' . $row['id_actbud'] . '/' . $row['kode_pencairan'] }}
                                         </span>
                                     </th>
@@ -107,24 +107,24 @@
                                         <span style="font-size: 14px;">
                                             {!! $row['nama_kegiatan'] !!}
                                         </span>
-                                        <hr class="mt-0 mb-0">
-                                        <span class="badge bg-secondary">
+                                        <hr class="mt-1 mb-2">
+                                        <span class="badge bg-secondary p-2">
                                             <i class="mdi mdi-calendar"></i> 
                                             {{ tanggal_indo($row['tgl_mulai']).' - '.tanggal_indo($row['tgl_selesai']) }}
                                         </span>
                                     </td>
                                     <!--<td style="vertical-align: middle;">{{ $row['keterangan'] }}</td>-->
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <span class="badge bg-success">
+                                        <span class="badge bg-success p-2">
                                             {{ rupiah($row['agr']) }}
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="{{ base_url('app/hibah/status_pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud'])) }}" class="badge bg-info">Lihat</a>
+                                        <a href="{{ base_url('app/hibah/status_pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud'])) }}" class="badge bg-info p-2">Lihat</a>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         @if ($row['status_actbud'] == 'approved')
-                                            <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/hibah/pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']).'/cetak_form_actbud?pdf=true') }}', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-xs text-white"><i class="mdi mdi-printer"></i></a>
+                                            <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/hibah/pencairan/v_detail/'.encrypt($row['id_hibah']).'/actbud/'.encrypt($row['id_actbud']).'/cetak_form_actbud?pdf=true') }}', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-sm text-white"><i class="mdi mdi-printer"></i></a>
                                         @else
                                         -
                                         @endif
