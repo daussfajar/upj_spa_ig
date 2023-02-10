@@ -1,21 +1,21 @@
-@extends('layouts.user')
 
-@section('title', 'Actbud Disetujui')
 
-@section('page-title')
+<?php $__env->startSection('title', 'Actbud Disetujui'); ?>
+
+<?php $__env->startSection('page-title'); ?>
     <i class="mdi mdi-table"></i> Actbud Disetujui
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-@endsection
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-table"></i> Actbud Disetujui</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-md-12">
         <div class="card-box">
             <div class="table-responsive">
@@ -34,64 +34,68 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($actbud as $item)
+                        <?php $__currentLoopData = $actbud; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th class="text-center" style="vertical-align: middle;">{{ $loop->iteration }}</th>
+                                <th class="text-center" style="vertical-align: middle;"><?php echo e($loop->iteration); ?></th>
                                 <td style="vertical-align: middle;">
                                     <span class="badge bg-primary p-2">
-                                        {{ $item->kode_uraian }}
+                                        <?php echo e($item->kode_uraian); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <span class="badge bg-secondary p-2">
-                                        {{ $item->kode_pencairan }}
+                                        <?php echo e($item->kode_pencairan); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;font-size:14px;">
-                                    <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/' . $item->jenis_anggaran . '/pencairan/v_detail/' . encrypt($item->id_uraian) . '/actbud/' . encrypt($item->id)) }}')">{!! $item->nama_kegiatan !!}</a>
+                                    <a href="javascript:void(0)" onclick="window.open('<?php echo e(base_url('app/' . $item->jenis_anggaran . '/pencairan/v_detail/' . encrypt($item->id_uraian) . '/actbud/' . encrypt($item->id))); ?>')"><?php echo $item->nama_kegiatan; ?></a>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <span class="badge bg-dark text-white p-2">
-                                        {{ tanggal_indo($item->tgl_mulai) }} s/d {{ tanggal_indo($item->tgl_selesai) }}
+                                        <?php echo e(tanggal_indo($item->tgl_mulai)); ?> s/d <?php echo e(tanggal_indo($item->tgl_selesai)); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
-                                    @switch($item->jenis_anggaran)
-                                        @case('hibah')
+                                    <?php switch($item->jenis_anggaran):
+                                        case ('hibah'): ?>
                                             <span class="badge badge-warning p-2">Hibah</span>
-                                            @break
-                                        @case('sponsorship')
+                                            <?php break; ?>
+                                        <?php case ('sponsorship'): ?>
                                             <span class="badge badge-warning p-2">Sponsorship</span>
-                                            @break
-                                        @default
+                                            <?php break; ?>
+                                        <?php default: ?>
                                             
-                                    @endswitch
+                                    <?php endswitch; ?>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
                                     <span class="badge bg-purple p-2">
-                                        {{ rupiah($item->agr) }}
+                                        <?php echo e(rupiah($item->agr)); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
                                     <span class="badge badge-success p-2"><i class="mdi mdi-check-bold"></i> Disetujui</span>                                    
                                 </td>
                                 <th class="text-center" style="vertical-align: middle">
-                                    <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/' . $item->jenis_anggaran . '/pencairan/v_detail/' . encrypt($item->id_uraian) . '/actbud/' . encrypt($item->id) . '/cetak_form_actbud?pdf=true') }}', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-sm"><i class="mdi mdi-printer"></i></a>
+                                    <a href="javascript:void(0)" onclick="window.open('<?php echo e(base_url('app/' . $item->jenis_anggaran . '/pencairan/v_detail/' . encrypt($item->id_uraian) . '/actbud/' . encrypt($item->id) . '/cetak_form_actbud?pdf=true')); ?>', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-sm"><i class="mdi mdi-printer"></i></a>
                                 </th>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>  
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>  
 <script>
     $(document).ready(function(){
         $('.dataTable').dataTable({
@@ -99,4 +103,5 @@
         })
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/users/table/v_actbud_disetujui.blade.php ENDPATH**/ ?>

@@ -118,7 +118,7 @@
     </div>
 </div>
 
-{!! form_open('app/kredit_saldo/batalkan_kredit') !!}
+{!! form_open('app/kredit_saldo/batalkan_kredit', array('class' => 'myForm')) !!}
 <div id="modal-hapus-kredit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -143,7 +143,7 @@
 </div>
 {!! form_close() !!}
 
-{!! form_open('app/kredit_saldo/finalisasi_kredit') !!}
+{!! form_open('app/kredit_saldo/finalisasi_kredit', array('class' => 'myForm')) !!}
 <div id="modal-finalisasi-kredit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -168,7 +168,7 @@
 </div>
 {!! form_close() !!}
 
-{!! form_open('app/kredit_saldo/preview_upload', array('enctype' => 'multipart/form-data')) !!}
+{!! form_open('app/kredit_saldo/preview_upload', array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
 <div id="modal-upload-saldo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

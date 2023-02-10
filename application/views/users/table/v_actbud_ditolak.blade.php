@@ -20,7 +20,7 @@
         <div class="card-box">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered dataTable">
-                    <thead>
+                    <thead class="bg-purple text-white">
                         <tr>
                             <th class="text-center" width=30>No</th>
                             <th>Kode Uraian</th>
@@ -36,26 +36,40 @@
                         @foreach ($actbud as $item)
                             <tr>
                                 <th class="text-center" style="vertical-align: middle;">{{ $loop->iteration }}</th>
-                                <td style="vertical-align: middle;">{{ $item->kode_uraian }}</td>
-                                <td style="vertical-align: middle;">{{ $item->kode_pencairan }}</td>
                                 <td style="vertical-align: middle;">
+                                    <span class="badge bg-primary p-2">
+                                        {{ $item->kode_uraian }}
+                                    </span>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    <span class="badge bg-secondary p-2">
+                                        {{ $item->kode_pencairan }}
+                                    </span>
+                                </td>
+                                <td style="vertical-align: middle;font-size:14px;">
                                     <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/' . $item->jenis_anggaran . '/pencairan/v_detail/' . encrypt($item->id_uraian) . '/actbud/' . encrypt($item->id)) }}', 'MsgWindow', 'width=800,height=800')">{!! $item->nama_kegiatan !!}</a>
                                 </td>
-                                <td style="vertical-align: middle;">{{ tanggal_indo($item->tgl_mulai) }} s/d {{ tanggal_indo($item->tgl_selesai) }}</td>
+                                <td style="vertical-align: middle;">
+                                    <span class="badge bg-dark text-white p-2">
+                                        {{ tanggal_indo($item->tgl_mulai) }} s/d {{ tanggal_indo($item->tgl_selesai) }}
+                                    </span>
+                                </td>
                                 <td style="vertical-align: middle;" class="text-center">
                                     @switch($item->jenis_anggaran)
                                         @case('hibah')
-                                            <span class="badge badge-warning">Hibah</span>
+                                            <span class="badge badge-warning p-2">Hibah</span>
                                             @break
                                         @case('sponsorship')
-                                            <span class="badge badge-warning">Sponsorship</span>
+                                            <span class="badge badge-warning p-2">Sponsorship</span>
                                             @break
                                         @default
                                             
                                     @endswitch
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
-                                    {{ rupiah($item->agr) }}
+                                    <span class="badge bg-purple p-2">
+                                        {{ rupiah($item->agr) }}
+                                    </span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
                                     <span class="badge badge-danger"><i class="mdi mdi-close"></i> Ditolak</span>                                    

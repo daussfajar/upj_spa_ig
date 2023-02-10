@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="{{ base_url('app/approval') }}" method="GET" accept-charset="utf-8" autocomplete="off">                        
+                    <form action="{{ base_url('app/approval') }}" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
                         <div class="input-group">
                             <input type="search" id="q" value="{{ !empty($_GET['q']) ? $_GET['q'] : '' }}" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">
@@ -84,12 +84,12 @@
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle;">{{ $no }}</th>
                                     <th style="vertical-align: middle">
-                                        <span class="badge bg-purple">
+                                        <span class="badge bg-purple p-2">
                                             {{ $row['kode_uraian'] }}
                                         </span>
                                     </th>
                                     <th style="vertical-align: middle">
-                                        <span class="badge bg-primary">
+                                        <span class="badge bg-primary p-2">
                                             {{ $row['kode_pencairan'] }}
                                         </span>
                                     </th>
@@ -115,17 +115,17 @@
                                     <td style="vertical-align: middle" class="text-center">
                                         @switch($row['jenis_anggaran'])
                                             @case('hibah')
-                                                <span class="badge badge-info">Hibah</span>
+                                                <span class="badge badge-info p-2">Hibah</span>
                                                 @break
                                             @case('sponsorship')
-                                                <span class="badge badge-info">Sponsorship</span>
+                                                <span class="badge badge-info p-2">Sponsorship</span>
                                                 @break
                                             @default
-                                            <span class="badge badge-danger">Unknown</span>
+                                            <span class="badge badge-danger p-2">Unknown</span>
                                         @endswitch
                                     </td>
                                     <td style="vertical-align: middle" class="text-center">
-                                        <span class="badge bg-success">
+                                        <span class="badge bg-success p-2">
                                             {{ rupiah($row['agr'])}}
                                         </span>
                                     </td>
@@ -148,7 +148,7 @@
                     </tbody>
                 </table>
             </div>
-            <span class="badge badge-info">Total Data: {{ $data['total_rows'] }}</span>
+            <span class="badge badge-info p-2">Total Data: {{ $data['total_rows'] }}</span>
             {!! $data['pagination'] !!}
         </div>
     </div>

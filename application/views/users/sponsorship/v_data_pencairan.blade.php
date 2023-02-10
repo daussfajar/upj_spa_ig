@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="{{ base_url('app/sponsorship/pencairan') }}" method="GET" accept-charset="utf-8" autocomplete="off">                        
+                    <form action="{{ base_url('app/sponsorship/pencairan') }}" class="myForm" method="GET" accept-charset="utf-8" autocomplete="off">                        
                         <div class="input-group">
                             <input type="search" id="q" value="{{ !empty($_GET['q']) ? $_GET['q'] : '' }}" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">
@@ -90,7 +90,7 @@
                     <tbody>                        
                         @if (empty($data['data']))
                             <tr>
-                                <th colspan="8" class="text-center">Tidak ada data</th>
+                                <th colspan="10" class="text-center">Tidak ada data</th>
                             </tr>
                         @else
                         @php

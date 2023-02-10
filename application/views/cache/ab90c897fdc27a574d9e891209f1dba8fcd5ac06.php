@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="<?php echo e(base_url('app/approval')); ?>" method="GET" accept-charset="utf-8" autocomplete="off">                        
+                    <form action="<?php echo e(base_url('app/approval')); ?>" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
                         <div class="input-group">
                             <input type="search" id="q" value="<?php echo e(!empty($_GET['q']) ? $_GET['q'] : ''); ?>" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">
@@ -84,13 +84,13 @@
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle;"><?php echo e($no); ?></th>
                                     <th style="vertical-align: middle">
-                                        <span class="badge bg-purple">
+                                        <span class="badge bg-purple p-2">
                                             <?php echo e($row['kode_uraian']); ?>
 
                                         </span>
                                     </th>
                                     <th style="vertical-align: middle">
-                                        <span class="badge bg-primary">
+                                        <span class="badge bg-primary p-2">
                                             <?php echo e($row['kode_pencairan']); ?>
 
                                         </span>
@@ -117,17 +117,17 @@
                                     <td style="vertical-align: middle" class="text-center">
                                         <?php switch($row['jenis_anggaran']):
                                             case ('hibah'): ?>
-                                                <span class="badge badge-info">Hibah</span>
+                                                <span class="badge badge-info p-2">Hibah</span>
                                                 <?php break; ?>
                                             <?php case ('sponsorship'): ?>
-                                                <span class="badge badge-info">Sponsorship</span>
+                                                <span class="badge badge-info p-2">Sponsorship</span>
                                                 <?php break; ?>
                                             <?php default: ?>
-                                            <span class="badge badge-danger">Unknown</span>
+                                            <span class="badge badge-danger p-2">Unknown</span>
                                         <?php endswitch; ?>
                                     </td>
                                     <td style="vertical-align: middle" class="text-center">
-                                        <span class="badge bg-success">
+                                        <span class="badge bg-success p-2">
                                             <?php echo e(rupiah($row['agr'])); ?>
 
                                         </span>
@@ -153,7 +153,7 @@
                     </tbody>
                 </table>
             </div>
-            <span class="badge badge-info">Total Data: <?php echo e($data['total_rows']); ?></span>
+            <span class="badge badge-info p-2">Total Data: <?php echo e($data['total_rows']); ?></span>
             <?php echo $data['pagination']; ?>
 
         </div>

@@ -6,12 +6,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.60.155',
-	'username' => 'root@',
-	'password' => 'Benang3010',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '\e*X!7KML$;e,\xw',
 	// DEV'database' => 'upj_spa_hibah',
 	//PROD
-	'database' => 'upj_spa_hibah',
+	'database' => 'db_spa_ig',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

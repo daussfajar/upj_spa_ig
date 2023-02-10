@@ -27,7 +27,7 @@
 
 @section('content')
 <div class="col-md-12">    
-    {!! form_open('app/kredit_saldo/buat_kredit/save', array('enctype' => 'multipart/form-data')) !!}
+    {!! form_open('app/kredit_saldo/buat_kredit/save', array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
 	<div class="card card-border card-primary">
         <div class="card-header border-primary bg-transparent">
             <h3 class="card-title text-primary mb-0">Form Kredit Saldo</h3>

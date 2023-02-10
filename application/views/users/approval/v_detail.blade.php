@@ -368,7 +368,7 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 
 			<div class="tab-pane" id="pesan" role="tabpanel" aria-labelledby="pesan-tab">
 				{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/buat_pesan', array('id' =>
-				'form-pesan', 'enctype' => 'multipart/form-data')) !!}
+				'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
 				@if (!empty($messages))
 				<div class="messages">
 					<div class="list-group bs-ui-list-group mb-0 mr-2" id="chat-section">
@@ -572,7 +572,7 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 	</div>
 </div>
 
-{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/hapus_pesan') !!}
+{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/hapus_pesan', array('class' => 'myForm')) !!}
 <!-- modal hapus pesan -->
 <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -614,7 +614,7 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 {!! form_close() !!}
 
 @if ($kode_jabatan == 3 || $kode_jabatan == 0)
-{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/buat_catatan_wr_1') !!}
+{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/buat_catatan_wr_1', array('class' => 'myForm')) !!}
 <!-- modal buat catatan wr 1 -->
 <div id="modal-buat-catatan-wr-1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -650,7 +650,7 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 @endif
 
 @if ($kode_jabatan == 4 || $kode_jabatan == 0)
-{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/buat_catatan_wr_2') !!}
+{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/buat_catatan_wr_2', array('class' => 'myForm')) !!}
 <!-- modal buat catatan wr 1 -->
 <div id="modal-buat-catatan-wr-2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -687,7 +687,7 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 
 @if ($approvalOpen == true)
 <div class="col-md-12">
-	{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/submit_actbud', array('id' => 'form-persetujuan')) !!}
+	{!! form_open('app/approval/v_detail/' . $CI->uri->segment(4) . '/submit_actbud', array('id' => 'form-persetujuan', 'class' => 'myForm')) !!}
 	<input type="hidden" name="sign" value="{{ $data->sign }}">
 	<input type="hidden" name="kode_unit" value="{{ $data->kode_unit }}">
 	<div class="card">

@@ -39,7 +39,7 @@
                 Silakan lengkapi form dibawah ini untuk melakukan pencairan.
             </p>
 
-            {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form')) !!}
+            {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form', 'class' => 'myForm')) !!}
                 <div>
                     <h3>Step 1</h3>
                     <section>

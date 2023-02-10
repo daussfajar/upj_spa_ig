@@ -122,7 +122,7 @@
     </div>
 
     <!-- Modal Edit Karyawan -->
-    {!! form_open('', array('id' => 'form-edit-karyawan')) !!}    
+    {!! form_open('', array('id' => 'form-edit-karyawan', 'class' => 'myForm')) !!}    
     <div id="modal-edit-karyawan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -177,7 +177,7 @@
     {!! form_close() !!}
 
     <!-- Modal Tambah Karyawan -->
-    {!! form_open('app/master-data/karyawan/tambah_karyawan', array('id' => 'form-tambah-karyawan')) !!}    
+    {!! form_open('app/master-data/karyawan/tambah_karyawan', array('id' => 'form-tambah-karyawan', 'class' => 'myForm')) !!}    
     <div id="modal-tambah-karyawan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -231,7 +231,7 @@
     </div>
     {!! form_close() !!}
 
-    {!! form_open('app/master-data/karyawan/ubahpass', array('id' => 'form-ubahpass-karyawan')) !!}
+    {!! form_open('app/master-data/karyawan/ubahpass', array('id' => 'form-ubahpass-karyawan', 'class' => 'myForm')) !!}
     <div id="modal-ubahpass-karyawan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -268,7 +268,7 @@
     </div>
     {!! form_close() !!}
 
-    {!! form_open('', array('id' => 'form-hapus-karyawan')) !!}
+    {!! form_open('', array('id' => 'form-hapus-karyawan', 'class' => 'myForm')) !!}
     <div id="modal-hapus-karyawan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

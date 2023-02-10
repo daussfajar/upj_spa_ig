@@ -37,7 +37,7 @@
             Terdapat <b><span id='jumlah_kosong'></span></b> baris data yang belum lengkap! Mohon lengkapi data tersebut lalu upload kembali.
             </div>
 
-            {!! form_open('app/kredit_saldo/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8')) !!}
+            {!! form_open('app/kredit_saldo/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8', 'class' => 'myForm')) !!}
             <div class="table-responsive mt-3">
                 <table class="table table-bordered">
                     <thead class="bg-purple text-white">
