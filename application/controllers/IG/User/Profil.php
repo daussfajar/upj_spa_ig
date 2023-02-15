@@ -9,7 +9,7 @@ class Profil extends CI_Controller {
 	}
 
     public function profil_saya(){
-        return view('users.profil.profil_saya');
+        return view('ig.users.profil.profil_saya');
     }
 
 }

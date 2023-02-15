@@ -13,7 +13,7 @@ class Pemberitahuan extends CI_Controller {
 
     public function index(){
         $data['data'] = $this->Notification_model->get_all_notification();        
-        return view('users.pemberitahuan.index', $data);
+        return view('ig.users.pemberitahuan.index', $data);
     }
 
     public function detail_pemberitahuan(){
@@ -24,7 +24,7 @@ class Pemberitahuan extends CI_Controller {
             'is_seen' => 'yes'
         ]);
         
-        return view('users.pemberitahuan.detail');
+        return view('ig.users.pemberitahuan.detail');
     }
 
     public function set_sudah_dibaca_semua_pemberitahuan(){

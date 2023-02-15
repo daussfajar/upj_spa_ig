@@ -6,7 +6,7 @@ class HistoryApproval extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();		
-        $this->load->model('Approval_model');
+        $this->load->model('IG/Approval_model', 'm_approval');
 		$this->Global_model->is_finance();
 		header("X-XSS-Protection: 1; mode=block");
 	}
@@ -75,8 +75,8 @@ class HistoryApproval extends CI_Controller {
 			unset($_SESSION['session_where']);
 		}
 
-        $data['data'] = $this->Approval_model->get_data_history_approval($kode_unit, $where . ' ' . $qry . '');        
+        $data['data'] = $this->m_approval->get_data_history_approval($kode_unit, $where . ' ' . $qry . '');        
         //pr($data);
-        return view('users.history_approval.index', $data);
+        return view('ig.users.history_approval.index', $data);
     }
 }

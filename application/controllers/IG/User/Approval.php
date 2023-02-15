@@ -6,8 +6,8 @@ class Approval extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-        $this->load->model('Approval_model');
-        $this->load->model('Hibah_model');
+        $this->load->model('IG/Approval_model', 'm_approval');
+        $this->load->model('IG/Hibah_model', 'm_hibah');
 		$this->Global_model->is_finance();
 		header("X-XSS-Protection: 1; mode=block");
 	}
@@ -58,18 +58,18 @@ class Approval extends CI_Controller {
 			unset($_SESSION['session_where']);
 		}
 		
-		$data['data'] = $this->Approval_model->get_data_approval($kode_unit, $where . ' ' . $qry . ' ');
-        return view('users.approval.index', $data);
+		$data['data'] = $this->m_approval->get_data_approval($kode_unit, $where . ' ' . $qry . ' ');
+        return view('ig.users.approval.index', $data);
     }
 
     public function v_detail(){			
 		$id = !decrypt($this->uri->segment(4)) ? show_404() : decrypt($this->uri->segment(4));
-        $data['data'] = !empty($this->Approval_model->get_approval_by_id($id)) ? $this->Approval_model->get_approval_by_id($id) : redirect(base_url('app/approval'));
+        $data['data'] = !empty($this->m_approval->get_approval_by_id($id)) ? $this->m_approval->get_approval_by_id($id) : redirect(base_url('app/approval'));
         $data['detail_biaya'] = $this->db->get_where('ig_t_j_b_act', ['id_actbud' => $data['data']->id, 'status' => 'Aktif']);
-        $data['messages'] = $this->Hibah_model->get_data_chat_actbud($data['data']->id);
+        $data['messages'] = $this->m_hibah->get_data_chat_actbud($data['data']->id);
 		$data['dokumen_pendukung'] = $this->db->get_where('ig_tbl_actbud_upload', ['id_act' => $data['data']->id, 'status' => 'Aktif']);
         //pr($data['data']);		
-        return view('users.approval.v_detail', $data);
+        return view('ig.users.approval.v_detail', $data);
     }
 
     public function buat_catatan_wr_1(){

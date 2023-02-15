@@ -36,7 +36,7 @@
         <div class="navbar-custom">
             <ul class="list-unstyled topnav-menu float-right mb-0">
 
-                @include('layouts.user_notification')                
+                @include('spa.layouts.notification')                
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">

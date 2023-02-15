@@ -28,7 +28,7 @@ class PencairanSponsorship extends CI_Controller {
 		}
 		$data['data'] = $this->Sponsorship_model->get_data_sponsorship_finalisasi($qry);
 		//pr($data);
-        return view('users.sponsorship.v_data_pencairan', $data);
+        return view('ig.users.sponsorship.v_data_pencairan', $data);
 	}
 
 	public function detail_sponsorship(){
@@ -36,7 +36,7 @@ class PencairanSponsorship extends CI_Controller {
 		$data['data'] = !empty($this->Sponsorship_model->get_data_sponsorship_by_id($id, "")) ? $this->Sponsorship_model->get_data_sponsorship_by_id($id) : show_404();
 		$data['karyawan']		= $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit']			= $this->db->get('tbl_unit');	
-		return view('users.sponsorship.v_detail_sponsorship', $data);
+		return view('ig.users.sponsorship.v_detail_sponsorship', $data);
 	}
 
 	public function v_detail(){
@@ -48,7 +48,7 @@ class PencairanSponsorship extends CI_Controller {
 		$data['total_anggaran_yang_digunakan'] = $agr->digunakan;
 		$data['total_anggaran_yang_digunakan_final'] = $this->Sponsorship_model->cek_anggaran_digunakan_final($id);
 		
-		return view('users.sponsorship.v_detail_pencairan', $data);
+		return view('ig.users.sponsorship.v_detail_pencairan', $data);
 	}
 
 	public function buat_pencairan(){					
@@ -65,7 +65,7 @@ class PencairanSponsorship extends CI_Controller {
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
 		$data['unit'] = $this->db->get('tbl_unit');
 		
-		return view('users.sponsorship.buat_pencairan', $data);
+		return view('ig.users.sponsorship.buat_pencairan', $data);
 	}
 
 	public function create_pencairan(){
@@ -206,7 +206,7 @@ class PencairanSponsorship extends CI_Controller {
 		$data['sisa'] = $this->Sponsorship_model->cek_anggaran_rincian_kegiatan($id_actbud);
 		//$data['unit'] = $this->db->get('tbl_unit')->result();
 		$data['anggaran_tersisa'] = (int) ($data['data']->agr - $data['sisa']->digunakan);
-		return view('users.sponsorship.v_detail_actbud', $data);
+		return view('ig.users.sponsorship.v_detail_actbud', $data);
 	}
 
 	public function ubah_actbud(){		

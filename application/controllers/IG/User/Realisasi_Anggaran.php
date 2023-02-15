@@ -30,7 +30,7 @@ class Realisasi_Anggaran extends CI_Controller {
         $data['data'] = $this->Realisasi_Anggaran_Model->get_data($qry);
         $data['count_belum_realisasi'] = $this->Realisasi_Anggaran_Model->get_total_belum_finalisasi();
                 
-        return view('users.realisasi_anggaran.index', $data);
+        return view('ig.users.realisasi_anggaran.index', $data);
     }
 
     public function v_detail(){
@@ -43,7 +43,7 @@ class Realisasi_Anggaran extends CI_Controller {
         $data['dokumen_pendukung'] = $this->db->get_where('ig_tbl_actbud_upload', ['id_act' => $id_actbud, 'status' => 'Aktif']);
         $data['messages'] = $this->Hibah_model->get_data_chat_actbud($id_actbud);
         //pr($data);
-        return view('users.realisasi_anggaran.v_realisasi_anggaran', $data);
+        return view('ig.users.realisasi_anggaran.v_realisasi_anggaran', $data);
     }
 
     public function buat_catatan(){

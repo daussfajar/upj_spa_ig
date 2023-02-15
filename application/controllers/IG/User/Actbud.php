@@ -17,13 +17,13 @@ class Actbud extends CI_Controller {
     public function v_actbud_disetujui(){
         $nik = decrypt($_SESSION['user_sessions']['nik']);
         $data['actbud'] = $this->Actbud_model->get_data_actbud_approved($nik);
-        return view('users.table.v_actbud_disetujui', $data);
+        return view('ig.users.table.v_actbud_disetujui', $data);
     }
 
     public function v_actbud_ditolak(){
         $nik = decrypt($_SESSION['user_sessions']['nik']);
         $data['actbud'] = $this->Actbud_model->get_data_actbud_rejected($nik);
-        return view('users.table.v_actbud_ditolak', $data);
+        return view('ig.users.table.v_actbud_ditolak', $data);
     }
 }
 

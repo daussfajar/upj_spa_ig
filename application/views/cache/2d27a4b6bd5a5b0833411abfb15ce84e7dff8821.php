@@ -10,11 +10,11 @@
     <p class="">
         Silakan pilih aplikasi:
         <br>
-        <a href="<?php echo e(base_url('app/spa/dashboard')); ?>" class="">
+        <a href="<?php echo e(base_url('app/sim-spa/dashboard')); ?>" class="">
             SPA
         </a>
         <br>
-        <a href="<?php echo e(base_url('app/dashboard')); ?>">
+        <a href="<?php echo e(base_url('app/sim-ig/dashboard')); ?>">
             IG
         </a>
     </p>

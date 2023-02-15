@@ -28,7 +28,7 @@ class StatusPencairanHibah extends CI_Controller {
 		}
 		//$data['data'] = $this->Hibah_model->get_data_rincian_pencairan($nik, $unit, $qry);
 		$data['data'] = $this->Hibah_model->get_data_pencairan_all($nik, $qry);
-        return view('users.hibah.v_status_pencairan', $data);
+        return view('ig.users.hibah.v_status_pencairan', $data);
     }
 }
 

@@ -10,11 +10,11 @@
     <p class="">
         Silakan pilih aplikasi:
         <br>
-        <a href="{{ base_url('app/spa/dashboard') }}" class="">
+        <a href="{{ base_url('app/sim-spa/dashboard') }}" class="">
             SPA
         </a>
         <br>
-        <a href="{{ base_url('app/dashboard') }}">
+        <a href="{{ base_url('app/sim-ig/dashboard') }}">
             IG
         </a>
     </p>

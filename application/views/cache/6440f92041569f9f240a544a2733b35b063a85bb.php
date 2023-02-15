@@ -36,7 +36,7 @@
         <div class="navbar-custom">
             <ul class="list-unstyled topnav-menu float-right mb-0">
 
-                <?php echo $__env->make('layouts.user_notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>                
+                <?php echo $__env->make('spa.layouts.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>                
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">

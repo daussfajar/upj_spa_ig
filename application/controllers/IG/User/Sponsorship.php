@@ -47,7 +47,7 @@ class Sponsorship extends CI_Controller {
         $data['data']       = $this->Sponsorship_model->get_data_sponsorship($qry);
 		$data['karyawan']	= $this->db->get_where('tbl_karyawan', $w_karyawan);		
 		$data['unit'] 		= $this->db->get_where('tbl_unit', $w_unit);
-		return view('users.sponsorship.index', $data);
+		return view('ig.users.sponsorship.index', $data);
     }
 
 	public function v_buat_kegiatan(){
@@ -55,7 +55,7 @@ class Sponsorship extends CI_Controller {
 		$data['kode_uraian'] 	= $kode_uraian;	
 		$data['karyawan']		= $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit']			= $this->db->get('tbl_unit');
-		return view('users.sponsorship.tambah_data', $data);
+		return view('ig.users.sponsorship.tambah_data', $data);
 	}
 
 	public function submit_buat_kegiatan(){
@@ -178,7 +178,7 @@ class Sponsorship extends CI_Controller {
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit'] = $this->db->get('tbl_unit');	
 		
-		return view('users.sponsorship.v_detail_sponsorship', $data);
+		return view('ig.users.sponsorship.v_detail_sponsorship', $data);
 	}
 
 	public function edit_sponsorship(){
@@ -352,7 +352,7 @@ class Sponsorship extends CI_Controller {
 			$count_sheet = array_slice($sheet, 1);
 			$data['sheet'] = $count_sheet;			
 			//pr($data);
-			return view('users.sponsorship.preview_upload_sponsorship', $data);
+			return view('ig.users.sponsorship.preview_upload_sponsorship', $data);
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()

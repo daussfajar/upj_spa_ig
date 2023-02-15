@@ -7,6 +7,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['auth/login']['POST'] = 'Auth/verify';
 $route['lupa-password'] = 'ForgotPassword';
+$route['app/logout']['POST'] = 'Logout/logout';
 
 $route['app/menu'] = 'Gate/Menu';
 

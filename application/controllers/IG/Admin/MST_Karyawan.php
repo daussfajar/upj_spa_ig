@@ -16,7 +16,7 @@ class MST_Karyawan extends CI_Controller {
         $data['unit'] = $this->db->get_where('tbl_unit', ['status' => 'Aktif'])->result();
         $data['jabatan'] = $this->db->get_where('tbl_tingkatan', ['status' => 'Aktif'])->result();
         //pr($data);
-        return view('admin.master_data.karyawan', $data);
+        return view('ig.admin.master_data.karyawan', $data);
     }
 
     public function set_status(){

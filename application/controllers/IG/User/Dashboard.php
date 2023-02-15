@@ -49,6 +49,6 @@ class Dashboard extends CI_Controller {
 		$data['total_approval'] = $this->Approval_model->get_count_approval($unit, $where);		
         
 		//pr($data['total_approval']);
-		return view('users.dashboard.index', $data);
+		return view('ig.users.dashboard.index', $data);
 	}
 }

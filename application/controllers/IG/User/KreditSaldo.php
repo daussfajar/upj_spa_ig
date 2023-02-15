@@ -19,13 +19,13 @@ class KreditSaldo extends CI_Controller {
     public function index(){
         $nik = decrypt($_SESSION['user_sessions']['nik']);
         $data['kegiatan'] = $this->Hibah_model->get_all_in_out();        
-        return view('users.kredit_saldo.index', $data);
+        return view('ig.users.kredit_saldo.index', $data);
     }
 
     public function buat_kredit(){
         $nik = decrypt($_SESSION['user_sessions']['nik']);
         $data['kegiatan'] = $this->Hibah_model->get_all_kegiatan($nik);        
-        return view('users.kredit_saldo.buat_kredit', $data);
+        return view('ig.users.kredit_saldo.buat_kredit', $data);
     }
 
     public function batalkan_kredit(){
@@ -182,7 +182,7 @@ class KreditSaldo extends CI_Controller {
 			$count_sheet    = array_slice($sheet, 1);
 			$data['sheet']  = $count_sheet;			
 			//pr($data);
-			return view('users.kredit_saldo.preview_upload_kredit', $data);
+			return view('ig.users.kredit_saldo.preview_upload_kredit', $data);
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()

@@ -6,7 +6,7 @@ class Hibah extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-		$this->load->model('Hibah_model');
+		$this->load->model('IG/Hibah_model');
 		$this->Global_model->is_finance();
         header("X-XSS-Protection: 1; mode=block");
 	}
@@ -49,7 +49,7 @@ class Hibah extends CI_Controller {
 		$data['karyawan']	= $this->db->get_where('tbl_karyawan', $w_karyawan);		
 		$data['unit'] 		= $this->db->get_where('tbl_unit', $w_unit);
 		//pr($data['data']);
-		return view('users.hibah.index', $data);
+		return view('ig.users.hibah.index', $data);
 	}	
 
 	public function v_buat_kegiatan(){
@@ -57,7 +57,7 @@ class Hibah extends CI_Controller {
 		$data['kode_uraian'] 	= $kode_uraian;	
 		$data['karyawan']		= $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit']			= $this->db->get('tbl_unit');
-		return view('users.hibah.tambah_data', $data);
+		return view('ig.users.hibah.tambah_data', $data);
 	}
 
 	public function preview_upload(){
@@ -76,7 +76,7 @@ class Hibah extends CI_Controller {
 			$count_sheet    = array_slice($sheet, 1);
 			$data['sheet']  = $count_sheet;			
 			//pr($data);
-			return view('users.hibah.preview_upload_hibah', $data);
+			return view('ig.users.hibah.preview_upload_hibah', $data);
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
@@ -350,7 +350,7 @@ class Hibah extends CI_Controller {
 		$data['data'] = !empty($this->Hibah_model->get_data_hibah_by_id($id, "")) ? $this->Hibah_model->get_data_hibah_by_id($id) : show_404();	
 		$data['karyawan']		= $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit']			= $this->db->get('tbl_unit');	
-		return view('users.hibah.v_detail_hibah', $data);
+		return view('ig.users.hibah.v_detail_hibah', $data);
 	}
 
 	public function edit_hibah(){

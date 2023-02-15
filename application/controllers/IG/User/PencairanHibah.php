@@ -28,7 +28,7 @@ class PencairanHibah extends CI_Controller {
         
 		$data['data'] = $this->Hibah_model->get_data_hibah_finalisasi($qry);
 		
-        return view('users.hibah.v_data_pencairan', $data);
+        return view('ig.users.hibah.v_data_pencairan', $data);
     }
 
 	public function detail_hibah(){
@@ -36,7 +36,7 @@ class PencairanHibah extends CI_Controller {
 		$data['data'] = !empty($this->Hibah_model->get_data_hibah_by_id($id, "")) ? $this->Hibah_model->get_data_hibah_by_id($id) : show_404();
 		$data['karyawan']		= $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit']			= $this->db->get('tbl_unit');	
-		return view('users.hibah.v_detail_hibah', $data);
+		return view('ig.users.hibah.v_detail_hibah', $data);
 	}
 
 	public function v_detail(){
@@ -48,7 +48,7 @@ class PencairanHibah extends CI_Controller {
 		$data['total_anggaran_yang_digunakan'] = $agr->digunakan;
 		$data['total_anggaran_yang_digunakan_final'] = $this->Hibah_model->cek_anggaran_digunakan_final($id);		
 		
-		return view('users.hibah.v_detail_pencairan', $data);
+		return view('ig.users.hibah.v_detail_pencairan', $data);
 	}
 
 	public function buat_pencairan(){					
@@ -64,7 +64,7 @@ class PencairanHibah extends CI_Controller {
 		$data['pelaksana'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit'] = $this->db->get('tbl_unit');
         //pr($data);
-		return view('users.hibah.buat_pencairan', $data);
+		return view('ig.users.hibah.buat_pencairan', $data);
 	}
 
 	public function create_pencairan(){
@@ -209,7 +209,7 @@ class PencairanHibah extends CI_Controller {
 		//$data['unit'] = $this->db->get('tbl_unit')->result();
 		$data['anggaran_tersisa'] = (int) ($data['data']->agr - $data['sisa']->digunakan);
         //pr($data['data']);
-		return view('users.hibah.v_detail_actbud', $data);
+		return view('ig.users.hibah.v_detail_actbud', $data);
 	}
 
 	public function batalkan_actbud(){

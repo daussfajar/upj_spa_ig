@@ -11,7 +11,7 @@ class Settings extends CI_Controller {
     }
 
     public function pengaturan_umum(){      
-        return view('admin.pengaturan.pengaturan_umum');
+        return view('ig.admin.pengaturan.pengaturan_umum');
     }
 
     public function login_logs(){
@@ -20,7 +20,7 @@ class Settings extends CI_Controller {
         ON a.user_id = b.nik', 
         '1=1', '/' . APP_FOLDER . '/app/pengaturan/login_logs', 4, 5,4);
         //pr($data['data_logs']['data']);
-        return view('admin.pengaturan.data_login_logs', $data);
+        return view('ig.admin.pengaturan.data_login_logs', $data);
     }
 
 }

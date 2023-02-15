@@ -28,7 +28,7 @@ class StatusPencairanSponsorship extends CI_Controller {
 		}
 		
 		$data['data'] = $this->Sponsorship_model->get_data_pencairan_all($nik, $qry);
-        return view('users.sponsorship.v_status_pencairan', $data);
+        return view('ig.users.sponsorship.v_status_pencairan', $data);
     }
 
 }
