@@ -5,9 +5,10 @@ $route['default_controller'] = 'Auth';
 $route['404_override'] = 'Errors/error_404';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['lupa-password'] = 'User/ForgotPassword';
+$route['auth/login']['POST'] = 'Auth/verify';
+$route['lupa-password'] = 'ForgotPassword';
 
-include_once 'routes/routes_user.php';
-include_once 'routes/routes_approval.php';
-include_once 'routes/routes_settings_page.php';
-include_once 'routes/routes_admin.php';
+$route['app/menu'] = 'Gate/Menu';
+
+include_once 'routes/ig/routes.php';
+include_once 'routes/spa/routes.php';

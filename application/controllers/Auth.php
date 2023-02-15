@@ -83,7 +83,7 @@ class Auth extends CI_Controller {
                 $f_redirect_url = implode('/', $ex_redirect_url);
                 
                 if(empty($redirect_url)){
-                    return redirect(base_url('app/dashboard'));
+                    return redirect(base_url('app/menu'));
                 } else {
                     return redirect(base_url($f_redirect_url));
                 }

@@ -49,6 +49,10 @@
                             <i class="mdi mdi-account-circle"></i>
                             <span>Profil Saya</span>
                         </a>
+                        <a href="<?php echo e(base_url('app/menu')); ?>" class="dropdown-item notify-item">
+                            <i class="mdi mdi-menu"></i>
+                            <span>Menu</span>
+                        </a>
                         <a href="javascript:void(0);" data-toggle="modal" data-target="#modal-logout" class="dropdown-item notify-item">
                             <i class="mdi mdi-logout-variant"></i>
                             <span>Logout</span>
@@ -103,7 +107,7 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);"><b><?php echo e(APP_NAME); ?></b></a></li>                                        
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);"><b>IG</b></a></li>                                        
                                         <?php echo $__env->yieldContent('breadcrumb'); ?>
                                     </ol>
                                 </div>

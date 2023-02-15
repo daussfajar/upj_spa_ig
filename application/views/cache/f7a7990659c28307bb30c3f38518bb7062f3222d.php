@@ -1,0 +1,2 @@
+
+<?php echo $__env->make('spa.layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/dashboard/dashboard.blade.php ENDPATH**/ ?>
