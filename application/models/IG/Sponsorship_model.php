@@ -33,7 +33,7 @@ class Sponsorship_Model extends CI_Model {
         c.nama_unit,a.nama_hibah_sponsorship,a.cara_ukur,a.kode_unit,a.pic,a.kode_sub_aktivitas,a.indikator_kerja_umum,
         a.target,a.total_agr,a.ttd_pic,a.output,a.base_line,a.uraian_kegiatan,a.periode,a.tanggal_buat,a.status,a.finalisasi', 
         $this->table . " a LEFT JOIN tbl_karyawan b ON a.pic = b.nik INNER JOIN tbl_unit c ON a.kode_unit = c.kode_unit","a.jenis_ig = 'sponsorship' AND a.status = 'Aktif' ", 
-        '/' . APP_FOLDER . '/app/hibah', 3,5,4);
+        '/' . APP_FOLDER . '/app/sim-ig/hibah', 4,5,4);
         return $data;
     }
 
@@ -119,7 +119,7 @@ class Sponsorship_Model extends CI_Model {
         $data = $this->Global_model->get_data_with_pagination('a.id,a.kode_uraian,a.kode_pencairan,a.pic,
         a.nama_hibah_sponsorship,a.uraian_kegiatan,b.nama_lengkap nama_karyawan,a.total_agr,a.periode,a.tanggal_buat,a.status', $this->table . " a 
         INNER JOIN tbl_karyawan b ON a.pic = b.nik","a.status = 'Aktif' AND (a.jenis_ig = 'sponsorship' AND a.finalisasi = 'Y') ", 
-        '/' . APP_FOLDER . '/app/sponsorship/pencairan', 4,5,4);
+        '/' . APP_FOLDER . '/app/sim-ig/sponsorship/pencairan', 5,5,4);
         return $data;
     }
 
@@ -162,7 +162,7 @@ class Sponsorship_Model extends CI_Model {
         a.catatan_wr_2,a.status,b.kode_pencairan,a.keterangan,c.id id_hibah,b.status status_actbud,a.tgl_mulai,a.tgl_selesai', 
         "ig_t_j_b_act a INNER JOIN ig_tbl_actbud b ON a.id_actbud = b.id 
         INNER JOIN ig_tbl_uraian c ON b.id_uraian = c.id","c.jenis_ig = 'sponsorship' AND b.pic = '$pic' AND b.kode_unit = '$unit' AND a.status = 'Aktif' " . $where, 
-        '/' . APP_FOLDER . '/app/sponsorship/status_pencairan', 4,5,4);        
+        '/' . APP_FOLDER . '/app/sim-ig/sponsorship/status_pencairan', 5,5,4);        
         return $data;
     }
 
@@ -188,7 +188,7 @@ class Sponsorship_Model extends CI_Model {
         a.tanggal_pembuatan,a.kode_pencairan,
         a.agr,a.fnl_agr,a.status status_actbud,a.agr,c.id id_hibah", 
         "ig_tbl_actbud a INNER JOIN tbl_karyawan b ON a.pelaksana = b.nik INNER JOIN ig_tbl_uraian c ON a.id_uraian = c.id","c.jenis_ig = 'sponsorship'", 
-        '/' . APP_FOLDER . '/app/sponsorship/status_pencairan', 4,5,4);        
+        '/' . APP_FOLDER . '/app/sim-ig/sponsorship/status_pencairan', 5,5,4);        
         return $data;
     }
 

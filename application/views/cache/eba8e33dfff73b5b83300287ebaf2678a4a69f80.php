@@ -1,20 +1,20 @@
-@extends('ig.layouts.user')
 
-@section('title', 'Kredit Saldo - Preview Upload')
 
-@section('page-title')
-   <a href="{{ base_url('app/sim-ig/kredit_saldo') }}"><i class="mdi mdi-arrow-left"></i></a> Upload Excel
-@endsection
+<?php $__env->startSection('title', 'Kredit Saldo - Preview Upload'); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery-ui.custom-for-signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery.signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/daterangepicker.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-datepicker.min.css') }}">
+<?php $__env->startSection('page-title'); ?>
+   <a href="<?php echo e(base_url('app/sim-ig/kredit_saldo')); ?>"><i class="mdi mdi-arrow-left"></i></a> Upload Excel
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery-ui.custom-for-signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery.signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/daterangepicker.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-datepicker.min.css')); ?>">
 <style>
     .kbw-signature { width: 300px; height: 300px;}
     #ttd canvas{
@@ -22,14 +22,14 @@
         height: auto;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Hibah</a></li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-file-upload-outline"></i> Preview Upload</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-md-12">
         <div class="card-box">            
             <h4 class="header-title"><i class="mdi mdi-microsoft-excel"></i> Preview Data</h4>            
@@ -37,7 +37,8 @@
             Terdapat <b><span id='jumlah_kosong'></span></b> baris data yang belum lengkap! Mohon lengkapi data tersebut lalu upload kembali.
             </div>
 
-            {!! form_open('app/sim-ig/kredit_saldo/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8', 'class' => 'myForm')) !!}
+            <?php echo form_open('app/sim-ig/kredit_saldo/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8', 'class' => 'myForm')); ?>
+
             <div class="table-responsive mt-3">
                 <table class="table table-bordered">
                     <thead class="bg-purple text-white">
@@ -51,28 +52,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
+                        <?php
                             $numrow = 1;
                             $kosong = 0;
                             $num = 1;
-                        @endphp
-                        @foreach ($sheet as $row)
-                            @php
+                        ?>
+                        <?php $__currentLoopData = $sheet; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
                                 $kode_uraian = $row['A'];
                                 $kode_pencairan = $row['B'];
                                 $keterangan = $row['C'];
                                 $jenis_kredit = $row['D'];
                                 $nominal = $row['E'];    
                                 $numrow++;                            
-                            @endphp
+                            ?>
 
-                            @if ($numrow > 1)
-                                <input type="hidden" name="kode_uraian[]" value="{{ $kode_uraian }}">
-                                <input type="hidden" name="kode_pencairan[]" value="{{ $kode_pencairan }}">
-                                <input type="hidden" name="keterangan[]" value="{{ $keterangan }}">
-                                <input type="hidden" name="jenis_kredit[]" value="{{ $jenis_kredit }}">
-                                <input type="hidden" name="nominal[]" value="{{ $nominal }}">
-                                @php
+                            <?php if($numrow > 1): ?>
+                                <input type="hidden" name="kode_uraian[]" value="<?php echo e($kode_uraian); ?>">
+                                <input type="hidden" name="kode_pencairan[]" value="<?php echo e($kode_pencairan); ?>">
+                                <input type="hidden" name="keterangan[]" value="<?php echo e($keterangan); ?>">
+                                <input type="hidden" name="jenis_kredit[]" value="<?php echo e($jenis_kredit); ?>">
+                                <input type="hidden" name="nominal[]" value="<?php echo e($nominal); ?>">
+                                <?php
                                     $td_kode_uraian     = empty($kode_uraian) ? " style='background:#E07171;'" : "style='vertical-align:middle;'";
                                     $td_kode_pencairan  = empty($kode_pencairan) ? " style='background:#E07171;'" : "style='vertical-align:middle;'";
                                     $td_keterangan      = empty($keterangan) ? " style='background:#E07171;'" : "style='vertical-align:middle;'";
@@ -83,29 +84,29 @@
                                     $jenis_kredit == "" || $nominal == ""){
                                         $kosong++;
                                     }
-                                @endphp
+                                ?>
 
                                 <tr>
-                                    <th class="text-center" style="vertical-align: middle">{{ $num++ }}</th>
-                                    <td {!! $td_kode_uraian !!}>{{ $kode_uraian }}</td>
-                                    <td {!! $td_kode_pencairan !!}>{{ $kode_pencairan }}</td>
-                                    <td {!! $td_keterangan !!}>{{ $keterangan }}</td>
-                                    <td {!! $td_jenis_kredit !!} class="text-center">
-                                        @if ($jenis_kredit == "in")
+                                    <th class="text-center" style="vertical-align: middle"><?php echo e($num++); ?></th>
+                                    <td <?php echo $td_kode_uraian; ?>><?php echo e($kode_uraian); ?></td>
+                                    <td <?php echo $td_kode_pencairan; ?>><?php echo e($kode_pencairan); ?></td>
+                                    <td <?php echo $td_keterangan; ?>><?php echo e($keterangan); ?></td>
+                                    <td <?php echo $td_jenis_kredit; ?> class="text-center">
+                                        <?php if($jenis_kredit == "in"): ?>
                                             <span class="badge bg-info">Saldo Masuk</span>
-                                        @else
+                                        <?php else: ?>
                                             <span class="badge bg-danger">Saldo Keluar</span>
-                                        @endif
+                                        <?php endif; ?>
                                     </td>
-                                    <td {!! $td_nominal !!} class="text-center">{{ rupiah($nominal) }}</td>
+                                    <td <?php echo $td_nominal; ?> class="text-center"><?php echo e(rupiah($nominal)); ?></td>
                                 </tr>
-                            @endif
-                        @endforeach
+                            <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
             
-            @if ($kosong == 0)
+            <?php if($kosong == 0): ?>
                 <div class="card-box">    
                     <label for="">Tanda Tangan</label><br />
                     <div id="ttd"></div>
@@ -113,32 +114,33 @@
                     <button id="clear_ttd" class="btn btn-danger btn-sm"><i class="mdi mdi-trash-can-outline"></i> Hapus Tanda Tangan</button>
                     <textarea id="signature64" name="tanda_tangan" style="display: none" required></textarea>
                     <div class="float-right">
-                        <a href="{{ base_url('app/sim-ig/kredit_saldo') }}" class="btn btn-danger btn-sm">Batal</a>
+                        <a href="<?php echo e(base_url('app/sim-ig/kredit_saldo')); ?>" class="btn btn-danger btn-sm">Batal</a>
                         <button type="submit" class="btn btn-primary btn-sm"><i class="mdi mdi-upload"></i> Upload Data</button>                                
                     </div>                            
                     <br>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            {!! form_close() !!}
+            <?php echo form_close(); ?>
+
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-    <script src="{{ base_url('assets/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/daterangepicker.js') }}"></script>
-    <script src="{{ base_url('assets/js/select2.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/js/bootstrap-datepicker.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/daterangepicker.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
 
-    <script src="{{ base_url('assets/js/jquery.signature.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery.signature.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery.ui.touch-punch.min.js')); ?>"></script>
 
-    <script src="{{ base_url('assets/js/jquery.steps.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/jquery.validate.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/form-wizard.init.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery.steps.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery.validate.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/form-wizard.init.js')); ?>"></script>
     <script>
         $(document).ready(function(){
             var sig = $('#ttd').signature({syncField: '#signature64', syncFormat: 'PNG'});
@@ -151,13 +153,14 @@
             $(".select2").select2()
             $('#kosong').hide()
 
-            @if ($kosong > 0)
+            <?php if($kosong > 0): ?>
                 $(document).ready(function(){
                     // Ubah isi dari tag span dengan id jumlah_kosong dengan isi dari variabel kosong
                     $("#jumlah_kosong").html('<?php echo $kosong; ?>');
                     $("#kosong").show(); // Munculkan alert validasi kosong
                 });
-            @endif
+            <?php endif; ?>
         })
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('ig.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/ig/users/kredit_saldo/preview_upload_kredit.blade.php ENDPATH**/ ?>

@@ -1,18 +1,18 @@
-@extends('ig.layouts.user')
 
-@section('title', 'Sponsorship - Create')
 
-@section('page-title')
-    <a href="{{ base_url('app/sim-ig/sponsorship') }}"><i class="mdi mdi-arrow-left"></i></a> Create Sponsorship
-@endsection
+<?php $__env->startSection('title', 'Sponsorship - Create'); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery-ui.custom-for-signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery.signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
+<?php $__env->startSection('page-title'); ?>
+    <a href="<?php echo e(base_url('app/sim-ig/sponsorship')); ?>"><i class="mdi mdi-arrow-left"></i></a> Create Sponsorship
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery-ui.custom-for-signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery.signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
 <style>
     .kbw-signature { width: 300px; height: 300px;}
     #ttd canvas{
@@ -20,14 +20,14 @@
         height: auto;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-plus"></i> Create Sponsorship</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-md-12">
         <div class="card-box">
             <h4 class="header-title"><i class="mdi mdi-file-document-outline"></i> Buat Kegiatan Sponsorship</h4>
@@ -35,14 +35,15 @@
                 Silakan lengkapi form dibawah ini untuk membuat kegiatan Sponsorship.
             </p>
 
-            {!! form_open('app/sim-ig/sponsorship/buat_kegiatan/submit', array('id' => 'wizard-validation-form', 'class' => 'myForm')) !!}
+            <?php echo form_open('app/sim-ig/sponsorship/buat_kegiatan/submit', array('id' => 'wizard-validation-form', 'class' => 'myForm')); ?>
+
                 <div>
                     <h3>Step 1</h3>
                     <section>
                         <div class="form-group row">
                             <label class="col-lg-2 control-label " for="userName2">Kode Uraian </label>
                             <div class="col-lg-10">
-                                <input class="form-control" id="kode_uraian" name="kode_uraian" type="text" value="{{ ($kode_uraian) }}" readonly required>
+                                <input class="form-control" id="kode_uraian" name="kode_uraian" type="text" value="<?php echo e(($kode_uraian)); ?>" readonly required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -147,15 +148,15 @@
                             <div class="col-lg-10">
                                 <select name="pic" id="pic" class="form-control select2" style="width:100%;" required>
                                     <option value="">Pilih PIC Kegiatan</option>                                    
-                                    @foreach ($unit->result() as $item)
-                                        <optgroup label="{{ $item->nama_unit }}">
-                                            @foreach ($karyawan->result() as $ky)
-                                                @if ($ky->kode_unit == $item->kode_unit)
-                                                    <option value="{{ $ky->nik }}">{{ $ky->nama_lengkap }}</option>
-                                                @endif
-                                            @endforeach
+                                    <?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <optgroup label="<?php echo e($item->nama_unit); ?>">
+                                            <?php $__currentLoopData = $karyawan->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ky): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php if($ky->kode_unit == $item->kode_unit): ?>
+                                                    <option value="<?php echo e($ky->nik); ?>"><?php echo e($ky->nama_lengkap); ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </optgroup>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                                 <span class="help-block"><small>Tentukan pic.</small></span>
                             </div>
@@ -166,9 +167,9 @@
                             <div class="col-lg-10">
                                 <select name="unit" id="unit" class="form-control select2" style="width:100%;" required>
                                     <option value="">Pilih Unit Kegiatan</option>
-                                    @foreach ($unit->result() as $item)
-                                        <option value="{{ $item->kode_unit }}">{{ $item->nama_unit }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item->kode_unit); ?>"><?php echo e($item->nama_unit); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                                 <span class="help-block"><small>Tentukan unit.</small></span>
                             </div>
@@ -210,22 +211,23 @@
 
                     </section>
                 </div>
-            {!! form_close() !!}
+            <?php echo form_close(); ?>
+
         </div>                
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/select2.min.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="{{ base_url('assets/js/jquery.signature.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.signature.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.ui.touch-punch.min.js')); ?>"></script>
 
-<script src="{{ base_url('assets/js/jquery.steps.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.validate.min.js') }}"></script>
-<script src="{{ base_url('assets/js/form-wizard.init.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.steps.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.validate.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/form-wizard.init.js')); ?>"></script>
 <script>
     $(document).ready(function(){
 
@@ -264,4 +266,5 @@
         
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('ig.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/ig/users/sponsorship/tambah_data.blade.php ENDPATH**/ ?>

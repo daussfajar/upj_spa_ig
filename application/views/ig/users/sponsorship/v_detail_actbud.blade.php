@@ -3,7 +3,7 @@
 @section('title', 'Detail Kegiatan Actbud')
 
 @section('page-title')
-<a href="{{ base_url('app/sponsorship/status_pencairan') }}"><i class="mdi mdi-arrow-left"></i></a> Detail Kegiatan
+<a href="{{ base_url('app/sim-ig/sponsorship/status_pencairan') }}"><i class="mdi mdi-arrow-left"></i></a> Detail Kegiatan
 @endsection
 
 @section('css')
@@ -136,9 +136,9 @@
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item"><a href="{{ base_url('app/sponsorship') }}"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
-<li class="breadcrumb-item"><a href="{{ base_url('app/sponsorship/pencairan') }}"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
-<li class="breadcrumb-item"><a href="{{ base_url('app/sponsorship/status_pencairan') }}"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
+<li class="breadcrumb-item"><a href="{{ base_url('app/sim-ig/sponsorship') }}"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
+<li class="breadcrumb-item"><a href="{{ base_url('app/sim-ig/sponsorship/pencairan') }}"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
+<li class="breadcrumb-item"><a href="{{ base_url('app/sim-ig/sponsorship/status_pencairan') }}"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
 <li class="breadcrumb-item active"><a href="javascript:void(0)"><i class="mdi mdi-clipboard-outline"></i> Detail Actbud</li>
 @endsection
 
@@ -274,7 +274,7 @@
         @if ($data->status == 'approved')
             <div class="card-footer">
                 <div class="float-right">                    
-                    <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/cetak_form_actbud?pdf=true') }}')" class="btn btn-primary btn-sm"><i class="mdi mdi-printer"></i></a>
+                    <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/cetak_form_actbud?pdf=true') }}')" class="btn btn-primary btn-sm"><i class="mdi mdi-printer"></i></a>
                 </div>
             </div>
         @endif
@@ -435,7 +435,7 @@
         @endif
     </div>
     
-    {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+    {!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
     <div class="card card-border card-purple" id="card-chat">
         <div class="card-header border-purple bg-transparent">
             <h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
@@ -605,7 +605,7 @@
                 <br>
             </div>
         @else
-            {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/submit', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+            {!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/submit', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
                 <div class="card-box">
                     <div class="alert alert-info">
                         <p class="mb-0"><i class="mdi mdi-information-variant"></i> Sebelum submit, pastikan anda sudah mengisi detail biaya dengan benar.</p>                        
@@ -681,7 +681,7 @@
 </div>
 
 @if ($data->status !== 'cancel' && $data->status !== 'approved')
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-pesan', 'class' => 'myForm') !!}
+{!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-pesan', 'class' => 'myForm') !!}
     <!-- modal hapus pesan -->
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -725,7 +725,7 @@
 
 @if ($data->status == 'ongoing')
     <!--  Modal buat kegiatan -->
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat-rincian-kegiatan', 'class' => 'myForm') !!}
+{!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/buat-rincian-kegiatan', 'class' => 'myForm') !!}
 <div class="modal fade" id="modal-buat-kegiatan" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -765,7 +765,7 @@
 {!! form_close() !!}
 
 <!-- Modal ubah actbud -->
-<!--{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/ubah-actbud', 'class' => 'myForm') !!}
+<!--{!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/ubah-actbud', 'class' => 'myForm') !!}
 <div id="modal-ubah-actbud" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -850,7 +850,7 @@
 </div>
 {!! form_close() !!}-->
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/upload-dokumen-pendukung', array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+{!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/upload-dokumen-pendukung', array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
     <!-- modal upload dokumen pendukung -->
     <div id="modal-upload-dokumen-pendukung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -885,7 +885,7 @@
     <!-- /.modal -->
 {!! form_close() !!}
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/batalkan-actbud', 'class' => 'myForm') !!}
+{!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/batalkan-actbud', 'class' => 'myForm') !!}
     <!-- modal batalkan actbud -->
     <div id="modal-batalkan-actbud" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -911,7 +911,7 @@
     <!-- /.modal -->
 {!! form_close() !!}
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-dokumen-pendukung', 'class' => 'myForm') !!}
+{!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-dokumen-pendukung', 'class' => 'myForm') !!}
     <!-- modal hapus dokumen pendukung -->
     <div id="modal-hapus-dokumen-pendukung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -939,7 +939,7 @@
     <!-- /.modal -->
 {!! form_close() !!}
 
-{!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-rincian-kegiatan', 'class' => 'myForm') !!}
+{!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . $CI->uri->segment(7) . '/hapus-rincian-kegiatan', 'class' => 'myForm') !!}
     <!-- modal hapus dokumen pendukung -->
     <div id="modal-hapus-rincian-kegiatan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

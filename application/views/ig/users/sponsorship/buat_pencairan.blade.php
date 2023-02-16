@@ -25,9 +25,9 @@
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item"><a href="{{ base_url('app/sponsorship') }}"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
-<li class="breadcrumb-item active"><a href="{{ base_url('app/sponsorship/pencairan') }}"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
-<li class="breadcrumb-item"><a href="{{ base_url('app/sponsorship/pencairan') }}"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
+<li class="breadcrumb-item"><a href="{{ base_url('app/sim-ig/sponsorship') }}"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
+<li class="breadcrumb-item active"><a href="{{ base_url('app/sim-ig/sponsorship/pencairan') }}"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
+<li class="breadcrumb-item"><a href="{{ base_url('app/sim-ig/sponsorship/pencairan') }}"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-clipboard-file-outline"></i> Buat Pencairan</a></li>
 @endsection
 
@@ -39,7 +39,7 @@
                 Silakan lengkapi form dibawah ini untuk melakukan pencairan.
             </p>
 
-            {!! form_open('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form', 'class' => 'myForm')) !!}
+            {!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form', 'class' => 'myForm')) !!}
                 <div>
                     <h3>Step 1</h3>
                     <section>

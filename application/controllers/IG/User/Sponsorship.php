@@ -6,7 +6,7 @@ class Sponsorship extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-		$this->load->model('Sponsorship_model');
+		$this->load->model('IG/Sponsorship_model');
         $this->Global_model->is_finance();
         header("X-XSS-Protection: 1; mode=block");
 	}
@@ -152,7 +152,7 @@ class Sponsorship extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sponsorship'));
+				return redirect(base_url('app/sim-ig/sponsorship'));
 
 			} else {
 				$this->session->set_flashdata('alert', [
@@ -168,7 +168,7 @@ class Sponsorship extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/sponsorship'));
+			return redirect(base_url('app/sim-ig/sponsorship'));
 		}
 	}
 
@@ -265,14 +265,14 @@ class Sponsorship extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sponsorship'));
+				return redirect(base_url('app/sim-ig/sponsorship'));
 			} else {
 				$this->session->set_flashdata('alert', [
 					'message' => 'Terjadi kesalahan saat melakukan insert data.',
 					'type'    => 'error',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sponsorship'));
+				return redirect(base_url('app/sim-ig/sponsorship'));
 			}
 
 		} else {
@@ -280,7 +280,7 @@ class Sponsorship extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/sponsorship'));
+			return redirect(base_url('app/sim-ig/sponsorship'));
 		}
 	}
 
@@ -299,14 +299,14 @@ class Sponsorship extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sponsorship'));
+			return redirect(base_url('app/sim-ig/sponsorship'));
 
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/sponsorship/v_detail/' . $this->input->post('id', true)));
+			return redirect(base_url('app/sim-ig/sponsorship/v_detail/' . $this->input->post('id', true)));
 		}
 	}
 
@@ -325,14 +325,14 @@ class Sponsorship extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sponsorship'));
+			return redirect(base_url('app/sim-ig/sponsorship'));
 
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/sponsorship/v_detail/' . $this->input->post('id', true)));
+			return redirect(base_url('app/sim-ig/sponsorship/v_detail/' . $this->input->post('id', true)));
 		}
 	}
 
@@ -358,7 +358,7 @@ class Sponsorship extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/sponsorship'));
+			return redirect(base_url('app/sim-ig/sponsorship'));
 		}
 	}
 
@@ -490,14 +490,14 @@ class Sponsorship extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sponsorship'));
+			return redirect(base_url('app/sim-ig/sponsorship'));
 			
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/sponsorship'));
+			return redirect(base_url('app/sim-ig/sponsorship'));
 		}
 	}
 }

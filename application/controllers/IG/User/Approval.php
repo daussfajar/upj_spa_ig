@@ -72,9 +72,9 @@ class Approval extends CI_Controller {
         return view('ig.users.approval.v_detail', $data);
     }
 
-    public function buat_catatan_wr_1(){
+    public function buat_catatan_wr_1(string $id_actbud){
         $id = decrypt($this->input->post('id', true));
-        $id_actbud = decrypt($this->uri->segment(5));
+        $id_actbud = decrypt($id_actbud);
 
         $this->form_validation->set_rules('id', 'ID', 'trim|required', [
             'required' => '%s tidak boleh kosong.'
@@ -93,7 +93,7 @@ class Approval extends CI_Controller {
                 'title'   => ''
             ]);
 
-            return redirect(base_url('app/sim-ig/approval/v_detail/' . $this->uri->segment(5)));
+            return redirect(base_url('app/sim-ig/approval/v_detail/' . encrypt($id_actbud)));
 
         } else {
             $error = [
@@ -104,9 +104,9 @@ class Approval extends CI_Controller {
         }
     }
 
-    public function buat_catatan_wr_2(){
+    public function buat_catatan_wr_2(string $id_actbud){
         $id = decrypt($this->input->post('id', true));
-        $id_actbud = decrypt($this->uri->segment(5));
+        $id_actbud = decrypt($id_actbud);
 
         $this->form_validation->set_rules('id', 'ID', 'trim|required', [
             'required' => '%s tidak boleh kosong.'
@@ -125,7 +125,7 @@ class Approval extends CI_Controller {
                 'title'   => ''
             ]);
 
-            return redirect(base_url('app/sim-ig/approval/v_detail/' . $this->uri->segment(5)));
+            return redirect(base_url('app/sim-ig/approval/v_detail/' . encrypt($id_actbud)));
 
         } else {
             $error = [
@@ -136,8 +136,8 @@ class Approval extends CI_Controller {
         }
     }
 
-    public function buat_pesan(){
-        $id_actbud = decrypt($this->uri->segment(5));
+    public function buat_pesan(string $id_actbud){
+        $id_actbud = decrypt($id_actbud);
 		$pic = decrypt($_SESSION['user_sessions']['nik']);
 		$pesan = $this->input->post('pesan', true);
 		
@@ -292,7 +292,7 @@ class Approval extends CI_Controller {
 		}
     }
 
-    public function hapus_pesan(){
+    public function hapus_pesan(string $id_actbud){
         $id = decrypt($this->input->post('id', true));
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
@@ -326,8 +326,7 @@ class Approval extends CI_Controller {
 		}
     }
 
-	public function hapus_pesan_reply()
-	{
+	public function hapus_pesan_reply(string $id_actbud){
 		$id = decrypt($this->input->post('id', true));
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
@@ -361,9 +360,9 @@ class Approval extends CI_Controller {
 		}
 	}
 
-    public function submit_actbud(){
+    public function submit_actbud(string $id_actbud){
         $kode_jabatan = $_SESSION['user_sessions']['kode_jabatan'];
-        $id_actbud = decrypt($this->uri->segment(5));
+        $id_actbud = decrypt($id_actbud);
 		$kode_unit = $_SESSION['user_sessions']['kode_unit'];
 		$sign = $this->input->post('sign', true);
 		$nik = decrypt($_SESSION['user_sessions']['nik']);
@@ -550,7 +549,7 @@ class Approval extends CI_Controller {
 			if($data['status'] == 'approved'){
 				return redirect(base_url('app/sim-ig/approval'));
 			} else {
-				return redirect(base_url('app/sim-ig/approval/v_detail/' . $this->uri->segment(5)));
+				return redirect(base_url('app/sim-ig/approval/v_detail/' . encrypt($id_actbud)));
 			}			
             
         } else {

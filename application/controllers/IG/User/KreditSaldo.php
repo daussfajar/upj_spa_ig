@@ -47,13 +47,13 @@ class KreditSaldo extends CI_Controller {
                 'type'    => 'success',	
                 'title'   => ''
             ]);
-            return redirect(base_url('app/kredit_saldo'));
+            return redirect(base_url('app/sim-ig/kredit_saldo'));
         } else {
             $error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/kredit_saldo'));
+			return redirect(base_url('app/sim-ig/kredit_saldo'));
         }
     }
 
@@ -77,13 +77,13 @@ class KreditSaldo extends CI_Controller {
                 'type'    => 'success',	
                 'title'   => ''
             ]);
-            return redirect(base_url('app/kredit_saldo'));
+            return redirect(base_url('app/sim-ig/kredit_saldo'));
         } else {
             $error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/kredit_saldo'));
+			return redirect(base_url('app/sim-ig/kredit_saldo'));
         }
     }
 
@@ -139,7 +139,7 @@ class KreditSaldo extends CI_Controller {
                         'user_id'       => $nik,
                         'owner_user_id' => $nik,
                         'user_name'     => $_SESSION['user_sessions']['nama_lengkap'],
-                        'url'           => 'app/detail-pemberitahuan/',
+                        'url'           => 'app/sim-ig/detail-pemberitahuan/',
                         'message'       => 'berhasil melakukan Kredit <b>Saldo ' . $jk . '</b> dengan keterangan <b>"'.$keterangan.'"</b> ke kode uraian <b>'.$kegiatan.'</b>, nominalnya sebesar ' . rupiah($nominal) . '.',
                         'is_seen'       => 'no',
                         'title'         => 'Berhasil Kredit Saldo',
@@ -152,7 +152,7 @@ class KreditSaldo extends CI_Controller {
                         'type'    => 'success',	
                         'title'   => ''
                     ]);
-                    return redirect(base_url('app/kredit_saldo'));
+                    return redirect(base_url('app/sim-ig/kredit_saldo'));
                 }
             }
 
@@ -161,7 +161,7 @@ class KreditSaldo extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/kredit_saldo/buat_kredit'));
+			return redirect(base_url('app/sim-ig/kredit_saldo/buat_kredit'));
         }
         
     }
@@ -188,7 +188,7 @@ class KreditSaldo extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/kredit_saldo'));
+			return redirect(base_url('app/sim-ig/kredit_saldo'));
 		}
     }
 
@@ -245,7 +245,7 @@ class KreditSaldo extends CI_Controller {
                 'user_id'       => $nik,
                 'owner_user_id' => $nik,
                 'user_name'     => $_SESSION['user_sessions']['nama_lengkap'],
-                'url'           => 'app/detail-pemberitahuan/',
+                'url'           => 'app/sim-ig/detail-pemberitahuan/',
                 'message'       => 'berhasil melakukan upload kredit saldo.',
                 'is_seen'       => 'no',
                 'title'         => 'Berhasil Kredit Saldo',
@@ -258,14 +258,14 @@ class KreditSaldo extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/kredit_saldo'));
+			return redirect(base_url('app/sim-ig/kredit_saldo'));
 
         } else {
             $error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/kredit_saldo'));
+			return redirect(base_url('app/sim-ig/kredit_saldo'));
         }
     }
 

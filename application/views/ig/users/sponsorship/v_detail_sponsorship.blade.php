@@ -3,7 +3,7 @@
 @section('title', 'Sponsorship - Detail Kegiatan')
 
 @section('page-title')
-    <a href="{{ base_url('app/sponsorship') }}"><i class="mdi mdi-arrow-left"></i></a> Detail Kegiatan
+    <a href="{{ base_url('app/sim-ig/sponsorship') }}"><i class="mdi mdi-arrow-left"></i></a> Detail Kegiatan
 @endsection
 
 @section('css')
@@ -155,7 +155,7 @@
     </div>
 
     <!--  Modal edit -->
-    {!! form_open('app/sponsorship/v_detail/' . $CI->uri->segment(4) . '/edit_sponsorship', array('id' => 'form-ubah', 'class' => 'myForm')) !!}
+    {!! form_open('app/sim-ig/sponsorship/v_detail/' . $CI->uri->segment(4) . '/edit_sponsorship', array('id' => 'form-ubah', 'class' => 'myForm')) !!}
     <div class="modal fade bs-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -292,7 +292,7 @@
     <!-- /.modal -->
 
     <!-- Modal batalkan kegiatan -->
-    {!! form_open('app/sponsorship/v_detail/' . $CI->uri->segment(4) . '/batalkan_kegiatan', 'class' => 'myForm') !!}
+    {!! form_open('app/sim-ig/sponsorship/v_detail/' . $CI->uri->segment(4) . '/batalkan_kegiatan', 'class' => 'myForm') !!}
     <div id="modal-batalkan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -318,7 +318,7 @@
     <!-- /.modal -->
     {!! form_close() !!}
 
-    {!! form_open('app/sponsorship/v_detail/' . $CI->uri->segment(4) . '/finalisasi', 'class' => 'myForm') !!}
+    {!! form_open('app/sim-ig/sponsorship/v_detail/' . $CI->uri->segment(4) . '/finalisasi', 'class' => 'myForm') !!}
     <div id="modal-finalisasi" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

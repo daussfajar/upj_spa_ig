@@ -75,7 +75,7 @@
                             </tr>
                         <?php else: ?>
                         <?php
-                            $no = (empty($CI->uri->segment(3)) ? 0 : $CI->uri->segment(3) + 0);
+                            $no = (empty($CI->uri->segment(4)) ? 0 : $CI->uri->segment(4) + 0);
                         ?>
                             <?php $__currentLoopData = $data['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php
@@ -145,7 +145,7 @@
                                         </span>
                                     </td>
                                     <td style="vertical-align: middle" class="text-center">
-                                        <a href="<?php echo e(base_url('app/approval/v_detail/' . encrypt($row['id']))); ?>" class="btn btn-primary btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="<?php echo e(base_url('app/sim-ig/approval/v_detail/' . encrypt($row['id']))); ?>" class="btn btn-primary btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

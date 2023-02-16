@@ -32,7 +32,7 @@ class Realisasi_Anggaran_Model extends CI_Model {
         a.id_uraian,a.kode_uraian,a.kode_pencairan,a.kode_unit,a.nama_kegiatan,a.deskripsi_kegiatan,
         a.pic,a.pelaksana,a.tgl_mulai,a.tgl_selesai,a.periode,a.tanggal_pembuatan,a.agr,b.nama_lengkap nama_pic,
         c.nama_unit nama_unit_pic,a.realisasi", "ig_tbl_actbud a 
-        JOIN tbl_karyawan b ON a.pic = b.nik JOIN tbl_unit c ON b.kode_unit = c.kode_unit", "a.status = 'approved' " . $where . $p1 . "", '/' . APP_FOLDER . '/app/realisasi_anggaran', 3,5,4);
+        JOIN tbl_karyawan b ON a.pic = b.nik JOIN tbl_unit c ON b.kode_unit = c.kode_unit", "a.status = 'approved' " . $where . $p1 . "", '/' . APP_FOLDER . '/app/sim-ig/realisasi_anggaran', 4,5,4);
         return $data;
     }
 

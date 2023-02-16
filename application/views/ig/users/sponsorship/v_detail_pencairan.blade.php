@@ -3,7 +3,7 @@
 @section('title', 'Sponsorship - Detail Kegiatan')
 
 @section('page-title')
-    <a href="{{ base_url('app/sponsorship/pencairan') }}"><i class="mdi mdi-arrow-left"></i></a> Pencairan
+    <a href="{{ base_url('app/sim-ig/sponsorship/pencairan') }}"><i class="mdi mdi-arrow-left"></i></a> Pencairan
 @endsection
 
 @section('css')
@@ -21,9 +21,9 @@
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item"><a href="{{ base_url('app/sponsorship') }}"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
-<li class="breadcrumb-item"><a href="{{ base_url('app/sponsorship/pencairan') }}"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
-<li class="breadcrumb-item active"><a href="{{ base_url('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5)) }}"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
+<li class="breadcrumb-item"><a href="{{ base_url('app/sim-ig/sponsorship') }}"><i class="mdi mdi-briefcase-outline"></i> Sponsorship</a></li>
+<li class="breadcrumb-item"><a href="{{ base_url('app/sim-ig/sponsorship/pencairan') }}"><i class="mdi mdi-cash-register"></i> Pencairan</a></li>
+<li class="breadcrumb-item active"><a href="{{ base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5)) }}"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
 @endsection
 
 @section('content')
@@ -179,7 +179,7 @@
                 </div>
             </div>
             <div class="float-right mb-3">
-                <a href="{{ base_url('app/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan') }}" class="btn btn-success btn-sm">+ Buat Pencairan</a>
+                <a href="{{ base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $CI->uri->segment(5) . '/buat_pencairan') }}" class="btn btn-success btn-sm">+ Buat Pencairan</a>
             </div>  
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover dataTable">
@@ -222,7 +222,7 @@
                                     {{ rupiah($item->agr) }}
                                 </th>                              
                                 <th style="vertical-align: middle;" class="text-center">                                
-                                    <a href="{{ base_url('app/hibah/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . encrypt($item->id)) }}" class="btn btn-primary btn-sm col-md-12"><i class="mdi mdi-arrow-right"></i></a>
+                                    <a href="{{ base_url('app/sim-ig/hibah/pencairan/v_detail/' . $CI->uri->segment(5) . '/actbud/' . encrypt($item->id)) }}" class="btn btn-primary btn-sm col-md-12"><i class="mdi mdi-arrow-right"></i></a>
                                 </th>
                             </tr>
                         @endforeach

@@ -6,8 +6,8 @@ class PencairanSponsorship extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-		$this->load->model('Sponsorship_model');
-		$this->load->model('Actbud_model');
+		$this->load->model('IG/Sponsorship_model');
+		$this->load->model('IG/Actbud_model');
         header("X-XSS-Protection: 1; mode=block");
 	}
 
@@ -132,7 +132,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Habis'
 				]);
-				return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
 			}
 
 			if($total_agr > $batas){
@@ -141,7 +141,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Lewat Batas'
 				]);
-				return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
 			} else {
 				$data = [
 					'id_uraian' => $decrypted_id,
@@ -172,7 +172,7 @@ class PencairanSponsorship extends CI_Controller {
 						'type'    => 'success',	
 						'title'   => ''
 					]);
-					return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . encrypt($this->db->insert_id())));
+					return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . encrypt($this->db->insert_id())));
 		
 				} else {
 					$this->session->set_flashdata('alert', [
@@ -180,7 +180,7 @@ class PencairanSponsorship extends CI_Controller {
 						'type'    => 'error',	
 						'title'   => ''
 					]);
-					return redirect(base_url('app/sponsorship/status_pencairan'));
+					return redirect(base_url('app/sim-ig/sponsorship/status_pencairan'));
 				}
 			}
 
@@ -250,7 +250,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
 			} else {
 				$data = [			
 					'nama_kegiatan' => $this->input->post('nama_kegiatan', true),
@@ -271,7 +271,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
 			}			
 
 		} else {
@@ -295,7 +295,7 @@ class PencairanSponsorship extends CI_Controller {
 			'type'    => 'success',	
 			'title'   => ''
 		]);
-		return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5)));
+		return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5)));
 	}
 
 	public function hapus_pesan(){
@@ -382,7 +382,7 @@ class PencairanSponsorship extends CI_Controller {
 					'title'   => ''
 				]);
 
-				return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-dokumen-pendukung'));
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-dokumen-pendukung'));
 
 			}
 
@@ -421,7 +421,7 @@ class PencairanSponsorship extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-dokumen-pendukung'));
+			return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-dokumen-pendukung'));
 
 		} else {
 			$error = [
@@ -469,7 +469,7 @@ class PencairanSponsorship extends CI_Controller {
 					]);
 				}
 
-				return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) ));
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) ));
 			} else {
 				$data = [
 					'id_actbud' => $id_actbud,
@@ -485,7 +485,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-rincian'));
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-rincian'));
 			}
 															
 		} else {
@@ -515,7 +515,7 @@ class PencairanSponsorship extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-rincian'));
+			return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-rincian'));
 
 		} else {
 			$error = [
@@ -543,7 +543,7 @@ class PencairanSponsorship extends CI_Controller {
 			'type'    => 'success',	
 			'title'   => ''
 		]);
-		return redirect(base_url('app/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+		return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
 	}
 
 	public function buat_pesan(){

@@ -1,18 +1,18 @@
-@extends('ig.layouts.user')
 
-@section('title', 'Kredit Saldo')
 
-@section('page-title')
+<?php $__env->startSection('title', 'Kredit Saldo'); ?>
+
+<?php $__env->startSection('page-title'); ?>
     Kredit Saldo
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery-ui.custom-for-signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery.signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery-ui.custom-for-signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery.signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
 <style>
     .kbw-signature { width: 300px; height: 300px;}
     #ttd canvas{
@@ -20,17 +20,17 @@
         height: auto;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item active"><a href="javascript: void(0);">Kredit Saldo</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="col-md-12">
     <div class="float-right">
         <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-upload-saldo" class="btn btn-sm btn-info mr-1"><i class="mdi mdi-upload"></i> Upload</a>
-        <a href="{{ base_url('app/sim-ig/kredit_saldo/buat_kredit') }}" class="btn btn-success btn-sm"><i class="mdi mdi-plus"></i> Buat Kredit Saldo</a>
+        <a href="<?php echo e(base_url('app/sim-ig/kredit_saldo/buat_kredit')); ?>" class="btn btn-success btn-sm"><i class="mdi mdi-plus"></i> Buat Kredit Saldo</a>
     </div>
     <div class="card card-border card-primary mt-5">
         <div class="card-header border-primary bg-transparent">
@@ -53,64 +53,69 @@
                         </tr>
                     </thead>
                     <tbody id="tb-kredit">
-                        @foreach ($kegiatan as $item)
+                        <?php $__currentLoopData = $kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th style="vertical-align: middle;" class="text-center">{{ $loop->iteration }}</th>
+                                <th style="vertical-align: middle;" class="text-center"><?php echo e($loop->iteration); ?></th>
                                 <th style="vertical-align: middle;">
                                     <a href="javascript:void(0)" class="badge bg-info p-2 text-white">
-                                        {{ $item->nama_lengkap == '' ? 'Belum ditentukan' : $item->nama_lengkap }} {{ $item->nama_unit == '' ? '' : '('.$item->nama_unit.')' }}
+                                        <?php echo e($item->nama_lengkap == '' ? 'Belum ditentukan' : $item->nama_lengkap); ?> <?php echo e($item->nama_unit == '' ? '' : '('.$item->nama_unit.')'); ?>
+
                                     </a>
                                 </th>
                                 <td style="vertical-align: middle;">
                                     <span class="badge bg-purple p-2">
-                                        {{ $item->kode_uraian }}
+                                        <?php echo e($item->kode_uraian); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <span style="font-size: 14px;">
-                                        <b>{{ $item->nama_hibah_sponsorship }}</b>
+                                        <b><?php echo e($item->nama_hibah_sponsorship); ?></b>
                                         <hr class="mt-1 mb-1">
-                                        {{ $item->uraian_kegiatan }}
+                                        <?php echo e($item->uraian_kegiatan); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
-                                    @if ($item->jenis_kredit == 'in')
+                                    <?php if($item->jenis_kredit == 'in'): ?>
                                         <a href="javascript:void(0)" class="badge bg-success p-2 text-white">Saldo Masuk</a>
-                                    @else
+                                    <?php else: ?>
                                         <a href="javascript:void(0)" class="badge bg-warning p-2 text-white">Saldo Keluar</a>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
                                     <span class="badge bg-primary p-2">
-                                        {{ rupiah($item->nominal) }}
+                                        <?php echo e(rupiah($item->nominal)); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
-                                    @if ($item->file_pendukung != "")
-                                        <a href="{{ base_url('app-data/kredit-saldo/attachment/' . $item->file_pendukung) }}" download="{{ $item->kode_uraian . ' - ' . $item->nama_hibah_sponsorship . ' ' . $item->nama_lengkap }}" class="btn btn-xs btn-secondary"><i class="mdi mdi-download"></i> Download</a>
-                                    @else
+                                    <?php if($item->file_pendukung != ""): ?>
+                                        <a href="<?php echo e(base_url('app-data/kredit-saldo/attachment/' . $item->file_pendukung)); ?>" download="<?php echo e($item->kode_uraian . ' - ' . $item->nama_hibah_sponsorship . ' ' . $item->nama_lengkap); ?>" class="btn btn-xs btn-secondary"><i class="mdi mdi-download"></i> Download</a>
+                                    <?php else: ?>
                                         -
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <span style="font-size: 14px;">
-                                        {{ $item->keterangan }}
+                                        <?php echo e($item->keterangan); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-center">
-                                    @if ($item->disetujui == 'N')
-                                        <a href="javascript:void(0)" data-id="{{ encrypt($item->id) }}" 
-                                            data-kode_uraian="{{ $item->kode_uraian }}" data-nama_kegiatan="{{ $item->nama_hibah_sponsorship }}" 
+                                    <?php if($item->disetujui == 'N'): ?>
+                                        <a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>" 
+                                            data-kode_uraian="<?php echo e($item->kode_uraian); ?>" data-nama_kegiatan="<?php echo e($item->nama_hibah_sponsorship); ?>" 
                                             class="btn btn-xs btn-danger btn-hapus col-12">Hapus</a>
-                                        <a href="javascript:void(0)" data-id="{{ encrypt($item->id) }}" 
-                                            data-kode_uraian="{{ $item->kode_uraian }}" data-nama_kegiatan="{{ $item->nama_hibah_sponsorship }}" 
+                                        <a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>" 
+                                            data-kode_uraian="<?php echo e($item->kode_uraian); ?>" data-nama_kegiatan="<?php echo e($item->nama_hibah_sponsorship); ?>" 
                                             class="btn btn-xs btn-primary p-2 mt-1 btn-finalisasi col-12">Finalisasi</a>
-                                    @else
-                                        <a href="javascript:void(0)" title="Disetujui: {{ $item->disetujui_stamp }}" class="btn btn-xs btn-success"><i class="mdi mdi-check"></i></a>
-                                    @endif
+                                    <?php else: ?>
+                                        <a href="javascript:void(0)" title="Disetujui: <?php echo e($item->disetujui_stamp); ?>" class="btn btn-xs btn-success"><i class="mdi mdi-check"></i></a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
@@ -118,7 +123,8 @@
     </div>
 </div>
 
-{!! form_open('app/sim-ig/kredit_saldo/batalkan_kredit', array('class' => 'myForm')) !!}
+<?php echo form_open('app/sim-ig/kredit_saldo/batalkan_kredit', array('class' => 'myForm')); ?>
+
 <div id="modal-hapus-kredit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -141,9 +147,11 @@
         </div>        
     </div>    
 </div>
-{!! form_close() !!}
+<?php echo form_close(); ?>
 
-{!! form_open('app/sim-ig/kredit_saldo/finalisasi_kredit', array('class' => 'myForm')) !!}
+
+<?php echo form_open('app/sim-ig/kredit_saldo/finalisasi_kredit', array('class' => 'myForm')); ?>
+
 <div id="modal-finalisasi-kredit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -166,9 +174,11 @@
         </div>        
     </div>    
 </div>
-{!! form_close() !!}
+<?php echo form_close(); ?>
 
-{!! form_open('app/sim-ig/kredit_saldo/preview_upload', array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+
+<?php echo form_open('app/sim-ig/kredit_saldo/preview_upload', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
+
 <div id="modal-upload-saldo" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -200,26 +210,27 @@
         </div>        
     </div>    
 </div>
-{!! form_close() !!}
-@endsection
+<?php echo form_close(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/select2.min.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="{{ base_url('assets/js/jquery.signature.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.signature.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.ui.touch-punch.min.js')); ?>"></script>
 
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 
-<script src="{{ base_url('assets/js/jquery.steps.min.js') }}"></script>
-<script src="{{ base_url('assets/js/jquery.validate.min.js') }}"></script>
-<script src="{{ base_url('assets/js/form-wizard.init.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-filestyle.min.js') }}"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.steps.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/jquery.validate.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/form-wizard.init.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-filestyle.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
         $('.dataTable').dataTable({
@@ -253,4 +264,5 @@
         })
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('ig.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/ig/users/kredit_saldo/index.blade.php ENDPATH**/ ?>

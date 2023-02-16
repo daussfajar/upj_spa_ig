@@ -796,14 +796,14 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function cetak_form_actbud(){
+	public function cetak_form_actbud(string $id_uraian, string $id_actbud){
 		$this->load->library('pdf');
-		$id_uraian = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));		
-		$id_actbud = !decrypt($this->uri->segment(7)) ? show_404() : decrypt($this->uri->segment(7));		        
+		$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
+		$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);
 		$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);
 		$data['rincian_kegiatan'] = $this->db->get_where('ig_t_j_b_act', ['id_actbud' => $id_actbud, 'status' => 'Aktif']);
 		$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);
-		$html = $this->load->view('users/hibah/cetak_form_actbud', $data, true);
+		$html = $this->load->view('ig/users/hibah/cetak_form_actbud', $data, true);
         
 		$filename = $data['data']->kode_uraian . ' - ' . $data['data']->nama_kegiatan;
 		$this->pdf->generate($html, $filename, true, 'A4', 'portrait');

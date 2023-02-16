@@ -41,7 +41,7 @@ class Global_Model extends CI_Model {
     public function not_logged_in(){        
         $session_exists = $this->session->userdata('user_sessions');
         if (!empty($session_exists)) {			
-			redirect(base_url('app/dashboard'));			
+			redirect(base_url('app/sim-ig/dashboard'));			
 		}
     }
 
@@ -108,7 +108,7 @@ class Global_Model extends CI_Model {
 				'type'    => 'error',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/dashboard'));
+			return redirect(base_url('app/sim-ig/dashboard'));
 		}
 	}
 

@@ -6,8 +6,8 @@ class Realisasi_Anggaran extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-        $this->load->model('Realisasi_Anggaran_Model');
-        $this->load->model('Hibah_model');
+        $this->load->model('IG/Realisasi_Anggaran_Model');
+        $this->load->model('IG/Hibah_model');
         header("X-XSS-Protection: 1; mode=block");
 	}
 
@@ -33,27 +33,29 @@ class Realisasi_Anggaran extends CI_Controller {
         return view('ig.users.realisasi_anggaran.index', $data);
     }
 
-    public function v_detail(){
-        $id_actbud = decrypt($this->uri->segment(4));
-        $id_uraian = decrypt($this->uri->segment(5));
+    public function v_detail(string $id_actbud, string $id_uraian){
+        $id_actbud = decrypt($id_actbud);
+        $id_uraian = decrypt($id_uraian);
         $data['data'] = $this->Realisasi_Anggaran_Model->get_detail_actbud($id_actbud);
+        if(empty($data['data'])) return show_404();
         $data['detail_biaya'] = $this->Realisasi_Anggaran_Model->get_detail_biaya($id_actbud);
         $data['anggaran_disetujui'] = $this->Realisasi_Anggaran_Model->get_total_anggaran_disetujui($id_actbud);
         $data['anggaran_realisasi'] = $this->Realisasi_Anggaran_Model->get_total_anggaran_realisasi($id_actbud);
         $data['dokumen_pendukung'] = $this->db->get_where('ig_tbl_actbud_upload', ['id_act' => $id_actbud, 'status' => 'Aktif']);
         $data['messages'] = $this->Hibah_model->get_data_chat_actbud($id_actbud);
         //pr($data);
+        $data['id_actbud'] = encrypt($id_actbud);
+        $data['id_uraian'] = encrypt($id_uraian);
         return view('ig.users.realisasi_anggaran.v_realisasi_anggaran', $data);
     }
 
-    public function buat_catatan(){
+    public function buat_catatan(string $id_actbud, string $id_uraian){
         $this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);	
         $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
-		]);		
-
+		]);		        
 		if($this->form_validation->run() === TRUE){
 
             $raw_id = $this->input->post('id', true);
@@ -81,7 +83,7 @@ class Realisasi_Anggaran extends CI_Controller {
         }
     }
     
-    public function buat_catatan_keu(){
+    public function buat_catatan_keu(string $id_actbud, string $id_uraian){
         $this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);	
@@ -116,7 +118,7 @@ class Realisasi_Anggaran extends CI_Controller {
         }
     }
 
-    public function buat_realisasi_anggaran(){
+    public function buat_realisasi_anggaran(string $id_actbud, string $id_uraian){
         $this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);
@@ -165,7 +167,7 @@ class Realisasi_Anggaran extends CI_Controller {
         }
     }
 
-    public function unggah_bukti(){        
+    public function unggah_bukti(string $id_actbud, string $id_uraian){        
         $this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);	
@@ -261,7 +263,7 @@ class Realisasi_Anggaran extends CI_Controller {
         }
     }
 
-    public function unggah_bukti_keu(){        
+    public function unggah_bukti_keu(string $id_actbud, string $id_uraian){        
         $this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);	
@@ -357,9 +359,8 @@ class Realisasi_Anggaran extends CI_Controller {
         }
     }
 
-    public function finalisasi_anggaran(){
-        $raw_id_actbud = $this->uri->segment(4);
-        $id_actbud = !decrypt($raw_id_actbud) ? show_error("Error") : decrypt($raw_id_actbud);
+    public function finalisasi_anggaran(string $id_actbud, string $id_uraian){        
+        $id_actbud = !decrypt($id_actbud) ? show_error("Error") : decrypt($id_actbud);
         $total_fnl_agr = $this->Realisasi_Anggaran_Model->get_total_anggaran_realisasi($id_actbud);
                 
         $this->db->where('id', $id_actbud);
@@ -376,8 +377,9 @@ class Realisasi_Anggaran extends CI_Controller {
         return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
     }
 
-    public function buat_pesan(){
-		$id_actbud = decrypt($this->uri->segment(4));
+    public function buat_pesan(string $id_actbud, string $id_uraian){
+        if(!decrypt($id_actbud) || !decrypt($id_uraian)) return show_404();
+		$id_actbud = decrypt($id_actbud);
 		$pic = decrypt($_SESSION['user_sessions']['nik']);
 		$pesan = $this->input->post('pesan', true);
 		
@@ -429,7 +431,7 @@ class Realisasi_Anggaran extends CI_Controller {
 							'title'   => ''
 						]);
 		
-						return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-chat'));
+						return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . encrypt($id_actbud) . '/' . $id_uraian . '#card-chat'));
 	
 					}
 
@@ -446,7 +448,7 @@ class Realisasi_Anggaran extends CI_Controller {
 						'title'   => ''
 					]);
 	
-					return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-chat'));
+					return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . encrypt($id_actbud) . '/' . $id_uraian . '#card-chat'));
 				}
 
 			} else {
@@ -502,7 +504,7 @@ class Realisasi_Anggaran extends CI_Controller {
 							'title'   => ''
 						]);
 		
-						return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-chat'));
+						return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . encrypt($id_actbud) . '/' . $id_uraian . '#card-chat'));
 	
 					}
 	
@@ -519,7 +521,7 @@ class Realisasi_Anggaran extends CI_Controller {
 						'title'   => ''
 					]);
 	
-					return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-chat'));
+					return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . encrypt($id_actbud) . '/' . $id_uraian . '#card-chat'));
 				}						
 							
 			} else {
@@ -532,7 +534,7 @@ class Realisasi_Anggaran extends CI_Controller {
 		}		
 	}
 
-    public function hapus_pesan(){
+    public function hapus_pesan(string $id_actbud, string $id_uraian){
 		$id = decrypt($this->input->post('id', true));
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
@@ -556,7 +558,7 @@ class Realisasi_Anggaran extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-chat'));
+			return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . $id_actbud . '/' . $id_uraian . '#card-chat'));
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
@@ -565,8 +567,42 @@ class Realisasi_Anggaran extends CI_Controller {
 			return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
 		}
 	}
-    
-    public function hapus_lampiran_pic(){
+
+    public function hapus_pesan_reply(string $id_actbud, string $id_uraian){
+        $id = decrypt($this->input->post('id', true));
+        $this->form_validation->set_rules('id', 'ID', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if ($this->form_validation->run() === TRUE) {
+
+            $file_name = $this->input->post('attachment', true);
+
+            if ($file_name != "") {
+                unlink(FCPATH . 'app-data/chat-attachment/' . $file_name);
+            }
+
+            $this->db->where('id', $id);
+            $this->db->update('ig_tbl_actbud_chat_reply', [
+                'status' => 'Tidak Aktif'
+            ]);
+
+            $this->session->set_flashdata('alert', [
+                'message' => 'Pesan berhasil dihapus.',
+                'type'    => 'success',
+                'title'   => ''
+            ]);
+            return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . $id_actbud . '/' . $id_uraian . '#card-chat'));
+        } else {
+            $error = [
+                    'form_error' => validation_errors_array()
+                ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+        }
+    }
+
+    public function hapus_lampiran_pic(string $id_actbud, string $id_uraian){
         $id = decrypt($this->input->post('id', true));
         $attachment = decrypt($this->input->post('attachment', true));
         
@@ -595,7 +631,7 @@ class Realisasi_Anggaran extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-dt_biaya'));
+			return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . $id_actbud . '/' . $id_uraian . '#card-dt_biaya'));
 
         } else {
             $error = [
@@ -606,7 +642,7 @@ class Realisasi_Anggaran extends CI_Controller {
         }
     }
     
-    public function hapus_lampiran_keu(){
+    public function hapus_lampiran_keu(string $id_actbud, string $id_uraian){
         $id = decrypt($this->input->post('id', true));
         $attachment = decrypt($this->input->post('attachment', true));
         
@@ -635,7 +671,7 @@ class Realisasi_Anggaran extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-dt_biaya'));
+			return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . $id_actbud . '/' . $id_uraian . '#card-dt_biaya'));
 
         } else {
             $error = [
@@ -646,7 +682,7 @@ class Realisasi_Anggaran extends CI_Controller {
         }
     }
 
-    public function hapus_catatan_pic(){
+    public function hapus_catatan_pic(string $id_actbud, string $id_uraian){
         $raw_id = trim(filter_var($this->input->get('id', true), FILTER_SANITIZE_SPECIAL_CHARS));
         $pecah_id = explode('-', $raw_id);
         $id = !decrypt($pecah_id[1]) ? show_404() : decrypt($pecah_id[1]);
@@ -661,10 +697,10 @@ class Realisasi_Anggaran extends CI_Controller {
             'type'    => 'success',	
             'title'   => ''
         ]);
-        return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-dt_biaya'));
+        return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . $id_actbud . '/' . $id_uraian . '#card-dt_biaya'));
     }
     
-    public function hapus_catatan_keu(){
+    public function hapus_catatan_keu(string $id_actbud, string $id_uraian){
         $raw_id = trim(filter_var($this->input->get('id', true), FILTER_SANITIZE_SPECIAL_CHARS));
         $pecah_id = explode('-', $raw_id);
         $id = !decrypt($pecah_id[1]) ? show_404() : decrypt($pecah_id[1]);
@@ -679,6 +715,6 @@ class Realisasi_Anggaran extends CI_Controller {
             'type'    => 'success',	
             'title'   => ''
         ]);
-        return redirect(base_url('app/realisasi_anggaran/actbud/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '#card-dt_biaya'));
+        return redirect(base_url('app/sim-ig/realisasi_anggaran/actbud/' . $id_actbud . '/' . $id_uraian . '#card-dt_biaya'));
     }
 }

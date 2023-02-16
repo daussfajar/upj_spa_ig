@@ -11,7 +11,7 @@ $unit_all = $CI->db->get('tbl_unit')->result();
 @section('title', 'Sponsorship - Preview Upload')
 
 @section('page-title')
-   <a href="{{ base_url('app/sponsorship') }}"><i class="mdi mdi-arrow-left"></i></a> Upload Excel
+   <a href="{{ base_url('app/sim-ig/sponsorship') }}"><i class="mdi mdi-arrow-left"></i></a> Upload Excel
 @endsection
 
 @section('css')
@@ -48,7 +48,7 @@ $unit_all = $CI->db->get('tbl_unit')->result();
                 <label for="">Unit :</label>
                 <span class="badge bg-info">{{ $unit->nama_unit }}</span>
             </div>
-            {!! form_open('app/sponsorship/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8', 'class' => 'myForm')) !!}
+            {!! form_open('app/sim-ig/sponsorship/preview_upload/upload', array('autocomplete' => 'off', 'accept-charset' => 'utf-8', 'class' => 'myForm')) !!}
             <div class="table-responsive mt-3">
                 <table class="table table-bordered">
                     <thead class="bg-primary text-white">
@@ -215,7 +215,7 @@ $unit_all = $CI->db->get('tbl_unit')->result();
                 <button id="clear_ttd" class="btn btn-danger btn-sm"><i class="mdi mdi-trash-can-outline"></i> Hapus Tanda Tangan</button>
                 <textarea id="signature64" name="tanda_tangan" style="display: none" required></textarea>
                 <div class="float-right">
-                    <a href="{{ base_url('app/hibah') }}" class="btn btn-danger btn-sm">Batal</a>
+                    <a href="{{ base_url('app/sim-ig/hibah') }}" class="btn btn-danger btn-sm">Batal</a>
                     <button type="submit" class="btn btn-primary btn-sm"><i class="mdi mdi-upload"></i> Upload Data</button>                                
                 </div>                            
                 <br>

@@ -60,7 +60,7 @@ $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/buat-rincian-ke
 $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-rincian-kegiatan']['POST'] = 'IG/User/PencairanHibah/hapus_rincian_kegiatan/$1/$2';
 $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/submit']['POST'] = 'IG/User/PencairanHibah/submit_actbud/$1/$2';
 $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/buat_pesan']['POST'] = 'IG/User/PencairanHibah/buat_pesan/$1/$2';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/cetak_form_actbud'] = 'IG/User/PencairanHibah/cetak_form_actbud';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/cetak_form_actbud'] = 'IG/User/PencairanHibah/cetak_form_actbud/$1/$2';
 
 $route['app/sim-ig/hibah/status_pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanHibah/v_detail_actbud/$1/$2';
 $route['app/sim-ig/hibah/status_pencairan'] = 'IG/User/StatusPencairanHibah';
@@ -82,42 +82,42 @@ $route['app/sim-ig/riwayat_approval'] = 'IG/User/HistoryApproval';
 $route['app/sim-ig/riwayat_approval/(:num)'] = 'IG/User/HistoryApproval';
 
 // SPONSORSHIP
-$route['app/sim-ig/sponsorship/pencairan/detail_sponsorship/(:any)'] = 'IG/User/PencairanSponsorship/detail_sponsorship';
+$route['app/sim-ig/sponsorship/pencairan/detail_sponsorship/(:any)'] = 'IG/User/PencairanSponsorship/detail_sponsorship/$1';
 $route['app/sim-ig/sponsorship'] = 'IG/User/Sponsorship';
 $route['app/sim-ig/sponsorship/(:num)'] = 'IG/User/Sponsorship';
 $route['app/sim-ig/sponsorship/buat_kegiatan'] = 'IG/User/Sponsorship/v_buat_kegiatan';
 $route['app/sim-ig/sponsorship/buat_kegiatan/submit']['POST'] = 'IG/User/Sponsorship/submit_buat_kegiatan';
 
-$route['app/sim-ig/sponsorship/v_detail/(:any)'] = 'IG/User/Sponsorship/v_detail_sponsorship';
-$route['app/sim-ig/sponsorship/v_detail/(:any)/edit_sponsorship']['POST'] = 'IG/User/Sponsorship/edit_sponsorship';
-$route['app/sim-ig/sponsorship/v_detail/(:any)/batalkan_kegiatan']['POST'] = 'IG/User/Sponsorship/batalkan_kegiatan';
-$route['app/sim-ig/sponsorship/v_detail/(:any)/finalisasi']['POST'] = 'IG/User/Sponsorship/finalisasi';
+$route['app/sim-ig/sponsorship/v_detail/(:any)'] = 'IG/User/Sponsorship/v_detail_sponsorship/$1';
+$route['app/sim-ig/sponsorship/v_detail/(:any)/edit_sponsorship']['POST'] = 'IG/User/Sponsorship/edit_sponsorship/$1';
+$route['app/sim-ig/sponsorship/v_detail/(:any)/batalkan_kegiatan']['POST'] = 'IG/User/Sponsorship/batalkan_kegiatan/$1';
+$route['app/sim-ig/sponsorship/v_detail/(:any)/finalisasi']['POST'] = 'IG/User/Sponsorship/finalisasi/$1';
 
 $route['app/sim-ig/sponsorship/pencairan'] = 'IG/User/PencairanSponsorship';
 $route['app/sim-ig/sponsorship/pencairan/(:num)'] = 'IG/User/PencairanSponsorship';
 //$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)'] = 'IG/User/PencairanSponsorship/v_detail';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/buat_pencairan'] = 'IG/User/PencairanSponsorship/buat_pencairan';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/buat_pencairan/create']['POST'] = 'IG/User/PencairanSponsorship/create_pencairan';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/buat_pencairan'] = 'IG/User/PencairanSponsorship/buat_pencairan/$1';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/buat_pencairan/create']['POST'] = 'IG/User/PencairanSponsorship/create_pencairan/$1';
 
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanSponsorship/v_detail_actbud';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/ubah-actbud']['POST'] = 'IG/User/PencairanSponsorship/ubah_actbud';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/batalkan-actbud']['POST'] = 'IG/User/PencairanSponsorship/batalkan_actbud';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan']['POST'] = 'IG/User/PencairanSponsorship/hapus_pesan';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/upload-dokumen-pendukung']['POST'] = 'IG/User/PencairanSponsorship/upload_dokumen_pendukung';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-dokumen-pendukung']['POST'] = 'IG/User/PencairanSponsorship/hapus_dokumen_pendukung';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/buat-rincian-kegiatan']['POST'] = 'IG/User/PencairanSponsorship/buat_rincian_kegiatan';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-rincian-kegiatan']['POST'] = 'IG/User/PencairanSponsorship/hapus_rincian_kegiatan';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/submit']['POST'] = 'IG/User/PencairanSponsorship/submit_actbud';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanSponsorship/v_detail_actbud/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/ubah-actbud']['POST'] = 'IG/User/PencairanSponsorship/ubah_actbud/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/batalkan-actbud']['POST'] = 'IG/User/PencairanSponsorship/batalkan_actbud/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan']['POST'] = 'IG/User/PencairanSponsorship/hapus_pesan/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/upload-dokumen-pendukung']['POST'] = 'IG/User/PencairanSponsorship/upload_dokumen_pendukung/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-dokumen-pendukung']['POST'] = 'IG/User/PencairanSponsorship/hapus_dokumen_pendukung/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/buat-rincian-kegiatan']['POST'] = 'IG/User/PencairanSponsorship/buat_rincian_kegiatan/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-rincian-kegiatan']['POST'] = 'IG/User/PencairanSponsorship/hapus_rincian_kegiatan/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/submit']['POST'] = 'IG/User/PencairanSponsorship/submit_actbud/$1/$2';
 
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/buat_pesan']['POST'] = 'IG/User/PencairanSponsorship/buat_pesan';
-$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/cetak_form_actbud'] = 'IG/User/PencairanSponsorship/cetak_form_actbud';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/buat_pesan']['POST'] = 'IG/User/PencairanSponsorship/buat_pesan/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/cetak_form_actbud'] = 'IG/User/PencairanSponsorship/cetak_form_actbud/$1/$2';
 
 $route['app/sim-ig/sponsorship/preview_upload'] = 'IG/User/Sponsorship/preview_upload';
 $route['app/sim-ig/sponsorship/preview_upload/upload']['POST'] = 'IG/User/Sponsorship/upload_sponsorship';
 
 $route['app/sim-ig/sponsorship/status_pencairan'] = 'IG/User/StatusPencairanSponsorship';
 $route['app/sim-ig/sponsorship/status_pencairan/(:num)'] = 'IG/User/StatusPencairanSponsorship';
-$route['app/sim-ig/sponsorship/status_pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanSponsorship/v_detail_actbud';
+$route['app/sim-ig/sponsorship/status_pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanSponsorship/v_detail_actbud/$1/$2';
 
 // KREDIT SALDO
 $route['app/sim-ig/kredit_saldo'] = 'IG/User/KreditSaldo';
@@ -146,17 +146,18 @@ $route['app/sim-ig/data-pemberitahuan/hapus_data/(:any)'] = 'IG/User/Pemberitahu
 $route['app/sim-ig/realisasi_anggaran'] = 'IG/User/Realisasi_Anggaran';
 $route['app/sim-ig/realisasi_anggaran/(:num)'] = 'IG/User/Realisasi_Anggaran';
 // uri segment 4: id actbud, 5: id uraian
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)'] = 'IG/User/Realisasi_Anggaran/v_detail/$1';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_catatan']['POST'] = 'IG/User/Realisasi_Anggaran/buat_catatan';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_catatan_keu']['POST'] = 'IG/User/Realisasi_Anggaran/buat_catatan_keu';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_realisasi_anggaran']['POST'] = 'IG/User/Realisasi_Anggaran/buat_realisasi_anggaran';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/unggah_bukti']['POST'] = 'IG/User/Realisasi_Anggaran/unggah_bukti';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/unggah_bukti_keu']['POST'] = 'IG/User/Realisasi_Anggaran/unggah_bukti_keu';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/finalisasi-penyesuaian-anggaran']['POST'] = 'IG/User/Realisasi_Anggaran/finalisasi_anggaran';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_lampiran_pic']['POST'] = 'IG/User/Realisasi_Anggaran/hapus_lampiran_pic';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_lampiran_keu']['POST'] = 'IG/User/Realisasi_Anggaran/hapus_lampiran_keu';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_catatan_pic'] = 'IG/User/Realisasi_Anggaran/hapus_catatan_pic';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_catatan_keu'] = 'IG/User/Realisasi_Anggaran/hapus_catatan_keu';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)'] = 'IG/User/Realisasi_Anggaran/v_detail/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_catatan']['POST'] = 'IG/User/Realisasi_Anggaran/buat_catatan/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_catatan_keu']['POST'] = 'IG/User/Realisasi_Anggaran/buat_catatan_keu/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_realisasi_anggaran']['POST'] = 'IG/User/Realisasi_Anggaran/buat_realisasi_anggaran/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/unggah_bukti']['POST'] = 'IG/User/Realisasi_Anggaran/unggah_bukti/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/unggah_bukti_keu']['POST'] = 'IG/User/Realisasi_Anggaran/unggah_bukti_keu/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/finalisasi-penyesuaian-anggaran']['POST'] = 'IG/User/Realisasi_Anggaran/finalisasi_anggaran/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_lampiran_pic']['POST'] = 'IG/User/Realisasi_Anggaran/hapus_lampiran_pic/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_lampiran_keu']['POST'] = 'IG/User/Realisasi_Anggaran/hapus_lampiran_keu/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_catatan_pic'] = 'IG/User/Realisasi_Anggaran/hapus_catatan_pic/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus_catatan_keu'] = 'IG/User/Realisasi_Anggaran/hapus_catatan_keu/$1/$2';
 
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_pesan']['POST'] = 'IG/User/Realisasi_Anggaran/buat_pesan';
-$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus-pesan']['POST'] = 'IG/User/Realisasi_Anggaran/hapus_pesan';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/buat_pesan']['POST'] = 'IG/User/Realisasi_Anggaran/buat_pesan/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus-pesan']['POST'] = 'IG/User/Realisasi_Anggaran/hapus_pesan/$1/$2';
+$route['app/sim-ig/realisasi_anggaran/actbud/(:any)/(:any)/hapus-pesan-reply']['POST'] = 'IG/User/Realisasi_Anggaran/hapus_pesan_reply/$1/$2';
