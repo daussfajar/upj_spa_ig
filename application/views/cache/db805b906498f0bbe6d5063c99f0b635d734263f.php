@@ -1,22 +1,22 @@
-@extends('ig.layouts.user')
 
-@section('title', 'Pencairan Hibah')
 
-@section('page-title')
+<?php $__env->startSection('title', 'Pencairan Hibah'); ?>
+
+<?php $__env->startSection('page-title'); ?>
     <i class="mdi mdi-clipboard-list-outline"></i> Pencairan
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-@endsection
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Hibah</a></li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><i class="mdi mdi-clipboard-list-outline"></i> Pencairan</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <!--<div class="col-lg-6 col-xl-3">
         <div class="card widget-box-three">
             <div class="card-body">
@@ -40,9 +40,9 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="{{ base_url('app/sim-ig/hibah/pencairan') }}" class="myForm" method="GET" accept-charset="utf-8" autocomplete="off">                        
+                    <form action="<?php echo e(base_url('app/sim-ig/hibah/pencairan')); ?>" class="myForm" method="GET" accept-charset="utf-8" autocomplete="off">                        
                         <div class="input-group">
-                            <input type="search" id="q" value="{{ !empty($_GET['q']) ? $_GET['q'] : '' }}" name="q" class="form-control" placeholder="Cari data...">
+                            <input type="search" id="q" value="<?php echo e(!empty($_GET['q']) ? $_GET['q'] : ''); ?>" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">
                                 <button type="submit" class="btn waves-effect waves-light btn-primary btn-sm"><i class="mdi mdi-magnify mdi-18px"></i></button>
                             </span>
@@ -50,10 +50,10 @@
                     </form>
                 </div>
             </div> 
-            @if (isset($_GET['q']) && $CI->input->get('q', true) !== "")
-                @if (empty($data['data']))
+            <?php if(isset($_GET['q']) && $CI->input->get('q', true) !== ""): ?>
+                <?php if(empty($data['data'])): ?>
                     <div class="alert alert-info">
-                        <p class="mb-0">Pencarian anda <b>- {{ $CI->input->get('q', true) }} -</b> tidak ada dalam data.</p>
+                        <p class="mb-0">Pencarian anda <b>- <?php echo e($CI->input->get('q', true)); ?> -</b> tidak ada dalam data.</p>
                         <p class="mb-0">
                             Saran:
                             <ul class="mb-0">
@@ -63,12 +63,12 @@
                             </ul>
                         </p>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="alert alert-info">
-                        <p class="mb-0"><i class="mdi mdi-magnify"></i> Hasil pencarian dari: "<b>{{ $CI->input->get('q', true) }}</b>"</p>                    
+                        <p class="mb-0"><i class="mdi mdi-magnify"></i> Hasil pencarian dari: "<b><?php echo e($CI->input->get('q', true)); ?></b>"</p>                    
                     </div>
-                @endif
-            @endif
+                <?php endif; ?>
+            <?php endif; ?>
             <div class="table-responsive">
                 <table id="tb_data_hibah" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="bg-purple text-white">
@@ -87,56 +87,61 @@
                         </tr>
                     </thead>
                     <tbody>                        
-                        @if (empty($data['data']))
+                        <?php if(empty($data['data'])): ?>
                             <tr>
                                 <th colspan="10" class="text-center">Tidak ada data</th>
                             </tr>
-                        @else
-                        @php
+                        <?php else: ?>
+                        <?php
                             $no = (empty($CI->uri->segment(5)) ? 0 : $CI->uri->segment(5) + 0);
-                        @endphp
-                            @foreach ($data['data'] as $row)
-                                @php
+                        ?>
+                            <?php $__currentLoopData = $data['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php
                                     $no++
-                                @endphp
+                                ?>
                                 <tr>
-                                    <th class="text-center" style="vertical-align: middle">{{ $no }}</th>
+                                    <th class="text-center" style="vertical-align: middle"><?php echo e($no); ?></th>
                                     <th style="vertical-align: middle;">
                                         <span class="badge bg-secondary p-2">
-                                            {{ $row['kode_pencairan'] }}
+                                            <?php echo e($row['kode_pencairan']); ?>
+
                                         </span>
                                     </th>
                                     <td style="vertical-align: middle;">
                                         <span class="" style="font-size: 14px;">
-                                            {{ $row['nama_karyawan'] }} ({{ $row['pic'] }})
+                                            <?php echo e($row['nama_karyawan']); ?> (<?php echo e($row['pic']); ?>)
                                         </span>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <span style="font-size: 14px;">
-                                            {{ $row['nama_hibah_sponsorship'] }}
+                                            <?php echo e($row['nama_hibah_sponsorship']); ?>
+
                                         </span>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <span style="font-size: 14px;">
-                                            {{ $row['uraian_kegiatan'] }}
+                                            <?php echo e($row['uraian_kegiatan']); ?>
+
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <span class="badge bg-warning p-2">
-                                            @switch($row['periode'])
-                                                @case(1)
-                                                    {{ "Ganjil" }}
-                                                    @break
-                                                @case(2)
-                                                    {{ "Genap" }}
-                                                    @break
-                                                @default
-                                                    {{ "Unknown" }}                                            
-                                            @endswitch
+                                            <?php switch($row['periode']):
+                                                case (1): ?>
+                                                    <?php echo e("Ganjil"); ?>
+
+                                                    <?php break; ?>
+                                                <?php case (2): ?>
+                                                    <?php echo e("Genap"); ?>
+
+                                                    <?php break; ?>
+                                                <?php default: ?>
+                                                    <?php echo e("Unknown"); ?>                                            
+                                            <?php endswitch; ?>
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        @php
+                                        <?php
                                             $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
                                             ig_tbl_actbud a WHERE a.id_uraian = '%u' 
                                             AND a.status_act = 'send' AND (a.status != 'cancel')", $row['id']))->row();
@@ -147,44 +152,47 @@
                                             ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
                                             AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();
                                             echo '<span class="badge bg-success p-2">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
-                                        @endphp
+                                        ?>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <span class="badge bg-teal p-2">
-                                            {{ rupiah($getSum->digunakan) }}
+                                            <?php echo e(rupiah($getSum->digunakan)); ?>
+
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        @php                                                                                        								
+                                        <?php                                                                                        								
                                             echo '<span class="badge bg-primary p-2">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
-                                        @endphp
+                                        ?>
                                     </td>
                                     
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="{{ base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan') }}" class="badge bg-primary p-2 btn-sm">Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="<?php echo e(base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan')); ?>" class="badge bg-primary p-2 btn-sm">Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
                                     </td>
                                 </tr>
-                            @endforeach
-                        @endif
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
             <br>
-            <span class="badge badge-info p-2">Total Data: {{ $data['total_rows'] }}</span>
-            {!! $data['pagination'] !!}
+            <span class="badge badge-info p-2">Total Data: <?php echo e($data['total_rows']); ?></span>
+            <?php echo $data['pagination']; ?>
+
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 
 <script>
     $(document).ready(function(){        
                 
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('ig.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/ig/users/hibah/v_data_pencairan.blade.php ENDPATH**/ ?>

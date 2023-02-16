@@ -345,8 +345,8 @@ class Hibah extends CI_Controller {
 		}
 	}
 
-	public function v_detail_hibah(){
-		$id = !decrypt($this->uri->segment(4)) ? show_404() : decrypt($this->uri->segment(4));
+	public function v_detail_hibah(string $id){
+		$id = !decrypt($id) ? show_404() : decrypt($id);
 		$data['data'] = !empty($this->Hibah_model->get_data_hibah_by_id($id, "")) ? $this->Hibah_model->get_data_hibah_by_id($id) : show_404();	
 		$data['karyawan']		= $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit']			= $this->db->get('tbl_unit');	

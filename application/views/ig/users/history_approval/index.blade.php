@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-12">
-                <form action="{{ base_url('app/riwayat_approval') }}" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
+                <form action="{{ base_url('app/sim-ig/riwayat_approval') }}" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
                     <div class="input-group">
                         <input type="search" id="q" value="{{ !empty($_GET['q']) ? $_GET['q'] : '' }}" name="q" class="form-control" placeholder="Cari data...">
                         <span class="input-group-prepend">
@@ -145,9 +145,9 @@
                                         </span>
                                     </td>
                                     <td style="vertical-align: middle" class="text-center">
-                                        <a href="{{ base_url('app/riwayat_approval/v_detail/' . encrypt($row['id'])) }}" class="btn btn-primary col-12 btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="{{ base_url('app/sim-ig/riwayat_approval/v_detail/' . encrypt($row['id'])) }}" class="btn btn-primary col-12 btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                                         @if ($row['st_warek_2'] == 'Y')
-                                            <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/hibah/pencairan/v_detail/'.encrypt($row['id_uraian']).'/actbud/'.encrypt($row['id']).'/cetak_form_actbud?pdf=true') }}', 'MsgWindow', 'width=800,height=800')" class="btn btn-info col-12 btn-xs mt-1"><i class="mdi mdi-printer"></i> Cetak</a>
+                                            <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/sim-ig/hibah/pencairan/v_detail/'.encrypt($row['id_uraian']).'/actbud/'.encrypt($row['id']).'/cetak_form_actbud?pdf=true') }}', 'MsgWindow', 'width=800,height=800')" class="btn btn-info col-12 btn-xs mt-1"><i class="mdi mdi-printer"></i> Cetak</a>
                                         @endif                                        
                                     </td>
                                 </tr>

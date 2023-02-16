@@ -43,7 +43,7 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 			<div class="col-md-8 col-sm-8 col-xs-12">
 				<?php if($kode_unit == 002 || $jabatan == 0): ?>							
 				<div class="float-left">
-					<a href="<?php echo e(base_url('app/hibah/buat_kegiatan')); ?>" class="btn btn-success btn-sm"><i
+					<a href="<?php echo e(base_url('app/sim-ig/hibah/buat_kegiatan')); ?>" class="btn btn-success btn-sm"><i
 							class="mdi mdi-plus"></i> Tambah Data</a>
 				</div>
 				<div class="float-right">
@@ -55,7 +55,7 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 				<?php endif; ?>
 			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12">				
-				<form action="<?php echo e(base_url('app/hibah')); ?>" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
+				<form action="<?php echo e(base_url('app/sim-ig/hibah')); ?>" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
 					<div class="input-group">
 						<input type="search" id="q" value="<?php echo e(!empty($_GET['q']) ? $_GET['q'] : ''); ?>" name="q" class="form-control" placeholder="Cari data...">
 						<span class="input-group-prepend">
@@ -117,7 +117,7 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 					<tr>
 						<th class="text-center" style="vertical-align: middle"><?php echo e($no); ?></th>
 						<th style="vertical-align: middle;">
-                            <a href="<?php echo e(base_url('app/hibah/v_detail/' . encrypt($row['id']))); ?>" class="badge bg-purple p-2">
+                            <a href="<?php echo e(base_url('app/sim-ig/hibah/v_detail/' . encrypt($row['id']))); ?>" class="badge bg-purple p-2">
                                 <?php echo e($row['kode_uraian']); ?>
 
                             </a>
@@ -177,7 +177,7 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
                             </span>
 						</td>				
 						<td class="text-center" style="vertical-align: middle;">
-							<!--<a href="<?php echo e(base_url('app/hibah/v_detail/' . encrypt($row['id']))); ?>" class="btn btn-primary btn-sm"><i class="mdi mdi-arrow-right"></i></a>-->
+							<!--<a href="<?php echo e(base_url('app/sim-ig/hibah/v_detail/' . encrypt($row['id']))); ?>" class="btn btn-primary btn-sm"><i class="mdi mdi-arrow-right"></i></a>-->
 							<?php if($row['finalisasi'] == 'N'): ?>
 							<a href="javascript:void(0)" data-id="<?php echo e(encrypt($row['id'])); ?>" data-kode_uraian="<?php echo e($row['kode_uraian']); ?>" class="badge bg-danger p-2 batalkan-data col-12"><i
 									class="mdi mdi-trash-can"></i> Batalkan</a>
@@ -213,13 +213,13 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 				</tbody>
 			</table>
 		</div>
-		<span class="badge badge-info">Total Data: <?php echo e($data['total_rows']); ?></span>
+		<span class="badge badge-info p-2">Total Data: <?php echo e($data['total_rows']); ?></span>
 		<?php echo $data['pagination']; ?>
 
 	</div>
 </div>
 
-<?php echo form_open('app/hibah/preview_upload', array('enctype' => 'multipart/form-data')); ?>
+<?php echo form_open('app/sim-ig/hibah/preview_upload', array('enctype' => 'multipart/form-data')); ?>
 
 <div id="modal-upload" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -500,11 +500,11 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
                     <div class="form-group row">						
 						<label class="col-lg-4 control-label" for="">Kode Uraian</label>
 						<p class="col-lg-8 form-control-static" style="font-weight: bold;">
-                            <span class="kode_uraian badge bg-purple"></span>
+                            <span class="kode_uraian badge bg-purple p-2"></span>
                         </p>
 						<label class="col-lg-4 control-label" for="">Kode Pencairan</label>
 						<p class="col-lg-8 form-control-static" style="font-weight: bold;">
-                            <span class="kode_pencairan badge bg-primary"></span>
+                            <span class="kode_pencairan badge bg-primary p-2"></span>
                         </p>
 						<label class="col-lg-4 control-label" for="">Nama Hibah</label>
 						<p class="col-lg-8 form-control-static nama_hibah_sponsorship" style="font-size:14px;"></p>
@@ -601,7 +601,7 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 			}
 			const base_url = "<?= base_url() ?>"
 			
-			$('#form-batalkan').attr('action', '' + base_url + 'app/hibah/v_detail/' + data.id + '/batalkan_kegiatan')
+			$('#form-batalkan').attr('action', '' + base_url + 'app/sim-ig/hibah/v_detail/' + data.id + '/batalkan_kegiatan')
 			$('#modal-batalkan span#detail').text(data.kode_uraian)
 			$('#modal-batalkan input[name="id"]').val(data.id)
 			$('#modal-batalkan').modal('show')
@@ -616,7 +616,7 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 				kode_pencairan: $(this).data('kode_pencairan'),
 				pic: $(this).data('pic')
 			}
-			$('#form-set_pic').attr('action', '' + base_url + 'app/set_pic/' + data.id + '/save')
+			$('#form-set_pic').attr('action', '' + base_url + 'app/sim-ig/set_pic/' + data.id + '/save')
 			$('#modal-set_pic #set_pic_title').text(data.pic == '' ? 'Pemilihan PIC' : 'Ubah PIC')
 			$('#modal-set_pic #btn-set-pic').text(data.pic == '' ? 'Simpan' : 'Ubah PIC')
 			$('#modal-set_pic .kode_uraian').text(data.kode_uraian)
@@ -633,7 +633,7 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 			}
 			const base_url = "<?= base_url() ?>"
 			
-			$('#form-finalisasi').attr('action', '' + base_url + 'app/hibah/v_detail/' + data.id + '/finalisasi')
+			$('#form-finalisasi').attr('action', '' + base_url + 'app/sim-ig/hibah/v_detail/' + data.id + '/finalisasi')
 			$('#modal-finalisasi span#detail').text(data.kode_uraian)
 			$('#modal-finalisasi input[name="id"]').val(data.id)
 			$('#modal-finalisasi').modal('show')
@@ -661,8 +661,8 @@ $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
             const base_url = "<?= base_url() ?>"
             //$('#form-ubah').attr('action', '')
             console.log(data.id)
-			//app/hibah/v_detail/' . $CI->uri->segment(4) . '/edit_hibah'
-			$('#form-ubah').attr('action', '' + base_url + 'app/hibah/v_detail/' + data.id + '/edit_hibah')
+			//app/sim-ig/hibah/v_detail/' . $CI->uri->segment(4) . '/edit_hibah'
+			$('#form-ubah').attr('action', '' + base_url + 'app/sim-ig/hibah/v_detail/' + data.id + '/edit_hibah')
 			$('#modal-edit').modal('show')
 			$('#modal-edit input[type="hidden"][name="id"]').val(data.id)
 			$('#modal-edit input[name="nama_hibah"]').val(data.nama_hibah)

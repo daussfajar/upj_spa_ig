@@ -149,7 +149,7 @@ class Hibah_Model extends CI_Model {
         a.tanggal_pembuatan,a.kode_pencairan,
         a.agr,a.fnl_agr,a.status status_actbud,a.agr,c.id id_hibah", 
         "ig_tbl_actbud a INNER JOIN tbl_karyawan b ON a.pelaksana = b.nik INNER JOIN ig_tbl_uraian c ON a.id_uraian = c.id","c.jenis_ig = 'hibah'", 
-        '/' . APP_FOLDER . '/app/hibah/status_pencairan', 4,5,4);        
+        '/' . APP_FOLDER . '/app/hibah/status_pencairan', 5,5,4);        
         return $data;
     }
 

@@ -15,7 +15,7 @@ class Auth extends CI_Controller {
 	public function index()
 	{
         $this->Global_model->not_logged_in();
-		return view('users.front.login');
+		return view('front.login');
 	}
 
 	public function verify(){                

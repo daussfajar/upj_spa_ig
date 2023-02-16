@@ -6,8 +6,8 @@ class PencairanHibah extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-		$this->load->model('Hibah_model');
-		$this->load->model('Actbud_model');
+		$this->load->model('IG/Hibah_model');
+		$this->load->model('IG/Actbud_model');
         header("X-XSS-Protection: 1; mode=block");
 	}
 
@@ -40,7 +40,7 @@ class PencairanHibah extends CI_Controller {
 	}
 
 	public function v_detail(){
-		$id = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));
+		$id = !decrypt($this->uri->segment(6)) ? show_404() : decrypt($this->uri->segment(6));
 		$data['data'] = !$this->Hibah_model->get_data_hibah_by_id($id) ? show_404() : $this->Hibah_model->get_data_hibah_by_id($id);			
 		$data['data_pencairan'] = $this->Hibah_model->get_data_pencairan($id);
 		$agr = $this->Hibah_model->cek_anggaran_digunakan_sementara($id);        
@@ -51,8 +51,8 @@ class PencairanHibah extends CI_Controller {
 		return view('ig.users.hibah.v_detail_pencairan', $data);
 	}
 
-	public function buat_pencairan(){					
-		$id = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));
+	public function buat_pencairan(string $id){					
+		$id = !decrypt($id) ? show_404() : decrypt($id);
 		$agr = $this->Hibah_model->cek_anggaran_digunakan_sementara($id);				
 		$data['data'] = !$this->Hibah_model->get_data_hibah_by_id($id) ? show_error("Error", 403) : $this->Hibah_model->get_data_hibah_by_id($id);
 		$agr_in_out = $this->Actbud_model->get_agr_in_out($data['data']->kode_uraian);
@@ -131,7 +131,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Habis'
 				]);
-				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(6) . '/buat_pencairan'));
 			}
 
 			if($total_agr > $batas){
@@ -140,7 +140,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Lewat Batas'
 				]);
-				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(6) . '/buat_pencairan'));
 			} else {
 				$periode = !decrypt($this->input->post('periode', true)) ? show_error("Unauthorized!") : decrypt($this->input->post('periode', true));
 				$data = [
@@ -174,7 +174,7 @@ class PencairanHibah extends CI_Controller {
 						'type'    => 'success',	
 						'title'   => ''
 					]);
-					return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . encrypt($this->db->insert_id())));
+					return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(6) . '/actbud/' . encrypt($this->db->insert_id())));
 		
 				} else {
 					$this->session->set_flashdata('alert', [
@@ -182,7 +182,7 @@ class PencairanHibah extends CI_Controller {
 						'type'    => 'error',	
 						'title'   => ''
 					]);
-					return redirect(base_url('app/hibah/pencairan'));
+					return redirect(base_url('app/sim-ig/hibah/pencairan'));
 				}
 			}
 
@@ -195,20 +195,22 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function v_detail_actbud(){		
-		$id_uraian = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));		
-		$id_actbud = !decrypt($this->uri->segment(7)) ? show_404() : decrypt($this->uri->segment(7));		
-		$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);		
+	public function v_detail_actbud(string $id_uraian, string $id_actbud){
+		$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
+		$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);		
+		$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);
+		
+		if(empty($data['data'])) return show_404();
 		$kode_unit = $data['data']->kode_unit;
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
 		$data['messages'] = $this->Hibah_model->get_data_chat_actbud($id_actbud);        
 		$data['dokumen_pendukung'] = $this->db->get_where('ig_tbl_actbud_upload', ['id_act' => $id_actbud, 'status' => 'Aktif']);
 		$data['rincian_kegiatan'] = $this->db->get_where('ig_t_j_b_act', ['id_actbud' => $id_actbud, 'status' => 'Aktif']);
-		$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);
-        //pr($data['sisa']);
+		$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);        
 		//$data['unit'] = $this->db->get('tbl_unit')->result();
-		$data['anggaran_tersisa'] = (int) ($data['data']->agr - $data['sisa']->digunakan);
-        //pr($data['data']);
+		$data['anggaran_tersisa'] = (int) ($data['data']->agr - $data['sisa']->digunakan);        
+		$data['id_uraian'] = encrypt($id_uraian);
+		$data['id_actbud'] = encrypt($id_actbud);		
 		return view('ig.users.hibah.v_detail_actbud', $data);
 	}
 
@@ -224,7 +226,7 @@ class PencairanHibah extends CI_Controller {
 			'type'    => 'success',	
 			'title'   => ''
 		]);
-		return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5)));
+		return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(5)));
 	}
 
 	public function ubah_actbud(){		
@@ -268,7 +270,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
 			} else {
 				$data = [			
 					'nama_kegiatan' => $this->input->post('nama_kegiatan', true),
@@ -289,7 +291,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
 			}			
 
 		} else {
@@ -301,8 +303,8 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function buat_pesan(){
-		$id_actbud = decrypt($this->uri->segment(7));
+	public function buat_pesan(string $id_uraian, string $id_actbud){
+		$id_actbud = decrypt($id_actbud);
 		$pic = decrypt($_SESSION['user_sessions']['nik']);
 		$pesan = $this->input->post('pesan', true);
 		
@@ -354,7 +356,7 @@ class PencairanHibah extends CI_Controller {
 							'title'   => ''
 						]);
 		
-						return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-chat'));
+						return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
 	
 					}
 
@@ -371,7 +373,7 @@ class PencairanHibah extends CI_Controller {
 						'title'   => ''
 					]);
 	
-					return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-chat'));					
+					return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
 				}
 
 			} else {
@@ -427,7 +429,7 @@ class PencairanHibah extends CI_Controller {
 							'title'   => ''
 						]);
 		
-						return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-chat'));
+						return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
 	
 					}
 	
@@ -444,7 +446,7 @@ class PencairanHibah extends CI_Controller {
 						'title'   => ''
 					]);
 	
-					return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-chat'));
+					return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
 				}						
 							
 			} else {
@@ -457,7 +459,7 @@ class PencairanHibah extends CI_Controller {
 		}		
 	}
 
-	public function hapus_pesan(){
+	public function hapus_pesan(string $id_uraian, string $id_actbud){
 		$id = decrypt($this->input->post('id', true));
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
@@ -474,14 +476,19 @@ class PencairanHibah extends CI_Controller {
 			$this->db->where('id', $id);
 			$this->db->update('ig_tbl_actbud_chat', [
 				'status' => 'Tidak Aktif'
-			]);			
+			]);
+
+			$this->db->where('id_pesan', $id);
+			$this->db->update('ig_tbl_actbud_chat_reply', [
+				'status' => 'Tidak Aktif'
+			]);
 
 			$this->session->set_flashdata('alert', [
 				'message' => 'Pesan berhasil dihapus.',
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-chat'));
+			return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-chat'));
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
@@ -491,7 +498,42 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function upload_dokumen_pendukung(){
+	public function hapus_pesan_reply(string $id_uraian, string $id_actbud)
+	{
+		$id = decrypt($this->input->post('id', true));
+		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
+			'required' => '%s tidak boleh kosong.'
+		]);
+
+		if ($this->form_validation->run() === TRUE) {
+
+			$file_name = $this->input->post('attachment', true);
+
+			if ($file_name != "") {
+				unlink(FCPATH . 'app-data/chat-attachment/' . $file_name);
+			}
+
+			$this->db->where('id', $id);
+			$this->db->update('ig_tbl_actbud_chat_reply', [
+				'status' => 'Tidak Aktif'
+			]);
+
+			$this->session->set_flashdata('alert', [
+				'message' => 'Pesan berhasil dihapus.',
+				'type'    => 'success',
+				'title'   => ''
+			]);
+			return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-chat'));
+		} else {
+			$error = [
+				'form_error' => validation_errors_array()
+			];
+			$this->session->set_flashdata('error_validation', $error);
+			return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+		}
+	}
+
+	public function upload_dokumen_pendukung(string $id_uraian, string $id_actbud){
 		$this->form_validation->set_rules('deskripsi', 'Deskripsi', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);	
@@ -504,7 +546,7 @@ class PencairanHibah extends CI_Controller {
 
 		if($this->form_validation->run() === TRUE){
 
-			$id_actbud = decrypt($this->uri->segment(7));
+			$id_actbud = decrypt($id_actbud);
 			$pic = decrypt($_SESSION['user_sessions']['nik']);
 			
 			$path = FCPATH . 'app-data/dokumen-pendukung';
@@ -541,7 +583,7 @@ class PencairanHibah extends CI_Controller {
 					'title'   => ''
 				]);
 
-				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-dokumen-pendukung'));
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-dokumen-pendukung'));
 
 			}
 
@@ -554,7 +596,7 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function hapus_dokumen_pendukung(){
+	public function hapus_dokumen_pendukung(string $id_uraian, string $id_actbud){
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);	
@@ -569,18 +611,27 @@ class PencairanHibah extends CI_Controller {
 			if($file_name != ""){
 				unlink(FCPATH . 'app-data/dokumen-pendukung/' . $file_name);
 			} 
-
+			
 			$this->db->where('id', $id);
-			$this->db->update('ig_tbl_actbud_upload', [
+			$update = $this->db->update('ig_tbl_actbud_upload', [
 				'status' => 'Tidak Aktif'
 			]);			
 
-			$this->session->set_flashdata('alert', [
-				'message' => 'Dokumen pendukung berhasil dihapus.',
-				'type'    => 'success',	
-				'title'   => ''
-			]);
-			return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-dokumen-pendukung'));
+			if($update) {
+				$this->session->set_flashdata('alert', [
+					'message' => 'Dokumen pendukung berhasil dihapus.',
+					'type'    => 'success',
+					'title'   => ''
+				]);
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-dokumen-pendukung'));
+			} else {
+				$this->session->set_flashdata('alert', [
+					'message' => 'Dokumen pendukung gagal dihapus.',
+					'type'    => 'success',
+					'title'   => ''
+				]);
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-dokumen-pendukung'));
+			}
 
 		} else {
 			$error = [
@@ -591,7 +642,7 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function buat_rincian_kegiatan(){
+	public function buat_rincian_kegiatan(string $id_uraian, string $id_actbud){
 		$this->form_validation->set_rules('nama_kegiatan', 'Nama kegiatan', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);
@@ -603,8 +654,8 @@ class PencairanHibah extends CI_Controller {
 		]);		
 
 		if($this->form_validation->run() === TRUE){
-			$id_uraian = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));		
-			$id_actbud = !decrypt($this->uri->segment(7)) ? show_404() : decrypt($this->uri->segment(7));
+			$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);		
+			$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);
 			$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);
 			$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);			
 			$batas = (int) ($data['data']->agr - $data['sisa']->digunakan);		
@@ -628,7 +679,7 @@ class PencairanHibah extends CI_Controller {
 					]);
 				}
 
-				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) ));
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($id_uraian) . '/actbud/' . encrypt($id_actbud) ));
 			} else {
 				$data = [
 					'id_actbud' => $id_actbud,
@@ -645,7 +696,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-rincian'));
+				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($id_uraian) . '/actbud/' . encrypt($id_actbud) . '#card-rincian'));
 			}
 															
 		} else {
@@ -657,7 +708,7 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function hapus_rincian_kegiatan(){
+	public function hapus_rincian_kegiatan(string $id_uraian, string $id_actbud){
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);
@@ -675,7 +726,7 @@ class PencairanHibah extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-rincian'));
+			return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-rincian'));
 
 		} else {
 			$error = [
@@ -686,8 +737,8 @@ class PencairanHibah extends CI_Controller {
 		}
 	}
 
-	public function submit_actbud(string $id_uraian, string $id){
-		$id = !decrypt($id) ? show_404() : decrypt($id);
+	public function submit_actbud(string $id_uraian, string $id_actbud){
+		$id = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);
 		$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
 		$pre_approval = $this->input->post('pre_approval', true);
 
@@ -735,7 +786,7 @@ class PencairanHibah extends CI_Controller {
 				'type'    => 'success',
 				'title'   => ''
 			]);
-			return redirect(base_url('app/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+			return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud));
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()

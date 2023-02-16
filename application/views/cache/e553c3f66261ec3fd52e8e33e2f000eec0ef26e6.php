@@ -1,21 +1,21 @@
-@extends('ig.layouts.user')
 
-@section('title', 'Detail Approval')
 
-@section('page-title')
-<a href="{{ $_SERVER['HTTP_REFERER'] }}" class=""><i class="mdi mdi-arrow-left"></i></a> <i class="mdi mdi-file-document-outline"></i> Detail Actbud
-@endsection
+<?php $__env->startSection('title', 'Detail Approval'); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('page-title'); ?>
+<a href="<?php echo e($_SERVER['HTTP_REFERER']); ?>" class=""><i class="mdi mdi-arrow-left"></i></a> <i class="mdi mdi-file-document-outline"></i> Detail Actbud
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-clipboard-file-outline"></i> Approval</a>
 </li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><b><i class="mdi mdi-file-document-outline"></i>
-			{{ $data->kode_uraian }}</a></b></li>
-@endsection
+			<?php echo e($data->kode_uraian); ?></a></b></li>
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
 <style>
 	.messages {
         width: 100%;
@@ -135,10 +135,10 @@
 	}
 
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-@php
+<?php $__env->startSection('content'); ?>
+<?php
 $kode_jabatan = $_SESSION['user_sessions']['kode_jabatan'];
 $approvalOpen = false;
 $kode_unit = $_SESSION['user_sessions']['kode_unit'];
@@ -158,10 +158,10 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 } else if($kode_jabatan == 0){
     $approvalOpen = true;
 }
-@endphp
+?>
 <div class="col-md-12">
     <h6>Status Approval</h6>
-	@include('ig.users.hibah.tracker_status_actbud')
+	<?php echo $__env->make('ig.users.hibah.tracker_status_actbud', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </div>
 <div class="col-md-12">
 	<div class="card-box">
@@ -171,7 +171,8 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 					<label for="">Kode Uraian</label>
 					<p class="form-control-static">
                         <span class="badge bg-purple p-2">
-                            {{ $data->kode_uraian }}
+                            <?php echo e($data->kode_uraian); ?>
+
                         </span>
                     </p>
 				</div>
@@ -180,7 +181,8 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 				<div class="form-group">
 					<label for="">Nama Hibah/Sponsorship</label>
 					<p class="form-control-static" style="font-size: 14px;">
-                        {{ $data->nama_kegiatan }}
+                        <?php echo e($data->nama_kegiatan); ?>
+
                     </p>
 				</div>
 			</div>
@@ -189,7 +191,8 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 					<label for="">Total Anggaran</label>
 					<p class="form-control-static">
 						<span class="badge bg-success p-2">
-                            {{ rupiah($data->agr) }}
+                            <?php echo e(rupiah($data->agr)); ?>
+
                         </span>
 					</p>
 				</div>
@@ -198,30 +201,31 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 				<div class="form-group">
 					<label for="">Jenis</label>
 					<p class="form-control-static">
-						@switch($data->jenis_anggaran)
-						@case('hibah')
+						<?php switch($data->jenis_anggaran):
+						case ('hibah'): ?>
 						<span class="badge badge-info p-2">Hibah</span>
-						@break
-						@case('sponsorship')
+						<?php break; ?>
+						<?php case ('sponsorship'): ?>
 						<span class="badge badge-info p-2">Sponsorship</span>
-						@break
-						@default
+						<?php break; ?>
+						<?php default: ?>
 						<span class="badge badge-danger p-2">Unknown</span>
-						@endswitch
+						<?php endswitch; ?>
 					</p>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="">KPI</label>
-					<p class="form-control-static" style="font-size: 14px;">{{ $data->kpi }}</p>
+					<p class="form-control-static" style="font-size: 14px;"><?php echo e($data->kpi); ?></p>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="">PIC</label>
 					<p class="form-control-static" style="font-size: 14px;">
-                        {{ $data->pic }}
+                        <?php echo e($data->pic); ?>
+
                     </p>
 				</div>
 			</div>
@@ -229,7 +233,8 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 				<div class="form-group">
 					<label for="">Pelaksana</label>
 					<p class="form-control-static" style="font-size: 14px;">
-                        {{ $data->pelaksana }}
+                        <?php echo e($data->pelaksana); ?>
+
                     </p>
 				</div>
 			</div>
@@ -237,8 +242,9 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 				<div class="form-group">
 					<label for="">Tanggal Pelaksaan</label>
 					<p class="form-control-static" style="font-size:14px;">
-						<i class="mdi mdi-calendar"></i> {{ tanggal_indo($data->tgl_mulai) }} s/d
-						{{ tanggal_indo($data->tgl_selesai) }}
+						<i class="mdi mdi-calendar"></i> <?php echo e(tanggal_indo($data->tgl_mulai)); ?> s/d
+						<?php echo e(tanggal_indo($data->tgl_selesai)); ?>
+
 					</p>
 				</div>
 			</div>
@@ -246,16 +252,16 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 				<div class="form-group">
 					<label for="">Periode</label>
 					<p class="form-control-static">
-						@switch($data->periode)
-						@case(1)
+						<?php switch($data->periode):
+						case (1): ?>
 						<span class="badge badge-warning p-2">Ganjil</span>
-						@break
-						@case(2)
+						<?php break; ?>
+						<?php case (2): ?>
 						<span class="badge badge-warning p-2">Genap</span>
-						@break
-						@default
+						<?php break; ?>
+						<?php default: ?>
 						<span class="badge badge-danger p-2">Unknown</span>
-						@endswitch
+						<?php endswitch; ?>
 					</p>
 				</div>
 			</div>
@@ -263,7 +269,8 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 				<div class="form-group">
 					<label for="">Deskripsi Kegiatan</label>
 					<p class="form-control-static" style="font-size: 14px;">
-						{{ $data->deskripsi_kegiatan }}
+						<?php echo e($data->deskripsi_kegiatan); ?>
+
 					</p>
 				</div>
 			</div>
@@ -311,93 +318,100 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 							</tr>
 						</thead>
 						<tbody id="tb-biaya">
-							@foreach ($detail_biaya->result() as $item)
+							<?php $__currentLoopData = $detail_biaya->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 							<tr>
-								<th class="text-center" style="vertical-align: middle">{{ $loop->iteration }}</th>
+								<th class="text-center" style="vertical-align: middle"><?php echo e($loop->iteration); ?></th>
 								<td style="vertical-align: middle">
                                     <span class="" style="font-size: 14px;">
-                                        {{ $item->nama_kegiatan }}
+                                        <?php echo e($item->nama_kegiatan); ?>
+
                                     </span>
                                 </td>
 								<td style="vertical-align: middle">
                                     <span class="" style="font-size: 14px;">
-                                        {{ $item->keterangan }}
+                                        <?php echo e($item->keterangan); ?>
+
                                     </span>
                                 </td>
 								<td class="text-center" style="vertical-align: middle" width=100>
                                     <span class="badge bg-success p-2">
-									    {{ rupiah($item->total_anggaran) }}
+									    <?php echo e(rupiah($item->total_anggaran)); ?>
+
                                     </span>
 								</td>
 								<td width=100>
 									<ul style="padding-inline-start: 0px;list-style:none;font-size:14px;">
 										<li>
 											<span> Warek 1:</span>
-											@if ($item->catatan_wr_1 !== "")
-											<span style="font-size:14px;">{{ $item->catatan_wr_1 }}</span>
-											@else
-											@if ($kode_jabatan == 3 || $kode_jabatan == 0 )
+											<?php if($item->catatan_wr_1 !== ""): ?>
+											<span style="font-size:14px;"><?php echo e($item->catatan_wr_1); ?></span>
+											<?php else: ?>
+											<?php if($kode_jabatan == 3 || $kode_jabatan == 0 ): ?>
 											<br>
-											<a href="javascript:void(0)" data-id="{{ encrypt($item->id) }}"
-												data-nama_kegiatan="{{ $item->nama_kegiatan }}"
+											<a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>"
+												data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>"
 												class="btnBuatCatatanWr1" style="font-size: 14px;">Buat catatan</a>
-											@endif
-											@endif
+											<?php endif; ?>
+											<?php endif; ?>
 										</li>
 										<li>
 											<span> Warek 2:</span>
-											@if ($item->catatan_wr_2 !== "")
-											<span style="font-size:14px;">{{ $item->catatan_wr_2 }}</span>
-											@else
-											@if ($kode_jabatan == 4 || $kode_jabatan == 0)
+											<?php if($item->catatan_wr_2 !== ""): ?>
+											<span style="font-size:14px;"><?php echo e($item->catatan_wr_2); ?></span>
+											<?php else: ?>
+											<?php if($kode_jabatan == 4 || $kode_jabatan == 0): ?>
 											<br>
-											<a href="javascript:void(0)" data-id="{{ encrypt($item->id) }}"
-												data-nama_kegiatan="{{ $item->nama_kegiatan }}"
+											<a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>"
+												data-nama_kegiatan="<?php echo e($item->nama_kegiatan); ?>"
 												class="btnBuatCatatanWr2" style="font-size: 14px;">Buat catatan</a>
-											@endif
-											@endif
+											<?php endif; ?>
+											<?php endif; ?>
 										</li>
 									</ul>
 								</td>
 							</tr>
-							@endforeach
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
 
 			<div class="tab-pane" id="pesan" role="tabpanel" aria-labelledby="pesan-tab">
-				{!! form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/buat_pesan', array('id' =>
-				'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
-				@if (!empty($messages))
+				<?php echo form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/buat_pesan', array('id' =>
+				'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
+
+				<?php if(!empty($messages)): ?>
 				<div class="messages">
 					<div class="list-group bs-ui-list-group mb-0 mr-2" id="chat-section">
-						@foreach ($messages as $item)
-						@php
+						<?php $__currentLoopData = $messages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						<?php
 						$reply_data = $CI->db->query("SELECT
 						a.id,a.nik,a.pesan,a.datetime_chat,a.attachment,a.attachment_size,a.status,b.nama_lengkap sender
 						FROM ig_tbl_actbud_chat_reply a
 						INNER JOIN tbl_karyawan b ON a.nik = b.nik WHERE a.id_pesan = '".$item->id."' AND a.status =
 						'Aktif'")->result();
-						@endphp
+						?>
 						<div class="list-group-item"
 							style="border-left:none;border-top:none;border-bottom:none;border-right:none;margin-bottom:10px;padding-top:0;padding-left:0;padding-right:0;">
 							<div class="list-group-item-heading mt-0 mb-1 pb-1 border-bottom">
 								<span>
 									<img src="<?= base_url() ?>assets/images/logo/logo.png" alt="" srcset="" width="20">
-									{{ $item->sender }}
+									<?php echo e($item->sender); ?>
+
 								</span>
 								<span style="font-size: 13px;float: right;">
-									<i class="mdi mdi-calendar-clock"></i> {{ $item->datetime_chat }}
+									<i class="mdi mdi-calendar-clock"></i> <?php echo e($item->datetime_chat); ?>
+
 								</span>
 							</div>
 							<p class="list-group-item-text m-0">
-								{{ $item->pesan }}
+								<?php echo e($item->pesan); ?>
+
 							</p>
-							@if (!empty($item->attachment))
-							@php
+							<?php if(!empty($item->attachment)): ?>
+							<?php
 							$pecah_attachment = explode('_', $item->attachment);
-							@endphp
+							?>
 							<div class="mt-2">
 								<span style="font-size: 13px;">Attachment:</span>
 								<div class="d-flex flex-row">
@@ -405,58 +419,61 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 										<i class="mdi mdi-file mdi-24px text-primary"></i>
 									</div>
 									<div class="ml-2 pt-2">
-										<span class="text-primary">{{ $pecah_attachment[1] }}</span>
+										<span class="text-primary"><?php echo e($pecah_attachment[1]); ?></span>
 										<span
-											style="font-size: 12px;color:black">{{ formatBytes($item->attachment_size) }}</span>
-										<a href="{{ base_url('app-data/chat-attachment/' . $item->attachment) }}"
-											class="btn btn-info btn-xs" download="{{ $pecah_attachment[1] }}"><i
+											style="font-size: 12px;color:black"><?php echo e(formatBytes($item->attachment_size)); ?></span>
+										<a href="<?php echo e(base_url('app-data/chat-attachment/' . $item->attachment)); ?>"
+											class="btn btn-info btn-xs" download="<?php echo e($pecah_attachment[1]); ?>"><i
 												class="mdi mdi-download"></i> Unduh</a>
 									</div>
 								</div>
 							</div>
-							@endif
-							<span style="font-size: 11px;">{{ get_time_ago(strtotime($item->datetime_chat)) }}</span>
+							<?php endif; ?>
+							<span style="font-size: 11px;"><?php echo e(get_time_ago(strtotime($item->datetime_chat))); ?></span>
 							<br>
 							<span style="font-size: 12px;">
 								<a href="javascript:void(0)" class="reply-chat" data-id="<?= encrypt($item->id) ?>"
 									data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>"
 									data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>"
 									data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-reply"></i> Reply</a>
-								@if ($item->nik == decrypt($_SESSION['user_sessions']['nik']))
+								<?php if($item->nik == decrypt($_SESSION['user_sessions']['nik'])): ?>
 								<a href="javascript:void(0)" class="hapus-chat" data-id="<?= encrypt($item->id) ?>"
 									data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>"
 									data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>"
 									data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-trash-can"></i> Hapus</a>
-								@endif
+								<?php endif; ?>
 							</span>
 
-							@if (!empty($reply_data))
+							<?php if(!empty($reply_data)): ?>
 							<br>
 							<a href="#collapse-reply-message-<?= $item->id ?>" class="showReply" data-toggle="collapse"
 								style="font-size: 12px;">Lihat Balasan</a>
 							<div class="collapse" id="collapse-reply-message-<?= $item->id ?>">
-								@foreach ($reply_data as $item)
+								<?php $__currentLoopData = $reply_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 								<div class="list-group-item mt-1"
 									style="border-left: none;border-top:none;border-bottom:none;border-right:none;padding-bottom:0;">
 									<div class="list-group-item-heading font-18 mt-0 mb-1 pb-1 border-bottom">
 										<span>
 											<img src="<?= base_url() ?>assets/images/logo/logo.png" alt="" srcset=""
 												width="20">
-											{{ $item->sender }}
+											<?php echo e($item->sender); ?>
+
 										</span>
 										<span style="font-size: 13px;float: right;">
-											<i class="mdi mdi-calendar-clock"></i> {{ $item->datetime_chat }}
+											<i class="mdi mdi-calendar-clock"></i> <?php echo e($item->datetime_chat); ?>
+
 										</span>
 									</div>
 
 									<p class="list-group-item-text m-0">
-										{{ $item->pesan }}
+										<?php echo e($item->pesan); ?>
+
 									</p>
 
-									@if (!empty($item->attachment))
-									@php
+									<?php if(!empty($item->attachment)): ?>
+									<?php
 									$pecah_attachment = explode('_', $item->attachment);
-									@endphp
+									?>
 									<div class="mt-2">
 										<span style="font-size: 13px;">Attachment:</span>
 										<div class="d-flex flex-row">
@@ -464,39 +481,39 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 												<i class="mdi mdi-file mdi-24px text-primary"></i>
 											</div>
 											<div class="ml-2 pt-2">
-												<span class="text-primary">{{ $pecah_attachment[1] }}</span>
+												<span class="text-primary"><?php echo e($pecah_attachment[1]); ?></span>
 												<span
-													style="font-size: 12px;color:black">{{ formatBytes($item->attachment_size) }}</span>
-												<a href="{{ base_url('app-data/chat-attachment/' . $item->attachment) }}"
-													class="btn btn-info btn-xs" download="{{ $pecah_attachment[1] }}"><i
+													style="font-size: 12px;color:black"><?php echo e(formatBytes($item->attachment_size)); ?></span>
+												<a href="<?php echo e(base_url('app-data/chat-attachment/' . $item->attachment)); ?>"
+													class="btn btn-info btn-xs" download="<?php echo e($pecah_attachment[1]); ?>"><i
 														class="mdi mdi-download"></i> Unduh</a>
 											</div>
 										</div>
 									</div>
-									@endif
+									<?php endif; ?>
 									<span
-										style="font-size: 11px;">{{ get_time_ago(strtotime($item->datetime_chat)) }}</span>
-									@if ($item->nik == decrypt($_SESSION['user_sessions']['nik']))
+										style="font-size: 11px;"><?php echo e(get_time_ago(strtotime($item->datetime_chat))); ?></span>
+									<?php if($item->nik == decrypt($_SESSION['user_sessions']['nik'])): ?>
 									<br>
 									<a href="javascript:void(0)" style="font-size:12px;" class="hapus-chat-reply" data-id="<?= encrypt($item->id) ?>"
 										data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>"
 										data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>"
 										data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-trash-can"></i> Hapus</a>
-									@endif
+									<?php endif; ?>
 								</div>
-								@endforeach
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</div>
-							@endif
+							<?php endif; ?>
 
 						</div>
-						@endforeach
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 					</div>
 				</div>
-				@else
+				<?php else: ?>
 				<div class="alert alert-info">
 					<p class="mb-0"><i class="mdi mdi-exclamation"></i> Belum ada pesan, silakan buat pesan</p>
 				</div>
-				@endif
+				<?php endif; ?>
 
 				<div class="list-group-item mb-1 d-none" id="reply-box">
 					<div class="list-group-item-heading font-18 mt-0 border-bottom mb-1 pb-1">
@@ -532,7 +549,8 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 								class="mdi mdi-send"></i></button>
 					</span>
 				</div>
-				{!! form_close() !!}
+				<?php echo form_close(); ?>
+
 			</div>
 			<div class="tab-pane" id="dokumen-pendukung" role="tabpanel" aria-labelledby="dokumen-pendukung-tab">
 				<div class="table-responsive">
@@ -546,31 +564,32 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 							</tr>
 						</thead>
 						<tbody id="tb-dokumen">
-							@foreach ($dokumen_pendukung->result() as $row)
+							<?php $__currentLoopData = $dokumen_pendukung->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 							<tr>
-								<th class="text-center">{{ $loop->iteration }}</th>
+								<th class="text-center"><?php echo e($loop->iteration); ?></th>
 								<td>
 									<a href="javascript:void(0)" style="font-size: 14px;">
 										<i class="mdi mdi-file"></i>
-										@php
+										<?php
 										$pecah_nama = explode('_', $row->nama_file);
 										echo $pecah_nama[1] . ' ('.formatBytes($row->ukuran_file).')';
-										@endphp
+										?>
 									</a>
 								</td>
 								<td>
 									<span class="" style="font-size: 14px;">
-                                        {{ $row->deskripsi }}
+                                        <?php echo e($row->deskripsi); ?>
+
                                     </span>
 								</td>
 								<td class="text-center">
-									<a href="{{ base_url('app-data/dokumen-pendukung/' . $row->nama_file) }}"
-										class="btn btn-info btn-xs" download="{{ $pecah_nama[1] }}" title="Download">
+									<a href="<?php echo e(base_url('app-data/dokumen-pendukung/' . $row->nama_file)); ?>"
+										class="btn btn-info btn-xs" download="<?php echo e($pecah_nama[1]); ?>" title="Download">
 										<i class="mdi mdi-download"></i> Unduh
 									</a>
 								</td>
 							</tr>
-							@endforeach
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</tbody>
 					</table>
 				</div>
@@ -579,7 +598,8 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 	</div>
 </div>
 
-{!! form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/hapus_pesan', array('class' => 'myForm')) !!}
+<?php echo form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/hapus_pesan', array('class' => 'myForm')); ?>
+
 <!-- modal hapus pesan -->
 <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -618,9 +638,11 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-{!! form_close() !!}
+<?php echo form_close(); ?>
 
-{!! form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/hapus_pesan_reply', array('class' => 'myForm')) !!}
+
+<?php echo form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/hapus_pesan_reply', array('class' => 'myForm')); ?>
+
 <!-- modal hapus pesan -->
 <div id="modal-hapus-pesan-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -659,10 +681,12 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-{!! form_close() !!}
+<?php echo form_close(); ?>
 
-@if ($kode_jabatan == 3 || $kode_jabatan == 0)
-{!! form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/buat_catatan_wr_1', array('class' => 'myForm')) !!}
+
+<?php if($kode_jabatan == 3 || $kode_jabatan == 0): ?>
+<?php echo form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/buat_catatan_wr_1', array('class' => 'myForm')); ?>
+
 <!-- modal buat catatan wr 1 -->
 <div id="modal-buat-catatan-wr-1" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -694,11 +718,13 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-{!! form_close() !!}
-@endif
+<?php echo form_close(); ?>
 
-@if ($kode_jabatan == 4 || $kode_jabatan == 0)
-{!! form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/buat_catatan_wr_2', array('class' => 'myForm')) !!}
+<?php endif; ?>
+
+<?php if($kode_jabatan == 4 || $kode_jabatan == 0): ?>
+<?php echo form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/buat_catatan_wr_2', array('class' => 'myForm')); ?>
+
 <!-- modal buat catatan wr 1 -->
 <div id="modal-buat-catatan-wr-2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
@@ -730,14 +756,16 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-{!! form_close() !!}
-@endif
+<?php echo form_close(); ?>
 
-@if ($approvalOpen == true)
+<?php endif; ?>
+
+<?php if($approvalOpen == true): ?>
 <div class="col-md-12">
-	{!! form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/submit_actbud', array('id' => 'form-persetujuan', 'class' => 'myForm')) !!}
-	<input type="hidden" name="sign" value="{{ $data->sign }}">
-	<input type="hidden" name="kode_unit" value="{{ $data->kode_unit }}">
+	<?php echo form_open('app/sim-ig/approval/v_detail/' . $CI->uri->segment(5) . '/submit_actbud', array('id' => 'form-persetujuan', 'class' => 'myForm')); ?>
+
+	<input type="hidden" name="sign" value="<?php echo e($data->sign); ?>">
+	<input type="hidden" name="kode_unit" value="<?php echo e($data->kode_unit); ?>">
 	<div class="card">
 		<div class="card-header bg-transparent">
 			<h5 class="card-title mb-0">FORM PERSETUJUAN</h5>
@@ -786,7 +814,7 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 				<div class="modal-body">
 					<div class="note"></div>
 					<p class="mb-0">Apakah anda yakin ingin <span class="detail" style="font-weight: bold"></span> actbud ini?</p>			
-					@if ($kode_jabatan == 0)
+					<?php if($kode_jabatan == 0): ?>
 						<div class="form-group">
 							<label for="">Anda sebagai <b>admin</b>, silakan pilih approval sebagai:</label>
 							<select name="approval_as" id="approval_as" class="form-control" required>
@@ -799,7 +827,7 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 								<option value="all">Semua</option>
 							</select>
 						</div>
-					@endif					
+					<?php endif; ?>					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary waves-effect btn-sm" data-dismiss="modal">Close</button>
@@ -811,17 +839,18 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-	{!! form_close() !!}
+	<?php echo form_close(); ?>
+
 </div>
-@endif
+<?php endif; ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
 	$(document).ready(function () {
 		
@@ -848,21 +877,21 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 			}
 		})
 
-		@if($kode_jabatan == 3 || $kode_jabatan == 0)
+		<?php if($kode_jabatan == 3 || $kode_jabatan == 0): ?>
 		$('#tb-biaya').on('click', '.btnBuatCatatanWr1', function () {
 			$('#modal-buat-catatan-wr-1').modal('show')
 			$('#modal-buat-catatan-wr-1 input[name="id"]').val($(this).data('id'))
 			$('#modal-buat-catatan-wr-1 p#detail').text($(this).data('nama_kegiatan'))
 		})
-		@endif
+		<?php endif; ?>
 
-		@if($kode_jabatan == 4 || $kode_jabatan == 0)
+		<?php if($kode_jabatan == 4 || $kode_jabatan == 0): ?>
 		$('#tb-biaya').on('click', '.btnBuatCatatanWr2', function () {
 			$('#modal-buat-catatan-wr-2').modal('show')
 			$('#modal-buat-catatan-wr-2 input[name="id"]').val($(this).data('id'))
 			$('#modal-buat-catatan-wr-2 p#detail').text($(this).data('nama_kegiatan'))
 		})
-		@endif
+		<?php endif; ?>
 
 		$('#approval_tracking').on('click', '.appvd', function(){
             $('#approval_tracking').on('click', '.appvd', function(){
@@ -967,4 +996,6 @@ if($kode_jabatan == 6 && $data->st_kabag == ""){
 	})
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('ig.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/ig/users/approval/v_detail.blade.php ENDPATH**/ ?>

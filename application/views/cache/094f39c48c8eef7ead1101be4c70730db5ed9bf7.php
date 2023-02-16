@@ -1,18 +1,18 @@
-@extends('ig.layouts.user')
 
-@section('title', 'Hibah - Detail Kegiatan')
 
-@section('page-title')
-    <a href="{{ $_SERVER['HTTP_REFERER'] }}"><i class="mdi mdi-arrow-left"></i></a> Detail Kegiatan
-@endsection
+<?php $__env->startSection('title', 'Hibah - Detail Kegiatan'); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery-ui.custom-for-signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/jquery.signature.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
+<?php $__env->startSection('page-title'); ?>
+    <a href="<?php echo e($_SERVER['HTTP_REFERER']); ?>"><i class="mdi mdi-arrow-left"></i></a> Detail Kegiatan
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery-ui.custom-for-signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/jquery.signature.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
 <style>
     .kbw-signature { width: 300px; height: 300px;}
     #ttd canvas{
@@ -20,14 +20,14 @@
         height: auto;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-briefcase-outline"></i> Hibah</a></li>
-<li class="breadcrumb-item active"><a href="javascript: void(0);"><b><i class="mdi mdi-file-document-outline"></i> {{ $data->kode_uraian }}</a></b></li>
-@endsection
+<li class="breadcrumb-item active"><a href="javascript: void(0);"><b><i class="mdi mdi-file-document-outline"></i> <?php echo e($data->kode_uraian); ?></a></b></li>
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-purple">
@@ -40,7 +40,7 @@
                             <label for="">PIC</label>
                             <p class="form-control-static">
                                 <span class="badge bg-info p-2">
-                                    <b><i class="mdi mdi-account"></i> {{ $data->nama_karyawan == '' ? 'belum ditentukan' : $data->nama_karyawan }}</b>
+                                    <b><i class="mdi mdi-account"></i> <?php echo e($data->nama_karyawan == '' ? 'belum ditentukan' : $data->nama_karyawan); ?></b>
                                 </span>
                             </p>
                         </div>
@@ -50,7 +50,8 @@
                             <label for="">Nama Hibah</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    {{ $data->nama_hibah_sponsorship }}
+                                    <?php echo e($data->nama_hibah_sponsorship); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -60,7 +61,8 @@
                             <label for="">Deskripsi Kegiatan</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    {{ $data->uraian_kegiatan }}
+                                    <?php echo e($data->uraian_kegiatan); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -70,7 +72,8 @@
                             <label for="">KPI</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    {{ $data->kpi }}
+                                    <?php echo e($data->kpi); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -80,7 +83,8 @@
                             <label for="">Cara Ukur</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    {{ $data->cara_ukur }}
+                                    <?php echo e($data->cara_ukur); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -90,7 +94,8 @@
                             <label for="">Base Line</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    {{ $data->base_line }}
+                                    <?php echo e($data->base_line); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -100,7 +105,8 @@
                             <label for="">Target</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    {{ $data->target }}
+                                    <?php echo e($data->target); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -110,7 +116,8 @@
                             <label for="">Output</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    {{ $data->output }}
+                                    <?php echo e($data->output); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -120,16 +127,18 @@
                             <label for="">Periode</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                @switch($data->periode)
-                                    @case(1)
-                                        {{ "Ganjil" }} 
-                                        @break
-                                    @case(2)
-                                        {{ "Genap" }}
-                                        @break
-                                    @default
-                                        {{ "Unknown" }}
-                                @endswitch
+                                <?php switch($data->periode):
+                                    case (1): ?>
+                                        <?php echo e("Ganjil"); ?> 
+                                        <?php break; ?>
+                                    <?php case (2): ?>
+                                        <?php echo e("Genap"); ?>
+
+                                        <?php break; ?>
+                                    <?php default: ?>
+                                        <?php echo e("Unknown"); ?>
+
+                                <?php endswitch; ?>
                                 </span>
                             </p>
                         </div>
@@ -139,7 +148,7 @@
                             <label for="">Kode Pencairan</label>
                             <p class="form-control-static">
                                 <span class="badge bg-primary p-2">
-                                    <b>{{ $data->kode_pencairan }}</b>
+                                    <b><?php echo e($data->kode_pencairan); ?></b>
                                 </span>
                             </p>
                         </div>
@@ -149,7 +158,8 @@
                             <label for="">Tanggal Buat</label>
                             <p class="form-control-static">
                                 <span class="" style="font-size: 14px;">
-                                    <i class="mdi mdi-calendar"></i> {{ $data->tanggal_buat }}
+                                    <i class="mdi mdi-calendar"></i> <?php echo e($data->tanggal_buat); ?>
+
                                 </span>
                             </p>
                         </div>
@@ -159,7 +169,7 @@
                             <label for="">Total Anggaran</label>
                             <p class="form-control-static">
                                 <span class="badge bg-success p-2">
-                                    <b><i class="mdi mdi-cash"></i> {{ rupiah($data->total_agr) }}</b>
+                                    <b><i class="mdi mdi-cash"></i> <?php echo e(rupiah($data->total_agr)); ?></b>
                                 </span>
                             </p>
                         </div>
@@ -167,19 +177,20 @@
                 </div>
             </div>
             <!--<div class="card-footer">
-                <a href="javascript:void(0)" class="btn btn-primary btn-sm float-right ml-1" id="btn-finalisasi" data-id="{{ encrypt($data->id) }}"><i class="mdi mdi-content-save"></i> Finalisasi</a>
-                <a href="javascript:void(0)" data-id="{{ encrypt($data->id) }}" data-nama_hibah="{{ $data->nama_hibah_sponsorship }}" 
-                    data-deskripsi="{{ $data->uraian_kegiatan }}" data-kpi="{{ $data->kpi }}" data-cara_ukur="{{ $data->cara_ukur }}" 
-                    data-base_line="{{ $data->base_line }}" data-target="{{ $data->target }}" data-output="{{ $data->output }}" 
-                    data-periode="{{ $data->periode }}" data-kode_pencairan="{{ $data->kode_pencairan }}" data-total_anggaran="{{ $data->total_agr }}" 
-                    data-ttd_pic="{{ $data->ttd_pic }}" class="btn btn-secondary btn-sm float-right ml-1" id="ubah-data"><i class="mdi mdi-pencil"></i> Ubah</a>
-                <a href="javascript:void(0)" data-id="{{ encrypt($data->id) }}" class="btn btn-danger btn-sm float-right" id="btn-batalkan"><i class="mdi mdi-trash-can-outline"></i> Batalkan</a>
+                <a href="javascript:void(0)" class="btn btn-primary btn-sm float-right ml-1" id="btn-finalisasi" data-id="<?php echo e(encrypt($data->id)); ?>"><i class="mdi mdi-content-save"></i> Finalisasi</a>
+                <a href="javascript:void(0)" data-id="<?php echo e(encrypt($data->id)); ?>" data-nama_hibah="<?php echo e($data->nama_hibah_sponsorship); ?>" 
+                    data-deskripsi="<?php echo e($data->uraian_kegiatan); ?>" data-kpi="<?php echo e($data->kpi); ?>" data-cara_ukur="<?php echo e($data->cara_ukur); ?>" 
+                    data-base_line="<?php echo e($data->base_line); ?>" data-target="<?php echo e($data->target); ?>" data-output="<?php echo e($data->output); ?>" 
+                    data-periode="<?php echo e($data->periode); ?>" data-kode_pencairan="<?php echo e($data->kode_pencairan); ?>" data-total_anggaran="<?php echo e($data->total_agr); ?>" 
+                    data-ttd_pic="<?php echo e($data->ttd_pic); ?>" class="btn btn-secondary btn-sm float-right ml-1" id="ubah-data"><i class="mdi mdi-pencil"></i> Ubah</a>
+                <a href="javascript:void(0)" data-id="<?php echo e(encrypt($data->id)); ?>" class="btn btn-danger btn-sm float-right" id="btn-batalkan"><i class="mdi mdi-trash-can-outline"></i> Batalkan</a>
             </div>-->
         </div>
     </div>
 
     <!--  Modal edit -->
-    {!! form_open('app/hibah/v_detail/' . $CI->uri->segment(4) . '/edit_hibah', array('id' => 'form-ubah')) !!}
+    <?php echo form_open('app/hibah/v_detail/' . $CI->uri->segment(4) . '/edit_hibah', array('id' => 'form-ubah')); ?>
+
     <div class="modal fade bs-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -262,15 +273,15 @@
                         <div class="col-lg-10">
                             <select name="pic" id="pic" class="form-control select2" style="width:100%;" required>
                                 <option value="">Pilih PIC Kegiatan</option>                                    
-                                @foreach ($unit->result() as $item)
-                                    <optgroup label="{{ $item->nama_unit }}">
-                                        @foreach ($karyawan->result() as $ky)
-                                            @if ($ky->kode_unit == $item->kode_unit)
-                                                <option value="{{ $ky->nik }}" {{ $ky->nik == $data->pic ? "selected" : "" }}>{{ $ky->nama_lengkap }}</option>
-                                            @endif
-                                        @endforeach
+                                <?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <optgroup label="<?php echo e($item->nama_unit); ?>">
+                                        <?php $__currentLoopData = $karyawan->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ky): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php if($ky->kode_unit == $item->kode_unit): ?>
+                                                <option value="<?php echo e($ky->nik); ?>" <?php echo e($ky->nik == $data->pic ? "selected" : ""); ?>><?php echo e($ky->nama_lengkap); ?></option>
+                                            <?php endif; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </optgroup>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                             <span class="help-block"><small>Tentukan pic.</small></span>
                         </div>
@@ -281,9 +292,9 @@
                         <div class="col-lg-10">
                             <select name="unit" id="unit" class="form-control select2" style="width:100%;" required>
                                 <option value="">Pilih Unit Kegiatan</option>
-                                @foreach ($unit->result() as $item)
-                                    <option value="{{ $item->kode_unit }}" {{ $item->kode_unit == $data->kode_unit ? "selected" : "" }}>{{ $item->nama_unit }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $unit->result(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->kode_unit); ?>" <?php echo e($item->kode_unit == $data->kode_unit ? "selected" : ""); ?>><?php echo e($item->nama_unit); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                             <span class="help-block"><small>Tentukan unit.</small></span>
                         </div>
@@ -312,11 +323,13 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    {!! form_close() !!}
+    <?php echo form_close(); ?>
+
     <!-- /.modal -->
 
     <!-- Modal batalkan kegiatan -->
-    {!! form_open('app/hibah/v_detail/' . $CI->uri->segment(4) . '/batalkan_kegiatan') !!}
+    <?php echo form_open('app/hibah/v_detail/' . $CI->uri->segment(4) . '/batalkan_kegiatan'); ?>
+
     <div id="modal-batalkan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -340,9 +353,11 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    {!! form_close() !!}
+    <?php echo form_close(); ?>
 
-    {!! form_open('app/hibah/v_detail/' . $CI->uri->segment(4) . '/finalisasi') !!}
+
+    <?php echo form_open('app/hibah/v_detail/' . $CI->uri->segment(4) . '/finalisasi'); ?>
+
     <div id="modal-finalisasi" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -369,15 +384,16 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    {!! form_close() !!}
-@endsection
+    <?php echo form_close(); ?>
 
-@section('js')
-    <script src="{{ base_url('assets/js/select2.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+    <script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="{{ base_url('assets/js/jquery.signature.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery.signature.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery.ui.touch-punch.min.js')); ?>"></script>
     <script>
         $(document).ready(function(){
 
@@ -456,4 +472,5 @@
             })
         })
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('ig.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/ig/users/hibah/v_detail_hibah.blade.php ENDPATH**/ ?>

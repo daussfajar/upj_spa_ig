@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <form action="<?php echo e(base_url('app/approval')); ?>" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
+                    <form action="<?php echo e(base_url('app/sim-ig/approval')); ?>" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
                         <div class="input-group">
                             <input type="search" id="q" value="<?php echo e(!empty($_GET['q']) ? $_GET['q'] : ''); ?>" name="q" class="form-control" placeholder="Cari data...">
                             <span class="input-group-prepend">

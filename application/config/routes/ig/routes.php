@@ -14,14 +14,15 @@ $route['app/sim-ig/admin/system/backup_db'] = 'IG/Maintenance/Backups/backup_db'
 /* APPROVAL */
 $route['app/sim-ig/approval'] = 'IG/User/Approval';
 $route['app/sim-ig/approval/(:num)'] = 'IG/User/Approval';
-$route['app/sim-ig/approval/v_detail/(:any)'] = 'IG/User/Approval/v_detail';
-$route['app/sim-ig/approval/v_detail/(:any)/buat_pesan']['POST'] = 'IG/User/Approval/buat_pesan';
-$route['app/sim-ig/approval/v_detail/(:any)/hapus_pesan']['POST'] = 'IG/User/Approval/hapus_pesan';
-$route['app/sim-ig/approval/v_detail/(:any)/buat_catatan_wr_1']['POST'] = 'IG/User/Approval/buat_catatan_wr_1';
-$route['app/sim-ig/approval/v_detail/(:any)/buat_catatan_wr_2']['POST'] = 'IG/User/Approval/buat_catatan_wr_2';
-$route['app/sim-ig/approval/v_detail/(:any)/submit_actbud']['POST'] = 'IG/User/Approval/submit_actbud';
+$route['app/sim-ig/approval/v_detail/(:any)'] = 'IG/User/Approval/v_detail/$1';
+$route['app/sim-ig/approval/v_detail/(:any)/buat_pesan']['POST'] = 'IG/User/Approval/buat_pesan/$1';
+$route['app/sim-ig/approval/v_detail/(:any)/hapus_pesan']['POST'] = 'IG/User/Approval/hapus_pesan/$1';
+$route['app/sim-ig/approval/v_detail/(:any)/hapus_pesan_reply']['POST'] = 'IG/User/Approval/hapus_pesan_reply/$1';
+$route['app/sim-ig/approval/v_detail/(:any)/buat_catatan_wr_1']['POST'] = 'IG/User/Approval/buat_catatan_wr_1/$1';
+$route['app/sim-ig/approval/v_detail/(:any)/buat_catatan_wr_2']['POST'] = 'IG/User/Approval/buat_catatan_wr_2/$1';
+$route['app/sim-ig/approval/v_detail/(:any)/submit_actbud']['POST'] = 'IG/User/Approval/submit_actbud/$1';
 
-$route['app/sim-ig/riwayat_approval/v_detail/(:any)'] = 'IG/User/Approval/v_detail';
+$route['app/sim-ig/riwayat_approval/v_detail/(:any)'] = 'IG/User/Approval/v_detail/$1';
 /* END APPROVAL */
 
 /* SETTINGS */
@@ -36,7 +37,7 @@ $route['app/sim-ig/hibah'] = 'IG/User/Hibah';
 $route['app/sim-ig/hibah/(:num)'] = 'IG/User/Hibah';
 $route['app/sim-ig/hibah/buat_kegiatan'] = 'IG/User/Hibah/v_buat_kegiatan';
 $route['app/sim-ig/hibah/buat_kegiatan/submit']['POST'] = 'IG/User/Hibah/submit_buat_kegiatan';
-$route['app/sim-ig/hibah/v_detail/(:any)'] = 'IG/User/Hibah/v_detail_hibah';
+$route['app/sim-ig/hibah/v_detail/(:any)'] = 'IG/User/Hibah/v_detail_hibah/$1';
 $route['app/sim-ig/hibah/v_detail/(:any)/edit_hibah']['POST'] = 'IG/User/Hibah/edit_hibah';
 $route['app/sim-ig/hibah/v_detail/(:any)/batalkan_kegiatan']['POST'] = 'IG/User/Hibah/batalkan_kegiatan';
 $route['app/sim-ig/hibah/v_detail/(:any)/finalisasi']['POST'] = 'IG/User/Hibah/finalisasi';
@@ -45,24 +46,30 @@ $route['app/sim-ig/hibah/pencairan/detail_hibah/(:any)'] = 'IG/User/PencairanHib
 $route['app/sim-ig/hibah/pencairan'] = 'IG/User/PencairanHibah';
 $route['app/sim-ig/hibah/pencairan/(:num)'] = 'IG/User/PencairanHibah';
 //$route['app/sim-ig/hibah/pencairan/v_detail/(:any)'] = 'IG/User/PencairanHibah/v_detail';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/buat_pencairan'] = 'IG/User/PencairanHibah/buat_pencairan';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/buat_pencairan/create']['POST'] = 'IG/User/PencairanHibah/create_pencairan';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/buat_pencairan'] = 'IG/User/PencairanHibah/buat_pencairan/$1';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/buat_pencairan/create']['POST'] = 'IG/User/PencairanHibah/create_pencairan/$1';
 
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanHibah/v_detail_actbud';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanHibah/v_detail_actbud/$1/$2';
 $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/ubah-actbud']['POST'] = 'IG/User/PencairanHibah/ubah_actbud';
 $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/batalkan-actbud']['POST'] = 'IG/User/PencairanHibah/batalkan_actbud';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan']['POST'] = 'IG/User/PencairanHibah/hapus_pesan';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/upload-dokumen-pendukung']['POST'] = 'IG/User/PencairanHibah/upload_dokumen_pendukung';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-dokumen-pendukung']['POST'] = 'IG/User/PencairanHibah/hapus_dokumen_pendukung';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/buat-rincian-kegiatan']['POST'] = 'IG/User/PencairanHibah/buat_rincian_kegiatan';
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-rincian-kegiatan']['POST'] = 'IG/User/PencairanHibah/hapus_rincian_kegiatan';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan']['POST'] = 'IG/User/PencairanHibah/hapus_pesan/$1/$2';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan-reply']['POST'] = 'IG/User/PencairanHibah/hapus_pesan_reply/$1/$2';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/upload-dokumen-pendukung']['POST'] = 'IG/User/PencairanHibah/upload_dokumen_pendukung/$1/$2';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-dokumen-pendukung']['POST'] = 'IG/User/PencairanHibah/hapus_dokumen_pendukung/$1/$2';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/buat-rincian-kegiatan']['POST'] = 'IG/User/PencairanHibah/buat_rincian_kegiatan/$1/$2';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/hapus-rincian-kegiatan']['POST'] = 'IG/User/PencairanHibah/hapus_rincian_kegiatan/$1/$2';
 $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/submit']['POST'] = 'IG/User/PencairanHibah/submit_actbud/$1/$2';
-
-$route['app/sim-ig/hibah/status_pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanHibah/v_detail_actbud';
-$route['app/sim-ig/realisasi_anggaran/history/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanHibah/v_detail_actbud';
-
-$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/buat_pesan']['POST'] = 'IG/User/PencairanHibah/buat_pesan';
+$route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/buat_pesan']['POST'] = 'IG/User/PencairanHibah/buat_pesan/$1/$2';
 $route['app/sim-ig/hibah/pencairan/v_detail/(:any)/actbud/(:any)/cetak_form_actbud'] = 'IG/User/PencairanHibah/cetak_form_actbud';
+
+$route['app/sim-ig/hibah/status_pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanHibah/v_detail_actbud/$1/$2';
+$route['app/sim-ig/hibah/status_pencairan'] = 'IG/User/StatusPencairanHibah';
+$route['app/sim-ig/hibah/status_pencairan/(:num)'] = 'IG/User/StatusPencairanHibah';
+$route['app/sim-ig/hibah/status_pencairan/v_detail/(:any)/actbud/(:any)/buat_pesan']['POST'] = 'IG/User/PencairanHibah/buat_pesan/$1/$2';
+$route['app/sim-ig/hibah/status_pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan']['POST'] = 'IG/User/PencairanHibah/hapus_pesan/$1/$2';
+$route['app/sim-ig/hibah/status_pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan-reply']['POST'] = 'IG/User/PencairanHibah/hapus_pesan_reply/$1/$2';
+
+$route['app/sim-ig/realisasi_anggaran/history/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanHibah/v_detail_actbud';
 
 $route['app/sim-ig/actbud-disetujui'] = 'IG/User/Actbud/v_actbud_disetujui';
 $route['app/sim-ig/actbud-ditolak'] = 'IG/User/Actbud/v_actbud_ditolak';
@@ -70,8 +77,6 @@ $route['app/sim-ig/actbud-ditolak'] = 'IG/User/Actbud/v_actbud_ditolak';
 $route['app/sim-ig/hibah/preview_upload'] = 'IG/User/Hibah/preview_upload';
 $route['app/sim-ig/hibah/preview_upload/upload']['POST'] = 'IG/User/Hibah/upload_hibah';
 
-$route['app/sim-ig/hibah/status_pencairan'] = 'IG/User/StatusPencairanHibah';
-$route['app/sim-ig/hibah/status_pencairan/(:num)'] = 'IG/User/StatusPencairanHibah';
 // HISTORY APPROVAL
 $route['app/sim-ig/riwayat_approval'] = 'IG/User/HistoryApproval';
 $route['app/sim-ig/riwayat_approval/(:num)'] = 'IG/User/HistoryApproval';
