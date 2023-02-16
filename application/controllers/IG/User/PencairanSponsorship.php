@@ -51,11 +51,11 @@ class PencairanSponsorship extends CI_Controller {
 		return view('ig.users.sponsorship.v_detail_pencairan', $data);
 	}
 
-	public function buat_pencairan(){					
-		$id = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));
+	public function buat_pencairan(string $id_uraian){					
+		$id = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
 		$agr = $this->Sponsorship_model->cek_anggaran_digunakan_sementara($id);		
 		$data['data'] = !$this->Sponsorship_model->get_data_sponsorship_by_id($id) ? show_error("Error", 403) : $this->Sponsorship_model->get_data_sponsorship_by_id($id);
-
+		
 		$agr_in_out = $this->Actbud_model->get_agr_in_out($data['data']->kode_uraian);
 		$saldo_masuk = $agr_in_out['saldo_masuk'];
 		$saldo_keluar = $agr_in_out['saldo_keluar'];
@@ -64,7 +64,7 @@ class PencairanSponsorship extends CI_Controller {
 		$kode_unit = $_SESSION['user_sessions']['kode_unit'];
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
 		$data['unit'] = $this->db->get('tbl_unit');
-		
+		$data['id_uraian'] = $id_uraian;
 		return view('ig.users.sponsorship.buat_pencairan', $data);
 	}
 

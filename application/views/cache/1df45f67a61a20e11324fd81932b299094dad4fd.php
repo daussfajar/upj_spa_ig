@@ -66,14 +66,14 @@
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
                                 <?php if($unit == 'Bagian Keuangan' || $jabatan == 0): ?>
-                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(3) == 'buat_kegiatan' ? 'mm-active' : '' ?>">
+                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'buat_kegiatan' ? 'mm-active' : '' ?>">
                                     <a href="<?php echo e(base_url('app/sim-ig/sponsorship')); ?>" class="<?= menu_active(4, 'buat_kegiatan', 'active') ?>">Kegiatan</a>
                                 </li>
                                 <?php endif; ?>
-                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(3) == 'pencairan' ? 'mm-active' : '' ?>">
+                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'pencairan' ? 'mm-active' : '' ?>">
                                     <a href="<?php echo e(base_url('app/sim-ig/sponsorship/pencairan')); ?>" class="">Pencairan</a>
                                 </li>
-                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(3) == 'status_pencairan' ? 'mm-active' : '' ?>">
+                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'status_pencairan' ? 'mm-active' : '' ?>">
                                     <a href="<?php echo e(base_url('app/sim-ig/sponsorship/status_pencairan')); ?>" class="<?= menu_active(4, 'status_pencairan', 'active') ?>">Status Pencairan</a>
                                 </li>
                             </ul>      
