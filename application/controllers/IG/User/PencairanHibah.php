@@ -131,7 +131,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Habis'
 				]);
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(6) . '/buat_pencairan'));
+				return redirect($_SERVER['HTTP_REFERER']);
 			}
 
 			if($total_agr > $batas){
@@ -140,7 +140,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Lewat Batas'
 				]);
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(6) . '/buat_pencairan'));
+				return redirect($_SERVER['HTTP_REFERER']);
 			} else {
 				$periode = !decrypt($this->input->post('periode', true)) ? show_error("Unauthorized!") : decrypt($this->input->post('periode', true));
 				$data = [
@@ -174,7 +174,7 @@ class PencairanHibah extends CI_Controller {
 						'type'    => 'success',	
 						'title'   => ''
 					]);
-					return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(6) . '/actbud/' . encrypt($this->db->insert_id())));
+					return redirect(base_url('app/sim-ig/hibah/status_pencairan/v_detail/' . $this->uri->segment(6) . '/actbud/' . encrypt($this->db->insert_id())));
 		
 				} else {
 					$this->session->set_flashdata('alert', [
@@ -182,7 +182,7 @@ class PencairanHibah extends CI_Controller {
 						'type'    => 'error',	
 						'title'   => ''
 					]);
-					return redirect(base_url('app/sim-ig/hibah/pencairan'));
+					return redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 
@@ -226,7 +226,7 @@ class PencairanHibah extends CI_Controller {
 			'type'    => 'success',	
 			'title'   => ''
 		]);
-		return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(5)));
+		return redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function ubah_actbud(){		
@@ -270,7 +270,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+				return redirect($_SERVER['HTTP_REFERER']);
 			} else {
 				$data = [			
 					'nama_kegiatan' => $this->input->post('nama_kegiatan', true),
@@ -291,7 +291,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
+				return redirect($_SERVER['HTTP_REFERER']);
 			}			
 
 		} else {
@@ -355,8 +355,8 @@ class PencairanHibah extends CI_Controller {
 							'type'    => 'success',	
 							'title'   => ''
 						]);
-		
-						return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
+
+						return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
 	
 					}
 
@@ -372,8 +372,8 @@ class PencairanHibah extends CI_Controller {
 						'type'    => 'success',	
 						'title'   => ''
 					]);
-	
-					return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
+
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
 				}
 
 			} else {
@@ -428,8 +428,8 @@ class PencairanHibah extends CI_Controller {
 							'type'    => 'success',	
 							'title'   => ''
 						]);
-		
-						return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
+
+						return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
 	
 					}
 	
@@ -445,8 +445,8 @@ class PencairanHibah extends CI_Controller {
 						'type'    => 'success',	
 						'title'   => ''
 					]);
-	
-					return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-chat'));
+
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
 				}						
 							
 			} else {
@@ -488,7 +488,7 @@ class PencairanHibah extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-chat'));
+			return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
@@ -523,7 +523,7 @@ class PencairanHibah extends CI_Controller {
 				'type'    => 'success',
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sim-ig/hibah/'.$this->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-chat'));
+			return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
@@ -583,7 +583,7 @@ class PencairanHibah extends CI_Controller {
 					'title'   => ''
 				]);
 
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . encrypt($id_actbud) . '#card-dokumen-pendukung'));
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
 
 			}
 
@@ -623,14 +623,14 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'success',
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-dokumen-pendukung'));
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
 			} else {
 				$this->session->set_flashdata('alert', [
 					'message' => 'Dokumen pendukung gagal dihapus.',
 					'type'    => 'success',
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-dokumen-pendukung'));
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
 			}
 
 		} else {
@@ -679,7 +679,7 @@ class PencairanHibah extends CI_Controller {
 					]);
 				}
 
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($id_uraian) . '/actbud/' . encrypt($id_actbud) ));
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
 			} else {
 				$data = [
 					'id_actbud' => $id_actbud,
@@ -696,7 +696,7 @@ class PencairanHibah extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($id_uraian) . '/actbud/' . encrypt($id_actbud) . '#card-rincian'));
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
 			}
 															
 		} else {
@@ -726,7 +726,7 @@ class PencairanHibah extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '#card-rincian'));
+			return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
 
 		} else {
 			$error = [
@@ -786,7 +786,7 @@ class PencairanHibah extends CI_Controller {
 				'type'    => 'success',
 				'title'   => ''
 			]);
-			return redirect(base_url('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud));
+			return redirect($_SERVER['HTTP_REFERER']);
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()

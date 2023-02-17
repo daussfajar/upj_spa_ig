@@ -11,7 +11,9 @@ class Backups extends CI_Controller {
         header("X-XSS-Protection: 1; mode=block");
     }
 
-    /*public function backup_db(){
+    public function backup_db(){
+        echo 'Fitur belum dibuat, sabar ya!';
+        exit;
         $this->load->dbutil();
 
         $db_name = 'backup-db-'.$this->db->database.'-on-'.date('Y-m-d-H-i-s').'.sql';
@@ -30,7 +32,7 @@ class Backups extends CI_Controller {
 
         $this->load->helper('download');
         force_download($db_name, $backup);
-    }*/
+    }
 }
 
 ?>

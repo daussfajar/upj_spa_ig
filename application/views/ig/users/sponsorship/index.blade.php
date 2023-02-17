@@ -105,10 +105,10 @@
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle">{{ $no }}</th>
                                     <th style="vertical-align: middle;">
-                                        <a href="{{ base_url('app/sim-ig/sponsorship/v_detail/'.encrypt($row['id'])) }}" class="badge bg-purple">{{ $row['kode_uraian'] }}</a>
+                                        <a href="{{ base_url('app/sim-ig/sponsorship/v_detail/'.encrypt($row['id'])) }}" class="badge bg-purple p-2">{{ $row['kode_uraian'] }}</a>
                                     </th>
                                     <th style="vertical-align: middle;">
-                                        <span class="badge bg-primary">
+                                        <span class="badge bg-primary p-2">
                                             {{ $row['kode_pencairan'] }}
                                         </span>
                                     </th>                                    
@@ -135,14 +135,14 @@
                                         <span class="" style="font-size: 14px;">
                                             {{ $row['nama_lengkap'] }} ({{ $row['pic'] }})
                                         </span>
-                                        <hr class="mt-1 mb-0">
+                                        <hr class="mt-1 mb-1">
                                         <a href="javascript:void(0)" data-id="{{ encrypt($row['id']) }}" 
 							                data-kode_uraian="{{ $row['kode_uraian'] }}" data-pic="{{ $row['pic'] }}" 
 							                data-kode_pencairan="{{ $row['kode_pencairan'] }}" 
-							                data-nama_hibah="{{ $row['nama_hibah_sponsorship'] }}" class="badge bg-secondary text-white btn-set_pic">{{ $row['nama_lengkap'] == '' ? 'Tentukan' : 'Ubah' }} PIC</a>
+							                data-nama_hibah="{{ $row['nama_hibah_sponsorship'] }}" class="badge bg-secondary p-2 text-white btn-set_pic">{{ $row['nama_lengkap'] == '' ? 'Tentukan' : 'Ubah' }} PIC</a>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <span class="badge bg-warning">
+                                        <span class="badge bg-warning p-2">
                                             @switch($row['periode'])
                                                 @case(1)
                                                     {{ "Ganjil" }}
@@ -161,7 +161,7 @@
                                     </td>-->
                                     <td class="text-center" style="vertical-align: middle;">
                                         @if ($row['finalisasi'] == 'N')
-                                            <a href="javascript:void(0)" data-id="{{ encrypt($row['id']) }}" data-kode_uraian="{{ $row['kode_uraian'] }}" class="badge bg-danger batalkan-data col-12"><i
+                                            <a href="javascript:void(0)" data-id="{{ encrypt($row['id']) }}" data-kode_uraian="{{ $row['kode_uraian'] }}" class="badge bg-danger batalkan-data col-12 p-2"><i
                                                     class="mdi mdi-trash-can"></i> Batalkan</a>
                                             <a href="javascript:void(0)" data-id="{{ encrypt($row['id']) }}"
                                                 data-nama_hibah="{{ $row['nama_hibah_sponsorship'] }}"
@@ -171,9 +171,9 @@
                                                 data-periode="{{ $row['periode'] }}" data-unit="{{ $row['kode_unit'] }}" data-pic="{{ $row['pic'] }}" data-kode_pencairan="{{ $row['kode_pencairan'] }}"
                                                 data-total_anggaran="{{ $row['total_agr'] }}" data-ttd_pic="{{ $row['ttd_pic'] }}"
                                                 data-kode_sub_aktivitas="{{ $row['kode_sub_aktivitas'] }}" data-indikator_kerja_umum="{{ $row['indikator_kerja_umum'] }}"
-                                                class="badge bg-secondary ubah-data col-12"><i class="mdi mdi-pencil"></i> Ubah</a>
+                                                class="badge bg-secondary p-2 ubah-data col-12"><i class="mdi mdi-pencil"></i> Ubah</a>
                                             <a href="javascript:void(0)" data-kode_uraian="{{ $row['kode_uraian'] }}" data-id="{{ encrypt($row['id']) }}"
-                                                class="badge bg-primary col-12 finalisasi"><i class="mdi mdi-content-save"></i> Finalisasi</a>
+                                                class="badge bg-primary col-12 p-2 finalisasi"><i class="mdi mdi-content-save"></i> Finalisasi</a>
                                         @elseif($row['finalisasi'] == 'Y')
                                             @php
                                                 $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
@@ -185,7 +185,7 @@
                                                 $getSumOut = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_keluar FROM 
                                                 ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
                                                 AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();									
-                                                echo '<span class="badge bg-primary">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                                echo '<span class="badge bg-primary p-2">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
                                             @endphp
                                         @endif
                                     </td>

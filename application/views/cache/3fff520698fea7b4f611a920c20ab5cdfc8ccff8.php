@@ -37,7 +37,7 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="<?php echo e(base_url('app/hibah/pencairan')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    <a href="<?php echo e(base_url('app/sim-ig/hibah/pencairan')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="<?php echo e(base_url('app/sponsorship/pencairan')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    <a href="<?php echo e(base_url('app/sim-ig/sponsorship/pencairan')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="<?php echo e(base_url('app/actbud-disetujui')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    <a href="<?php echo e(base_url('app/sim-ig/actbud-disetujui')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="<?php echo e(base_url('app/actbud-ditolak')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    <a href="<?php echo e(base_url('app/sim-ig/actbud-ditolak')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="<?php echo e(base_url('app/approval')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                        <a href="<?php echo e(base_url('app/sim-ig/approval')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="float-right">
-                                        <a href="<?php echo e(base_url('app/hibah')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="<?php echo e(base_url('app/sim-ig/hibah')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="float-right">
-                                        <a href="<?php echo e(base_url('app/sponsorship')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="<?php echo e(base_url('app/sim-ig/sponsorship')); ?>" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>

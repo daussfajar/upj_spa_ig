@@ -1,19 +1,20 @@
-@extends('ig.layouts.user')
 
-@section('title', 'Pengaturan - Umum')
 
-@section('page-title')
+<?php $__env->startSection('title', 'Pengaturan - Umum'); ?>
+
+<?php $__env->startSection('page-title'); ?>
     Pengaturan Umum
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);"><i class="mdi mdi-cogs"></i> Pengaturan</a></li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);">Umum</a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-md-12">
-        {!! form_open() !!}
+        <?php echo form_open(); ?>
+
         <div class="card-box">
             <div class="row">
                 <div class="col-md-6">
@@ -35,7 +36,8 @@
                 </div>
             </div>
         </div>
-        {!! form_close() !!}
+        <?php echo form_close(); ?>
+
 
         <div class="card-box">
             <h5 class="mt-0 mb-3">
@@ -46,7 +48,7 @@
                     <div class="form-group row">
                         <label for="" class="col-md-4 control-label">Backup</label>
                         <div class="col-md-8">
-                            <a href="{{ base_url('app/sim-ig/admin/system/backup_db') }}" class="btn btn-primary btn-xs">
+                            <a href="<?php echo e(base_url('app/sim-ig/admin/system/backup_db')); ?>" class="btn btn-primary btn-xs">
                                 <i class="mdi mdi-database-export"></i> Backup Database
                             </a>
                         </div>
@@ -55,4 +57,5 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('ig.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/ig/admin/pengaturan/pengaturan_umum.blade.php ENDPATH**/ ?>

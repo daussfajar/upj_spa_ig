@@ -454,7 +454,7 @@
         @endif
     </div>
     
-    {!! form_open('app/sim-ig/hibah/'.$CI->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+    {!! form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/buat_pesan', array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
     <div class="card card-border card-purple" id="card-chat">
         <div class="card-header border-purple bg-transparent">
             <h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
@@ -738,7 +738,7 @@
 </div>
 
 @if ($data->status !== 'cancel' && $data->status !== 'approved')
-{!! form_open('app/sim-ig/hibah/'.$CI->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/hapus-pesan', array('class' => 'myForm')) !!}
+{!! form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/hapus-pesan', array('class' => 'myForm')) !!}
     <!-- modal hapus pesan -->
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -779,7 +779,7 @@
     <!-- /.modal -->
 {!! form_close() !!}
 
-{!! form_open('app/sim-ig/hibah/'.$CI->uri->segment(4).'/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/hapus-pesan-reply', array('class' => 'myForm')) !!}
+{!! form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/hapus-pesan-reply', array('class' => 'myForm')) !!}
     <!-- modal hapus pesan -->
     <div id="modal-hapus-pesan-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
