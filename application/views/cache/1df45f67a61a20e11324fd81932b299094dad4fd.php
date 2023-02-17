@@ -29,7 +29,7 @@
                 <li class="<?= menu_active(3, 'hibah', 'mm-active') ?><?= menu_active(3, 'sponsorship', 'mm-active') ?>">
                     <a href="javascript:void(0)" class="waves-effect waves-light <?= menu_active(3, 'hibah', 'active') ?><?= menu_active(3, 'sponsorship', 'active') ?>">
                         <i class="mdi mdi-folder-outline"></i>
-                        <span>  IG  </span>
+                        <span>  Income Generating  </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">

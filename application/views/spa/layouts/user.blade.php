@@ -24,7 +24,7 @@
     <style>
         .left-side-menu-light .navbar-custom .topnav-menu .nav-link {
             padding: 0 15px;
-            color: rgba(255,255,255,1);
+            color: #797979;
         }        
     </style>
 </head>
@@ -33,10 +33,10 @@
     <div id="wrapper">
         
         <!-- Topbar Start -->
-        <div class="navbar-custom">
+        <div class="navbar-custom bg-white">
             <ul class="list-unstyled topnav-menu float-right mb-0">
 
-                @include('spa.layouts.notification')                
+                @include('spa.layouts.user_notification')                
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -64,15 +64,15 @@
             </ul>
 
             <!-- LOGO -->
-            <div class="logo-box">
-                <a href="{{ base_url('app/dashboard') }}" class="logo text-center">
+            <div class="logo-box bg-white">
+                <a href="{{ base_url('app/sim-spa/dashboard') }}" class="logo text-center">
                     <span class="logo-lg">
-                        <img src="{{ base_url('assets/images/logo/upj-logo-text-white.png') }}" alt="" class="mt-1" height="45">
+                        <img src="{{ base_url('assets/images/logo/logo_rkat_bg_white_text_black.png') }}" alt="" height="50">
                         <!-- <span class="logo-lg-text-light">SPA-IG</span> -->
                     </span>
                     <span class="logo-sm">
                         <!-- <span class="logo-sm-text-dark">S</span> -->
-                        <img src="{{ base_url('assets/images/logo/upj-logo-text-white.png') }}" alt="" height="24">
+                        <img src="{{ base_url('assets/images/logo/logo_spa_small_bg_white.png') }}" alt="" height="34">
                     </span>
                 </a>
             </div>
@@ -80,7 +80,7 @@
             <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                 <li>
                     <button class="button-menu-mobile waves-effect">
-                        <i class="mdi mdi-menu"></i>
+                        <i class="mdi mdi-menu" style="color: #797979;"></i>
                     </button>
                 </li>                                    
             </ul>
@@ -88,7 +88,7 @@
         <!-- end Topbar --> 
         
         <!-- ========== Left Sidebar Start ========== -->
-        @include('spa.layouts.sidebar_menu')
+        @include('spa.layouts.user_sidebar_menu')
         <!-- Left Sidebar End -->
 
         <!-- ============================================================== -->

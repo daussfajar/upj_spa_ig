@@ -9,7 +9,7 @@
     $unit = $_SESSION['user_sessions']['nama_unit'];
 ?>
 
-<div class="left-side-menu">
+<div class="left-side-menu" >
     <div class="slimscroll-menu">        
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -19,7 +19,7 @@
                 <li class="menu-title">Navigation</li>
 
                 <li class="<?= menu_active(3, 'dashboard', 'mm-active') ?>">
-                    <a href="{{ base_url('app/spa/dashboard') }}" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                    <a href="{{ base_url('app/sim-spa/dashboard') }}" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
                         <i class="mdi mdi-view-dashboard"></i>                                    
                         <span>  Dashboard  </span>
                     </a>                              

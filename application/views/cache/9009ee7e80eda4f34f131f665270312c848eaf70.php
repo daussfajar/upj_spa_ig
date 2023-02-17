@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title><?php echo e(APP_NAME); ?> | <?php echo $__env->yieldContent('title'); ?></title>    
+	<title><?php echo e(APP_NAME1); ?> <?php echo $__env->yieldContent('title'); ?></title>    
     <link rel="apple-touch-icon" sizes="76x76" href="<?php echo e(base_url('assets/images/favicon')); ?>/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(base_url('assets/images/favicon')); ?>/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(base_url('assets/images/favicon')); ?>/favicon-16x16.png">
@@ -24,7 +24,7 @@
     <style>
         .left-side-menu-light .navbar-custom .topnav-menu .nav-link {
             padding: 0 15px;
-            color: rgba(255,255,255,1);
+            color: #797979;
         }        
     </style>
 </head>
@@ -33,7 +33,7 @@
     <div id="wrapper">
         
         <!-- Topbar Start -->
-        <div class="navbar-custom">
+        <div class="navbar-custom bg-white">
             <ul class="list-unstyled topnav-menu float-right mb-0">
 
                 <?php echo $__env->make('ig.layouts.user_notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>                
@@ -64,15 +64,15 @@
             </ul>
 
             <!-- LOGO -->
-            <div class="logo-box">
-                <a href="<?php echo e(base_url('app/dashboard')); ?>" class="logo text-center">
+            <div class="logo-box bg-white">
+                <a href="<?php echo e(base_url('app/sim-ig/dashboard')); ?>" class="logo text-center">
                     <span class="logo-lg">
-                        <img src="<?php echo e(base_url('assets/images/logo/upj-logo-text-white.png')); ?>" alt="" class="mt-1" height="45">
+                        <img src="<?php echo e(base_url('assets/images/logo/logo_modul_ig_bg_white_text_black.png')); ?>" alt="" height="50">
                         <!-- <span class="logo-lg-text-light">SPA-IG</span> -->
                     </span>
                     <span class="logo-sm">
                         <!-- <span class="logo-sm-text-dark">S</span> -->
-                        <img src="<?php echo e(base_url('assets/images/logo/upj-logo-text-white.png')); ?>" alt="" height="24">
+                        <img src="<?php echo e(base_url('assets/images/logo/logo_spa_small_bg_white.png')); ?>" alt="" height="34">
                     </span>
                 </a>
             </div>
@@ -80,7 +80,7 @@
             <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                 <li>
                     <button class="button-menu-mobile waves-effect">
-                        <i class="mdi mdi-menu"></i>
+                        <i class="mdi mdi-menu" style="color:#797979;"></i>
                     </button>
                 </li>                                    
             </ul>
