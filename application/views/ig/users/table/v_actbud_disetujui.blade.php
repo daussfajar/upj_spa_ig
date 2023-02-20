@@ -76,7 +76,7 @@
                                     <span class="badge badge-success p-2"><i class="mdi mdi-check-bold"></i> Disetujui</span>                                    
                                 </td>
                                 <th class="text-center" style="vertical-align: middle">
-                                    <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/' . $item->jenis_anggaran . '/pencairan/v_detail/' . encrypt($item->id_uraian) . '/actbud/' . encrypt($item->id) . '/cetak_form_actbud?pdf=true') }}', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-sm"><i class="mdi mdi-printer"></i></a>
+                                    <a href="javascript:void(0)" onclick="window.open('{{ base_url('app/sim-ig/' . $item->jenis_anggaran . '/pencairan/v_detail/' . encrypt($item->id_uraian) . '/actbud/' . encrypt($item->id) . '/cetak_form_actbud?pdf=true') }}', 'MsgWindow', 'width=800,height=800')" class="btn btn-primary btn-sm"><i class="mdi mdi-printer"></i></a>
                                 </th>
                             </tr>
                         @endforeach

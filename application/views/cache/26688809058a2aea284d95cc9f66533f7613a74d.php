@@ -24,7 +24,61 @@
                         <span>  Dashboard  </span>
                     </a>                              
                 </li>                
-                                        
+                
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect waves-light">
+                        <i class="mdi mdi-folder-outline"></i>
+                        <span> RKAT </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="javascript:void(0)">List RKAT</a></li>
+                    </ul>
+                </li>
+
+                <li class="">
+                    <a href="javascript:void(0)" class="waves-effect waves-light">
+                        <i class="mdi mdi-file-document-edit-outline"></i>
+                        <span>  Pencairan RKAT  </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="">
+                            <a href="javascript:void(0)" class="waves-effect waves-light">
+                                <span>  Actbud  </span>
+                                <span class="menu-arrow"></span>
+                            </a>                                  
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li class="">
+                                    <a href="javascript:void(0)" class="">Input Actbud</a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)" class="">View Actbud</a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)" class="">Status Actbud</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="javascript:void(0)" class="waves-effect waves-light">
+                                <span>  Petty Cash  </span>
+                                <span class="menu-arrow"></span>
+                            </a>                                  
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li class="">
+                                    <a href="javascript:void(0)" class="">Input Petty Cash</a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)" class="">View Petty Cash</a>
+                                </li>
+                                <li class="">
+                                    <a href="javascript:void(0)" class="">Status Petty Cash</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             </ul>                            
         </div>
     </div>
