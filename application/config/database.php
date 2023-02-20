@@ -8,7 +8,7 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => '\e*X!7KML$;e,\xw',
+	'password' => '',
 	// DEV'database' => 'upj_spa_hibah',
 	//PROD
 	'database' => 'db_spa_ig',

@@ -4,33 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ base_url('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-theme.min.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/css/gate.css') }}">
-    <link rel="stylesheet" href="{{ base_url('assets/css/icons.min.css') }}">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-theme.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/gate.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(base_url('assets/css/icons.min.css')); ?>">
     <link rel="stylesheet" href="https://kit.fontawesome.com/954440fa22.css" crossorigin="anonymous">
     
     <title>Menu</title>
 </head>
 <body class="">
-    {{-- <p class="">
-        Silakan pilih aplikasi:
-        <br>
-        <a href="{{ base_url('app/sim-spa/dashboard') }}" class="">
-            SPA
-        </a>
-        <br>
-        <a href="{{ base_url('app/sim-ig/dashboard') }}">
-            IG
-        </a>
-    </p> --}}
+    
 <div class="bg">
     <div class="container-fluid">
         <div class="cont-header">
             <div class="head d-flex bg-light  flex-column w-75 h-75 rounded-lg">
                 <div class="head-banner p-2  w-100 d-flex align-items-center justify-content-around rounded-top">
                     <div class="d-flex align-items-center">
-                    <img src="{{ base_url('assets/images/logo/logo.png') }}" class="mr-4" alt="">
+                    <img src="<?php echo e(base_url('assets/images/logo/logo.png')); ?>" class="mr-4" alt="">
                         <div class="title-text d-flex flex-column text-white mr-4">
                             <p>SPA-IG</p>            
                             <p>UNIVERSITAS PEMBANGUNAN JAYA</p>
@@ -50,7 +40,7 @@
                                     <div class="card-flyer">
                                         <div class="text-box">
                                             <div class="image-box">
-                                                <img src="{{ base_url('assets/images/gedung-upj.png') }}" alt="" />
+                                                <img src="<?php echo e(base_url('assets/images/gedung-upj.png')); ?>" alt="" />
                                             </div>
                                             <div class="text-container">
                                                 <h6>SPA</h6>
@@ -60,11 +50,11 @@
                                 </a>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                <a href="{{ base_url('app/sim-ig/dashboard') }}">
+                                <a href="<?php echo e(base_url('app/sim-ig/dashboard')); ?>">
                                     <div class="card-flyer">
                                         <div class="text-box">
                                             <div class="image-box">
-                                                <img src="{{ base_url('assets/images/bg/upj4.jpg') }}" alt="" />
+                                                <img src="<?php echo e(base_url('assets/images/bg/upj4.jpg')); ?>" alt="" />
                                             </div>
                                             <div class="text-container">
                                                 <h6>IG</h6>                                                
@@ -102,8 +92,9 @@
 </div>
 
 
-    <script src="{{ base_url('assets/js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ base_url('assets/js/script.js') }}"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery-3.3.1.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/bootstrap.min.js')); ?>"></script>
+    <script src="<?php echo e(base_url('assets/js/script.js')); ?>"></script>
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/gate-menu.blade.php ENDPATH**/ ?>
