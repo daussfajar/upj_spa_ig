@@ -6,10 +6,10 @@ class Dashboard extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-		$this->load->model('Hibah_model');
-		$this->load->model('Sponsorship_model');
-		$this->load->model('Actbud_model');
-		$this->load->model('Approval_model');
+		$this->load->model('IG/Hibah_model');
+		$this->load->model('IG/Sponsorship_model');
+		$this->load->model('IG/Actbud_model');
+		$this->load->model('IG/Approval_model');
         header("X-XSS-Protection: 1; mode=block");
 	}
 

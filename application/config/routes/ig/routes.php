@@ -119,14 +119,17 @@ $route['app/sim-ig/sponsorship/status_pencairan'] = 'IG/User/StatusPencairanSpon
 $route['app/sim-ig/sponsorship/status_pencairan/(:num)'] = 'IG/User/StatusPencairanSponsorship';
 $route['app/sim-ig/sponsorship/status_pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/User/PencairanSponsorship/v_detail_actbud/$1/$2';
 
-// KREDIT SALDO
-$route['app/sim-ig/kredit_saldo'] = 'IG/User/KreditSaldo';
-$route['app/sim-ig/kredit_saldo/buat_kredit'] = 'IG/User/KreditSaldo/buat_kredit';
-$route['app/sim-ig/kredit_saldo/buat_kredit/save']['POST'] = 'IG/User/KreditSaldo/submit_kredit';
-$route['app/sim-ig/kredit_saldo/batalkan_kredit']['POST'] = 'IG/User/KreditSaldo/batalkan_kredit';
-$route['app/sim-ig/kredit_saldo/finalisasi_kredit']['POST'] = 'IG/User/KreditSaldo/finalisasi_kredit';
-$route['app/sim-ig/kredit_saldo/preview_upload'] = 'IG/User/KreditSaldo/preview_upload';
-$route['app/sim-ig/kredit_saldo/preview_upload/upload']['POST'] = 'IG/User/KreditSaldo/upload_kredit';
+// OLD KREDIT SALDO
+// $route['app/sim-ig/kredit_saldo'] = 'IG/User/KreditSaldo';
+// $route['app/sim-ig/kredit_saldo/buat_kredit'] = 'IG/User/KreditSaldo/buat_kredit';
+// $route['app/sim-ig/kredit_saldo/buat_kredit/save']['POST'] = 'IG/User/KreditSaldo/submit_kredit';
+// $route['app/sim-ig/kredit_saldo/batalkan_kredit']['POST'] = 'IG/User/KreditSaldo/batalkan_kredit';
+// $route['app/sim-ig/kredit_saldo/finalisasi_kredit']['POST'] = 'IG/User/KreditSaldo/finalisasi_kredit';
+// $route['app/sim-ig/kredit_saldo/preview_upload'] = 'IG/User/KreditSaldo/preview_upload';
+// $route['app/sim-ig/kredit_saldo/preview_upload/upload']['POST'] = 'IG/User/KreditSaldo/upload_kredit';
+
+// PENGALIHAN ANGGARAN
+$route['app/sim-ig/pengalihan-anggaran'] = 'IG/User/PengalihanAnggaran';
 
 // HIBAH DAN SPONSORSHIP
 $route['app/sim-ig/set_pic/(:any)/save']['POST'] = 'IG/User/PIC/set_pic';
@@ -135,11 +138,11 @@ $route['app/sim-ig/set_pic/(:any)/save']['POST'] = 'IG/User/PIC/set_pic';
 $route['app/sim-ig/profil_saya'] = 'IG/User/Profil/profil_saya';
 
 // NOTIFIKASI
-$route['app/sim-ig/detail-pemberitahuan/(:num)'] = 'IG/User/Pemberitahuan/detail_pemberitahuan';
+$route['app/sim-ig/data-pemberitahuan/detail-pemberitahuan/(:num)'] = 'IG/User/Pemberitahuan/detail_pemberitahuan';
 $route['app/sim-ig/data-pemberitahuan'] = 'IG/User/Pemberitahuan';
 $route['app/sim-ig/data-pemberitahuan/(:num)'] = 'IG/User/Pemberitahuan';
-$route['app/sim-ig/hapus-semua-pemberitahuan'] = 'IG/User/Pemberitahuan/hapus_semua_pemberitahuan';
-$route['app/sim-ig/set-sudah-dibaca-semua-pemberitahuan'] = 'IG/User/Pemberitahuan/set_sudah_dibaca_semua_pemberitahuan';
+$route['app/sim-ig/data-pemberitahuan/hapus-semua-pemberitahuan'] = 'IG/User/Pemberitahuan/hapus_semua_pemberitahuan';
+$route['app/sim-ig/data-pemberitahuan/set-sudah-dibaca-semua-pemberitahuan'] = 'IG/User/Pemberitahuan/set_sudah_dibaca_semua_pemberitahuan';
 $route['app/sim-ig/data-pemberitahuan/hapus_data/(:any)'] = 'IG/User/Pemberitahuan/hapus_pemberitahuan';
 
 // Realisasi Anggaran
