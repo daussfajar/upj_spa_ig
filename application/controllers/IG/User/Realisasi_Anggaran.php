@@ -130,6 +130,9 @@ class Realisasi_Anggaran extends CI_Controller {
 
             $anggaran_realisasi = $this->input->post('anggaran_realisasi', true);			
 			$total_agr = str_ireplace(".","", substr($anggaran_realisasi, 3));
+            if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+            if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+            
             $raw_id = $this->input->post('id', true);
             $decrypted_id = decrypt($raw_id);
             $data = $this->db->query("SELECT a.id,a.total_anggaran,a.total_anggaran_realisasi FROM ig_t_j_b_act a WHERE a.status = 'Aktif' AND 

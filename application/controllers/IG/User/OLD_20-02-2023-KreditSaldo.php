@@ -24,7 +24,7 @@ class KreditSaldo extends CI_Controller {
 
     public function buat_kredit(){
         $nik = decrypt($_SESSION['user_sessions']['nik']);
-        $data['kegiatan'] = $this->Hibah_model->get_all_kegiatan($nik);        
+        $data['kegiatan'] = $this->Hibah_model->get_all_kegiatan($nik);
         return view('ig.users.kredit_saldo.buat_kredit', $data);
     }
 
@@ -115,6 +115,8 @@ class KreditSaldo extends CI_Controller {
 				$this->load->library('upload', $config);			
                 $total_nominal = $this->input->post('nominal', true);			
                 $nominal = str_ireplace(".","", substr($total_nominal, 4));
+                if (!is_numeric($nominal)) return show_error("Total anggaran harus berupa angka!");
+                if (is_numeric($nominal) && $nominal < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
 
 				if(!$this->upload->do_upload('file_pendukung')){
 					return show_error($this->upload->display_errors(), 402, "Error");
