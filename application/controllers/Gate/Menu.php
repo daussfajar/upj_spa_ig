@@ -5,8 +5,8 @@ class Menu extends CI_Controller {
 
     function __construct(){
         parent::__construct();
-        $this->Global_model->is_logged_in();
-        header("X-XSS-Protection: 1; mode=block");
+        // $this->Global_model->is_logged_in();
+        // header("X-XSS-Protection: 1; mode=block");
     }
 
     public function index(){
