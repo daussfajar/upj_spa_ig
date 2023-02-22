@@ -7,7 +7,7 @@ class MST_Karyawan extends CI_Controller {
         parent::__construct();
         $this->Global_model->is_logged_in();
         $this->Global_model->is_admin();
-        $this->load->model('MasterData');
+        $this->load->model('IG/MasterData');
         header("X-XSS-Protection: 1; mode=block");
     }
 

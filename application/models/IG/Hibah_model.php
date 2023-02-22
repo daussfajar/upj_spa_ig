@@ -22,7 +22,7 @@ class Hibah_Model extends CI_Model {
 
     public function get_all_kegiatan(String $nik){
         $query = sprintf("SELECT a.id,a.kode_uraian,c.nama_unit,a.nama_hibah_sponsorship,b.nama_lengkap,a.uraian_kegiatan,
-        a.jenis_ig,a.kode_pencairan FROM ig_tbl_uraian a JOIN tbl_karyawan b ON a.pic = b.nik 
+        a.jenis_ig, a.total_agr, a.kode_pencairan, IF(a.periode = '1', 'Ganjil', 'Genap') AS periode FROM ig_tbl_uraian a JOIN tbl_karyawan b ON a.pic = b.nik 
         JOIN tbl_unit c ON b.kode_unit = c.kode_unit WHERE a.status = 'Aktif'");
         $result = $this->db->query($query)->result();
         return $result;

@@ -118,7 +118,9 @@ class PencairanHibah extends CI_Controller {
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
 			$pic = decrypt($_SESSION['user_sessions']['nik']);
-                        
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+			
 			$agr_in_out = $this->Actbud_model->get_agr_in_out($hibah->kode_uraian);
 			$saldo_masuk = $agr_in_out['saldo_masuk'];
 			$saldo_keluar = $agr_in_out['saldo_keluar'];
@@ -263,6 +265,9 @@ class PencairanHibah extends CI_Controller {
 			$sisa_anggaran = ($hibah->total_agr - $agr->digunakan);			
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
+			if(!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if(is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+			
 			//pr(($sisa_anggaran + $_REQUEST['old_anggaran']) - $total_agr);
 			if((($sisa_anggaran + $this->input->post('old_anggaran', true)) - $total_agr) < 0) {
 				$this->session->set_flashdata('alert', [
@@ -662,6 +667,8 @@ class PencairanHibah extends CI_Controller {
 			
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
 			
 			if((($data['sisa']->digunakan != "") && ($total_agr > $batas)) || ($total_agr > $batas)){
 
@@ -756,14 +763,14 @@ class PencairanHibah extends CI_Controller {
 			// ttd
 			$signature = $this->input->post('signature');
 			
-			if(substr($signature, -5) == "CYII=") {
-				$this->session->set_flashdata('alert', [
-					'message' => 'Tanda tangan tidak boleh kosong.',
-					'type'    => 'error',
-					'title'   => ''
-				]);
-				return redirect($_SERVER['HTTP_REFERER']);
-			}
+			// if(substr($signature, -5) == "CYII=") {
+			// 	$this->session->set_flashdata('alert', [
+			// 		'message' => 'Tanda tangan tidak boleh kosong.',
+			// 		'type'    => 'error',
+			// 		'title'   => ''
+			// 	]);
+			// 	return redirect($_SERVER['HTTP_REFERER']);
+			// }
 
 			if (check_base64_image($signature) === false) {
 				return show_error("Tanda tangan invalid!");

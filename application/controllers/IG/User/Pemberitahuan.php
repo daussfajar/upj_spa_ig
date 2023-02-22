@@ -7,11 +7,23 @@ class Pemberitahuan extends CI_Controller {
     function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();	
-        $this->load->model('Notification_model');
+        $this->load->model('IG/Notification_model');
         header("X-XSS-Protection: 1; mode=block");
 	}
 
     public function index(){
+        $qry = "";
+        $imp_arr = implode("/", $this->uri->segment_array());
+        if (!empty($_GET['q']) && $_GET['q'] !== "") {
+            $search = trim(filter_var($this->input->get('q', true), FILTER_SANITIZE_STRING));
+            $qry .= "";
+            $this->session->set_userdata('session_where', [
+                'url' => base_url() . $imp_arr,
+                'value' => $qry
+            ]);
+        } else {
+            unset($_SESSION['session_where']);
+        }        
         $data['data'] = $this->Notification_model->get_all_notification();        
         return view('ig.users.pemberitahuan.index', $data);
     }
@@ -37,7 +49,7 @@ class Pemberitahuan extends CI_Controller {
             'title'   => ''
         ]);
 
-        return redirect($_SERVER['HTTP_REFERER']);
+        return redirect(base_url('app/sim-ig/data-pemberitahuan'));
     }
 
     public function hapus_semua_pemberitahuan(){

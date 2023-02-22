@@ -80,9 +80,14 @@
                         </li>
 
                         @if ($unit == 'Bagian Keuangan' || $jabatan == 0 || $jabatan == 22 || $jabatan == 6)
-                            <li class="<?= menu_active(3, 'kredit_saldo', 'mm-active') ?>">
+                            <!--<li class="<?= menu_active(3, 'kredit_saldo', 'mm-active') ?>">
                                 <a href="{{ base_url('app/sim-ig/kredit_saldo') }}" class="waves-effect waves-light <?= menu_active(3, 'kredit_saldo', 'active') ?>"> 
                                     <span>  Debet/Kredit Saldo  </span>                                
+                                </a>
+                            </li>-->
+                            <li class="<?= menu_active(3, 'kredit_saldo', 'mm-active') ?>">
+                                <a href="{{ base_url('app/sim-ig/pengalihan-anggaran') }}" class="waves-effect waves-light <?= menu_active(3, 'kredit_saldo', 'active') ?>"> 
+                                    <span>  Pengalihan Anggaran  </span>                                
                                 </a>
                             </li>
                         @endif
