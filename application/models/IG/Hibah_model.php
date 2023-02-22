@@ -30,7 +30,7 @@ class Hibah_Model extends CI_Model {
 
     function cek_anggaran_digunakan_sementara(int $id_uraian){
         $query = sprintf("SELECT SUM(a.fnl_agr) digunakan FROM ig_tbl_actbud a WHERE a.id_uraian = '%u' AND a.status_act = 'send' 
-        AND (a.status = 'ongoing' OR a.status = 'submitted' OR a.status = 'approved')", $id_uraian);
+        AND (a.status != 'cancel')", $id_uraian);
         $result = $this->db->query($query)->row();
         return $result;
     }

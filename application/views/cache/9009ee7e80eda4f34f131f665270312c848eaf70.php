@@ -190,7 +190,7 @@
 
             <?php if($CI->session->flashdata('error_validation')): ?>
                 <?php $__currentLoopData = $CI->session->flashdata('error_validation')['form_error']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>            
-                    toastr["error"]("<?= $r ?>", "")                
+                    toastr["error"]("<?= $r ?>", "")
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>        		
             <?php endif; ?>
 

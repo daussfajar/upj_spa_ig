@@ -9,7 +9,7 @@ class PengalihanAnggaran_model extends CI_Model {
         $field = "a.id,a.pic,b.nama_lengkap AS nama_pengaju, a.kode_uraian,
         a.kode_uraian_out,a.kode_pencairan,
         a.kode_pencairan_out,a.pic,a.nominal,a.file_pendukung,
-        a.keterangan,a.disetujui, a.periode, a.periode_out";
+        a.keterangan,a.disetujui, a.periode, a.periode_out, a.saldo, a.saldo_out";
         $where = "a.status = 'Aktif'";
         $path_uri = '/' . APP_FOLDER . '/app/sim-ig/pengalihan-anggaran';
         $data = $this->Global_model->get_data_with_pagination(

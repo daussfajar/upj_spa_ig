@@ -188,7 +188,7 @@
 
             @if ($CI->session->flashdata('error_validation'))
                 @foreach ($CI->session->flashdata('error_validation')['form_error'] as $r)            
-                    toastr["error"]("<?= $r ?>", "")                
+                    toastr["error"]("<?= $r ?>", "")
                 @endforeach        		
             @endif
 

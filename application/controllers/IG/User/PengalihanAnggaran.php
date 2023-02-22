@@ -20,7 +20,9 @@ class PengalihanAnggaran extends CI_Controller {
         $imp_arr = implode("/", $this->uri->segment_array());
         if (!empty($_GET['q']) && $_GET['q'] !== "") {
             $search = trim(filter_var($this->input->get('q', true), FILTER_SANITIZE_STRING));
-            $qry .= "AND (b.nama_lengkap LIKE '%".$search."%')";
+            $qry .= "AND (b.nama_lengkap LIKE '%".$search."%' OR a.kode_uraian LIKE '%".$search."%' 
+            OR a.kode_uraian_out LIKE '%".$search."%' OR a.keterangan LIKE '%".$search."%' OR a.kode_pencairan LIKE 
+            '%".$search."%' OR a.kode_pencairan_out LIKE '%".$search."%')";
             $this->session->set_userdata('session_where', [
                 'url' => base_url() . $imp_arr,
                 'value' => $qry
@@ -36,10 +38,10 @@ class PengalihanAnggaran extends CI_Controller {
                             ->order_by('a.nama_lengkap', 'ASC')
                             ->get()
                             ->result_array();        
-        $data['kegiatan'] = $this->Hibah_model->get_all_kegiatan($nik);
+        $data['kegiatan'] = $this->Global_model->get_rincian_anggaran();
 
         $data['data_pengalihan'] = $this->m_pengalihan->get_all_pengalihan();
-        
+        //pr($data['data_pengalihan']);
         return view('ig.users.pengalihan_anggaran.index', $data);
     }
 
@@ -64,7 +66,13 @@ class PengalihanAnggaran extends CI_Controller {
         ]);
         $this->form_validation->set_rules('pic', 'PIC/Pengaju', 'trim|required', [
             'required' => '%s tidak boleh kosong.'
-        ]);        
+        ]);
+        $this->form_validation->set_rules('saldo', 'Saldo', 'trim|required|numeric|is_natural_no_zero|integer', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+        $this->form_validation->set_rules('saldo_out', 'Saldo Out', 'trim|required|numeric|is_natural_no_zero|integer', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
 
         if ($this->form_validation->run() === FALSE) {
             $error = [
@@ -85,18 +93,25 @@ class PengalihanAnggaran extends CI_Controller {
             if (empty($kode_pencairan_tujuan)) return show_404();
             if (!decrypt($kode_pencairan_tujuan[0]) || (!empty($kode_pencairan_tujuan[1]) && !decrypt($kode_pencairan_tujuan[1]))) return show_404();
             $kode_uraian_tujuan = decrypt($kode_pencairan_tujuan[0]);
-            $kode_pencairan_tujuan = empty($kode_pencairan_tujuan[1]) ? "-" : decrypt($kode_pencairan_tujuan[1]);
-
+            $kode_pencairan_tujuan = empty($kode_pencairan_tujuan[1]) ? "-" : decrypt($kode_pencairan_tujuan[1]);            
+            
             $pic = $this->input->post('pic', true);
             $periode = $this->input->post('periode', true);
             $periode_tujuan = $this->input->post('periode_out', true);
+            $saldo = $this->input->post('saldo', true);
+            $saldo_out = $this->input->post('saldo_out', true);
             $signature = $this->input->post('signature');
             $keterangan = $this->input->post('alasan', true);
             $total_anggaran = $this->input->post('anggaran', true);
-            $total_agr = str_ireplace(".", "", substr($total_anggaran, 4));            
-            if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
-            if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+            $total_agr = str_ireplace(".", "", substr($total_anggaran, 4));
+            if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!", 400, "400 - Bad Request, Invalid argument (invalid request payload)");
+            if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0", 400, "400 - Bad Request, Invalid argument (invalid request payload)");
+            $detail_anggaran = $this->Global_model->get_detail_anggaran($kode_uraian_asal);
 
+            if($total_agr > $detail_anggaran->sisa_agr){
+                return show_error("Anggaran melebihi batas, batas maksimal anggaran adalah " . rupiah($detail_anggaran->sisa_agr), 400, "400 - Bad Request, Invalid argument (invalid request payload)");
+            }
+            
             $image_parts = explode(";base64,", $signature);            
             if(empty($image_parts)) return show_404();
             
@@ -110,7 +125,7 @@ class PengalihanAnggaran extends CI_Controller {
             // }
 
             if (check_base64_image($signature) === false) {
-                return show_error("Tanda tangan invalid!");
+                return show_error("Tanda tangan invalid!", 400, "400 - Bad Request, Invalid argument (invalid request payload)");
             }
             
             $data = [
@@ -124,7 +139,9 @@ class PengalihanAnggaran extends CI_Controller {
                 'pic' => $pic,
                 'periode' => $periode,
                 'periode_out' => $periode_tujuan,
-                'disetujui' => 'Y'
+                'disetujui' => 'Y',
+                'saldo' => $saldo,
+                'saldo_out' => $saldo_out
             ];            
 
             if (!empty($_FILES['file_pendukung']['name'])) {
@@ -142,7 +159,7 @@ class PengalihanAnggaran extends CI_Controller {
                 $this->load->library('upload', $config);
 
                 if (!$this->upload->do_upload('file_pendukung')) {
-                    return show_error($this->upload->display_errors(), 402, "Error");
+                    return show_error($this->upload->display_errors(), 403, "Error");
                 } else {
                     $upload_data = $this->upload->data();                    
                     $data['file_pendukung'] = $upload_data['file_name'];

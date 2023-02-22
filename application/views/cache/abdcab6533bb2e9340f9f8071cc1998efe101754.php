@@ -126,28 +126,51 @@
                                 <th style="vertical-align: middle;font-size:14px;"><?php echo e($rows['nama_pengaju']); ?></th>
                                 <td style="vertical-align: middle;font-size:14px;"><?php echo e($rows['keterangan']); ?></td>
                                 <td style="vertical-align: middle;font-size:14px;" class="text-center">
+                                    <b><?php echo e($rows['kode_uraian_out']); ?></b>
+                                    <hr class="mt-1 mb-1">
+                                    <b>Periode : </b> <?php echo e($rows['periode_out']); ?>                                    
+                                </td>
+                                <td style="vertical-align: middle;" class="text-center">
+                                    <span class="badge bg-teal p-2">
+                                        <?php echo e(rupiah($rows['saldo'])); ?>
+
+                                    </span>
+                                </td>
+                                <td style="vertical-align: middle;font-size:14px;" class="text-center">
                                     <b><?php echo e($rows['kode_uraian']); ?></b>
                                     <hr class="mt-1 mb-1">
                                     <b>Periode : </b> <?php echo e($rows['periode']); ?>
 
                                 </td>
-                                <td style="vertical-align: middle;font-size:14px;" class="text-center">
-                                </td>
-                                <td style="vertical-align: middle;font-size:14px;" class="text-center">
-                                    <b><?php echo e($rows['kode_uraian_out']); ?></b>
-                                    <hr class="mt-1 mb-1">
-                                    <b>Periode : </b> <?php echo e($rows['periode_out']); ?>
+                                <td style="vertical-align: middle;" class="text-center">
+                                    <span class="badge bg-teal p-2">
+                                        <?php echo e(rupiah($rows['saldo_out'])); ?>
 
+                                    </span>
                                 </td>
-                                <td style="vertical-align: middle;font-size:14px;" class="text-center">
-                                </td>
-                                <td style="vertical-align: middle;font-size:14px;" class="text-center">
+                                <td style="vertical-align: middle;" class="text-center">
                                     <span class="badge bg-success p-2">
                                         <?php echo e(rupiah($rows['nominal'])); ?>
 
                                     </span>
                                 </td>
-                                <td style="vertical-align: middle;font-size:14px;" class="text-center">
+                                <td style="vertical-align: middle;" class="text-center">
+                                    <?php switch($rows['disetujui']):
+                                        case ('Y'): ?>
+                                            <span class="badge bg-primary p-2">
+                                                <i class="mdi mdi-check-bold"></i> Sukses
+                                            </span>
+                                            <?php break; ?>
+                                        <?php case ('N'): ?>
+                                            <span class="badge bg-danger p-2">
+                                                Belum Difinalisasi
+                                            </span>
+                                            <?php break; ?>
+                                        <?php default: ?>
+                                        <span class="badge bg-danger p-2">
+                                            Unknown
+                                        </span>
+                                    <?php endswitch; ?>
                                 </td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -181,7 +204,7 @@
                             <select name="kode_pencairan_asal" id="kode_pencairan_asal" class="select2 form-control" style="width:100%;" required>
                                 <option value="">-- Pilih --</option>
                                 <?php $__currentLoopData = $kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>" data-saldo="">
+                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>"<?php echo $item->sisa_agr > 0 ? ' data-sisa_agr="'.rupiah_1($item->sisa_agr).'" data-r_sisa_agr="'.$item->sisa_agr.'"' : ''; ?> data-saldo="<?php echo e($item->total_agr); ?>"<?php echo e(($item->sisa_agr == 0 || $item->sisa_agr < 0) ? ' disabled' : ''); ?>>
                                     <?php echo e($item->kode_uraian . ' ('.$item->periode.')' . ($item->kode_pencairan != "" ? "(" . $item->kode_pencairan . ")" : "")); ?> - <?php echo e($item->nama_lengkap . ' ('.$item->nama_unit.')'); ?> - <?php echo e($item->nama_hibah_sponsorship); ?>
 
                                 </option>
@@ -191,13 +214,15 @@
                     </div>
                     <input type="hidden" name="periode" value="">
                     <input type="hidden" name="periode_out" value="">
+                    <input type="hidden" name="saldo" value="">
+                    <input type="hidden" name="saldo_out" value="">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">* Kode Pencairan Tujuan</label>
                             <select name="kode_pencairan_tujuan" id="kode_pencairan_tujuan" class="select2 form-control" style="width:100%;" required>
                                 <option value="">-- Pilih --</option>
                                 <?php $__currentLoopData = $kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>">
+                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>" data-saldo="<?php echo e($item->total_agr); ?>">
                                     <?php echo e($item->kode_uraian . ' ('.$item->periode.')' . ($item->kode_pencairan != "" ? "(" . $item->kode_pencairan . ")" : "")); ?> - <?php echo e($item->nama_lengkap . ' ('.$item->nama_unit.')'); ?> - <?php echo e($item->nama_hibah_sponsorship); ?>
 
                                 </option>
@@ -225,14 +250,15 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="">* Alasan</label>
-                            <textarea name="alasan" id="alasan" cols="3" rows="3" class="form-control"></textarea>
+                            <textarea name="alasan" id="alasan" cols="3" rows="3" class="form-control" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">* Anggaran</label>
-                            <input type="text" name="anggaran" id="anggaran" class="form-control" required>
-                        </div>
+                            <input type="text" name="anggaran" id="anggaran" class="form-control" readonly required>
+                            <span class="help-block text-primary" style="font-weight:bold;" id="help-agr"></span>
+                        </div>                        
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
@@ -280,22 +306,47 @@
 <script src="<?php echo e(base_url('assets/js/bootstrap-filestyle.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
-        var rupiah = document.getElementById('anggaran')        
+        var rupiah = document.getElementById('anggaran')		
 
-		rupiah.addEventListener('keyup', function(e){			            
-			rupiah.value = formatRupiah(this.value, 'Rp. ')
-		})
+        $('#anggaran').on('input propertychange paste', function (e) {
+            let val = $(this).val()
+            let reg = /^0/gi
+            if (val.match(reg)) {
+                $(this).val(val.replace(reg, ''))
+            }                                     
+        })
 
         $('.select2').select2()
         
         $('select[name="kode_pencairan_asal"]').change(function(){
-            let selected = $(this).find('option:selected').data('periode')
+            const selected = $(this).find('option:selected').data('periode')
+            const saldo = $(this).find('option:selected').data('saldo')
+            const sisa_agr = $(this).find('option:selected').data('sisa_agr')            
+            const r_sisa_agr = $(this).find('option:selected').data('r_sisa_agr')
             $('input[name="periode"]').val(selected)
+            $('input[name="saldo"]').val(saldo)
+            $('#anggaran').removeAttr('readonly')
+            $('#anggaran').val('')
+            $('#help-agr').html(`
+            <small>Maksimal: ${sisa_agr}</small>
+            `)
+
+            rupiah.addEventListener('keyup', function(e){                
+                rupiah.value = formatRupiah(this.value, 'Rp. ')
+                let real_value = rupiah.value.substr(4).split('.').join('')
+                let m_agr = sisa_agr.split(',')                
+                if(real_value > r_sisa_agr){
+                    toastr["error"](`Anggaran tidak boleh lebih dari ${m_agr[0]}`, "")
+                    return $('#anggaran').val(m_agr[0])
+                }
+            })
         })
 
         $('select[name="kode_pencairan_tujuan"]').change(function(){
-            let selected = $(this).find('option:selected').data('periode')
+            const selected = $(this).find('option:selected').data('periode')
+            const saldo = $(this).find('option:selected').data('saldo')
             $('input[name="periode_out"]').val(selected)
+            $('input[name="saldo_out"]').val(saldo)
         })
 
         function formatRupiah(angka, prefix){
@@ -319,7 +370,6 @@
         saveButton = wrapper.querySelector("[data-action=save]"),
         canvas = wrapper.querySelector("canvas"),
         signaturePad
-
 
         function resizeCanvas() {
             var ratio =  window.devicePixelRatio || 1
