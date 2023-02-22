@@ -18,7 +18,7 @@ class Notification_model extends CI_Model {
 	    //a.date_created,a.message,a.color, a.icon FROM ig_tbl_notifikasi a WHERE (a.owner_user_id = '$nik' OR a.user_id = '$nik') AND a.status = 'Aktif' ORDER BY a.is_seen DESC, a.date_created DESC
         $data = $this->Global_model->get_data_with_pagination('a.id,a.user_name,a.url,a.owner_user_id,a.user_id,a.is_seen,a.title,a.is_seen,a.message,a.date_created,a.icon', 
         $this->table . " a", "(a.owner_user_id = '$nik' OR a.user_id = '$nik') AND a.status = 'Aktif' ORDER BY a.is_seen,a.date_created DESC", 
-        '/' . APP_FOLDER . '/app/data-pemberitahuan', 3,5,4);
+        '/' . APP_FOLDER . '/app/sim-ig/data-pemberitahuan', 4,5,4);
         return $data;
     }
 

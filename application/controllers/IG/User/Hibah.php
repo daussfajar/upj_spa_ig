@@ -82,7 +82,7 @@ class Hibah extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/hibah'));
+			return redirect(base_url('app/sim-ig/hibah'));
 		}				
 	}
 
@@ -214,14 +214,14 @@ class Hibah extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/hibah'));
+			return redirect(base_url('app/sim-ig/hibah'));
 			
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/hibah'));
+			return redirect(base_url('app/sim-ig/hibah'));
 		}
 	}
 
@@ -292,6 +292,8 @@ class Hibah extends CI_Controller {
 
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
 			
 			$data = [
 				'kode_uraian'               => $this->input->post('kode_uraian', true),
@@ -325,7 +327,7 @@ class Hibah extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/hibah'));
+				return redirect(base_url('app/sim-ig/hibah'));
 
 			} else {
 				$this->session->set_flashdata('alert', [
@@ -341,7 +343,7 @@ class Hibah extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/hibah/buat_kegiatan'));
+			return redirect(base_url('app/sim-ig/hibah/buat_kegiatan'));
 		}
 	}
 
@@ -405,6 +407,8 @@ class Hibah extends CI_Controller {
 			$id = !decrypt($this->input->post('id', true)) ? show_404() : decrypt($this->input->post('id', true));
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
 
 			$data = [				
 				'nama_hibah_sponsorship' => $this->input->post('nama_hibah', true),
@@ -437,14 +441,14 @@ class Hibah extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/hibah'));
+				return redirect(base_url('app/sim-ig/hibah'));
 			} else {
 				$this->session->set_flashdata('alert', [
 					'message' => 'Terjadi kesalahan saat melakukan insert data.',
 					'type'    => 'error',	
 					'title'   => ''
 				]);
-				return redirect(base_url('app/hibah'));
+				return redirect(base_url('app/sim-ig/hibah'));
 			}
 
 		} else {
@@ -452,7 +456,7 @@ class Hibah extends CI_Controller {
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/hibah'));
+			return redirect(base_url('app/sim-ig/hibah'));
 		}
 	}
 
@@ -471,14 +475,14 @@ class Hibah extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/hibah'));
+			return redirect(base_url('app/sim-ig/hibah'));
 
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/hibah/v_detail/' . $this->input->post('id', true)));
+			return redirect(base_url('app/sim-ig/hibah/v_detail/' . $this->input->post('id', true)));
 		}
 	}
 
@@ -497,14 +501,14 @@ class Hibah extends CI_Controller {
 				'type'    => 'success',	
 				'title'   => ''
 			]);
-			return redirect(base_url('app/hibah'));
+			return redirect(base_url('app/sim-ig/hibah'));
 
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);				
-			return redirect(base_url('app/hibah/v_detail/' . $this->input->post('id', true)));
+			return redirect(base_url('app/sim-ig/hibah/v_detail/' . $this->input->post('id', true)));
 		}
 	}
 }

@@ -17,7 +17,7 @@
 		<div class="dropdown-item noti-title">
 			<h5 class="font-16 m-0">
 				<span class="float-right">
-					<a href="{{ base_url('app/hapus-semua-pemberitahuan') }}" class="text-dark">
+					<a href="{{ base_url('app/sim-ig/data-pemberitahuan/hapus-semua-pemberitahuan') }}" class="text-dark">
 						<small>Hapus Semua</small>
 					</a>
 				</span>Pemberitahuan
@@ -39,7 +39,7 @@
 					}
 
 				@endphp
-				<a href="{{ base_url('app/detail-pemberitahuan/' . $item->id) }}" class="dropdown-item notify-item {{ $item->is_seen == 'no' ? 'bg-unseen_notif' : '' }}">
+				<a href="{{ base_url('app/sim-ig/data-pemberitahuan/detail-pemberitahuan/' . $item->id) }}" class="dropdown-item notify-item {{ $item->is_seen == 'no' ? 'bg-unseen_notif' : '' }}">
 					<div class="notify-icon bg-{{ $item->color }}">
 						<i class="mdi {{ $item->icon }}"></i>
 					</div>
@@ -51,7 +51,7 @@
 		</div>
 
 		<!-- All-->
-		<a href="{{ base_url('app/data-pemberitahuan') }}" class="dropdown-item text-center text-primary notify-item notify-all">
+		<a href="{{ base_url('app/sim-ig/data-pemberitahuan') }}" class="dropdown-item text-center text-primary notify-item notify-all">
 			Lihat Semua Pemberitahuan
 			<i class="fi-arrow-right"></i>
 		</a>
