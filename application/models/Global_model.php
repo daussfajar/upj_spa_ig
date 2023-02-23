@@ -165,7 +165,12 @@ class Global_Model extends CI_Model {
 		return $fetch;
 	}
 
-	public function get_rincian_anggaran(){
+	public function get_rincian_anggaran(string $jenis = ""){
+		$where = "";
+		if($jenis != ""){
+			$where .= " AND a.jenis_ig = ?";
+		}
+
 		$raw_query = "SELECT
 			a.id,
 			a.kode_uraian,
@@ -180,17 +185,22 @@ class Global_Model extends CI_Model {
 			( a.periode = 1, 'Ganjil', 'Genap' ) AS periode,
 			IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) agr_masuk,
 			IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) agr_keluar,
-			IFNULL( ( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 ) agr_digunakan 
+			IFNULL( ( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS != 'cancel' ), 0 ) agr_digunakan 
 		FROM
 			ig_tbl_uraian a
 			JOIN tbl_karyawan b ON a.pic = b.nik
 			JOIN tbl_unit c ON b.kode_unit = c.kode_unit 
-		WHERE
+		WHERE			
 			a.STATUS = 'Aktif' 
+			$where
 		GROUP BY
 			a.kode_uraian";
 
-		$query = $this->db->query($raw_query);
+		if($jenis != ""){
+			$query = $this->db->query($raw_query, [$jenis]);
+		} else {
+			$query = $this->db->query($raw_query);
+		}
 		$fetch = $query->result();
 		return $fetch;
 	}

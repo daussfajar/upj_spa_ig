@@ -96,10 +96,25 @@ class Hibah_Model extends CI_Model {
             unset($_SESSION['session_where']);
         }
         
-        $data = $this->Global_model->get_data_with_pagination('a.id,a.kode_uraian,a.kode_pencairan,a.pic,
-        a.nama_hibah_sponsorship,a.uraian_kegiatan,b.nama_lengkap nama_karyawan,a.total_agr,a.periode,a.tanggal_buat,a.status', $this->table . " a 
-        INNER JOIN tbl_karyawan b ON a.pic = b.nik","a.status = 'Aktif' AND (a.jenis_ig = 'hibah' AND a.finalisasi = 'Y') ", 
-        '/' . APP_FOLDER . '/app/sim-ig/hibah/pencairan', 5,5,4);
+        $data = $this->Global_model->get_data_with_pagination(
+            "a.id,
+            a.kode_uraian,
+            c.nama_unit,
+            a.nama_hibah_sponsorship,
+            b.nama_lengkap,
+            a.uraian_kegiatan,
+            a.jenis_ig,
+            a.total_agr,
+            a.pic,
+            b.nama_lengkap AS nama_karyawan,
+            a.kode_pencairan, IF( a.periode = 1, 'Ganjil', 'Genap' ) AS periode,
+            IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) agr_masuk,
+            IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) agr_keluar,
+            IFNULL( ( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS != 'cancel' ), 0 )
+            agr_digunakan", 
+            $this->table . " a JOIN tbl_karyawan b ON a.pic = b.nik JOIN tbl_unit c ON b.kode_unit = c.kode_unit",
+            "a.status = 'Aktif' AND (a.jenis_ig = 'hibah' AND a.finalisasi = 'Y')", 
+            '/' . APP_FOLDER . '/app/sim-ig/hibah/pencairan', 5,5,4);
         return $data;
     }
 

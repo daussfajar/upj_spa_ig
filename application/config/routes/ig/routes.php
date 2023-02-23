@@ -103,6 +103,7 @@ $route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)'] = 'IG/U
 $route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/ubah-actbud']['POST'] = 'IG/User/PencairanSponsorship/ubah_actbud/$1/$2';
 $route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/batalkan-actbud']['POST'] = 'IG/User/PencairanSponsorship/batalkan_actbud/$1/$2';
 $route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan']['POST'] = 'IG/User/PencairanSponsorship/hapus_pesan/$1/$2';
+$route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-pesan-reply']['POST'] = 'IG/User/PencairanSponsorship/hapus_pesan_reply/$1/$2';
 $route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/upload-dokumen-pendukung']['POST'] = 'IG/User/PencairanSponsorship/upload_dokumen_pendukung/$1/$2';
 $route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/hapus-dokumen-pendukung']['POST'] = 'IG/User/PencairanSponsorship/hapus_dokumen_pendukung/$1/$2';
 $route['app/sim-ig/sponsorship/pencairan/v_detail/(:any)/actbud/(:any)/buat-rincian-kegiatan']['POST'] = 'IG/User/PencairanSponsorship/buat_rincian_kegiatan/$1/$2';

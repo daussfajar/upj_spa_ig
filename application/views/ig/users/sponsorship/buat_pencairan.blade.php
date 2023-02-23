@@ -39,7 +39,7 @@
                 Silakan lengkapi form dibawah ini untuk melakukan pencairan.
             </p>
 
-            {!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $id_uraian . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form', 'class' => 'myForm')) !!}
+            {!! form_open('app/sim-ig/sponsorship/pencairan/v_detail/' . $id_uraian . '/buat_pencairan/create?id=' . $id_uraian, array('id' => 'wizard-validation-form', 'class' => 'myForm')) !!}
                 <input type="hidden" name="periode" value="<?= encrypt($data->periode) ?>">
                 <div>
                     <h3>Step 1</h3>
@@ -59,7 +59,7 @@
                         <div class="form-group row">
                             <label class="col-lg-2 control-label " for="password2"> Nama Kegiatan *</label>
                             <div class="col-lg-10">
-                                <textarea name="nama_kegiatan" id="nama_kegiatan" class="form-control" cols="3" rows="3" required readonly>{{ $data->nama_hibah_sponsorship }}</textarea>
+                                <textarea name="nama_kegiatan" id="nama_kegiatan" class="form-control" cols="3" rows="3" readonly required>{{ $data->nama_hibah_sponsorship }}</textarea>
                                 <span class="help-block"><small>Masukan nama kegiatan.</small></span>
                             </div>
                         </div>
@@ -69,6 +69,7 @@
                             <div class="col-lg-10">
                                 <textarea name="deskripsi_kegiatan" id="deskripsi_kegiatan" class="form-control" cols="3" rows="3" required></textarea>
                                 <span class="help-block"><small>Deskripsikan rincian kegiatan hibah.</small></span>
+                                <label id="deskripsi_kegiatan-error" class="error" for="deskripsi_kegiatan"></label>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -90,12 +91,20 @@
                             <label class="col-lg-2 control-label" for="address2">Pelaksana *</label>
                             <div class="col-lg-10">
                                 <select name="pelaksana" id="pelaksana" class="form-control select2" style="width:100%;" required>
-                                    <option value="">Pilih Pelaksana Kegiatan</option>
-                                    @foreach ($karyawan->result() as $ky)
-                                        <option value="{{ $ky->nik }}">{{ $ky->nama_lengkap }}</option>
+                                    <option value="">Pilih Pelaksana</option>
+                                    @foreach ($unit->result() as $item)
+                                        <optgroup label="{{ $item->nama_unit }}">
+                                            @foreach ($pelaksana->result() as $ky)
+                                                @if ($item->kode_unit == $ky->kode_unit)
+                                                    <option value="{{ $ky->nik }}">{{ $ky->nama_lengkap }}</option>
+                                                @endif
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
+                                    <option value="">Pilih Pelaksana Kegiatan</option>                                    
                                 </select>
                                 <span class="help-block"><small>Tentukan pelaksana kegiatan.</small></span>
+                                <label id="pelaksana-error" class="error" for="pelaksana"></label>
                             </div>
                         </div>
 
@@ -109,33 +118,44 @@
                         <div class="form-group row">
                             <label class="col-lg-2 control-label " for="address2">Tanggal Kegiatan *</label>
                             <div class="col-lg-10">
+                                <span class="help-block"><small>Tentukan tanggal pelaksanaan kegiatan.</small></span>
                                 <div>
                                     <div class="input-daterange input-group date-range">
                                         <input type="text" class="form-control" name="tgl_mulai" required />
                                         <div class="input-group-append">
                                             <span class="input-group-text bg-primary text-white b-0">s/d</span>
                                         </div>
-
                                         <input type="text" class="form-control" name="tgl_selesai" required />
                                     </div>
+                                    <div class="float-left">
+                                        <label id="tgl_mulai-error" class="error" for="tgl_mulai"></label>
+                                    </div>
+                                    <div class="float-right">
+                                        <label id="tgl_mulai-error" class="error" for="tgl_selesai"></label>
+                                    </div>
                                 </div>
-                                <span class="help-block"><small>Tentukan tanggal pelaksanaan kegiatan.</small></span>
                             </div>
-                        </div> 
+                        </div>                         
 
                         <div class="form-group row">
                             <label class="col-lg-2 control-label " for="address2">Total Anggaran *</label>
                             <div class="col-lg-10">
-                                <input type="text" name="total_anggaran" id="total_anggaran" class="form-control" required>                                
+                                <input type="text" name="total_anggaran" id="total_anggaran" class="form-control" readonly required>
                                 <span class="help-block"><small>Tentukan total anggaran kegiatan (max: {{ rupiah($sisa) }}).</small></span>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input id="acceptTerms" name="accept_terms" type="checkbox" class="required">
+                                <label for="acceptTerms">Saya setuju dengan Syarat dan Ketentuan.</label>
+                                <label id="accept_terms-error" class="error" for="accept_terms"></label>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-lg-12 control-label ">(*) Wajib diisi</label>
                         </div>
                     </section>
-                    <h3>Step Final</h3>
+                    <!-- <h3>Step Final</h3>
                     <section>
                         <div class="form-group row">
                             <div class="col-md-12">
@@ -151,7 +171,7 @@
                             </div>
                         </div>
 
-                    </section>
+                    </section>-->
                 </div>
             {!! form_close() !!}
         </div>                
@@ -190,6 +210,9 @@
             $("#signature64").val('');
         });
 
+        let sisa_agr = "<?= $sisa ?>"
+        $('#total_anggaran').val(formatRupiah(sisa_agr, 'Rp. '))
+        
         var rupiah = document.getElementById('total_anggaran');
         var final_anggaran = document.getElementById('final_anggaran')
 

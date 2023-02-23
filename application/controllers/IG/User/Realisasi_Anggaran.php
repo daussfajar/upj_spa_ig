@@ -365,19 +365,29 @@ class Realisasi_Anggaran extends CI_Controller {
     public function finalisasi_anggaran(string $id_actbud, string $id_uraian){        
         $id_actbud = !decrypt($id_actbud) ? show_error("Error") : decrypt($id_actbud);
         $total_fnl_agr = $this->Realisasi_Anggaran_Model->get_total_anggaran_realisasi($id_actbud);
-                
+        
         $this->db->where('id', $id_actbud);
-        $this->db->update('ig_tbl_actbud', [
+        $update = $this->db->update('ig_tbl_actbud', [
             'realisasi' => 'Y',
-            'fnl_agr' => $total_fnl_agr->total
+            'fnl_agr' => $total_fnl_agr->total,
+            'stamp_keu_realisasi' => date('Y-m-d H:i:s')
         ]);
 
-        $this->session->set_flashdata('alert', [
-            'message' => 'Berhasil finalisasi.',
-            'type'    => 'success',	
-            'title'   => ''
-        ]);
-        return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+        if ($update === true) {
+            $this->session->set_flashdata('alert', [
+                'message' => 'Berhasil finalisasi.',
+                'type'    => 'success',
+                'title'   => ''
+            ]);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+        } else {
+            $this->session->set_flashdata('alert', [
+                'message' => 'Gagal finalisasi.',
+                'type'    => 'success',
+                'title'   => ''
+            ]);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+        }
     }
 
     public function buat_pesan(string $id_actbud, string $id_uraian){

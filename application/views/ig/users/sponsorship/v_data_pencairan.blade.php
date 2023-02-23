@@ -9,6 +9,13 @@
 @section('css')
 <link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<style>
+    .badge-disabled{
+        color: #212529;
+        opacity: .65;
+        cursor: not-allowed;
+    }    
+</style>
 @endsection
 
 @section('breadcrumb')
@@ -98,11 +105,12 @@
                         @endphp
                             @foreach ($data['data'] as $row)
                                 @php
-                                    $no++
+                                    $no++;
+                                    $sisa_agr = (($row['total_agr'] + $row['agr_masuk']) - ($row['agr_keluar'] + $row['agr_digunakan']));
+                                    $total_agr = ($row['total_agr'] + $row['agr_masuk'] - $row['agr_keluar']);
                                 @endphp
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle">{{ $no }}</th>
-                                    <!--<th style="vertical-align: middle;"><a href="{{ base_url('app/sim-ig/hibah/pencairan/detail_hibah/' . encrypt($row['id'])) }}">{{ $row['kode_uraian'] }}</a></th>-->
                                     <th style="vertical-align: middle;">
                                         <span class="badge bg-secondary p-2">
                                             {{ $row['kode_pencairan'] }}
@@ -114,55 +122,47 @@
                                         </span>
                                     </td>
                                     <td style="vertical-align: middle;">
-                                        <span class="" style="font-size: 14px;">
+                                        <span style="font-size: 14px;">
                                             {{ $row['nama_hibah_sponsorship'] }}
                                         </span>
-                                    </td>      
+                                    </td>
                                     <td style="vertical-align: middle;">
                                         <span style="font-size: 14px;">
                                             {{ $row['uraian_kegiatan'] }}
                                         </span>
-                                    </td>                              
+                                    </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <span class="badge bg-warning p-2">
-                                            @switch($row['periode'])
-                                                @case(1)
-                                                    {{ "Ganjil" }}
-                                                    @break
-                                                @case(2)
-                                                    {{ "Genap" }}
-                                                    @break
-                                                @default
-                                                    {{ "Unknown" }}                                            
-                                            @endswitch
+                                            {{ $row['periode'] }}
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        @php
-                                            $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
-                                            ig_tbl_actbud a WHERE a.id_uraian = '%u' 
-                                            AND a.status_act = 'send' AND (a.status != 'cancel')", $row['id']))->row();
-                                            $getSumIn = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_masuk FROM 
-                                            ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
-                                            AND b.disetujui = 'Y' AND b.jenis_kredit = 'in'", $row['kode_uraian']))->row();
-                                            $getSumOut = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_keluar FROM 
-                                            ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
-                                            AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();									
-                                            echo '<span class="badge bg-success p-2">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
-                                        @endphp
+                                        <?php
+                                            // $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
+                                            // ig_tbl_actbud a WHERE a.id_uraian = '%u' 
+                                            // AND a.status_act = 'send' AND (a.status != 'cancel')", $row['id']))->row();
+                                            // $getSumIn = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_masuk FROM 
+                                            // ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
+                                            // AND b.disetujui = 'Y' AND b.jenis_kredit = 'in'", $row['kode_uraian']))->row();
+                                            // $getSumOut = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_keluar FROM 
+                                            // ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
+                                            // AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();
+                                            // echo '<span class="badge bg-success p-2">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                            echo '<span class="badge bg-success p-2">'.rupiah($total_agr).'</span>';
+                                        ?>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <span class="badge bg-teal p-2">
-                                            {{ rupiah($getSum->digunakan) }}
+                                            <?= rupiah($row['agr_digunakan']) ?>
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        @php                                                                                        								
-                                            echo '<span class="badge bg-primary p-2">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
-                                        @endphp
-                                    </td>
+                                        <?php 
+                                        echo '<span class="badge bg-primary p-2">'.rupiah($sisa_agr).'</span>';
+                                        ?>
+                                    </td>                                    
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="{{ base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan') }}" class="badge bg-primary btn-sm p-2">Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="<?= ($sisa_agr == 0) ? 'javascript:void(0)' : base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan') ?>" class="badge bg-primary p-2 btn-sm<?= ($sisa_agr == 0) ? ' badge-disabled' : '' ?>" <?= ($sisa_agr == 0) ? ' data-toggle="tooltip" data-placement="top" title="" data-original-title="Sisa anggaran sudah habis"' : '' ?>>Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

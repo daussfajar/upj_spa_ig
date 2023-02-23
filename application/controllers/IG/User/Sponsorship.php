@@ -37,14 +37,14 @@ class Sponsorship extends CI_Controller {
 		];
 
 		if($jabatan != 0){            
-			if(!$kode_unit == 002){
+			if($kode_unit != 002){
 				$w_karyawan['kode_unit'] = $kode_unit;
 				$w_unit['kode_unit'] = $kode_unit;
 				$qry .= "AND a.kode_unit = " . $kode_unit;
 			}
 		}
         
-        $data['data']       = $this->Sponsorship_model->get_data_sponsorship($qry);
+        $data['data']       = $this->Sponsorship_model->get_data_sponsorship($qry);		
 		$data['karyawan']	= $this->db->get_where('tbl_karyawan', $w_karyawan);		
 		$data['unit'] 		= $this->db->get_where('tbl_unit', $w_unit);
 		return view('ig.users.sponsorship.index', $data);

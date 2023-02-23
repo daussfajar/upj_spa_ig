@@ -38,8 +38,7 @@ class PengalihanAnggaran extends CI_Controller {
                             ->order_by('a.nama_lengkap', 'ASC')
                             ->get()
                             ->result_array();        
-        $data['kegiatan'] = $this->Global_model->get_rincian_anggaran();
-
+        $data['kegiatan'] = $this->Global_model->get_rincian_anggaran();        
         $data['data_pengalihan'] = $this->m_pengalihan->get_all_pengalihan();
         // pr($data);
         return view('ig.users.pengalihan_anggaran.index', $data);
