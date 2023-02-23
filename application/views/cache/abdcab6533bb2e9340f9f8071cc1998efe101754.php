@@ -203,12 +203,14 @@
                             <label for="">* Kode Pencairan Asal</label>
                             <select name="kode_pencairan_asal" id="kode_pencairan_asal" class="select2 form-control" style="width:100%;" required>
                                 <option value="">-- Pilih --</option>
-                                <?php $__currentLoopData = $kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>"<?php echo $item->sisa_agr > 0 ? ' data-sisa_agr="'.rupiah_1($item->sisa_agr).'" data-r_sisa_agr="'.$item->sisa_agr.'"' : ''; ?> data-saldo="<?php echo e($item->total_agr); ?>"<?php echo e(($item->sisa_agr == 0 || $item->sisa_agr < 0) ? ' disabled' : ''); ?>>
+                                <?php foreach ($kegiatan as $item){ 
+                                    $sisa_agr = (($item->total_agr + $item->agr_masuk) - ($item->agr_keluar + $item->agr_digunakan));
+                                    ?>
+                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>"<?php echo $sisa_agr > 0 ? ' data-sisa_agr="'.rupiah_1($sisa_agr).'" data-r_sisa_agr="'.$sisa_agr.'"' : ''; ?> data-saldo="<?php echo e($sisa_agr); ?>"<?php echo e(($sisa_agr == 0 || $sisa_agr < 0) ? ' disabled' : ''); ?>>
                                     <?php echo e($item->kode_uraian . ' ('.$item->periode.')' . ($item->kode_pencairan != "" ? "(" . $item->kode_pencairan . ")" : "")); ?> - <?php echo e($item->nama_lengkap . ' ('.$item->nama_unit.')'); ?> - <?php echo e($item->nama_hibah_sponsorship); ?>
 
                                 </option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -221,12 +223,14 @@
                             <label for="">* Kode Pencairan Tujuan</label>
                             <select name="kode_pencairan_tujuan" id="kode_pencairan_tujuan" class="select2 form-control" style="width:100%;" required>
                                 <option value="">-- Pilih --</option>
-                                <?php $__currentLoopData = $kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>" data-saldo="<?php echo e($item->total_agr); ?>">
+                                <?php foreach ($kegiatan as $item){ 
+                                    $sisa_agr = (($item->total_agr + $item->agr_masuk) - ($item->agr_keluar + $item->agr_digunakan));
+                                    ?>
+                                <option value="<?php echo e(encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan)); ?>" data-kode_pencairan="<?php echo e($item->kode_pencairan); ?>" data-periode="<?php echo e($item->periode); ?>" data-saldo="<?php echo e($sisa_agr); ?>">
                                     <?php echo e($item->kode_uraian . ' ('.$item->periode.')' . ($item->kode_pencairan != "" ? "(" . $item->kode_pencairan . ")" : "")); ?> - <?php echo e($item->nama_lengkap . ' ('.$item->nama_unit.')'); ?> - <?php echo e($item->nama_hibah_sponsorship); ?>
 
                                 </option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -336,8 +340,9 @@
                 let real_value = rupiah.value.substr(4).split('.').join('')
                 let m_agr = sisa_agr.split(',')                
                 if(real_value > r_sisa_agr){
-                    toastr["error"](`Anggaran tidak boleh lebih dari ${m_agr[0]}`, "")
-                    return $('#anggaran').val(m_agr[0])
+                    //toastr["error"](`Anggaran tidak boleh lebih dari ${m_agr[0]}`, "")
+                    $('#anggaran').val(m_agr[0])
+                    return false
                 }
             })
         })

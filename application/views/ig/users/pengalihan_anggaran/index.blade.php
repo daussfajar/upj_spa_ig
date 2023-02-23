@@ -196,11 +196,13 @@
                             <label for="">* Kode Pencairan Asal</label>
                             <select name="kode_pencairan_asal" id="kode_pencairan_asal" class="select2 form-control" style="width:100%;" required>
                                 <option value="">-- Pilih --</option>
-                                @foreach ($kegiatan as $item)
-                                <option value="{{ encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan) }}" data-kode_pencairan="{{ $item->kode_pencairan }}" data-periode="{{ $item->periode }}"{!! $item->sisa_agr > 0 ? ' data-sisa_agr="'.rupiah_1($item->sisa_agr).'" data-r_sisa_agr="'.$item->sisa_agr.'"' : '' !!} data-saldo="{{ $item->total_agr }}"{{ ($item->sisa_agr == 0 || $item->sisa_agr < 0) ? ' disabled' : '' }}>
+                                <?php foreach ($kegiatan as $item){ 
+                                    $sisa_agr = (($item->total_agr + $item->agr_masuk) - ($item->agr_keluar + $item->agr_digunakan));
+                                    ?>
+                                <option value="{{ encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan) }}" data-kode_pencairan="{{ $item->kode_pencairan }}" data-periode="{{ $item->periode }}"{!! $sisa_agr > 0 ? ' data-sisa_agr="'.rupiah_1($sisa_agr).'" data-r_sisa_agr="'.$sisa_agr.'"' : '' !!} data-saldo="{{ $sisa_agr }}"{{ ($sisa_agr == 0 || $sisa_agr < 0) ? ' disabled' : '' }}>
                                     {{ $item->kode_uraian . ' ('.$item->periode.')' . ($item->kode_pencairan != "" ? "(" . $item->kode_pencairan . ")" : "") }} - {{ $item->nama_lengkap . ' ('.$item->nama_unit.')' }} - {{ $item->nama_hibah_sponsorship }}
                                 </option>
-                                @endforeach
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -213,11 +215,13 @@
                             <label for="">* Kode Pencairan Tujuan</label>
                             <select name="kode_pencairan_tujuan" id="kode_pencairan_tujuan" class="select2 form-control" style="width:100%;" required>
                                 <option value="">-- Pilih --</option>
-                                @foreach ($kegiatan as $item)
-                                <option value="{{ encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan) }}" data-kode_pencairan="{{ $item->kode_pencairan }}" data-periode="{{ $item->periode }}" data-saldo="{{ $item->total_agr }}">
+                                <?php foreach ($kegiatan as $item){ 
+                                    $sisa_agr = (($item->total_agr + $item->agr_masuk) - ($item->agr_keluar + $item->agr_digunakan));
+                                    ?>
+                                <option value="{{ encrypt($item->kode_uraian) . '_' . encrypt($item->kode_pencairan) }}" data-kode_pencairan="{{ $item->kode_pencairan }}" data-periode="{{ $item->periode }}" data-saldo="{{ $sisa_agr }}">
                                     {{ $item->kode_uraian . ' ('.$item->periode.')' . ($item->kode_pencairan != "" ? "(" . $item->kode_pencairan . ")" : "") }} - {{ $item->nama_lengkap . ' ('.$item->nama_unit.')' }} - {{ $item->nama_hibah_sponsorship }}
                                 </option>
-                                @endforeach
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -326,8 +330,9 @@
                 let real_value = rupiah.value.substr(4).split('.').join('')
                 let m_agr = sisa_agr.split(',')                
                 if(real_value > r_sisa_agr){
-                    toastr["error"](`Anggaran tidak boleh lebih dari ${m_agr[0]}`, "")
-                    return $('#anggaran').val(m_agr[0])
+                    //toastr["error"](`Anggaran tidak boleh lebih dari ${m_agr[0]}`, "")
+                    $('#anggaran').val(m_agr[0])
+                    return false
                 }
             })
         })

@@ -130,6 +130,7 @@ $route['app/sim-ig/sponsorship/status_pencairan/v_detail/(:any)/actbud/(:any)'] 
 
 // PENGALIHAN ANGGARAN
 $route['app/sim-ig/pengalihan-anggaran'] = 'IG/User/PengalihanAnggaran';
+$route['app/sim-ig/pengalihan-anggaran/(:num)'] = 'IG/User/PengalihanAnggaran';
 $route['app/sim-ig/pengalihan-anggaran/buat-pengalihan']['POST'] = 'IG/User/PengalihanAnggaran/buat_pengalihan';
 
 // HIBAH DAN SPONSORSHIP

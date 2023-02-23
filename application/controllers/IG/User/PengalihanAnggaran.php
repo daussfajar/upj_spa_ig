@@ -41,7 +41,7 @@ class PengalihanAnggaran extends CI_Controller {
         $data['kegiatan'] = $this->Global_model->get_rincian_anggaran();
 
         $data['data_pengalihan'] = $this->m_pengalihan->get_all_pengalihan();
-        //pr($data['data_pengalihan']);
+        // pr($data);
         return view('ig.users.pengalihan_anggaran.index', $data);
     }
 
@@ -67,10 +67,10 @@ class PengalihanAnggaran extends CI_Controller {
         $this->form_validation->set_rules('pic', 'PIC/Pengaju', 'trim|required', [
             'required' => '%s tidak boleh kosong.'
         ]);
-        $this->form_validation->set_rules('saldo', 'Saldo', 'trim|required|numeric|is_natural_no_zero|integer', [
+        $this->form_validation->set_rules('saldo', 'Saldo', 'trim|required|numeric|is_natural|integer', [
             'required' => '%s tidak boleh kosong.'
         ]);
-        $this->form_validation->set_rules('saldo_out', 'Saldo Out', 'trim|required|numeric|is_natural_no_zero|integer', [
+        $this->form_validation->set_rules('saldo_out', 'Saldo Out', 'trim|required|numeric|is_natural|integer', [
             'required' => '%s tidak boleh kosong.'
         ]);
 
@@ -107,9 +107,10 @@ class PengalihanAnggaran extends CI_Controller {
             if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!", 400, "400 - Bad Request, Invalid argument (invalid request payload)");
             if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0", 400, "400 - Bad Request, Invalid argument (invalid request payload)");
             $detail_anggaran = $this->Global_model->get_detail_anggaran($kode_uraian_asal);
-
-            if($total_agr > $detail_anggaran->sisa_agr){
-                return show_error("Anggaran melebihi batas, batas maksimal anggaran adalah " . rupiah($detail_anggaran->sisa_agr), 400, "400 - Bad Request, Invalid argument (invalid request payload)");
+            $sisa_agr = (($detail_anggaran->total_agr + $detail_anggaran->agr_masuk) - ($detail_anggaran->agr_keluar + $detail_anggaran->agr_digunakan));
+            
+            if($total_agr > $sisa_agr){
+                return show_error("Anggaran melebihi batas, batas maksimal anggaran adalah " . rupiah($sisa_agr), 400, "400 - Bad Request, Invalid argument (invalid request payload)");
             }
             
             $image_parts = explode(";base64,", $signature);            

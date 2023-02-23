@@ -136,72 +136,59 @@ class Global_Model extends CI_Model {
 
 	public function get_detail_anggaran(string $kode_uraian){
 		$raw_query = "SELECT
-            a.id,
-            a.kode_uraian,
-            c.nama_unit,
-            a.nama_hibah_sponsorship,
-            b.nama_lengkap,
-            a.uraian_kegiatan,
-            a.jenis_ig,
-            a.total_agr,
-            a.kode_pencairan,
-        IF
-            ( a.periode = '1', 'Ganjil', 'Genap' ) AS periode,
-            IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) agr_masuk,
-            IFNULL(( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) agr_keluar,
-            IFNULL(( SELECT SUM( agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS != 'cancel' ), 0 ) agr_diajukan,
-            IFNULL(( SELECT SUM( agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 ) agr_diajukan_final,
-            IFNULL(( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 ) agr_digunakan,
-            ((a.total_agr + IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) - (IFNULL(( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) + IFNULL(( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 )))) AS sisa_agr 
-        FROM
-            ig_tbl_uraian a
-            JOIN tbl_karyawan b ON a.pic = b.nik
-            JOIN tbl_unit c ON b.kode_unit = c.kode_unit
-            LEFT JOIN ig_tbl_pengalihan d ON d.kode_uraian = a.kode_uraian
-            LEFT JOIN ig_tbl_pengalihan e ON e.kode_uraian_out = a.kode_uraian
-            LEFT JOIN ig_tbl_actbud f ON f.id_uraian = a.id
-            LEFT JOIN ig_t_j_b_act g ON f.id = g.id_actbud 
-        WHERE
-            a.kode_uraian = ? AND a.STATUS = 'Aktif'";
+			a.id,
+			a.kode_uraian,
+			c.nama_unit,
+			a.nama_hibah_sponsorship,
+			b.nama_lengkap,
+			a.uraian_kegiatan,
+			a.jenis_ig,
+			a.total_agr,
+			a.kode_pencairan,
+		IF
+			( a.periode = 1, 'Ganjil', 'Genap' ) AS periode,
+			IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) agr_masuk,
+			IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) agr_keluar,
+			IFNULL( ( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS != 'cancel' ), 0 ) agr_digunakan 
+		FROM
+			ig_tbl_uraian a
+			JOIN tbl_karyawan b ON a.pic = b.nik
+			JOIN tbl_unit c ON b.kode_unit = c.kode_unit 
+		WHERE
+			a.kode_uraian = ? AND
+			a.STATUS = 'Aktif' 
+		GROUP BY
+			a.kode_uraian";
 
 		$query = $this->db->query($raw_query, [$kode_uraian]);
 		$fetch = $query->row();
 		return $fetch;
 	}
 
-	public function get_rincian_anggaran()
-	{
+	public function get_rincian_anggaran(){
 		$raw_query = "SELECT
-            a.id,
-            a.kode_uraian,
-            c.nama_unit,
-            a.nama_hibah_sponsorship,
-            b.nama_lengkap,
-            a.uraian_kegiatan,
-            a.jenis_ig,
-            a.total_agr,
-            a.kode_pencairan,
-        IF
-            ( a.periode = '1', 'Ganjil', 'Genap' ) AS periode,
-            IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) agr_masuk,
-            IFNULL(( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) agr_keluar,
-            IFNULL(( SELECT SUM( agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS != 'cancel' ), 0 ) agr_diajukan,
-            IFNULL(( SELECT SUM( agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 ) agr_diajukan_final,
-            IFNULL(( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 ) agr_digunakan,
-            ((a.total_agr + IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) - (IFNULL(( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) + IFNULL(( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 )))) AS sisa_agr 
-        FROM
-            ig_tbl_uraian a
-            JOIN tbl_karyawan b ON a.pic = b.nik
-            JOIN tbl_unit c ON b.kode_unit = c.kode_unit
-            LEFT JOIN ig_tbl_pengalihan d ON d.kode_uraian = a.kode_uraian
-            LEFT JOIN ig_tbl_pengalihan e ON e.kode_uraian_out = a.kode_uraian
-            LEFT JOIN ig_tbl_actbud f ON f.id_uraian = a.id
-            LEFT JOIN ig_t_j_b_act g ON f.id = g.id_actbud 
-        WHERE
-            a.STATUS = 'Aktif'
-		GROUP BY
+			a.id,
 			a.kode_uraian,
-			a.kode_pencairan";
+			c.nama_unit,
+			a.nama_hibah_sponsorship,
+			b.nama_lengkap,
+			a.uraian_kegiatan,
+			a.jenis_ig,
+			a.total_agr,
+			a.kode_pencairan,
+		IF
+			( a.periode = 1, 'Ganjil', 'Genap' ) AS periode,
+			IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) agr_masuk,
+			IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) agr_keluar,
+			IFNULL( ( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS = 'approved' ), 0 ) agr_digunakan 
+		FROM
+			ig_tbl_uraian a
+			JOIN tbl_karyawan b ON a.pic = b.nik
+			JOIN tbl_unit c ON b.kode_unit = c.kode_unit 
+		WHERE
+			a.STATUS = 'Aktif' 
+		GROUP BY
+			a.kode_uraian";
 
 		$query = $this->db->query($raw_query);
 		$fetch = $query->result();
