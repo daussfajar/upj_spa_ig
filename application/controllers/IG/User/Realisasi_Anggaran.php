@@ -130,6 +130,9 @@ class Realisasi_Anggaran extends CI_Controller {
 
             $anggaran_realisasi = $this->input->post('anggaran_realisasi', true);			
 			$total_agr = str_ireplace(".","", substr($anggaran_realisasi, 3));
+            if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+            if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+            
             $raw_id = $this->input->post('id', true);
             $decrypted_id = decrypt($raw_id);
             $data = $this->db->query("SELECT a.id,a.total_anggaran,a.total_anggaran_realisasi FROM ig_t_j_b_act a WHERE a.status = 'Aktif' AND 
@@ -362,19 +365,29 @@ class Realisasi_Anggaran extends CI_Controller {
     public function finalisasi_anggaran(string $id_actbud, string $id_uraian){        
         $id_actbud = !decrypt($id_actbud) ? show_error("Error") : decrypt($id_actbud);
         $total_fnl_agr = $this->Realisasi_Anggaran_Model->get_total_anggaran_realisasi($id_actbud);
-                
+        
         $this->db->where('id', $id_actbud);
-        $this->db->update('ig_tbl_actbud', [
+        $update = $this->db->update('ig_tbl_actbud', [
             'realisasi' => 'Y',
-            'fnl_agr' => $total_fnl_agr->total
+            'fnl_agr' => $total_fnl_agr->total,
+            'stamp_keu_realisasi' => date('Y-m-d H:i:s')
         ]);
 
-        $this->session->set_flashdata('alert', [
-            'message' => 'Berhasil finalisasi.',
-            'type'    => 'success',	
-            'title'   => ''
-        ]);
-        return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+        if ($update === true) {
+            $this->session->set_flashdata('alert', [
+                'message' => 'Berhasil finalisasi.',
+                'type'    => 'success',
+                'title'   => ''
+            ]);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+        } else {
+            $this->session->set_flashdata('alert', [
+                'message' => 'Gagal finalisasi.',
+                'type'    => 'success',
+                'title'   => ''
+            ]);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+        }
     }
 
     public function buat_pesan(string $id_actbud, string $id_uraian){

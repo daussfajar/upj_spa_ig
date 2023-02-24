@@ -63,7 +63,8 @@ class PencairanHibah extends CI_Controller {
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
 		$data['pelaksana'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit'] = $this->db->get('tbl_unit');
-        //pr($data);
+		$data['id_uraian'] = encrypt($id);
+        // pr($data['id_uraian']);
 		return view('ig.users.hibah.buat_pencairan', $data);
 	}
 
@@ -118,11 +119,17 @@ class PencairanHibah extends CI_Controller {
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
 			$pic = decrypt($_SESSION['user_sessions']['nik']);
-                        
-			$agr_in_out = $this->Actbud_model->get_agr_in_out($hibah->kode_uraian);
-			$saldo_masuk = $agr_in_out['saldo_masuk'];
-			$saldo_keluar = $agr_in_out['saldo_keluar'];
-
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+			
+			// OLD
+			// $agr_in_out = $this->Actbud_model->get_agr_in_out($hibah->kode_uraian);
+			// $saldo_masuk = $agr_in_out['saldo_masuk'];
+			// $saldo_keluar = $agr_in_out['saldo_keluar'];
+			// $batas = ($hibah->total_agr + ($saldo_masuk - $saldo_keluar)) - (int) (empty($agr->digunakan) ? 0 : $agr->digunakan);
+			$agr_in_out = $this->Global_model->get_detail_anggaran($hibah->kode_uraian);
+			$saldo_masuk = $agr_in_out->agr_masuk;
+			$saldo_keluar = $agr_in_out->agr_keluar;
 			$batas = ($hibah->total_agr + ($saldo_masuk - $saldo_keluar)) - (int) (empty($agr->digunakan) ? 0 : $agr->digunakan);
 			
 			if($batas == 0){
@@ -197,10 +204,10 @@ class PencairanHibah extends CI_Controller {
 
 	public function v_detail_actbud(string $id_uraian, string $id_actbud){
 		$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
-		$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);		
+		$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);
 		$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);
-		
 		if(empty($data['data'])) return show_404();
+		
 		$kode_unit = $data['data']->kode_unit;
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
 		$data['messages'] = $this->Hibah_model->get_data_chat_actbud($id_actbud);        
@@ -210,7 +217,7 @@ class PencairanHibah extends CI_Controller {
 		//$data['unit'] = $this->db->get('tbl_unit')->result();
 		$data['anggaran_tersisa'] = (int) ($data['data']->agr - $data['sisa']->digunakan);        
 		$data['id_uraian'] = encrypt($id_uraian);
-		$data['id_actbud'] = encrypt($id_actbud);		
+		$data['id_actbud'] = encrypt($id_actbud);
 		return view('ig.users.hibah.v_detail_actbud', $data);
 	}
 
@@ -263,6 +270,9 @@ class PencairanHibah extends CI_Controller {
 			$sisa_anggaran = ($hibah->total_agr - $agr->digunakan);			
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
+			if(!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if(is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+			
 			//pr(($sisa_anggaran + $_REQUEST['old_anggaran']) - $total_agr);
 			if((($sisa_anggaran + $this->input->post('old_anggaran', true)) - $total_agr) < 0) {
 				$this->session->set_flashdata('alert', [
@@ -572,7 +582,8 @@ class PencairanHibah extends CI_Controller {
 					'id_act' => $id_actbud,					
 					'nama_file' => $upload_data['file_name'],
 					'ukuran_file' => $file_size,
-					'deskripsi' => $this->input->post('deskripsi', true)
+					'deskripsi' => $this->input->post('deskripsi', true),
+					'user_created' => $pic
 				];
 
 				$this->db->insert('ig_tbl_actbud_upload', $data);
@@ -662,6 +673,8 @@ class PencairanHibah extends CI_Controller {
 			
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
 			
 			if((($data['sisa']->digunakan != "") && ($total_agr > $batas)) || ($total_agr > $batas)){
 
@@ -689,14 +702,23 @@ class PencairanHibah extends CI_Controller {
 					'total_anggaran' => $total_agr,
 				];
 	
-				$this->db->insert('ig_t_j_b_act', $data);
+				$insert = $this->db->insert('ig_t_j_b_act', $data);
 				
-				$this->session->set_flashdata('alert', [
-					'message' => 'Berhasil membuat kegiatan',
-					'type'    => 'success',	
-					'title'   => ''
-				]);
-				return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+				if($insert === true){
+					$this->session->set_flashdata('alert', [
+						'message' => 'Berhasil membuat kegiatan',
+						'type'    => 'success',
+						'title'   => ''
+					]);
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+				} else {
+					$this->session->set_flashdata('alert', [
+						'message' => 'Gagal membuat kegiatan',
+						'type'    => 'success',
+						'title'   => ''
+					]);
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+				}
 			}
 															
 		} else {
@@ -756,14 +778,14 @@ class PencairanHibah extends CI_Controller {
 			// ttd
 			$signature = $this->input->post('signature');
 			
-			if(substr($signature, -5) == "CYII=") {
-				$this->session->set_flashdata('alert', [
-					'message' => 'Tanda tangan tidak boleh kosong.',
-					'type'    => 'error',
-					'title'   => ''
-				]);
-				return redirect($_SERVER['HTTP_REFERER']);
-			}
+			// if(substr($signature, -5) == "CYII=") {
+			// 	$this->session->set_flashdata('alert', [
+			// 		'message' => 'Tanda tangan tidak boleh kosong.',
+			// 		'type'    => 'error',
+			// 		'title'   => ''
+			// 	]);
+			// 	return redirect($_SERVER['HTTP_REFERER']);
+			// }
 
 			if (check_base64_image($signature) === false) {
 				return show_error("Tanda tangan invalid!");
@@ -774,19 +796,30 @@ class PencairanHibah extends CI_Controller {
 			
 			// OLD $kode_unit = $_SESSION['user_sessions']['kode_unit'];
 			$this->db->where('id', $id);
-			$this->db->update('ig_tbl_actbud', [
+			$update = $this->db->update('ig_tbl_actbud', [
 				'status' => 'submitted',
 				'lock_editing' => 'Y',
 				'sign' => $pre_approval,
 				'ttd_pic' => $signature
 			]);
 
-			$this->session->set_flashdata('alert', [
-				'message' => 'Berhasil submit kegiatan',
-				'type'    => 'success',
-				'title'   => ''
-			]);
-			return redirect($_SERVER['HTTP_REFERER']);
+			if ($update === true) {
+				$this->session->set_flashdata('alert', [
+					'message' => 'Berhasil submit kegiatan',
+					'type'    => 'success',
+					'title'   => ''
+				]);
+
+				return redirect($_SERVER['HTTP_REFERER']);
+			} else {
+				$this->session->set_flashdata('alert', [
+					'message' => 'Gagal submit kegiatan',
+					'type'    => 'success',
+					'title'   => ''
+				]);
+
+				return redirect($_SERVER['HTTP_REFERER']);
+			}
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()

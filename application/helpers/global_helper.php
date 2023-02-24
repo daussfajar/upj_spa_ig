@@ -61,6 +61,14 @@ if (!function_exists('rupiah')) {
 	}
 }
 
+if (!function_exists('rupiah_1')) {
+    function rupiah_1($angka)
+    {
+        $hasil_rupiah = "Rp. " . number_format($angka, 2, ',', '.');
+        return $hasil_rupiah;
+    }
+}
+
 if (!function_exists('pr')) {
 	function pr($data, $type = null){
 		echo '<pre>';

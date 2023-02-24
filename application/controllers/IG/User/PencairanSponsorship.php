@@ -6,12 +6,13 @@ class PencairanSponsorship extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->Global_model->is_logged_in();
-		$this->load->model('IG/Hibah_model');
+		$this->load->model('IG/Sponsorship_model');
 		$this->load->model('IG/Actbud_model');
         header("X-XSS-Protection: 1; mode=block");
 	}
 
-    public function index($qry = ""){
+	public function index(){		
+		$qry = "";
 		$imp_arr = implode("/", $this->uri->segment_array());
 		if (!empty($_GET['q']) && $_GET['q'] !== "") {
 			$search = trim(filter_var($this->input->get('q', true), FILTER_SANITIZE_STRING));
@@ -25,46 +26,52 @@ class PencairanSponsorship extends CI_Controller {
 		} else {
 			unset($_SESSION['session_where']);
 		}
-        
-		$data['data'] = $this->Hibah_model->get_data_hibah_finalisasi($qry);
-		
+		$data['data'] = $this->Sponsorship_model->get_data_sponsorship_finalisasi($qry);
+		//pr($data);
         return view('ig.users.sponsorship.v_data_pencairan', $data);
-    }
+	}
 
-	public function detail_hibah(){
+	public function detail_sponsorship(){
 		$id = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));
-		$data['data'] = !empty($this->Hibah_model->get_data_hibah_by_id($id, "")) ? $this->Hibah_model->get_data_hibah_by_id($id) : show_404();
+		$data['data'] = !empty($this->Sponsorship_model->get_data_sponsorship_by_id($id, "")) ? $this->Sponsorship_model->get_data_sponsorship_by_id($id) : show_404();
 		$data['karyawan']		= $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit']			= $this->db->get('tbl_unit');	
-		return view('ig.users.sponsorship.v_detail_hibah', $data);
+		return view('ig.users.sponsorship.v_detail_sponsorship', $data);
 	}
 
 	public function v_detail(){
-		$id = !decrypt($this->uri->segment(6)) ? show_404() : decrypt($this->uri->segment(6));
-		$data['data'] = !$this->Hibah_model->get_data_hibah_by_id($id) ? show_404() : $this->Hibah_model->get_data_hibah_by_id($id);			
-		$data['data_pencairan'] = $this->Hibah_model->get_data_pencairan($id);
-		$agr = $this->Hibah_model->cek_anggaran_digunakan_sementara($id);        
+		$id = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));
+		$data['data'] = !$this->Sponsorship_model->get_data_sponsorship_by_id($id) ? show_404() : $this->Sponsorship_model->get_data_sponsorship_by_id($id);			
+		$data['data_pencairan'] = $this->Sponsorship_model->get_data_pencairan($id);
+		$agr = $this->Sponsorship_model->cek_anggaran_digunakan_sementara($id);
 		$data['sisa'] = (int) $data['data']->total_agr - $agr->digunakan;
 		$data['total_anggaran_yang_digunakan'] = $agr->digunakan;
-		$data['total_anggaran_yang_digunakan_final'] = $this->Hibah_model->cek_anggaran_digunakan_final($id);		
+		$data['total_anggaran_yang_digunakan_final'] = $this->Sponsorship_model->cek_anggaran_digunakan_final($id);
 		
 		return view('ig.users.sponsorship.v_detail_pencairan', $data);
 	}
 
-	public function buat_pencairan(string $id){					
+	public function buat_pencairan(string $id){
 		$id = !decrypt($id) ? show_404() : decrypt($id);
-		$agr = $this->Hibah_model->cek_anggaran_digunakan_sementara($id);				
-		$data['data'] = !$this->Hibah_model->get_data_hibah_by_id($id) ? show_error("Error", 403) : $this->Hibah_model->get_data_hibah_by_id($id);
-		$agr_in_out = $this->Actbud_model->get_agr_in_out($data['data']->kode_uraian);
-		$saldo_masuk = $agr_in_out['saldo_masuk'];
-		$saldo_keluar = $agr_in_out['saldo_keluar'];
+		$agr = $this->Sponsorship_model->cek_anggaran_digunakan_sementara($id);		
+		$data['data'] = !$this->Sponsorship_model->get_data_sponsorship_by_id($id) ? show_error("Error", 403) : $this->Sponsorship_model->get_data_sponsorship_by_id($id);
+
+		// OLD
+		// $agr_in_out = $this->Actbud_model->get_agr_in_out($data['data']->kode_uraian);
+		// $saldo_masuk = $agr_in_out['saldo_masuk'];
+		// $saldo_keluar = $agr_in_out['saldo_keluar'];
+
+		$agr_in_out = $this->Global_model->get_detail_anggaran($data['data']->kode_uraian);		
+		$saldo_masuk = $agr_in_out->agr_masuk;
+		$saldo_keluar = $agr_in_out->agr_keluar;
 		$data['sisa'] = (int) ($data['data']->total_agr + ($saldo_masuk - $saldo_keluar)) - $agr->digunakan;
+		
 		$kode_unit = $data['data']->kode_unit;
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
 		$data['pelaksana'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif']);
 		$data['unit'] = $this->db->get('tbl_unit');
-        //pr($data);
 		$data['id_uraian'] = encrypt($id);
+		
 		return view('ig.users.sponsorship.buat_pencairan', $data);
 	}
 
@@ -105,26 +112,32 @@ class PencairanSponsorship extends CI_Controller {
 		$this->form_validation->set_rules('accept_terms', 'Accept Terms', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);
-		
-		if($this->form_validation->run() === TRUE){            
+
+		if($this->form_validation->run() === TRUE){
 			$id = filter_var($this->input->get('id', true), FILTER_SANITIZE_STRING);
 			$decrypted_id = !decrypt($id) ? show_404() : decrypt($id);
-			$hibah = $this->Hibah_model->get_data_hibah_by_id($decrypted_id);		
-			$agr = $this->Hibah_model->cek_anggaran_digunakan_sementara($decrypted_id);			
+			$sponsorship = $this->Sponsorship_model->get_data_sponsorship_by_id($decrypted_id);		
+			$agr = $this->Sponsorship_model->cek_anggaran_digunakan_sementara($decrypted_id);			
 			// $image_parts = explode(";base64,", $_POST['tanda_tangan']);               
             // $image_base64_encode = $image_parts[1];
 			// OLD $kode_unit = $_SESSION['user_sessions']['kode_unit'];
-            $kode_unit = $hibah->kode_unit;
-                        
+            $kode_unit = $sponsorship->kode_unit;
+
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
 			$pic = decrypt($_SESSION['user_sessions']['nik']);
-                        
-			$agr_in_out = $this->Actbud_model->get_agr_in_out($hibah->kode_uraian);
-			$saldo_masuk = $agr_in_out['saldo_masuk'];
-			$saldo_keluar = $agr_in_out['saldo_keluar'];
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
 
-			$batas = ($hibah->total_agr + ($saldo_masuk - $saldo_keluar)) - (int) (empty($agr->digunakan) ? 0 : $agr->digunakan);
+			// OLD
+			// $agr_in_out = $this->Actbud_model->get_agr_in_out($hibah->kode_uraian);
+			// $saldo_masuk = $agr_in_out['saldo_masuk'];
+			// $saldo_keluar = $agr_in_out['saldo_keluar'];
+			// $batas = ($hibah->total_agr + ($saldo_masuk - $saldo_keluar)) - (int) (empty($agr->digunakan) ? 0 : $agr->digunakan);
+			$agr_in_out = $this->Global_model->get_detail_anggaran($sponsorship->kode_uraian);
+			$saldo_masuk = $agr_in_out->agr_masuk;
+			$saldo_keluar = $agr_in_out->agr_keluar;
+			$batas = ($sponsorship->total_agr + ($saldo_masuk - $saldo_keluar)) - (int) (empty($agr->digunakan) ? 0 : $agr->digunakan);			
 			
 			if($batas == 0){
 				$this->session->set_flashdata('alert', [
@@ -132,7 +145,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Habis'
 				]);
-				return redirect($_SERVER['HTTP_REFERER']);
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
 			}
 
 			if($total_agr > $batas){
@@ -141,7 +154,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => 'Anggaran Lewat Batas'
 				]);
-				return redirect($_SERVER['HTTP_REFERER']);
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/buat_pencairan'));
 			} else {
 				$periode = !decrypt($this->input->post('periode', true)) ? show_error("Unauthorized!") : decrypt($this->input->post('periode', true));
 				$data = [
@@ -152,8 +165,7 @@ class PencairanSponsorship extends CI_Controller {
 					'nama_kegiatan' => $this->input->post('nama_kegiatan', true),
 					'deskripsi_kegiatan' => $this->input->post('deskripsi_kegiatan', true),
 					'kpi' => $this->input->post('kpi', true),
-					/* OLD 'pic' => $pic,*/
-                    'pic' => $hibah->pic,
+					'pic' => $pic,
 					'pelaksana' => $this->input->post('pelaksana', true),
 					'jenis_anggaran' => 'sponsorship',
 					'tgl_mulai' => $this->input->post('tgl_mulai', true),
@@ -162,20 +174,20 @@ class PencairanSponsorship extends CI_Controller {
 					'tahun' => date('Y'),
 					'tanggal_pembuatan' => date('Y-m-d H:i:s'),
 					'agr' => $total_agr,
-                    'fnl_agr' => $total_agr,
+					'fnl_agr' => $total_agr,
 					'status_act' => 'send'
 				];
 		
-				$insert = $this->Hibah_model->create_pencairan($data);
+				$insert = $this->Sponsorship_model->create_pencairan($data);
 		
 				if($insert['success'] === TRUE){
 		
 					$this->session->set_flashdata('alert', [
-						'message' => 'Selamat anda berhasil membuat pencairan hibah.',
+						'message' => 'Selamat anda berhasil membuat pencairan sponsorship.',
 						'type'    => 'success',	
 						'title'   => ''
 					]);
-					return redirect(base_url('app/sim-ig/sponsorship/status_pencairan/v_detail/' . $this->uri->segment(6) . '/actbud/' . encrypt($this->db->insert_id())));
+					return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(6) . '/actbud/' . encrypt($this->db->insert_id())));
 		
 				} else {
 					$this->session->set_flashdata('alert', [
@@ -183,7 +195,7 @@ class PencairanSponsorship extends CI_Controller {
 						'type'    => 'error',	
 						'title'   => ''
 					]);
-					return redirect($_SERVER['HTTP_REFERER']);
+					return redirect(base_url('app/sim-ig/sponsorship/status_pencairan'));
 				}
 			}
 
@@ -194,40 +206,27 @@ class PencairanSponsorship extends CI_Controller {
 			$this->session->set_flashdata('error_validation', $error);				
 			return redirect($_SERVER['HTTP_REFERER']);
 		}
+		
 	}
 
 	public function v_detail_actbud(string $id_uraian, string $id_actbud){
 		$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
-		$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);		
-		$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);
-		
-		if(empty($data['data'])) return show_404();
+		$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);
+		$data['data'] = $this->Sponsorship_model->get_detail_actbud($id_uraian, $id_actbud);
+		if (empty($data['data'])) return show_404();
+
 		$kode_unit = $data['data']->kode_unit;
-		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
-		$data['messages'] = $this->Hibah_model->get_data_chat_actbud($id_actbud);        
+		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);		
+		$data['messages'] = $this->Sponsorship_model->get_data_chat_actbud($id_actbud);		
 		$data['dokumen_pendukung'] = $this->db->get_where('ig_tbl_actbud_upload', ['id_act' => $id_actbud, 'status' => 'Aktif']);
 		$data['rincian_kegiatan'] = $this->db->get_where('ig_t_j_b_act', ['id_actbud' => $id_actbud, 'status' => 'Aktif']);
-		$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);        
+		$data['sisa'] = $this->Sponsorship_model->cek_anggaran_rincian_kegiatan($id_actbud);
 		//$data['unit'] = $this->db->get('tbl_unit')->result();
-		$data['anggaran_tersisa'] = (int) ($data['data']->agr - $data['sisa']->digunakan);        
+		$data['anggaran_tersisa'] = (int) ($data['data']->agr - $data['sisa']->digunakan);
 		$data['id_uraian'] = encrypt($id_uraian);
-		$data['id_actbud'] = encrypt($id_actbud);		
+		$data['id_actbud'] = encrypt($id_actbud);
+		
 		return view('ig.users.sponsorship.v_detail_actbud', $data);
-	}
-
-	public function batalkan_actbud(){
-		$id_actbud = !decrypt($this->uri->segment(7)) ? show_404() : decrypt($this->uri->segment(7));
-		$this->db->where('id', $id_actbud);
-		$this->db->update('ig_tbl_actbud', [
-			'status' => 'cancel'
-		]);
-
-		$this->session->set_flashdata('alert', [
-			'message' => 'Selamat anda berhasil membatalkan kegiatan.',
-			'type'    => 'success',	
-			'title'   => ''
-		]);
-		return redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function ubah_actbud(){		
@@ -259,8 +258,8 @@ class PencairanSponsorship extends CI_Controller {
 		if($this->form_validation->run() === TRUE){
 			$id = decrypt($this->uri->segment(7));
 			$id_uraian = decrypt($this->uri->segment(5));
-			$hibah = $this->Hibah_model->get_data_hibah_by_id($id_uraian);		
-			$agr = $this->Hibah_model->cek_anggaran_digunakan_sementara($id_uraian);
+			$hibah = $this->Sponsorship_model->get_data_sponsorship_by_id($id_uraian);		
+			$agr = $this->Sponsorship_model->cek_anggaran_digunakan_sementara($id_uraian);
 			$sisa_anggaran = ($hibah->total_agr - $agr->digunakan);			
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
@@ -271,7 +270,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'error',	
 					'title'   => ''
 				]);
-				return redirect($_SERVER['HTTP_REFERER']);
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
 			} else {
 				$data = [			
 					'nama_kegiatan' => $this->input->post('nama_kegiatan', true),
@@ -292,7 +291,7 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				return redirect($_SERVER['HTTP_REFERER']);
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7)));
 			}			
 
 		} else {
@@ -304,163 +303,22 @@ class PencairanSponsorship extends CI_Controller {
 		}
 	}
 
-	public function buat_pesan(string $id_uraian, string $id_actbud){
-		$id_actbud = decrypt($id_actbud);
-		$pic = decrypt($_SESSION['user_sessions']['nik']);
-		$pesan = $this->input->post('pesan', true);
-		
-		if(isset($_POST['reply_pesan'])){
-			$this->form_validation->set_rules('reply_id', 'ID', 'trim|required', [
-				'required' => '%s tidak boleh kosong.'
-			]);
-			$this->form_validation->set_rules('reply_pesan', 'Pesan', 'trim|required', [
-				'required' => '%s tidak boleh kosong.'
-			]);	
-	
-			if($this->form_validation->run() === TRUE){
-				$reply_id = decrypt($this->input->post('reply_id', true));
-				$reply_pesan = $this->input->post('reply_pesan', true);
-				if(!empty($_FILES['reply_attachment']['name'])){
-					
-					$path = FCPATH . 'app-data/chat-attachment';
-					$config['upload_path'] 		= $path;
-					$config['allowed_types'] 	= 'jpg|jpeg|png|docx|xlsx|pptx|vsdx|webp|pdf';
-					$config['file_name'] 		= uniqid() . time() . '_' . $_FILES['reply_attachment']['name'];
-					$config['max_size'] 		= 10000;
-					$config['max_width']  		= 1024;
-					$config['max_height']  		= 768;
-					$config['encrypt_name'] 	= false;
-					$config['detect_mime'] 		= true;
-					$config['remove_spaces'] 	= true;
-					$config['mod_mime_fix'] 	= true;
-					$this->load->library('upload', $config);			
-	
-					if(!$this->upload->do_upload('reply_attachment')){
-						return show_error($this->upload->display_errors(), 402, "Error");
-					} else {
-						$upload_data = $this->upload->data();
-						$file_size = $_FILES['reply_attachment']['size'];
-	
-						$data = [
-							'id_pesan' => $reply_id,							
-							'nik' => $pic,
-							'pesan' => $reply_pesan,
-							'attachment' => $upload_data['file_name'],
-							'attachment_size' => $file_size
-						];
-	
-						$this->db->insert('ig_tbl_actbud_chat_reply', $data);
-	
-						$this->session->set_flashdata('alert', [
-							'message' => 'Pesan berhasil terkirim.',
-							'type'    => 'success',	
-							'title'   => ''
-						]);
+	public function batalkan_actbud(){
+		$id_actbud = !decrypt($this->uri->segment(7)) ? show_404() : decrypt($this->uri->segment(7));
+		$this->db->where('id', $id_actbud);
+		$this->db->update('ig_tbl_actbud', [
+			'status' => 'cancel'
+		]);
 
-						return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
-	
-					}
-
-				} else {					
-					$this->db->insert('ig_tbl_actbud_chat_reply', [
-						'id_pesan' => $reply_id,							
-						'nik' => $pic,
-						'pesan' => $reply_pesan,
-					]);
-
-					$this->session->set_flashdata('alert', [
-						'message' => 'Pesan berhasil terkirim.',
-						'type'    => 'success',	
-						'title'   => ''
-					]);
-
-					return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
-				}
-
-			} else {
-				$error = [
-					'form_error' => validation_errors_array()
-				];
-				$this->session->set_flashdata('error_validation', $error);				
-				return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
-			}
-
-		} else {
-
-			$this->form_validation->set_rules('pesan', 'Pesan', 'trim|required', [
-				'required' => '%s tidak boleh kosong.'
-			]);	
-	
-			if($this->form_validation->run() === TRUE){								
-	
-				if(!empty($_FILES['attachment']['name'])){
-					
-					$path = FCPATH . 'app-data/chat-attachment';
-					$config['upload_path'] 		= $path;
-					$config['allowed_types'] 	= 'jpg|jpeg|png|docx|xlsx|pptx|vsdx|webp|pdf';
-					$config['file_name'] 		= uniqid() . time() . '_' . $_FILES['attachment']['name'];
-					$config['max_size'] 		= 10000;
-					$config['max_width']  		= 1024;
-					$config['max_height']  		= 768;
-					$config['encrypt_name'] 	= false;
-					$config['detect_mime'] 		= true;
-					$config['remove_spaces'] 	= true;
-					$config['mod_mime_fix'] 	= true;
-					$this->load->library('upload', $config);			
-	
-					if(!$this->upload->do_upload('attachment')){
-						return show_error($this->upload->display_errors(), 402, "Error");
-					} else {
-						$upload_data = $this->upload->data();
-						$file_size = $_FILES['attachment']['size'];
-	
-						$data = [
-							'id_act' => $id_actbud,
-							'nik' => $pic,
-							'pesan' => $pesan,
-							'attachment' => $upload_data['file_name'],
-							'attachment_size' => $file_size
-						];
-	
-						$this->db->insert('ig_tbl_actbud_chat', $data);
-	
-						$this->session->set_flashdata('alert', [
-							'message' => 'Pesan berhasil terkirim.',
-							'type'    => 'success',	
-							'title'   => ''
-						]);
-
-						return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
-	
-					}
-	
-				} else {
-	
-					$this->db->insert('ig_tbl_actbud_chat', [
-						'id_act' => $id_actbud,
-						'nik' => $pic,
-						'pesan' => $pesan
-					]);
-					$this->session->set_flashdata('alert', [
-						'message' => 'Pesan berhasil terkirim.',
-						'type'    => 'success',	
-						'title'   => ''
-					]);
-
-					return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
-				}						
-							
-			} else {
-				$error = [
-					'form_error' => validation_errors_array()
-				];
-				$this->session->set_flashdata('error_validation', $error);				
-				return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
-			}
-		}		
+		$this->session->set_flashdata('alert', [
+			'message' => 'Selamat anda berhasil membatalkan kegiatan.',
+			'type'    => 'success',	
+			'title'   => ''
+		]);
+		return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5)));
 	}
 
-	public function hapus_pesan(string $id_uraian, string $id_actbud){
+	public function hapus_pesan(){
 		$id = decrypt($this->input->post('id', true));
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
@@ -477,12 +335,7 @@ class PencairanSponsorship extends CI_Controller {
 			$this->db->where('id', $id);
 			$this->db->update('ig_tbl_actbud_chat', [
 				'status' => 'Tidak Aktif'
-			]);
-
-			$this->db->where('id_pesan', $id);
-			$this->db->update('ig_tbl_actbud_chat_reply', [
-				'status' => 'Tidak Aktif'
-			]);
+			]);			
 
 			$this->session->set_flashdata('alert', [
 				'message' => 'Pesan berhasil dihapus.',
@@ -499,8 +352,7 @@ class PencairanSponsorship extends CI_Controller {
 		}
 	}
 
-	public function hapus_pesan_reply(string $id_uraian, string $id_actbud)
-	{
+	public function hapus_pesan_reply(string $id_uraian, string $id_actbud){
 		$id = decrypt($this->input->post('id', true));
 		$this->form_validation->set_rules('id', 'ID', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
@@ -573,7 +425,8 @@ class PencairanSponsorship extends CI_Controller {
 					'id_act' => $id_actbud,					
 					'nama_file' => $upload_data['file_name'],
 					'ukuran_file' => $file_size,
-					'deskripsi' => $this->input->post('deskripsi', true)
+					'deskripsi' => $this->input->post('deskripsi', true),
+					'user_created' => $pic
 				];
 
 				$this->db->insert('ig_tbl_actbud_upload', $data);
@@ -583,8 +436,8 @@ class PencairanSponsorship extends CI_Controller {
 					'type'    => 'success',	
 					'title'   => ''
 				]);
-				
-				return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
+
+				return redirect(base_url('app/sim-ig/sponsorship/pencairan/v_detail/' . $this->uri->segment(5) . '/actbud/' . $this->uri->segment(7) . '#card-dokumen-pendukung'));
 
 			}
 
@@ -592,8 +445,8 @@ class PencairanSponsorship extends CI_Controller {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
-			$this->session->set_flashdata('error_validation', $error);
-			return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
+			$this->session->set_flashdata('error_validation', $error);				
+			return redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 
@@ -612,16 +465,16 @@ class PencairanSponsorship extends CI_Controller {
 			if($file_name != ""){
 				unlink(FCPATH . 'app-data/dokumen-pendukung/' . $file_name);
 			} 
-			
+
 			$this->db->where('id', $id);
 			$update = $this->db->update('ig_tbl_actbud_upload', [
 				'status' => 'Tidak Aktif'
 			]);			
 
-			if($update) {
+			if($update){
 				$this->session->set_flashdata('alert', [
 					'message' => 'Dokumen pendukung berhasil dihapus.',
-					'type'    => 'success',
+					'type'    => 'success',	
 					'title'   => ''
 				]);
 				return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
@@ -655,10 +508,10 @@ class PencairanSponsorship extends CI_Controller {
 		]);		
 
 		if($this->form_validation->run() === TRUE){
-			$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);		
+			$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
 			$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);
-			$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);
-			$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);			
+			$data['data'] = $this->Sponsorship_model->get_detail_actbud($id_uraian, $id_actbud);
+			$data['sisa'] = $this->Sponsorship_model->cek_anggaran_rincian_kegiatan($id_actbud);			
 			$batas = (int) ($data['data']->agr - $data['sisa']->digunakan);		
 			
 			$total_anggaran = $this->input->post('total_anggaran', true);			
@@ -680,24 +533,32 @@ class PencairanSponsorship extends CI_Controller {
 					]);
 				}
 
-				return redirect($_SERVER['HTTP_REFERER']);
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
 			} else {
 				$data = [
 					'id_actbud' => $id_actbud,
 					'nama_kegiatan' => $this->input->post('nama_kegiatan', true),
 					'keterangan' => $this->input->post('keterangan', true),
-                    'total_anggaran_realisasi' => $total_agr,
-					'total_anggaran' => $total_agr,
+					'total_anggaran' => $total_agr
 				];
 	
-				$this->db->insert('ig_t_j_b_act', $data);
+				$insert = $this->db->insert('ig_t_j_b_act', $data);
 				
-				$this->session->set_flashdata('alert', [
-					'message' => 'Berhasil membuat kegiatan',
-					'type'    => 'success',	
-					'title'   => ''
-				]);
-				return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+				if($insert === true){
+					$this->session->set_flashdata('alert', [
+						'message' => 'Berhasil membuat kegiatan',
+						'type'    => 'success',
+						'title'   => ''
+					]);
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+				} else {
+					$this->session->set_flashdata('alert', [
+						'message' => 'Gagal membuat kegiatan',
+						'type'    => 'success',
+						'title'   => ''
+					]);
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+				}
 			}
 															
 		} else {
@@ -746,25 +607,25 @@ class PencairanSponsorship extends CI_Controller {
 		$this->form_validation->set_rules('signature', 'Tanda Tangan', 'trim|required', [
 			'required' => '%s tidak boleh kosong.'
 		]);
-		
-		if($_REQUEST['pre_approval'] != ""){
+
+		if ($_REQUEST['pre_approval'] != "") {
 			$this->form_validation->set_rules('pre_approval', 'Pre-Approval', 'trim|required|numeric', [
 				'required' => '%s tidak boleh kosong.'
 			]);
 		}
 
-		if ($this->form_validation->run() === TRUE) {			
+		if ($this->form_validation->run() === TRUE) {
 			// ttd
 			$signature = $this->input->post('signature');
-			
-			if(substr($signature, -5) == "CYII=") {
-				$this->session->set_flashdata('alert', [
-					'message' => 'Tanda tangan tidak boleh kosong.',
-					'type'    => 'error',
-					'title'   => ''
-				]);
-				return redirect($_SERVER['HTTP_REFERER']);
-			}
+
+			// if(substr($signature, -5) == "CYII=") {
+			// 	$this->session->set_flashdata('alert', [
+			// 		'message' => 'Tanda tangan tidak boleh kosong.',
+			// 		'type'    => 'error',
+			// 		'title'   => ''
+			// 	]);
+			// 	return redirect($_SERVER['HTTP_REFERER']);
+			// }
 
 			if (check_base64_image($signature) === false) {
 				return show_error("Tanda tangan invalid!");
@@ -772,41 +633,208 @@ class PencairanSponsorship extends CI_Controller {
 
 			$signature = str_replace('data:image/png;base64,', '', $signature);
 			$signature = str_replace(' ', '+', $signature);
-			
+
 			// OLD $kode_unit = $_SESSION['user_sessions']['kode_unit'];
 			$this->db->where('id', $id);
-			$this->db->update('ig_tbl_actbud', [
+			$update = $this->db->update('ig_tbl_actbud', [
 				'status' => 'submitted',
 				'lock_editing' => 'Y',
 				'sign' => $pre_approval,
 				'ttd_pic' => $signature
 			]);
 
-			$this->session->set_flashdata('alert', [
-				'message' => 'Berhasil submit kegiatan',
-				'type'    => 'success',
-				'title'   => ''
-			]);
-			return redirect($_SERVER['HTTP_REFERER']);
+			if ($update === true) {
+				$this->session->set_flashdata('alert', [
+					'message' => 'Berhasil submit kegiatan',
+					'type'    => 'success',
+					'title'   => ''
+				]);
+
+				return redirect($_SERVER['HTTP_REFERER']);
+			} else {
+				$this->session->set_flashdata('alert', [
+					'message' => 'Gagal submit kegiatan',
+					'type'    => 'success',
+					'title'   => ''
+				]);
+
+				return redirect($_SERVER['HTTP_REFERER']);
+			}
 		} else {
 			$error = [
 				'form_error' => validation_errors_array()
 			];
 			$this->session->set_flashdata('error_validation', $error);
 			return redirect($_SERVER['HTTP_REFERER']);
-		}
+		}		
 	}
 
-	public function cetak_form_actbud(string $id_uraian, string $id_actbud){
+	public function buat_pesan(string $id_uraian, string $id_actbud){
+		$id_actbud = decrypt($id_actbud);
+		$pic = decrypt($_SESSION['user_sessions']['nik']);
+		$pesan = $this->input->post('pesan', true);
+		
+		if(isset($_POST['reply_pesan'])){
+			$this->form_validation->set_rules('reply_id', 'ID', 'trim|required', [
+				'required' => '%s tidak boleh kosong.'
+			]);
+			$this->form_validation->set_rules('reply_pesan', 'Pesan', 'trim|required', [
+				'required' => '%s tidak boleh kosong.'
+			]);	
+	
+			if($this->form_validation->run() === TRUE){
+				$reply_id = decrypt($this->input->post('reply_id', true));
+				$reply_pesan = $this->input->post('reply_pesan', true);
+				if(!empty($_FILES['reply_attachment']['name'])){
+					
+					$path = FCPATH . 'app-data/chat-attachment';
+					$config['upload_path'] 		= $path;
+					$config['allowed_types'] 	= 'jpg|jpeg|png|docx|xlsx|pptx|vsdx|webp|pdf';
+					$config['file_name'] 		= uniqid() . time() . '_' . $_FILES['reply_attachment']['name'];
+					$config['max_size'] 		= 10000;
+					$config['max_width']  		= 1024;
+					$config['max_height']  		= 768;
+					$config['encrypt_name'] 	= false;
+					$config['detect_mime'] 		= true;
+					$config['remove_spaces'] 	= true;
+					$config['mod_mime_fix'] 	= true;
+					$this->load->library('upload', $config);			
+	
+					if(!$this->upload->do_upload('reply_attachment')){
+						return show_error($this->upload->display_errors(), 402, "Error");
+					} else {
+						$upload_data = $this->upload->data();
+						$file_size = $_FILES['reply_attachment']['size'];
+	
+						$data = [
+							'id_pesan' => $reply_id,							
+							'nik' => $pic,
+							'pesan' => $reply_pesan,
+							'attachment' => $upload_data['file_name'],
+							'attachment_size' => $file_size
+						];
+	
+						$this->db->insert('ig_tbl_actbud_chat_reply', $data);
+	
+						$this->session->set_flashdata('alert', [
+							'message' => 'Pesan berhasil terkirim.',
+							'type'    => 'success',	
+							'title'   => ''
+						]);
+		
+						return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+	
+					}
+
+				} else {					
+					$this->db->insert('ig_tbl_actbud_chat_reply', [
+						'id_pesan' => $reply_id,							
+						'nik' => $pic,
+						'pesan' => $reply_pesan,
+					]);
+
+					$this->session->set_flashdata('alert', [
+						'message' => 'Pesan berhasil terkirim.',
+						'type'    => 'success',	
+						'title'   => ''
+					]);
+	
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+				}
+
+			} else {
+				$error = [
+					'form_error' => validation_errors_array()
+				];
+				$this->session->set_flashdata('error_validation', $error);				
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+			}
+
+		} else {
+
+			$this->form_validation->set_rules('pesan', 'Pesan', 'trim|required', [
+				'required' => '%s tidak boleh kosong.'
+			]);	
+	
+			if($this->form_validation->run() === TRUE){								
+	
+				if(!empty($_FILES['attachment']['name'])){
+					
+					$path = FCPATH . 'app-data/chat-attachment';
+					$config['upload_path'] 		= $path;
+					$config['allowed_types'] 	= 'jpg|jpeg|png|docx|xlsx|pptx|vsdx|webp|pdf';
+					$config['file_name'] 		= uniqid() . time() . '_' . $_FILES['attachment']['name'];
+					$config['max_size'] 		= 10000;
+					$config['max_width']  		= 1024;
+					$config['max_height']  		= 768;
+					$config['encrypt_name'] 	= false;
+					$config['detect_mime'] 		= true;
+					$config['remove_spaces'] 	= true;
+					$config['mod_mime_fix'] 	= true;
+					$this->load->library('upload', $config);			
+	
+					if(!$this->upload->do_upload('attachment')){
+						return show_error($this->upload->display_errors(), 402, "Error");
+					} else {
+						$upload_data = $this->upload->data();
+						$file_size = $_FILES['attachment']['size'];
+	
+						$data = [
+							'id_act' => $id_actbud,
+							'nik' => $pic,
+							'pesan' => $pesan,
+							'attachment' => $upload_data['file_name'],
+							'attachment_size' => $file_size
+						];
+	
+						$this->db->insert('ig_tbl_actbud_chat', $data);
+	
+						$this->session->set_flashdata('alert', [
+							'message' => 'Pesan berhasil terkirim.',
+							'type'    => 'success',	
+							'title'   => ''
+						]);
+		
+						return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+	
+					}
+	
+				} else {
+	
+					$this->db->insert('ig_tbl_actbud_chat', [
+						'id_act' => $id_actbud,
+						'nik' => $pic,
+						'pesan' => $pesan
+					]);
+					$this->session->set_flashdata('alert', [
+						'message' => 'Pesan berhasil terkirim.',
+						'type'    => 'success',	
+						'title'   => ''
+					]);
+	
+					return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+				}						
+							
+			} else {
+				$error = [
+					'form_error' => validation_errors_array()
+				];
+				$this->session->set_flashdata('error_validation', $error);				
+				return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+			}
+		}		
+	}
+
+	public function cetak_form_actbud(){
 		$this->load->library('pdf');
-		$id_uraian = !decrypt($id_uraian) ? show_404() : decrypt($id_uraian);
-		$id_actbud = !decrypt($id_actbud) ? show_404() : decrypt($id_actbud);
-		$data['data'] = $this->Hibah_model->get_detail_actbud($id_uraian, $id_actbud);
+		$id_uraian = !decrypt($this->uri->segment(5)) ? show_404() : decrypt($this->uri->segment(5));		
+		$id_actbud = !decrypt($this->uri->segment(7)) ? show_404() : decrypt($this->uri->segment(7));		
+		$data['data'] = $this->Sponsorship_model->get_detail_actbud($id_uraian, $id_actbud);		
 		$data['rincian_kegiatan'] = $this->db->get_where('ig_t_j_b_act', ['id_actbud' => $id_actbud, 'status' => 'Aktif']);
-		$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);
-		$html = $this->load->view('ig/users/hibah/cetak_form_actbud', $data, true);
-        
+		$data['sisa'] = $this->Sponsorship_model->cek_anggaran_rincian_kegiatan($id_actbud);		
+		$html = $this->load->view('ig.users/hibah/cetak_form_actbud', $data, true);
 		$filename = $data['data']->kode_uraian . ' - ' . $data['data']->nama_kegiatan;
+		//pr($data);
 		$this->pdf->generate($html, $filename, true, 'A4', 'portrait');
 	}
 }

@@ -107,7 +107,7 @@
                                         <span style="font-size: 14px;">
                                             {!! $row['nama_kegiatan'] !!}
                                         </span>
-                                        <hr class="mt-0 mb-0">
+                                        <hr class="mt-1 mb-2">
                                         <span class="badge bg-secondary p-2">
                                             <i class="mdi mdi-calendar"></i> 
                                             {{ tanggal_indo($row['tgl_mulai']).' - '.tanggal_indo($row['tgl_selesai']) }}

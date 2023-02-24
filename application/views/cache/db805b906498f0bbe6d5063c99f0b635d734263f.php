@@ -9,6 +9,13 @@
 <?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
 <link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<style>
+    .badge-disabled{
+        color: #212529;
+        opacity: .65;
+        cursor: not-allowed;
+    }    
+</style>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
@@ -97,7 +104,9 @@
                         ?>
                             <?php $__currentLoopData = $data['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php
-                                    $no++
+                                    $no++;
+                                    $sisa_agr = (($row['total_agr'] + $row['agr_masuk']) - ($row['agr_keluar'] + $row['agr_digunakan']));
+                                    $total_agr = ($row['total_agr'] + $row['agr_masuk'] - $row['agr_keluar']);
                                 ?>
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle"><?php echo e($no); ?></th>
@@ -126,48 +135,38 @@
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <span class="badge bg-warning p-2">
-                                            <?php switch($row['periode']):
-                                                case (1): ?>
-                                                    <?php echo e("Ganjil"); ?>
+                                            <?php echo e($row['periode']); ?>
 
-                                                    <?php break; ?>
-                                                <?php case (2): ?>
-                                                    <?php echo e("Genap"); ?>
-
-                                                    <?php break; ?>
-                                                <?php default: ?>
-                                                    <?php echo e("Unknown"); ?>                                            
-                                            <?php endswitch; ?>
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <?php
-                                            $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
-                                            ig_tbl_actbud a WHERE a.id_uraian = '%u' 
-                                            AND a.status_act = 'send' AND (a.status != 'cancel')", $row['id']))->row();
-                                            $getSumIn = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_masuk FROM 
-                                            ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
-                                            AND b.disetujui = 'Y' AND b.jenis_kredit = 'in'", $row['kode_uraian']))->row();
-                                            $getSumOut = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_keluar FROM 
-                                            ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
-                                            AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();
-                                            echo '<span class="badge bg-success p-2">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                            // $getSum = $CI->db->query(sprintf("SELECT SUM(a.fnl_agr) digunakan FROM 
+                                            // ig_tbl_actbud a WHERE a.id_uraian = '%u' 
+                                            // AND a.status_act = 'send' AND (a.status != 'cancel')", $row['id']))->row();
+                                            // $getSumIn = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_masuk FROM 
+                                            // ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
+                                            // AND b.disetujui = 'Y' AND b.jenis_kredit = 'in'", $row['kode_uraian']))->row();
+                                            // $getSumOut = $CI->db->query(sprintf("SELECT SUM(b.nominal) saldo_keluar FROM 
+                                            // ig_tbl_in_out b WHERE b.kode_uraian = '%s' 
+                                            // AND b.disetujui = 'Y' AND b.jenis_kredit = 'out'", $row['kode_uraian']))->row();
+                                            // echo '<span class="badge bg-success p-2">'.rupiah($row['total_agr'] + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                            echo '<span class="badge bg-success p-2">'.rupiah($total_agr).'</span>';
                                         ?>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <span class="badge bg-teal p-2">
-                                            <?php echo e(rupiah($getSum->digunakan)); ?>
-
+                                            <?= rupiah($row['agr_digunakan']) ?>
                                         </span>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <?php                                                                                        								
-                                            echo '<span class="badge bg-primary p-2">'.rupiah($row['total_agr'] - $getSum->digunakan + $getSumIn->saldo_masuk - $getSumOut->saldo_keluar).'</span>';
+                                        <?php 
+                                        echo '<span class="badge bg-primary p-2">'.rupiah($sisa_agr).'</span>';
                                         ?>
                                     </td>
                                     
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="<?php echo e(base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan')); ?>" class="badge bg-primary p-2 btn-sm">Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
+                                        <a href="<?= ($sisa_agr == 0) ? 'javascript:void(0)' : base_url('app/sim-ig/hibah/pencairan/v_detail/' . encrypt($row['id']) . '/buat_pencairan') ?>" class="badge bg-primary p-2 btn-sm<?= ($sisa_agr == 0) ? ' badge-disabled' : '' ?>" <?= ($sisa_agr == 0) ? ' data-toggle="tooltip" data-placement="top" title="" data-original-title="Sisa anggaran sudah habis"' : '' ?>>Buat Pencairan <i class="mdi mdi-arrow-right"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

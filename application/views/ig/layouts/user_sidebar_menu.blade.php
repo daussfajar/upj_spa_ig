@@ -45,12 +45,12 @@
                                     </li>
                                 @endif                       
         
-                                <li class="<?= ($CI->uri->segment(3) == 'hibah' && $CI->uri->segment(4) == 'pencairan' || ($CI->uri->segment(4) == 'pencairan' && is_numeric($CI->uri->segment(5)))) ? 'mm-active' : '' ?>">
+                                <li class="<?= ($CI->uri->segment(3) == 'hibah' && $CI->uri->segment(4) == 'pencairan' || ($CI->uri->segment(3) == 'hibah' && $CI->uri->segment(4) == 'pencairan' && is_numeric($CI->uri->segment(5)))) ? 'mm-active' : '' ?>">
                                     <a href="{{ base_url('app/sim-ig/hibah/pencairan') }}" class="<?= menu_active(4, 'pencairan', 'active') ?>">                                        
                                         <span>Pencairan</span>
                                     </a>
                                 </li>                                
-                                <li class="<?= $CI->uri->segment(3) == 'hibah' && $CI->uri->segment(4) == 'status_pencairan' ? 'mm-active' : '' ?>">
+                                <li class="<?= ($CI->uri->segment(3) == 'hibah' && $CI->uri->segment(4) == 'status_pencairan' || ($CI->uri->segment(3) == 'hibah' && $CI->uri->segment(4) == 'status_pencairan' && is_numeric($CI->uri->segment(5)))) ? 'mm-active' : '' ?>">
                                     <a href="{{ base_url('app/sim-ig/hibah/status_pencairan') }}" class="<?= menu_active(4, 'status_pencairan', 'active') ?>">
                                         <!--<span class="badge badge-info badge-pill float-right">2</span>-->
                                         <span>Status Pencairan</span>
@@ -70,19 +70,24 @@
                                     <a href="{{ base_url('app/sim-ig/sponsorship') }}" class="<?= menu_active(4, 'buat_kegiatan', 'active') ?>">Kegiatan</a>
                                 </li>
                                 @endif
-                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'pencairan' ? 'mm-active' : '' ?>">
+                                <li class="<?= ($CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'pencairan' || ($CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'pencairan' && is_numeric($CI->uri->segment(5)))) ? 'mm-active' : '' ?>">
                                     <a href="{{ base_url('app/sim-ig/sponsorship/pencairan') }}" class="">Pencairan</a>
                                 </li>
-                                <li class="<?= $CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'status_pencairan' ? 'mm-active' : '' ?>">
+                                <li class="<?= ($CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'status_pencairan' || ($CI->uri->segment(3) == 'sponsorship' && $CI->uri->segment(4) == 'status_pencairan' && is_numeric($CI->uri->segment(5)))) ? 'mm-active' : '' ?>">
                                     <a href="{{ base_url('app/sim-ig/sponsorship/status_pencairan') }}" class="<?= menu_active(4, 'status_pencairan', 'active') ?>">Status Pencairan</a>
                                 </li>
                             </ul>      
                         </li>
 
                         @if ($unit == 'Bagian Keuangan' || $jabatan == 0 || $jabatan == 22 || $jabatan == 6)
-                            <li class="<?= menu_active(3, 'kredit_saldo', 'mm-active') ?>">
+                            <!--<li class="<?= menu_active(3, 'kredit_saldo', 'mm-active') ?>">
                                 <a href="{{ base_url('app/sim-ig/kredit_saldo') }}" class="waves-effect waves-light <?= menu_active(3, 'kredit_saldo', 'active') ?>"> 
                                     <span>  Debet/Kredit Saldo  </span>                                
+                                </a>
+                            </li>-->
+                            <li class="<?= menu_active(3, 'kredit_saldo', 'mm-active') ?>">
+                                <a href="{{ base_url('app/sim-ig/pengalihan-anggaran') }}" class="waves-effect waves-light <?= menu_active(3, 'kredit_saldo', 'active') ?>"> 
+                                    <span>  Pengalihan Anggaran  </span>                                
                                 </a>
                             </li>
                         @endif

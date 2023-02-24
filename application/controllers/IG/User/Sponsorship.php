@@ -37,14 +37,14 @@ class Sponsorship extends CI_Controller {
 		];
 
 		if($jabatan != 0){            
-			if(!$kode_unit == 002){
+			if($kode_unit != 002){
 				$w_karyawan['kode_unit'] = $kode_unit;
 				$w_unit['kode_unit'] = $kode_unit;
 				$qry .= "AND a.kode_unit = " . $kode_unit;
 			}
 		}
         
-        $data['data']       = $this->Sponsorship_model->get_data_sponsorship($qry);
+        $data['data']       = $this->Sponsorship_model->get_data_sponsorship($qry);		
 		$data['karyawan']	= $this->db->get_where('tbl_karyawan', $w_karyawan);		
 		$data['unit'] 		= $this->db->get_where('tbl_unit', $w_unit);
 		return view('ig.users.sponsorship.index', $data);
@@ -119,7 +119,9 @@ class Sponsorship extends CI_Controller {
 
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
-			
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+
 			$data = [
 				'kode_uraian' => $this->input->post('kode_uraian', true),
 				'nama_hibah_sponsorship' => $this->input->post('nama_sponsorship', true),
@@ -233,7 +235,9 @@ class Sponsorship extends CI_Controller {
 			$id = !decrypt($this->input->post('id', true)) ? show_404() : decrypt($this->input->post('id', true));
 			$total_anggaran = $this->input->post('total_anggaran', true);			
 			$total_agr = str_ireplace(".","", substr($total_anggaran, 4));
-
+			if (!is_numeric($total_agr)) return show_error("Total anggaran harus berupa angka!");
+			if (is_numeric($total_agr) && $total_agr < 0) return show_error("Total anggaran tidak boleh lebik kecil dari 0");
+			
 			$data = [
 				'nama_hibah_sponsorship' => $this->input->post('nama_sponsorship', true),
 				'uraian_kegiatan' => $this->input->post('deskripsi_kegiatan', true),

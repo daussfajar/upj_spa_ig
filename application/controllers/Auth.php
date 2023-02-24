@@ -59,7 +59,8 @@ class Auth extends CI_Controller {
 						'ip_address' 	=> $_SERVER['REMOTE_ADDR'],
 						'user_agent'	=> $this->input->user_agent()
 					],
-					'last_access'	=> time()
+					'last_access'	=> time(),
+					'last_login'	=> $user->terakhir_login
 				];
 
 				/*$this->db->insert('logs_login', [

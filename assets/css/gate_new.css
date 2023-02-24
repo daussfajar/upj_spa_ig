@@ -1,0 +1,95 @@
+.bg {
+	/* background-image     : url(../images/bg/upj5.jpg);	 */
+    /* background: linear-gradient(180deg, rgba(100, 192, 239, 0.32) 0%, rgba(20, 111, 165, 0.59) 53.6%, #ee302e 100%), url(../images/bg/upj5.jpg) !important; */
+    background: linear-gradient(180deg, rgba(100, 192, 239, 0.32) 0%, rgba(20, 111, 165, 0.59) 53.6%, #222435 100%), url(../images/bg/upj5.jpg) !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover !important;
+}
+
+.xcm{
+    border-top-right-radius: 20px!important;
+    border-top-left-radius: 20px!important;
+}
+
+.ycm{
+    border-bottom-right-radius: 20px!important;
+    border-bottom-left-radius: 20px!important;
+}
+
+.header-deck{
+    padding: 32px!important;
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 12px 12px 0 0;
+}
+
+.h-title{
+    display: flex;
+    flex-direction: row;
+}
+
+.h-title-img{
+    height: 80px;
+    width: 80px;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 26px;
+    background-color: white;
+}
+
+.h-title-img img{
+    max-width: 80% !important;
+    max-height: 80% !important;
+    width: auto;
+    height: auto;
+    border: 0;
+    vertical-align: middle;
+}
+
+.h-title-name{
+    max-width: 75%;
+    margin-right: 16px;
+    height: fit-content;
+    margin: auto 0;
+    display: inline-block;
+}
+
+.t-title{
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.t-comp{
+    padding-top: 0;
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.c-option{
+    cursor: pointer;
+    background-color: transparent!important;
+}
+
+.c-option:hover{
+    transform: scale(1.05);
+    transition: 0.2s;
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+#main-cont{
+    border-top-right-radius: 20px!important;
+    border-top-left-radius: 20px!important;
+    /* background: rgba(255,255,255,.3); */
+    background: rgb(0 0 0 / 30%);
+    padding: 15px;
+    border-bottom-right-radius: 20px!important;
+    border-bottom-left-radius: 20px!important;
+}

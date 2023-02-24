@@ -1,7 +1,27 @@
+<<<<<<< HEAD
 <?php
 $session = $CI->session->userdata('user_sessions'); ?>
 @extends('spa.layouts.user') @section('title') RKAT - Dashboard @endsection
 @section('page-title') Dashboard @endsection @section('css') @endsection
+=======
+<?php 
+$session = $CI->session->userdata('user_sessions');
+?>
+@extends('spa.layouts.user')
+
+@section('title')
+    <?= MOD2 ?> Dashboard
+@endsection
+
+@section('page-title')
+    Dashboard
+@endsection
+
+@section('css')
+    
+@endsection
+
+>>>>>>> b9fd31aa1a8f53c380d81499ae53e2b43d19762f
 @section('breadcrumb')
 <li class="breadcrumb-item active">
     <a href="javascript: void(0);">Dashboard</a>

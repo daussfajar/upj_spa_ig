@@ -16,8 +16,9 @@ class Sponsorship_Model extends CI_Model {
         $this->table = 'ig_tbl_uraian';
         $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
         $nik = decrypt($_SESSION['user_sessions']['nik']);
+        $kode_unit = $_SESSION['user_sessions']['kode_unit'];
 
-        if($jabatan == 0){
+        if($jabatan == 0 || ($kode_unit == 002)){
             $where .= " ORDER BY a.id DESC";
         } else {
             $where .= "AND a.pic = '$nik' ORDER BY a.id DESC";
@@ -33,7 +34,7 @@ class Sponsorship_Model extends CI_Model {
         c.nama_unit,a.nama_hibah_sponsorship,a.cara_ukur,a.kode_unit,a.pic,a.kode_sub_aktivitas,a.indikator_kerja_umum,
         a.target,a.total_agr,a.ttd_pic,a.output,a.base_line,a.uraian_kegiatan,a.periode,a.tanggal_buat,a.status,a.finalisasi', 
         $this->table . " a LEFT JOIN tbl_karyawan b ON a.pic = b.nik INNER JOIN tbl_unit c ON a.kode_unit = c.kode_unit","a.jenis_ig = 'sponsorship' AND a.status = 'Aktif' ", 
-        '/' . APP_FOLDER . '/app/sim-ig/hibah', 4,5,4);
+        '/' . APP_FOLDER . '/app/sim-ig/sponsorship', 4,5,4);
         return $data;
     }
 
@@ -103,7 +104,7 @@ class Sponsorship_Model extends CI_Model {
         $this->table = 'ig_tbl_uraian';        
         $nik = decrypt($_SESSION['user_sessions']['nik']);
         $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
-        $kode_unit = $_SESSION['user_sessions']['kode_unit'];                
+        $kode_unit = $_SESSION['user_sessions']['kode_unit'];
         if($jabatan == 0){
             $where .= " ORDER BY a.id DESC";
         } else {
@@ -116,10 +117,25 @@ class Sponsorship_Model extends CI_Model {
             unset($_SESSION['session_where']);
         }
         
-        $data = $this->Global_model->get_data_with_pagination('a.id,a.kode_uraian,a.kode_pencairan,a.pic,
-        a.nama_hibah_sponsorship,a.uraian_kegiatan,b.nama_lengkap nama_karyawan,a.total_agr,a.periode,a.tanggal_buat,a.status', $this->table . " a 
-        INNER JOIN tbl_karyawan b ON a.pic = b.nik","a.status = 'Aktif' AND (a.jenis_ig = 'sponsorship' AND a.finalisasi = 'Y') ", 
-        '/' . APP_FOLDER . '/app/sim-ig/sponsorship/pencairan', 5,5,4);
+        $data = $this->Global_model->get_data_with_pagination(
+            "a.id,
+            a.kode_uraian,
+            c.nama_unit,
+            a.nama_hibah_sponsorship,
+            b.nama_lengkap,
+            a.uraian_kegiatan,
+            a.jenis_ig,
+            a.total_agr,
+            a.pic,
+            b.nama_lengkap AS nama_karyawan,
+            a.kode_pencairan, IF( a.periode = 1, 'Ganjil', 'Genap' ) AS periode,
+            IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian = a.kode_uraian ), 0 ) agr_masuk,
+            IFNULL( ( SELECT SUM( nominal ) FROM ig_tbl_pengalihan WHERE kode_uraian_out = a.kode_uraian ), 0 ) agr_keluar,
+            IFNULL( ( SELECT SUM( fnl_agr ) FROM ig_tbl_actbud WHERE kode_uraian = a.kode_uraian AND STATUS != 'cancel' ), 0 )
+            agr_digunakan", 
+            $this->table . " a INNER JOIN tbl_karyawan b ON a.pic = b.nik JOIN tbl_unit c ON b.kode_unit = c.kode_unit",
+            "a.status = 'Aktif' AND (a.jenis_ig = 'sponsorship' AND a.finalisasi = 'Y') ", 
+            '/' . APP_FOLDER . '/app/sim-ig/sponsorship/pencairan', 5,5,4);
         return $data;
     }
 
@@ -181,7 +197,7 @@ class Sponsorship_Model extends CI_Model {
         } else {
             unset($_SESSION['session_where']);
         }
-
+        
         $data = $this->Global_model->get_data_with_pagination("a.id id_actbud,IF(a.jenis_anggaran = 'sponsorship', 'SP', 'HB') jns_agr,a.nama_kegiatan,
         b.nama_lengkap nama_pelaksana,a.deskripsi_kegiatan,
         a.pelaksana,a.pic,a.tgl_mulai,a.tgl_selesai,a.periode,

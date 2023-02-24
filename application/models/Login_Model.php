@@ -8,7 +8,7 @@ class Login_Model extends CI_Model {
     }
 
     public function cek_login(String $email, String $password){
-        $query = $this->db->query("SELECT a.nik,a.nama_lengkap,a.email,a.password,a.kode_unit,a.status,a.foto,b.nama_unit,c.keterangan_tingkatan,b.prodi_id singkatan_unit,a.kode_tingkatan FROM 
+        $query = $this->db->query("SELECT a.nik,a.nama_lengkap,a.email,a.password,a.kode_unit,a.status,a.foto,b.nama_unit,c.keterangan_tingkatan,b.prodi_id singkatan_unit,a.kode_tingkatan,a.terakhir_login FROM 
         tbl_karyawan a INNER JOIN tbl_unit b ON a.kode_unit = b.kode_unit INNER JOIN tbl_tingkatan c ON a.kode_tingkatan = c.kode_tingkatan 
         WHERE a.email = " . $this->db->escape($email) . " AND a.password = " . $this->db->escape($password) . " AND a.status = 'Aktif'");
         return $query->row();

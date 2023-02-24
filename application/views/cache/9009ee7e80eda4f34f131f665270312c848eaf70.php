@@ -166,7 +166,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm waves-effect" data-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-danger btn-sm waves-effect waves-light">Logout <i class="mdi mdi-logout-variant"></i></button>
+                    <button type="submit" class="btn btn-danger btn-sm waves-effect waves-light">keluar <i class="mdi mdi-logout-variant"></i></button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -190,7 +190,7 @@
 
             <?php if($CI->session->flashdata('error_validation')): ?>
                 <?php $__currentLoopData = $CI->session->flashdata('error_validation')['form_error']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>            
-                    toastr["error"]("<?= $r ?>", "")                
+                    toastr["error"]("<?= $r ?>", "")
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>        		
             <?php endif; ?>
 

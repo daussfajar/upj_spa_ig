@@ -165,7 +165,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm waves-effect" data-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-danger btn-sm waves-effect waves-light">Logout <i class="mdi mdi-logout-variant"></i></button>
+                    <button type="submit" class="btn btn-danger btn-sm waves-effect waves-light">keluar <i class="mdi mdi-logout-variant"></i></button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -188,7 +188,7 @@
 
             @if ($CI->session->flashdata('error_validation'))
                 @foreach ($CI->session->flashdata('error_validation')['form_error'] as $r)            
-                    toastr["error"]("<?= $r ?>", "")                
+                    toastr["error"]("<?= $r ?>", "")
                 @endforeach        		
             @endif
 

@@ -39,7 +39,7 @@
                 Silakan lengkapi form dibawah ini untuk melakukan pencairan.
             </p>
 
-            <?php echo form_open('app/sim-ig/hibah/pencairan/v_detail/' . $CI->uri->segment(6) . '/buat_pencairan/create?id=' . encrypt($data->id), array('id' => 'wizard-validation-form')); ?>
+            <?php echo form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/buat_pencairan/create?id=' . $id_uraian, array('id' => 'wizard-validation-form')); ?>
 
                 <input type="hidden" name="periode" value="<?= encrypt($data->periode) ?>">
                 <div>
