@@ -1,8 +1,11 @@
 .bg {
-	background-image     : url(../images/bg/upj5.jpg);
-	background-size      : cover;
-	background-repeat    : no-repeat;
-	background-attachment: fixed;
+	/* background-image     : url(../images/bg/upj5.jpg);	 */
+    /* background: linear-gradient(180deg, rgba(100, 192, 239, 0.32) 0%, rgba(20, 111, 165, 0.59) 53.6%, #ee302e 100%), url(../images/bg/upj5.jpg) !important; */
+    background: linear-gradient(180deg, rgba(100, 192, 239, 0.32) 0%, rgba(20, 111, 165, 0.59) 53.6%, #222435 100%), url(../images/bg/upj5.jpg) !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover !important;
 }
 
 .xcm{
@@ -72,10 +75,21 @@
 
 .c-option{
     cursor: pointer;
+    background-color: transparent!important;
 }
 
 .c-option:hover{
     transform: scale(1.05);
     transition: 0.2s;
     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+#main-cont{
+    border-top-right-radius: 20px!important;
+    border-top-left-radius: 20px!important;
+    /* background: rgba(255,255,255,.3); */
+    background: rgb(0 0 0 / 30%);
+    padding: 15px;
+    border-bottom-right-radius: 20px!important;
+    border-bottom-left-radius: 20px!important;
 }

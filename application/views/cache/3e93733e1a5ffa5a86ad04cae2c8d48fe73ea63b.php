@@ -99,7 +99,7 @@
                                         <?php echo $row['nama_kegiatan']; ?>
 
                                     </span>
-                                    <hr class="mt-0 mb-0">
+                                    <hr class="mt-1 mb-0">
                                     <span style="font-size:12px;line-height:5px;">
                                         <?php
                                         $ex_ket = explode(' ', $row['deskripsi_kegiatan']);
@@ -111,8 +111,8 @@
                                         echo implode(' ', $potong) . $extnds;
                                         ?>
                                     </span>
-                                    
-                                    <span class="badge bg-secondary p-2">
+                                    <br>
+                                    <span class="badge bg-secondary p-2 mt-1">
                                         <i class="mdi mdi-calendar"></i> <?php echo e(tanggal_indo($row['tgl_mulai']) . ' s/d ' . tanggal_indo($row['tgl_selesai'])); ?>
 
                                     </span>
