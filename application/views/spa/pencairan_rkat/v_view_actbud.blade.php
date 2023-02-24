@@ -1,14 +1,23 @@
 <?php
 $session = $CI->session->userdata('user_sessions'); ?>
 @extends('spa.layouts.user') 
-@section('title') RKAT - ACTBUD @endsection
-@section('page-title') Actbud @endsection @section('css') @endsection
+
+@section('title')
+    <?= MOD2 ?> Pencairan RKAT - View Acbud
+@endsection
+
+@section('page-title') 
+
+Actbud 
+
+@endsection 
+
 @section('breadcrumb')
-<li class="breadcrumb-item ">
-	<a href="javascript: void(0);">Actbud</a>
-</li>
-<li class="breadcrumb-item active"><a href="{{ base_url('app/sim-spa/actbud') }}"> View Actbud</a></li>
-@endsection @section('css')
+<li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
+<li class="breadcrumb-item active"><a href="javascript: void(0);">View Acbud</a></li>
+@endsection 
+
+@section('css')
 <link
 	rel="stylesheet"
 	href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}"
@@ -22,13 +31,18 @@ $session = $CI->session->userdata('user_sessions'); ?>
 	rel="stylesheet"
 	href="{{ base_url('assets/css/bootstrap-select.min.css') }}"
 />
-@endsection @section('content')
+@endsection 
+
+@section('content')
 <div class="col-md-12">
 	<div class="card-box mt-2">
+		<div class="row">
+		<div class="col-md-8 col-sm-8 col-xs-12">
+		</div>
         <div class="col-md-4 col-sm-4 col-xs-12">				
-            <form action="{{ base_url('app/sim-ig/hibah') }}" method="GET" accept-charset="utf-8" autocomplete="off" class="myForm">
+            <form action="" method="" accept-charset="utf-8" autocomplete="off" class="myForm">
                 <div class="input-group">
-                    <input type="search" id="q" value="" name="q" class="form-control" placeholder="Cari data...">
+                    <input type="search" id="" value="" name="" class="form-control" placeholder="Cari data...">
                     <span class="input-group-prepend">
                         <button type="submit" class="btn waves-effect waves-light btn-primary btn-sm">
                             <i class="mdi mdi-magnify mdi-18px"></i>
@@ -37,6 +51,7 @@ $session = $CI->session->userdata('user_sessions'); ?>
                 </div>
             </form>				
         </div>			
+	</div>
 		<div class="table-responsive mt-1">
 			<table
 				id="tb_data_actbud"

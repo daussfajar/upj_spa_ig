@@ -1,7 +1,20 @@
-<?php
-$session = $CI->session->userdata('user_sessions'); ?>
- <?php $__env->startSection('title'); ?> RKAT - Dashboard <?php $__env->stopSection(); ?>
-<?php $__env->startSection('page-title'); ?> Dashboard <?php $__env->stopSection(); ?> <?php $__env->startSection('css'); ?> <?php $__env->stopSection(); ?>
+<?php 
+$session = $CI->session->userdata('user_sessions');
+?>
+
+
+<?php $__env->startSection('title'); ?>
+    <?= MOD2 ?> Dashboard
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('page-title'); ?>
+    Dashboard
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+    
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item active">
     <a href="javascript: void(0);">Dashboard</a>

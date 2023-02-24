@@ -5,7 +5,7 @@ $last_login_message = "";
 
 if(!empty($last_login)){
 	$ex_last_login = explode(' ', $last_login);
-	$last_login_message .= "<span style='font-size:12px;' class='text-primary'> ( Terakhir Login: ".tanggal_indo($ex_last_login[0]).", ".$ex_last_login[1]." )</span>";
+	$last_login_message .= "<span style='font-size:12px;' class='text-white'> ( Terakhir Login: ".tanggal_indo($ex_last_login[0]).", ".$ex_last_login[1]." )</span>";
 }
 ?>
 <!DOCTYPE html>
@@ -36,122 +36,48 @@ if(!empty($last_login)){
     <link rel="stylesheet" href="<?php echo e(base_url('assets/css/toastr.min.css')); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.6.96/css/materialdesignicons.min.css">
 </head>
-<<<<<<< HEAD
-<body class="">
-    
-<div class="bg">
-    <div class="container-fluid">
-        <div class="cont-header">
-            <div class="head d-flex bg-light col-lg-10 col-md-12 col-sm-12  flex-column rounded-lg">
-                <div class="head-banner p-2 col d-flex align-items-center justify-content-around rounded-top">
-                    <div class="d-flex align-items-center col-lg col-md-12 col-sm-12">
-                    <img src="<?php echo e(base_url('assets/images/logo/logo.png')); ?>" class="mr-4" alt="">
-                        <div class="title-text d-flex flex-column text-white">
-                            <p>SPA-IG</p>            
-                            <p>UNIVERSITAS PEMBANGUNAN JAYA</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <button class="btn btn-sm btn-secondary"><i class="mdi mdi-account-circle mr-2"></i>Halaman Profile</button>     
-                        <button class="btn btn-sm btn-secondary"><i class="mdi mdi-logout mr-2"></i>Logout</button>     
-                    </div>
-                </div>
-                <div class="d-flex flex-column body-card pb-5 justify-content-around">
-                    <h5 class="mt-4">MODULE</h5>  
-                    <div id="cards_landscape_wrap-2" class=""> 
-                        <div class="row ms-5 d-flex justify-content-around">    
-                                                    
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                <a href="#">
-                                    <div class="card-flyer">
-                                        <div class="text-box">
-                                            <div class="image-box">
-                                                <img src="<?php echo e(base_url('assets/images/gedung-upj.png')); ?>" alt="" />
-                                            </div>
-                                            <div class="text-container">
-                                                <h6>SPA</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                                <a href="<?php echo e(base_url('app/sim-ig/dashboard')); ?>">
-                                    <div class="card-flyer">
-                                        <div class="text-box">
-                                            <div class="image-box"> 
-                                                <img src="<?php echo e(base_url('assets/images/bg/upj4.jpg')); ?>" alt="" />
-                                            </div>
-                                            <div class="text-container">
-                                                <h6>IG</h6>                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                           
-                            <div class="card-right col-xs-12 col-sm-6 col-md-6 col-lg-3 mt-5 rounded-lg">
-                                <div class="card">
-                                  <div class="card-content">
-                                    <div class="card-body">
-                                      <div class="media d-flex">
-                                        <div class="media-body text-left">
-                                          <h6 class="success">USERNAME</h6>
-                                          <span>admin</span>
-                                        </div>
-                                        <div class="align-self-center">
-                                          <h2 class="mdi mdi-login"></h2>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            
-                        </div>
-                    </div>      
-                </div>
-=======
 
 <body class="bg">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 col-sm-8 col-xs-8 mx-auto pt-5">
-				<div class="card xcm ycm">
-					<div class="card-header bg-dark header-deck xcm">
-						<div class="h-title">
-							<div class="h-title-img">
-								<img src="<?php echo e(base_url('assets/images/logo/864.jpg')); ?>" alt="" srcset="">
+			<div class="col-lg-10 col-sm-10 col-xs-10 mx-auto pt-5">
+				<div id="main-cont">
+					<div class="card xcm ycm mb-0 bg-transparent" style="border:none;">
+						<div class="card-header header-deck xcm" style="background: transparent!important;">
+							<div class="h-title">
+								<div class="h-title-img">
+									<img src="<?php echo e(base_url('assets/images/logo/864.jpg')); ?>" alt="" srcset="">
+								</div>
+								<div class="h-title-name">
+									<h3 class="text-white t-title">Sistem Pencairan Anggaran</h3>
+									<h2 class="text-white t-comp">Universitas Pembangunan Jaya</h2>
+								</div>
+							</div>	
+							<div class="btn-group" style="height:40px;">
+								<button type="button" class="btn btn-light dropdown-toggle waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-menu"></i></button>
+								<ul class="dropdown-menu">
+									<li><a href="#" class="dropdown-item">Halaman Profil</a></li>								
+									<li><a href="#" data-toggle="modal" data-target="#modal-logout" class="dropdown-item">Keluar</a></li>
+								</ul>
 							</div>
-							<div class="h-title-name">
-								<h3 class="text-white t-title">Sistem Pencairan Anggaran</h3>
-								<h2 class="text-white t-comp">Universitas Pembangunan Jaya</h2>
-							</div>
-						</div>	
-						<div class="btn-group" style="height:40px;">
-							<button type="button" class="btn btn-light dropdown-toggle waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-menu"></i></button>
-							<ul class="dropdown-menu">
-								<li><a href="#" class="dropdown-item">Halaman Profil</a></li>								
-								<li><a href="#" data-toggle="modal" data-target="#modal-logout" class="dropdown-item">Keluar</a></li>
-							</ul>
-						</div>					
-					</div>
-					<div class="card-body">
-						<p class="mb-0 pb-0">Selamat datang, <strong><?= $nama ?></strong>!<?= $last_login_message ?></p>
-						<h6>Pilih Modul:</h6>
-						<hr>
-						<div class="row">
-							<div class="col-md-4">
-								<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-spa/dashboard')); ?>'">
-									<div class="card-body">
-										<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/RKAT.png')); ?>" alt="SIM RKAT">										
+						</div>
+						<div class="card-body" style="min-height: 360px;max-height:auto;">
+							<p class="mb-0 pb-0 text-white">Selamat datang, <strong><?= $nama ?></strong>!<?= $last_login_message ?></p>
+							<h6 class="text-white">Pilih Modul:</h6>
+							<hr>
+							<div class="row">
+								<div class="col-md-3">
+									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-spa/dashboard')); ?>'">
+										<div class="card-body">
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/RKAT.png')); ?>" alt="SIM RKAT">										
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-ig/dashboard')); ?>'">
-									<div class="card-body">
-										<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/IG.png')); ?>" alt="SIM IG">
+								<div class="col-md-3">
+									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-ig/dashboard')); ?>'">
+										<div class="card-body">
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/IG.png')); ?>" alt="SIM IG">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -180,17 +106,13 @@ if(!empty($last_login)){
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light btn-sm waves-effect" data-dismiss="modal">Kembali</button>
                     <button type="submit" class="btn btn-danger btn-sm waves-effect waves-light">Keluar <i class="mdi mdi-logout-variant"></i></button>
->>>>>>> b9fd31aa1a8f53c380d81499ae53e2b43d19762f
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
-<<<<<<< HEAD
-=======
     <?php echo form_close(); ?>
->>>>>>> b9fd31aa1a8f53c380d81499ae53e2b43d19762f
 
     <!-- End Modal Logout -->
 

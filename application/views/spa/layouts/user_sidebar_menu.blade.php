@@ -53,7 +53,7 @@
                                     <a href="{{ base_url('app/sim-spa/pencairan-rkat/input-actbud') }}" class="">Input Actbud</a>
                                 </li>
                                 <li class="">
-                                    <a href="{{ base_url('app/sim-spa/actbud') }}" class="<?= menu_active(2, 'actbud', 'active') ?>">View Actbud</a>
+                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/view-actbud') }}" class="">View Actbud</a>
                                 </li>
                                 <li class="">
                                     <a href="javascript:void(0)" class="">Status Actbud</a>
