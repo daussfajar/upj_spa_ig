@@ -4,11 +4,11 @@ $session = $CI->session->userdata('user_sessions');
 @extends('spa.layouts.user')
 
 @section('title')
-    <?= MOD2 ?> Dashboard
+    <?= MOD2 ?> Pencairan RKAT - Input Acbud
 @endsection
 
 @section('page-title')
-    Dashboard
+    Input Actbud
 @endsection
 
 @section('css')
@@ -16,7 +16,8 @@ $session = $CI->session->userdata('user_sessions');
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item active"><a href="javascript: void(0);">Dashboard</a></li>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
+<li class="breadcrumb-item active"><a href="javascript: void(0);">Input Acbud</a></li>
 @endsection
 
 @section('content')    

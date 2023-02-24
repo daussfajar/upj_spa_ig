@@ -4,7 +4,7 @@ $session = $CI->session->userdata('user_sessions');
 
 
 <?php $__env->startSection('title'); ?>
-    RKAT - Dashboard
+    <?= MOD2 ?> Dashboard
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('page-title'); ?>

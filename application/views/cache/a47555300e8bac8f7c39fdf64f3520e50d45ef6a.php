@@ -1,26 +1,27 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
-    <?= MOD2 ?> Dashboard
-@endsection
 
-@section('page-title')
-    Dashboard
-@endsection
+<?php $__env->startSection('title'); ?>
+    <?= MOD2 ?> Pencairan RKAT - Input Acbud
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('page-title'); ?>
+    Input Actbud
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
     
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
-<li class="breadcrumb-item active"><a href="javascript: void(0);">Dashboard</a></li>
-@endsection
+<?php $__env->startSection('breadcrumb'); ?>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
+<li class="breadcrumb-item active"><a href="javascript: void(0);">Input Acbud</a></li>
+<?php $__env->stopSection(); ?>
 
-@section('content')    
-    @if ($session['kode_jabatan'] == 7)
+<?php $__env->startSection('content'); ?>    
+    <?php if($session['kode_jabatan'] == 7): ?>
     <div class="col-lg-6 col-xl-4">
         <div class="card widget-box-three">
             <div class="card-body">
@@ -87,5 +88,6 @@ $session = $CI->session->userdata('user_sessions');
             </div>
         </div>
     </div>
-    @endif    
-@endsection
+    <?php endif; ?>    
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/pencairan_rkat/v_input_actbud.blade.php ENDPATH**/ ?>

@@ -50,7 +50,7 @@
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li class="">
-                                    <a href="javascript:void(0)" class="">Input Actbud</a>
+                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/input-actbud') }}" class="">Input Actbud</a>
                                 </li>
                                 <li class="">
                                     <a href="javascript:void(0)" class="">View Actbud</a>
