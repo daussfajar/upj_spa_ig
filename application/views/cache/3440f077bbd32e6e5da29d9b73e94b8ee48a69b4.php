@@ -1,12 +1,12 @@
 <?php
 $session = $CI->session->userdata('user_sessions'); ?>
-@extends('spa.layouts.user') @section('title') RKAT - Dashboard @endsection
-@section('page-title') Dashboard @endsection @section('css') @endsection
-@section('breadcrumb')
+ <?php $__env->startSection('title'); ?> RKAT - Dashboard <?php $__env->stopSection(); ?>
+<?php $__env->startSection('page-title'); ?> Dashboard <?php $__env->stopSection(); ?> <?php $__env->startSection('css'); ?> <?php $__env->stopSection(); ?>
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item active">
     <a href="javascript: void(0);">Dashboard</a>
 </li>
-@endsection @section('content') @if ($session['kode_jabatan'] == 7)
+<?php $__env->stopSection(); ?> <?php $__env->startSection('content'); ?> <?php if($session['kode_jabatan'] == 7): ?>
 <div class="col-lg-6 col-xl-4">
     <div class="card widget-box-three">
         <div class="card-body">
@@ -73,7 +73,7 @@ $session = $CI->session->userdata('user_sessions'); ?>
         </div>
     </div>
 </div>
-@endif
+<?php endif; ?>
 
 
 <div class="col-lg-6 col-xl-3">
@@ -176,4 +176,5 @@ $session = $CI->session->userdata('user_sessions'); ?>
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/dashboard/dashboard.blade.php ENDPATH**/ ?>

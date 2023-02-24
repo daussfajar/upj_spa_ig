@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title><?php echo e(APP_NAME1); ?> <?php echo $__env->yieldContent('title'); ?></title>    
+	<title><?php echo e(APP_NAME); ?> | <?php echo $__env->yieldContent('title'); ?></title>    
     <link rel="apple-touch-icon" sizes="76x76" href="<?php echo e(base_url('assets/images/favicon')); ?>/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(base_url('assets/images/favicon')); ?>/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(base_url('assets/images/favicon')); ?>/favicon-16x16.png">
@@ -36,7 +36,7 @@
         <div class="navbar-custom bg-white">
             <ul class="list-unstyled topnav-menu float-right mb-0">
 
-                <?php echo $__env->make('ig.layouts.user_notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>                
+                <?php echo $__env->make('spa.layouts.user_notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>                
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -65,9 +65,9 @@
 
             <!-- LOGO -->
             <div class="logo-box bg-white">
-                <a href="<?php echo e(base_url('app/sim-ig/dashboard')); ?>" class="logo text-center">
+                <a href="<?php echo e(base_url('app/sim-spa/dashboard')); ?>" class="logo text-center">
                     <span class="logo-lg">
-                        <img src="<?php echo e(base_url('assets/images/logo/logo_modul_ig_bg_white_text_black.png')); ?>" alt="" height="50">
+                        <img src="<?php echo e(base_url('assets/images/logo/logo_rkat_bg_white_text_black.png')); ?>" alt="" height="50">
                         <!-- <span class="logo-lg-text-light">SPA-IG</span> -->
                     </span>
                     <span class="logo-sm">
@@ -80,7 +80,7 @@
             <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                 <li>
                     <button class="button-menu-mobile waves-effect">
-                        <i class="mdi mdi-menu" style="color:#797979;"></i>
+                        <i class="mdi mdi-menu" style="color: #797979;"></i>
                     </button>
                 </li>                                    
             </ul>
@@ -88,7 +88,7 @@
         <!-- end Topbar --> 
         
         <!-- ========== Left Sidebar Start ========== -->
-        <?php echo $__env->make('ig.layouts.user_sidebar_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php echo $__env->make('spa.layouts.user_sidebar_menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Left Sidebar End -->
 
         <!-- ============================================================== -->
@@ -107,7 +107,7 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);"><b>IG</b></a></li>                                        
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);"><b>SPA</b></a></li>
                                         <?php echo $__env->yieldContent('breadcrumb'); ?>
                                     </ol>
                                 </div>
@@ -150,7 +150,7 @@
     <!-- END wrapper -->    
 
     <!-- Modal Logout -->
-    <?php echo form_open('app/logout', array('class' => 'myForm')); ?>
+    <?php echo form_open('app/logout'); ?>
 
     <div id="modal-logout" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -206,4 +206,4 @@
     <script src="<?php echo e(base_url('assets/js/app.min.js')); ?>"></script>   
     <?php echo $__env->yieldContent('js'); ?> 
 </body>
-</html><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/ig/layouts/user.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/layouts/user.blade.php ENDPATH**/ ?>
