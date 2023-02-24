@@ -42,7 +42,6 @@ class RKAT_model extends CI_Model {
         $this->datatables->where('a1.periode', $periode);
         $this->datatables->like('a1.kode_pencairan', $kode_pencairan);
         $this->datatables->group_by('a1.kode_uraian');
-        $this->datatables->order_by('a1.kode_pencairan');
         $this->datatables->get_num_rows();
         return $this->datatables->generate();
     }
