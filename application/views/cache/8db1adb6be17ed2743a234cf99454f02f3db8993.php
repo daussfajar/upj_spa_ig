@@ -3,16 +3,16 @@ $session = $CI->session->userdata('user_sessions'); ?>
 
 
 <?php $__env->startSection('title'); ?>
-    <?= MOD2 ?> Pencairan RKAT - View Actbud
+    <?= MOD2 ?> Pencairan RKAT - View Petty Cash
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('page-title'); ?>
-    View Actbud
+    View Petty Cash
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
     <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
-    <li class="breadcrumb-item active"><a href="javascript: void(0);">View Actbud</a></li>
+    <li class="breadcrumb-item active"><a href="javascript: void(0);">View Petty Cash</a></li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -43,7 +43,7 @@ $session = $CI->session->userdata('user_sessions'); ?>
                 </div>
             </div>
             <div class="table-responsive">
-                <table id="tb_data_actbud" class="table table-striped table-bordered dt-responsive nowrap">
+                <table id="tb_data_petty_cash" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="bg-purple text-white text-center">
                         <tr>
                             <th width="50" style="vertical-align: middle">No</th>
@@ -51,28 +51,18 @@ $session = $CI->session->userdata('user_sessions'); ?>
                             <th style="vertical-align: middle">Jenis Biaya</th>
                             <th style="vertical-align: middle">No Borang</th>
                             <th class="text-center" style="vertical-align: middle">
-                                Kode Pencarian
+                                KPI
                             </th>
-                            <th width="200" style="vertical-align: middle">PIC</th>
+                            <th width="200" style="vertical-align: middle">Kode Pencairan</th>
                         </tr>
                     </thead>
-                    <tbody id="tb-actbud"></tbody>
+                    <tbody id="tb-petty-cash"></tbody>
                 </table>
             </div>
         </div>
     </div>
-<?php $__env->stopSection(); ?>
-
 <?php $__env->startSection('js'); ?>
-    <script src="<?php echo e(base_url('assets/js/bootstrap-select.min.js')); ?>"></script>
-    <script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
-    <script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
-    <script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
-    <script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
-
-    <script>
-        
-    </script>
+<?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/pencairan_rkat/v_view_actbud.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/pencairan_rkat/v_view_pettycash.blade.php ENDPATH**/ ?>

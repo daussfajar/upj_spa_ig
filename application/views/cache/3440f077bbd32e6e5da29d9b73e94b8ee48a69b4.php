@@ -1,4 +1,4 @@
-<?php 
+<?php
 $session = $CI->session->userdata('user_sessions');
 ?>
 
@@ -12,182 +12,191 @@ $session = $CI->session->userdata('user_sessions');
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
-    
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-<li class="breadcrumb-item active">
-    <a href="javascript: void(0);">Dashboard</a>
-</li>
-<?php $__env->stopSection(); ?> <?php $__env->startSection('content'); ?> <?php if($session['kode_jabatan'] == 7): ?>
-<div class="col-lg-6 col-xl-4">
-    <div class="card widget-box-three">
-        <div class="card-body">
-            <div class="float-right mt-2">
-                <i class="mdi mdi-clipboard-multiple-outline text-purple display-4 m-0"></i>
-            </div>
-            <div class="overflow-hidden">
-                <p class="text-uppercase font-weight-medium text-truncate mb-2">
-                    Pengajuan Actbud
-                </p>
-                <h2 class="mb-0">
-                    <span data-plugin="counterup"> </span>
-                </h2>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-lg-6 col-xl-4">
-    <div class="card widget-box-three">
-        <div class="card-body">
-            <div class="float-right mt-2">
-                <i class="mdi mdi-clipboard-multiple-outline text-primary display-4 m-0"></i>
-            </div>
-            <div class="overflow-hidden">
-                <p class="text-uppercase font-weight-medium text-truncate mb-2">
-                    Pengajuan Petty Cash
-                </p>
-                <h2 class="mb-0">
-                    <span data-plugin="counterup"> </span>
-                </h2>
+    <li class="breadcrumb-item active">
+        <a href="javascript: void(0);">Dashboard</a>
+    </li>
+    <?php $__env->stopSection(); ?> <?php $__env->startSection('content'); ?>
+    <?php if($session['kode_jabatan'] == 7): ?>
+        <div class="col-lg-6 col-xl-4">
+            <div class="card widget-box-three">
+                <div class="card-body">
+                    <div class="float-right mt-2">
+                        <i class="mdi mdi-clipboard-multiple-outline text-purple display-4 m-0"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <p class="text-uppercase font-weight-medium text-truncate mb-2">
+                            Pengajuan Actbud
+                        </p>
+                        <h2 class="mb-0">
+                            <span data-plugin="counterup"> </span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+        <div class="col-lg-6 col-xl-4">
+            <div class="card widget-box-three">
+                <div class="card-body">
+                    <div class="float-right mt-2">
+                        <i class="mdi mdi-clipboard-multiple-outline text-primary display-4 m-0"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <p class="text-uppercase font-weight-medium text-truncate mb-2">
+                            Pengajuan Petty Cash
+                        </p>
+                        <h2 class="mb-0">
+                            <span data-plugin="counterup"> </span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="col-lg-6 col-xl-4">
-    <div class="card widget-box-three">
-        <div class="card-body">
-            <div class="float-right mt-2">
-                <i class="mdi mdi-progress-close text-danger display-4 m-0"></i>
-            </div>
-            <div class="overflow-hidden">
-                <p class="text-uppercase font-weight-medium text-truncate mb-2">
-                    Actbud Ditolak
-                </p>
-                <h2 class="mb-0">
-                    <span data-plugin="counterup"> </span>
-                </h2>
+        <div class="col-lg-6 col-xl-4">
+            <div class="card widget-box-three">
+                <div class="card-body">
+                    <div class="float-right mt-2">
+                        <i class="mdi mdi-progress-close text-danger display-4 m-0"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <p class="text-uppercase font-weight-medium text-truncate mb-2">
+                            Actbud Ditolak
+                        </p>
+                        <h2 class="mb-0">
+                            <span data-plugin="counterup"> </span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
+    <?php endif; ?>
 
 
-<div class="col-lg-6 col-xl-3">
-    <div class="card widget-box-three">
-        <div class="card-body">
-            <div class="float-right mt-2">
-                <i class="mdi mdi-clipboard-multiple-outline text-purple display-4 m-0"></i>
+    <div class="col-lg-6 col-xl-3">
+        <div class="card widget-box-three">
+            <div class="card-body">
+                <div class="float-right mt-2">
+                    <i class="mdi mdi-clipboard-multiple-outline text-purple display-4 m-0"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-uppercase font-weight-medium text-truncate mb-2">
+                        Permohonan Actbud Terkait ICT
+                    </p>
+                    <h2 class="mb-0">
+                        <span data-plugin="counterup"> </span>
+                    </h2>
+                </div>
             </div>
-            <div class="overflow-hidden">
-                <p class="text-uppercase font-weight-medium text-truncate mb-2">
-                    Permohonan Actbud Terkait ICT
-                </p>
-                <h2 class="mb-0">
-                    <span data-plugin="counterup"> </span>
-                </h2>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-lg-6 col-xl-3">
-    <div class="card widget-box-three">
-        <div class="card-body">
-            <div class="float-right mt-2">
-                <i class="mdi mdi-clipboard-multiple-outline text-primary display-4 m-0"></i>
-            </div>
-            <div class="overflow-hidden">
-                <p class="text-uppercase font-weight-medium text-truncate mb-2">
-                    Permohonan Approval Actbud oleh Unit
-                </p>
-                <h2 class="mb-0">
-                    <span data-plugin="counterup"> </span>
-                </h2>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-lg-6 col-xl-3">
-    <div class="card widget-box-three">
-        <div class="card-body">
-            <div class="float-right mt-2">
-                <i class="mdi mdi-list-status text-primary display-4 m-0"></i>
+    <div class="col-lg-6 col-xl-3">
+        <div class="card widget-box-three">
+            <div class="card-body">
+                <div class="float-right mt-2">
+                    <i class="mdi mdi-clipboard-multiple-outline text-primary display-4 m-0"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-uppercase font-weight-medium text-truncate mb-2">
+                        Permohonan Approval Actbud oleh Unit
+                    </p>
+                    <h2 class="mb-0">
+                        <span data-plugin="counterup"> </span>
+                    </h2>
+                </div>
             </div>
-            <div class="overflow-hidden">
-                <p class="text-uppercase font-weight-medium text-truncate mb-2">
-                    Status Actbud Yang Diajukan
-                </p>
-                <h2 class="mb-0">
-                    <span data-plugin="counterup"> </span>
-                </h2>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-lg-6 col-xl-3">
-    <div class="card widget-box-three">
-        <div class="card-body">
-            <div class="float-right mt-2">
-                <i class="mdi mdi-progress-close text-danger display-4 m-0"></i>
-            </div>
-            <div class="overflow-hidden">
-                <p class="text-uppercase font-weight-medium text-truncate mb-2">
-                    Actbud Ditolak
-                </p>
-                <h2 class="mb-0">
-                    <span data-plugin="counterup"> </span>
-                </h2>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col">
-    <div class="card text-center">
-        <div class="card-header">PERHATIAN</div>
-        <div class="card-body">
-            <h4 class="card-text">Kami Informasikan, bahwa untuk dapat melakukan pencairan ACTBUD / PETTY CASH diharapkan segera mengisi PIC pada RKAT</h4>
-            <a href="#" class="btn btn-primary my-4">Klik Disini</a>
-            <p class="card-text">Atas Perhatiannya Kami Ucapkan Terima Kasih.</p>
+    <div class="col-lg-6 col-xl-3">
+        <div class="card widget-box-three">
+            <div class="card-body">
+                <div class="float-right mt-2">
+                    <i class="mdi mdi-list-status text-primary display-4 m-0"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-uppercase font-weight-medium text-truncate mb-2">
+                        Status Actbud Yang Diajukan
+                    </p>
+                    <h2 class="mb-0">
+                        <span data-plugin="counterup"> </span>
+                    </h2>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                </div>
+            </div>
         </div>
-        <div class="card-footer"><h6>ICT-UPJ</h6></div>
     </div>
-</div>
+    <div class="col-lg-6 col-xl-3">
+        <div class="card widget-box-three">
+            <div class="card-body">
+                <div class="float-right mt-2">
+                    <i class="mdi mdi-progress-close text-danger display-4 m-0"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-uppercase font-weight-medium text-truncate mb-2">
+                        Actbud Ditolak
+                    </p>
+                    <h2 class="mb-0">
+                        <span data-plugin="counterup"> </span>
+                    </h2>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="float-right">
+                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card text-center">
+            <div class="card-header">PERHATIAN</div>
+            <div class="card-body">
+                <h4 class="card-text">Kami Informasikan, bahwa untuk dapat melakukan pencairan ACTBUD / PETTY CASH
+                    diharapkan segera mengisi PIC pada RKAT</h4>
+                <a href="#" class="btn btn-primary my-4">Klik Disini</a>
+                <p class="card-text">Atas Perhatiannya Kami Ucapkan Terima Kasih.</p>
+            </div>
+            <div class="card-footer">
+                <h6>ICT-UPJ</h6>
+            </div>
+        </div>
+    </div>
 
+
+    
+
+
+    
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/dashboard/dashboard.blade.php ENDPATH**/ ?>

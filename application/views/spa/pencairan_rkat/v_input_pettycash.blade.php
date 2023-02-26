@@ -1,28 +1,26 @@
 <?php
-$session = $CI->session->userdata('user_sessions'); ?>
+$session = $CI->session->userdata('user_sessions');
+?>
 @extends('spa.layouts.user')
 
 @section('title')
-    <?= MOD2 ?> Pencairan RKAT - View Actbud
+    <?= MOD2 ?> Pencairan RKAT - Input Petty Cash
 @endsection
 
 @section('page-title')
-    View Actbud
+    Input Petty Cash
+@endsection
+
+@section('css')
 @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
-    <li class="breadcrumb-item active"><a href="javascript: void(0);">View Actbud</a></li>
-@endsection
-
-@section('css')
-    <link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}" />
-    <link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}" />
-    <link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}" />
-    <link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}" />
+    <li class="breadcrumb-item active"><a href="javascript: void(0);">Input Petty Cash</a></li>
 @endsection
 
 @section('content')
+
     <div class="col-md-12">
         <div class="card-box mt-2">
             <div class="row mb-3">
@@ -43,24 +41,32 @@ $session = $CI->session->userdata('user_sessions'); ?>
                 </div>
             </div>
             <div class="table-responsive">
-                <table id="tb_data_actbud" class="table table-striped table-bordered dt-responsive nowrap">
+                <table id="tb_data_pettycash" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="bg-purple text-white text-center">
                         <tr>
                             <th width="50" style="vertical-align: middle">No</th>
                             <th style="vertical-align: middle">Uraian</th>
-                            <th style="vertical-align: middle">Jenis Biaya</th>
-                            <th style="vertical-align: middle">No Borang</th>
-                            <th class="text-center" style="vertical-align: middle">
-                                Kode Pencarian
-                            </th>
-                            <th width="200" style="vertical-align: middle">PIC</th>
+                            <th style="vertical-align: middle">Kode Pencairan</th>
+                            <th style="vertical-align: middle">Ganjil</th>
+                            <th class="text-center" style="vertical-align: middle">Genap</th>
+                            <th width="200" style="vertical-align: middle">Sisa</th>
+                            <th width="200" style="vertical-align: middle">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="tb-actbud"></tbody>
+                    <tbody id="tb-pettycash"></tbody>
                 </table>
             </div>
         </div>
     </div>
+    </div>
+
 @section('js')
+    <script src="{{ base_url('assets/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+
+
 @endsection
 @endsection

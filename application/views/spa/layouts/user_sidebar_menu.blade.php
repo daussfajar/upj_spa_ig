@@ -56,7 +56,7 @@
                                     <a href="{{ base_url('app/sim-spa/pencairan-rkat/view-actbud') }}" class="">View Actbud</a>
                                 </li>
                                 <li class="">
-                                    <a href="javascript:void(0)" class="">Status Actbud</a>
+                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/status-actbud') }}" class="">Status Actbud</a>
                                 </li>
                             </ul>
                         </li>
@@ -67,13 +67,13 @@
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li class="">
-                                    <a href="javascript:void(0)" class="">Input Petty Cash</a>
+                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/input-petty-cash') }}" class="">Input Petty Cash</a>
                                 </li>
                                 <li class="">
-                                    <a href="javascript:void(0)" class="">View Petty Cash</a>
+                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/view-petty-cash') }}" class="">View Petty Cash</a>
                                 </li>
                                 <li class="">
-                                    <a href="javascript:void(0)" class="">Status Petty Cash</a>
+                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/status-petty-cash') }}" class="">Status Petty Cash</a>
                                 </li>
                             </ul>
                         </li>

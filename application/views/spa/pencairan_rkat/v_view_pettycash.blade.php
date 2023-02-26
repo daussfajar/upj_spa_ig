@@ -3,16 +3,16 @@ $session = $CI->session->userdata('user_sessions'); ?>
 @extends('spa.layouts.user')
 
 @section('title')
-    <?= MOD2 ?> Pencairan RKAT - View Actbud
+    <?= MOD2 ?> Pencairan RKAT - View Petty Cash
 @endsection
 
 @section('page-title')
-    View Actbud
+    View Petty Cash
 @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
-    <li class="breadcrumb-item active"><a href="javascript: void(0);">View Actbud</a></li>
+    <li class="breadcrumb-item active"><a href="javascript: void(0);">View Petty Cash</a></li>
 @endsection
 
 @section('css')
@@ -43,7 +43,7 @@ $session = $CI->session->userdata('user_sessions'); ?>
                 </div>
             </div>
             <div class="table-responsive">
-                <table id="tb_data_actbud" class="table table-striped table-bordered dt-responsive nowrap">
+                <table id="tb_data_petty_cash" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="bg-purple text-white text-center">
                         <tr>
                             <th width="50" style="vertical-align: middle">No</th>
@@ -51,12 +51,12 @@ $session = $CI->session->userdata('user_sessions'); ?>
                             <th style="vertical-align: middle">Jenis Biaya</th>
                             <th style="vertical-align: middle">No Borang</th>
                             <th class="text-center" style="vertical-align: middle">
-                                Kode Pencarian
+                                KPI
                             </th>
-                            <th width="200" style="vertical-align: middle">PIC</th>
+                            <th width="200" style="vertical-align: middle">Kode Pencairan</th>
                         </tr>
                     </thead>
-                    <tbody id="tb-actbud"></tbody>
+                    <tbody id="tb-petty-cash"></tbody>
                 </table>
             </div>
         </div>

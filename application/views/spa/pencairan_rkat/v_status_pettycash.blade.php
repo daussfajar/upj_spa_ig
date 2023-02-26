@@ -3,16 +3,16 @@ $session = $CI->session->userdata('user_sessions'); ?>
 @extends('spa.layouts.user')
 
 @section('title')
-    <?= MOD2 ?> Pencairan RKAT - View Actbud
+    <?= MOD2 ?> Pencairan RKAT - Status Petty Cash
 @endsection
 
 @section('page-title')
-    View Actbud
+    Status Persetujuan Petty Cash
 @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
-    <li class="breadcrumb-item active"><a href="javascript: void(0);">View Actbud</a></li>
+    <li class="breadcrumb-item active"><a href="javascript: void(0);">Status Petty Cash</a></li>
 @endsection
 
 @section('css')
@@ -24,8 +24,11 @@ $session = $CI->session->userdata('user_sessions'); ?>
 
 @section('content')
     <div class="col-md-12">
-        <div class="card-box mt-2">
-            <div class="row mb-3">
+        <div class="card mt-2">
+            <div class="card-header">
+                PIC:
+            </div>
+            <div class="row my-3 px-4">
                 <div class="col-md-8 col-sm-8 col-xs-12">
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
@@ -42,21 +45,22 @@ $session = $CI->session->userdata('user_sessions'); ?>
                     </form>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table id="tb_data_actbud" class="table table-striped table-bordered dt-responsive nowrap">
+            <div class="table-responsive px-4">
+                <table id="tb_data_petty_cash" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="bg-purple text-white text-center">
                         <tr>
                             <th width="50" style="vertical-align: middle">No</th>
-                            <th style="vertical-align: middle">Uraian</th>
-                            <th style="vertical-align: middle">Jenis Biaya</th>
-                            <th style="vertical-align: middle">No Borang</th>
+                            <th style="vertical-align: middle">No Dokumen</th>
+                            <th style="vertical-align: middle">Kode Pencairan</th>
+                            <th style="vertical-align: middle">Nama Kegiatan</th>
                             <th class="text-center" style="vertical-align: middle">
-                                Kode Pencarian
+                                Anggaran
                             </th>
-                            <th width="200" style="vertical-align: middle">PIC</th>
+                            <th style="vertical-align: middle">Status Approval</th>
+                            <th style="vertical-align: middle">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="tb-actbud"></tbody>
+                    <tbody id="tb-petty-cash"></tbody>
                 </table>
             </div>
         </div>
