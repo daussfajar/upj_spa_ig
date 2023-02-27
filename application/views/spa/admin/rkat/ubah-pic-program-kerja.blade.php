@@ -45,7 +45,7 @@ $session = $CI->session->userdata('user_sessions');
                 <table class="table table-striped table-bordered table-hover" id="table-pic-rkat-program-kerja" style="wdith:100%;">
                     <thead>
                         <tr>
-                            <th>Nama Unit</th>
+                            <th>Prodi/Unit</th>
                             <th>Kode Pencairan</th>
                             <th>Uraian dan Tujuan <br>Kegiatan</th>
                             <th>KPI</th>
