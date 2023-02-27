@@ -176,7 +176,12 @@ $session = $CI->session->userdata('user_sessions');
                 [0, 'desc']
             ],
             columnDefs: [
-                { "targets": 5, "orderable": false }
+                { "targets": 0, "searchable": true },
+                { "targets": 1, "searchable": true },
+                { "targets": 2, "searchable": true },
+                { "targets": 3, "searchable": false },
+                { "targets": 4, "searchable": false },
+                { "targets": 5, "orderable": false, "searchable": false }
             ],
             rowCallback: function(row, data, iDisplayIndex) {
                 $('td:eq(0)', row).html();
