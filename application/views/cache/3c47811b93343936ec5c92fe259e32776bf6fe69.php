@@ -61,7 +61,7 @@ $session = $CI->session->userdata('user_sessions');
     </div>
 </div>
 
-<?php echo form_open('app/sim-spa/rkat/ubah-pic', array()); ?>
+<?php echo form_open('app/sim-spa/rkat/ubah-pic', array('class' => 'myForm')); ?>
 
     <div id="modal-ubah-pic" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -84,8 +84,8 @@ $session = $CI->session->userdata('user_sessions');
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-xs waves-effect" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary btn-xs waves-effect waves-light"><i class="mdi mdi-pencil"></i> Simpan</button>
+                    <button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light"><i class="mdi mdi-pencil"></i> Simpan</button>
                 </div>
             </div>
         </div>
@@ -176,7 +176,12 @@ $session = $CI->session->userdata('user_sessions');
                 [0, 'desc']
             ],
             columnDefs: [
-                { "targets": 5, "orderable": false }
+                { "targets": 0, "searchable": true },
+                { "targets": 1, "searchable": true },
+                { "targets": 2, "searchable": true },
+                { "targets": 3, "searchable": false },
+                { "targets": 4, "searchable": false },
+                { "targets": 5, "orderable": false, "searchable": false }
             ],
             rowCallback: function(row, data, iDisplayIndex) {
                 $('td:eq(0)', row).html();

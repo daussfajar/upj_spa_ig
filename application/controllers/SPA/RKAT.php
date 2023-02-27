@@ -16,24 +16,33 @@ class RKAT extends CI_Controller{
 
     // endpoint datatable
     public function get_pic_rkat_program_kerja(){
-        $kode_rkat_master   = $this->input->post('kode-rkat');
-        $periode            = $this->input->post('periode');
-        header('Content-Type: application/json');
-		echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'PK');
+        $method                 = $this->input->method();
+        if ($method == "post"){
+            $kode_rkat_master   = $this->input->post('kode-rkat');
+            $periode            = $this->input->post('periode');
+            header('Content-Type: application/json');
+            echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'PK');
+        } else return show_404();
     }
     
     public function get_pic_rkat_operasional(){
-        $kode_rkat_master   = $this->input->post('kode-rkat');
-        $periode            = $this->input->post('periode');
-        header('Content-Type: application/json');   
-		echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'OPS');
+        $method                 = $this->input->method();
+        if ($method == "post"){
+            $kode_rkat_master   = $this->input->post('kode-rkat');
+            $periode            = $this->input->post('periode');
+            header('Content-Type: application/json');   
+            echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'OPS');
+        } else return show_404();
     }
     
     public function get_pic_rkat_investasi(){
-        $kode_rkat_master   = $this->input->post('kode-rkat');
-        $periode            = $this->input->post('periode');
-        header('Content-Type: application/json');
-		echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'INV');
+        $method                 = $this->input->method();
+        if($method == "post"){
+            $kode_rkat_master   = $this->input->post('kode-rkat');
+            $periode            = $this->input->post('periode');
+            header('Content-Type: application/json');
+            echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'INV');
+        } else return show_404();
     }
 
     // view
@@ -80,19 +89,7 @@ class RKAT extends CI_Controller{
         }
 
         return view('spa.rkat.ubah-pic-investasi', $data);
-    }
-
-    public function list_rkat_program_kerja(){
-        return view('spa.rkat.list-program-kerja');
-    }
-
-    public function list_rkat_operasional(){
-        return view('spa.rkat.list-operasional');
-    }
-
-    public function list_rkat_investasi(){
-        return view('spa.rkat.list-investasi');
-    }
+    }    
 
     public function ubah_pic(){
         $this->form_validation->set_rules('kode', 'Data', 'trim|required', [

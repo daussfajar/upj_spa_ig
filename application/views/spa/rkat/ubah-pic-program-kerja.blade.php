@@ -14,6 +14,7 @@ $session = $CI->session->userdata('user_sessions');
 @section('css')
 <link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -61,7 +62,7 @@ $session = $CI->session->userdata('user_sessions');
     </div>
 </div>
 
-{!! form_open('app/sim-spa/rkat/ubah-pic', array()) !!}
+{!! form_open('app/sim-spa/rkat/ubah-pic', array('class' => 'myForm')) !!}
     <div id="modal-ubah-pic" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -75,7 +76,7 @@ $session = $CI->session->userdata('user_sessions');
                     <input type="hidden" name="kode" value="">
                     <div class="form-group">
                         <label for="">PIC</label>
-                        <select name="pic" id="pic" class="form-control" required>
+                        <select name="pic" id="pic" class="form-control select2" style="width:100%;" required>
                             @foreach ($karyawan as $kry)
                                 <option value="{{ $kry['nik'] }}">{{ $kry['nama_lengkap'] }}</option>
                             @endforeach
@@ -83,8 +84,8 @@ $session = $CI->session->userdata('user_sessions');
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-xs waves-effect" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary btn-xs waves-effect waves-light"><i class="mdi mdi-pencil"></i> Simpan</button>
+                    <button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light"><i class="mdi mdi-pencil"></i> Simpan</button>
                 </div>
             </div>
         </div>
@@ -94,12 +95,18 @@ $session = $CI->session->userdata('user_sessions');
 @endsection
 
 @section('js')
+<script src="{{ base_url('assets/js/select2.min.js') }}"></script>
 <script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function(){
+        
+        $(".select2").select2({
+            placeholder: "Tentukan PIC..."
+        })
+
         $('#tbody-pic-rkat-program-kerja').on('click', '.btn-edit', function(){
             var kode_uraian = $(this).data('kode-uraian');
             var pic = $(this).data('pic');

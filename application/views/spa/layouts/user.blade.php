@@ -150,7 +150,7 @@
     <!-- END wrapper -->    
 
     <!-- Modal Logout -->
-    {!! form_open('app/logout') !!}
+    {!! form_open('app/logout', array('class' => 'myForm')) !!}
     <div id="modal-logout" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -176,7 +176,7 @@
     <!-- End Modal Logout -->
 
     <!-- end page -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="{{ base_url('assets/js/jquery-3.6.0.slim.js') }}"></script>
     
     <script src="{{ base_url('assets/js/vendor.min.js') }}"></script>    
     <script src="{{ base_url('assets/js/toastr.min.js') }}"></script>    

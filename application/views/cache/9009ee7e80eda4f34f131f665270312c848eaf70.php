@@ -178,7 +178,7 @@
     <!-- End Modal Logout -->
 
     <!-- end page -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery-3.6.0.slim.js')); ?>"></script>
     
     <script src="<?php echo e(base_url('assets/js/vendor.min.js')); ?>"></script>    
     <script src="<?php echo e(base_url('assets/js/toastr.min.js')); ?>"></script>    
