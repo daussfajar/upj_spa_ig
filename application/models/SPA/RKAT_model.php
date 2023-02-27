@@ -46,7 +46,7 @@ class RKAT_model extends CI_Model {
         return $this->datatables->generate();
     }
 
-    public function get_pic_rkat($kode_rkat_master, $periode, $where = null)
+    public function get_pic_rkat_by_nik($kode_rkat_master, $periode, $where = null)
     {
         $this->datatables->select("
             a1.kode_pencairan as kode_pencairan, 
