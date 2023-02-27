@@ -83,15 +83,48 @@ class RKAT extends CI_Controller{
     }
 
     public function list_rkat_program_kerja(){
-        return view('spa.rkat.list-program-kerja');
+        $session = $this->session->userdata('user_sessions');
+        $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
+        $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
+        $data['periode'] = 0;
+        if($data['rkat_master']['periode'] == "Ganjil"){
+            $data['periode'] = '1';
+        } else if ($data['rkat_master']['periode'] == "Genap"){
+            $data['periode'] = '2';
+        }
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat($data['kode_rkat_master'], $data['periode'], 'PK');
+
+        return view('spa.rkat.list-program-kerja', $data);
     }
 
     public function list_rkat_operasional(){
-        return view('spa.rkat.list-operasional');
+        $session = $this->session->userdata('user_sessions');
+        $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
+        $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
+        $data['periode'] = 0;
+        if($data['rkat_master']['periode'] == "Ganjil"){
+            $data['periode'] = '1';
+        } else if ($data['rkat_master']['periode'] == "Genap"){
+            $data['periode'] = '2';
+        }
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat($data['kode_rkat_master'], $data['periode'], 'OPS');
+
+        return view('spa.rkat.list-operasional', $data);
     }
 
     public function list_rkat_investasi(){
-        return view('spa.rkat.list-investasi');
+        $session = $this->session->userdata('user_sessions');
+        $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
+        $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
+        $data['periode'] = 0;
+        if($data['rkat_master']['periode'] == "Ganjil"){
+            $data['periode'] = '1';
+        } else if ($data['rkat_master']['periode'] == "Genap"){
+            $data['periode'] = '2';
+        }
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat($data['kode_rkat_master'], $data['periode'], 'INV');
+
+        return view('spa.rkat.list-investasi', $data);
     }
 
     public function ubah_pic(){
