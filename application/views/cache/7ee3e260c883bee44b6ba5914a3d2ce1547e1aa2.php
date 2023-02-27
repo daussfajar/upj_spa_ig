@@ -18,9 +18,8 @@ $session = $CI->session->userdata('user_sessions');
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
-<li class="breadcrumb-item">RKAT</li>
-<li class="breadcrumb-item">Ubah PIC</li>
-<li class="breadcrumb-item active">Program Kerja</li>
+<li class="breadcrumb-item">Program Kerja</li>
+<li class="breadcrumb-item active">Ubah PIC</li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>

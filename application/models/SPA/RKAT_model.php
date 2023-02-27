@@ -45,6 +45,65 @@ class RKAT_model extends CI_Model {
         $this->datatables->get_num_rows();
         return $this->datatables->generate();
     }
+
+    public function get_pic_rkat($kode_rkat_master, $periode, $where = null)
+    {
+        $this->datatables->select("
+            a1.kode_pencairan as kode_pencairan, 
+            a1.kode_uraian as kode_uraian,
+            a1.uraian,
+            a1.pic,
+            a5.nama_lengkap,
+            IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,
+            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran
+        ");
+        $this->datatables->from('tbl_uraian as a1');
+        $this->datatables->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT');
+        $this->datatables->join('p_in as a3', 'a3.id_uraian_t = a1.kode_uraian', 'LEFT');
+        $this->datatables->join('p_out as a4', 'a4.id_uraian_f = a1.kode_uraian', 'LEFT');
+        $this->datatables->join('tbl_karyawan as a5', 'a5.nik = a1.pic', 'LEFT');
+        $this->datatables->where('a1.kode_rkat_master', $kode_rkat_master);
+        $this->datatables->where('a1.periode', $periode);
+        if($where != null){
+            $this->datatables->where($where);
+        }
+
+        $this->datatables->group_by('a1.kode_uraian');
+        $this->datatables->get_num_rows();
+        return $this->datatables->generate();
+    }
+
+    public function get_list_rkat($kode_rkat_master, $periode, $kode_pencairan){
+        $this->db->select("
+            a1.kode_pencairan as kode_pencairan, 
+            a1.kode_uraian as kode_uraian,
+            a1.uraian,
+            a1.kpi,
+            a1.renstra_prodi,
+            a1.renstra_univ,
+            a1.pic,
+            a1.tahun,
+            a1.total_agr_stj,
+            a5.nama_lengkap,
+            IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,
+            ifnull( a1.total_agr ,'0') AS total_agr,
+            sum(ifnull( a2.t_aju_agr ,'0')) AS  t_aju_agr,
+            sum(ifnull( a2.t_pyn_agr ,'0')) AS  t_pyn_agr,
+            ifnull( a3.n_in ,'0') AS n_in,
+            ifnull( a4.n_out ,'0') AS n_out,
+            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_agr
+        ");
+        $this->db->from('tbl_uraian as a1');
+        $this->db->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT');
+        $this->db->join('p_in as a3', 'a3.id_uraian_t = a1.kode_uraian', 'LEFT');
+        $this->db->join('p_out as a4', 'a4.id_uraian_f = a1.kode_uraian', 'LEFT');
+        $this->db->join('tbl_karyawan as a5', 'a5.nik = a1.pic', 'LEFT');
+        $this->db->where('a1.kode_rkat_master', $kode_rkat_master);
+        $this->db->where('a1.periode', $periode);
+        $this->db->like('a1.kode_pencairan', $kode_pencairan);
+        $this->db->group_by('a1.kode_uraian');
+        return $this->db->get()->result_array();
+    }
     
 }
 ?>

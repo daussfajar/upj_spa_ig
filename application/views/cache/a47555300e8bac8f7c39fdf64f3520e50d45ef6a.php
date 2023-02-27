@@ -81,7 +81,7 @@ $session = $CI->session->userdata('user_sessions');
             processing: true,
             serverSide: true,
             ajax: {
-                "url": "<?php echo base_url('SPA/RKAT/get_pic_rkat_investasi') ?>",
+                "url": "<?php echo base_url('SPA/PencairanRKAT/get_actbud') ?>",
                 "type": "POST",
                 "dataType" : "json",
                 "data" : {
