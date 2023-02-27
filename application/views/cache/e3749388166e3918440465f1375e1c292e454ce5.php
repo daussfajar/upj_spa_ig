@@ -19,7 +19,7 @@
                 <li class="menu-title">Navigation</li>
 
                 <li class="<?= menu_active(3, 'dashboard', 'mm-active') ?>">
-                    <a href="{{ base_url('app/sim-spa/dashboard') }}" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/dashboard')); ?>" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
                         <i class="mdi mdi-view-dashboard"></i>                                    
                         <span>  Dashboard  </span>
                     </a>                              
@@ -50,13 +50,13 @@
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li class="">
-                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/input-actbud') }}" class="">Input Actbud</a>
+                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/input-actbud')); ?>" class="">Input Actbud</a>
                                 </li>
                                 <li class="">
-                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/view-actbud') }}" class="">View Actbud</a>
+                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/view-actbud')); ?>" class="">View Actbud</a>
                                 </li>
                                 <li class="">
-                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/status-actbud') }}" class="">Status Actbud</a>
+                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/status-actbud')); ?>" class="">Status Actbud</a>
                                 </li>
                             </ul>
                         </li>
@@ -67,13 +67,13 @@
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li class="">
-                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/input-petty-cash') }}" class="">Input Petty Cash</a>
+                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/input-petty-cash')); ?>" class="">Input Petty Cash</a>
                                 </li>
                                 <li class="">
-                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/view-petty-cash') }}" class="">View Petty Cash</a>
+                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/view-petty-cash')); ?>" class="">View Petty Cash</a>
                                 </li>
                                 <li class="">
-                                    <a href="{{ base_url('app/sim-spa/pencairan-rkat/status-petty-cash') }}" class="">Status Petty Cash</a>
+                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/status-petty-cash')); ?>" class="">Status Petty Cash</a>
                                 </li>
                             </ul>
                         </li>
@@ -83,4 +83,4 @@
         </div>
     </div>
     <!-- Sidebar -left -->
-</div>
+</div><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/layouts/user_sidebar_menu.blade.php ENDPATH**/ ?>

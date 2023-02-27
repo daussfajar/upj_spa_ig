@@ -17,7 +17,7 @@
 		<div class="dropdown-item noti-title">
 			<h5 class="font-16 m-0">
 				<span class="float-right">
-					<a href="<?php echo e(base_url('app/sim-ig/data-pemberitahuan/hapus-semua-pemberitahuan')); ?>" class="text-dark">
+					<a href="<?php echo e(base_url('app/hapus-semua-pemberitahuan')); ?>" class="text-dark">
 						<small>Hapus Semua</small>
 					</a>
 				</span>Pemberitahuan
@@ -39,7 +39,7 @@
 					}
 
 				?>
-				<a href="<?php echo e(base_url('app/sim-ig/data-pemberitahuan/detail-pemberitahuan/' . $item->id)); ?>" class="dropdown-item notify-item <?php echo e($item->is_seen == 'no' ? 'bg-unseen_notif' : ''); ?>">
+				<a href="<?php echo e(base_url('app/detail-pemberitahuan/' . $item->id)); ?>" class="dropdown-item notify-item <?php echo e($item->is_seen == 'no' ? 'bg-unseen_notif' : ''); ?>">
 					<div class="notify-icon bg-<?php echo e($item->color); ?>">
 						<i class="mdi <?php echo e($item->icon); ?>"></i>
 					</div>
@@ -52,11 +52,11 @@
 		</div>
 
 		<!-- All-->
-		<a href="<?php echo e(base_url('app/sim-ig/data-pemberitahuan')); ?>" class="dropdown-item text-center text-primary notify-item notify-all">
+		<a href="<?php echo e(base_url('app/data-pemberitahuan')); ?>" class="dropdown-item text-center text-primary notify-item notify-all">
 			Lihat Semua Pemberitahuan
 			<i class="fi-arrow-right"></i>
 		</a>
 
 	</div>
 </li>
-<?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/ig/layouts/user_notification.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/layouts/user_notification.blade.php ENDPATH**/ ?>

@@ -5,7 +5,7 @@ $last_login_message = "";
 
 if(!empty($last_login)){
 	$ex_last_login = explode(' ', $last_login);
-	$last_login_message .= "<span style='font-size:12px;' class='text-primary'> ( Terakhir Login: ".tanggal_indo($ex_last_login[0]).", ".$ex_last_login[1]." )</span>";
+	$last_login_message .= "<span style='font-size:12px;' class='text-white'> ( Terakhir Login: ".tanggal_indo($ex_last_login[0]).", ".$ex_last_login[1]." )</span>";
 }
 ?>
 <!DOCTYPE html>
@@ -40,42 +40,44 @@ if(!empty($last_login)){
 <body class="bg">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 col-sm-8 col-xs-8 mx-auto pt-5">
-				<div class="card xcm ycm">
-					<div class="card-header bg-dark header-deck xcm">
-						<div class="h-title">
-							<div class="h-title-img">
-								<img src="<?php echo e(base_url('assets/images/logo/864.jpg')); ?>" alt="" srcset="">
+			<div class="col-lg-10 col-sm-10 col-xs-10 mx-auto pt-5">
+				<div id="main-cont">
+					<div class="card xcm ycm mb-0 bg-transparent" style="border:none;">
+						<div class="card-header header-deck xcm" style="background: transparent!important;">
+							<div class="h-title">
+								<div class="h-title-img">
+									<img src="<?php echo e(base_url('assets/images/logo/864.jpg')); ?>" alt="" srcset="">
+								</div>
+								<div class="h-title-name">
+									<h3 class="text-white t-title">Sistem Pencairan Anggaran</h3>
+									<h2 class="text-white t-comp">Universitas Pembangunan Jaya</h2>
+								</div>
+							</div>	
+							<div class="btn-group" style="height:40px;">
+								<button type="button" class="btn btn-light dropdown-toggle waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-menu"></i></button>
+								<ul class="dropdown-menu">
+									<li><a href="#" class="dropdown-item">Halaman Profil</a></li>								
+									<li><a href="#" data-toggle="modal" data-target="#modal-logout" class="dropdown-item">Keluar</a></li>
+								</ul>
 							</div>
-							<div class="h-title-name">
-								<h3 class="text-white t-title">Sistem Pencairan Anggaran</h3>
-								<h2 class="text-white t-comp">Universitas Pembangunan Jaya</h2>
-							</div>
-						</div>	
-						<div class="btn-group" style="height:40px;">
-							<button type="button" class="btn btn-light dropdown-toggle waves-effect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-menu"></i></button>
-							<ul class="dropdown-menu">
-								<li><a href="#" class="dropdown-item">Halaman Profil</a></li>								
-								<li><a href="#" data-toggle="modal" data-target="#modal-logout" class="dropdown-item">Keluar</a></li>
-							</ul>
-						</div>					
-					</div>
-					<div class="card-body">
-						<p class="mb-0 pb-0">Selamat datang, <strong><?= $nama ?></strong>!<?= $last_login_message ?></p>
-						<h6>Pilih Modul:</h6>
-						<hr>
-						<div class="row">
-							<div class="col-md-4">
-								<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-spa/dashboard')); ?>'">
-									<div class="card-body">
-										<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/RKAT.png')); ?>" alt="SIM RKAT">										
+						</div>
+						<div class="card-body" style="min-height: 360px;max-height:auto;">
+							<p class="mb-0 pb-0 text-white">Selamat datang, <strong><?= $nama ?></strong>!<?= $last_login_message ?></p>
+							<h6 class="text-white">Pilih Modul:</h6>
+							<hr>
+							<div class="row">
+								<div class="col-md-3">
+									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-spa/dashboard')); ?>'">
+										<div class="card-body">
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/RKAT.png')); ?>" alt="SIM RKAT">										
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-ig/dashboard')); ?>'">
-									<div class="card-body">
-										<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/IG.png')); ?>" alt="SIM IG">
+								<div class="col-md-3">
+									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-ig/dashboard')); ?>'">
+										<div class="card-body">
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/IG.png')); ?>" alt="SIM IG">
+										</div>
 									</div>
 								</div>
 							</div>
