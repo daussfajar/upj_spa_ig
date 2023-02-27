@@ -28,8 +28,7 @@ class RKAT extends CI_Controller{
         $method = $this->input->method();
         if ($method == "post"){
             header('Content-Type: application/json');
-            // $year = date('Y');
-            $year = 2022;
+            $year = date('Y');
             echo $this->m_rkat->get_pic_rkat_admin('OPS', $year);
         } else return show_404();
     }
