@@ -24,3 +24,18 @@ $route['app/sim-spa/rkat/list/program-kerja'] = 'SPA/RKAT/list_rkat_program_kerj
 $route['app/sim-spa/rkat/list/operasional'] = 'SPA/RKAT/list_rkat_operasional';
 $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
 // END RKAT
+
+// ADMIN
+    // START RKAT
+        // pic
+        $route['app/sim-spa/admin/rkat/pic/program-kerja'] = 'SPA/Admin/RKAT/pic_rkat_program_kerja';
+        $route['app/sim-spa/admin/rkat/pic/operasional'] = 'SPA/Admin/RKAT/pic_rkat_operasional';
+        $route['app/sim-spa/admin/rkat/pic/investasi'] = 'SPA/Admin/RKAT/pic_rkat_investasi';
+        $route['app/sim-spa/admin/rkat/ubah-pic'] = 'SPA/Admin/RKAT/ubah_pic';
+
+        // list
+        $route['app/sim-spa/admin/rkat/list/program-kerja'] = 'SPA/Admin/RKAT/list_rkat_program_kerja';
+        $route['app/sim-spa/admin/rkat/list/operasional'] = 'SPA/Admin/RKAT/list_rkat_operasional';
+        $route['app/sim-spa/admin/rkat/list/investasi'] = 'SPA/Admin/RKAT/list_rkat_investasi';
+    // END RKAT
+// END ADMIN

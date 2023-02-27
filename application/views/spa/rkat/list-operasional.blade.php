@@ -42,7 +42,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
                 </li>
             </ul>
             <div class="table-responsive my-4">
-                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-operasional">
+                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-operasional" style="wdith:100%;">
                     <thead>
                         <tr>
                             <th>Kode Pencairan</th>

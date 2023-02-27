@@ -23,6 +23,29 @@ class RKAT_model extends CI_Model {
         }
     }
 
+    public function get_pic_rkat_admin($kode_pencairan, $year){
+        $this->datatables->select("
+            a1.kode_pencairan as kode_pencairan, 
+            a1.kode_uraian as kode_uraian,
+            a1.uraian,
+            a1.kpi,
+            a1.pic,
+            a1.rp_ganjil,
+            a1.rp_genap,
+            a3.nama_lengkap,
+            a4.nama_unit,
+        ");
+        $this->datatables->from('tbl_uraian as a1');
+        $this->datatables->join('tbl_rkat_master as a2', 'a2.kode_rkat_master = a1.kode_rkat_master', 'LEFT');
+        $this->datatables->join('tbl_karyawan as a3', 'a3.nik = a1.pic', 'LEFT');
+        $this->datatables->join('tbl_unit as a4', 'a4.kode_unit = a3.kode_unit', 'LEFT');
+        $this->datatables->like('a1.kode_pencairan', $kode_pencairan);
+        $this->datatables->where('a2.tahun_berlaku', $year);
+        $this->datatables->group_by('a1.kode_uraian');
+        $this->datatables->get_num_rows();
+        return $this->datatables->generate();
+    }
+
     public function get_pic_rkat($kode_rkat_master, $periode, $kode_pencairan){
         $this->datatables->select("
             a1.kode_pencairan as kode_pencairan, 

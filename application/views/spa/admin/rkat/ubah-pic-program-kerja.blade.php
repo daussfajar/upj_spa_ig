@@ -32,24 +32,26 @@ $session = $CI->session->userdata('user_sessions');
         <div class="card-body">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="<?= base_url('app/sim-spa/rkat/pic/program-kerja') ?>">Program Kerja</a>
+                    <a class="nav-link active" href="<?= base_url('app/sim-spa/admin/rkat/pic/program-kerja') ?>">Program Kerja</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('app/sim-spa/rkat/pic/operasional') ?>">Operasional</a>
+                    <a class="nav-link" href="<?= base_url('app/sim-spa/admin/rkat/pic/operasional') ?>">Operasional</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('app/sim-spa/rkat/pic/investasi') ?>">Investasi</a>
+                    <a class="nav-link" href="<?= base_url('app/sim-spa/admin/rkat/pic/investasi') ?>">Investasi</a>
                 </li>
             </ul>
             <div class="table-responsive my-4">
                 <table class="table table-striped table-bordered table-hover" id="table-pic-rkat-program-kerja" style="wdith:100%;">
                     <thead>
                         <tr>
+                            <th>Nama Unit</th>
                             <th>Kode Pencairan</th>
-                            <th>Uraian dan Tujuan Kegiatan</th>
+                            <th>Uraian dan Tujuan <br>Kegiatan</th>
+                            <th>KPI</th>
                             <th>PIC</th>
-                            <th>Periode</th>
-                            <th>Sisa Anggaran</th>
+                            <th>Rp. Ganjil</th>
+                            <th>Rp. Genap</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -61,7 +63,7 @@ $session = $CI->session->userdata('user_sessions');
     </div>
 </div>
 
-{!! form_open('app/sim-spa/rkat/ubah-pic', array('class' => 'myForm')) !!}
+{!! form_open('app/sim-spa/admin/rkat/ubah-pic', array('class' => 'myForm')) !!}
     <div id="modal-ubah-pic" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -77,7 +79,7 @@ $session = $CI->session->userdata('user_sessions');
                         <label for="">PIC</label>
                         <select name="pic" id="pic" class="form-control select2" style="width:100%;" required>
                             @foreach ($karyawan as $kry)
-                                <option value="{{ $kry['nik'] }}">{{ $kry['nama_lengkap'] }}</option>
+                                <option value="{{ $kry['nik'] }}">{{ $kry['nama_lengkap'] }} / {{ $kry['kode_unit'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -135,15 +137,15 @@ $session = $CI->session->userdata('user_sessions');
             processing: true,
             serverSide: true,
             ajax: {
-                "url": "<?php echo base_url('SPA/RKAT/get_pic_rkat_program_kerja') ?>",
+                "url": "<?php echo base_url('SPA/Admin/RKAT/get_pic_rkat_program_kerja') ?>",
                 "type": "POST",
                 "dataType" : "json",
-                "data" : {
-                    'kode-rkat': '<?= $kode_rkat_master ?>',
-                    'periode': '<?= $periode ?>'
-                },
+                "data" : {},
             },
             columns: [
+                {
+                    "data": "nama_unit"
+                },
                 {
                     "data": "kode_pencairan"
                 },
@@ -151,13 +153,20 @@ $session = $CI->session->userdata('user_sessions');
                     "data": "uraian"
                 },
                 {
+                    "data": "kpi"
+                },
+                {
                     "data": "nama_lengkap"
                 },
                 {
-                    "data": "periode"
+                    "data": "rp_ganjil",
+                    "class" : "text-center",
+                    "render": function(data, type, row) {
+                        return formatRupiah(data, 'Rp. ');
+                    }
                 },
                 {
-                    "data": "sisa_anggaran",
+                    "data": "rp_genap",
                     "class" : "text-center",
                     "render": function(data, type, row) {
                         return formatRupiah(data, 'Rp. ');
@@ -177,15 +186,10 @@ $session = $CI->session->userdata('user_sessions');
                 },
             ],
             order: [
-                [0, 'desc']
+                [1, 'desc']
             ],
             columnDefs: [
-                { "targets": 0, "searchable": true },
-                { "targets": 1, "searchable": true },
-                { "targets": 2, "searchable": true },
-                { "targets": 3, "searchable": false },
-                { "targets": 4, "searchable": false },
-                { "targets": 5, "orderable": false, "searchable": false }
+                { "targets": 7, "orderable": false, "searchable": false }
             ],
             rowCallback: function(row, data, iDisplayIndex) {
                 $('td:eq(0)', row).html();
