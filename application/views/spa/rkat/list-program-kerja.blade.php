@@ -113,7 +113,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
             processing: true,
             serverSide: false,
             order: [
-                [1, 'asc']
+                [0, 'asc']
             ],
         });
     });

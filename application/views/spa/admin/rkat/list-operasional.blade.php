@@ -45,6 +45,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
                 <table class="table table-striped table-bordered table-hover" id="table-list-rkat-operasional">
                     <thead>
                         <tr>
+                            <th>Prodi/Unit</th>
                             <th>Kode Pencairan</th>
                             <th>Kode Kegiatan</th>
                             <th>Uraian dan Tujuan <br>Kegiatan</th>
@@ -66,6 +67,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
                                 foreach($list_rkat as $key => $value){
                         ?>
                                     <tr>
+                                        <td><?= $value['nama_unit'] ?></td>
                                         <td><?= $value['kode_pencairan'] ?></td>
                                         <td><?= $value['renstra_prodi'] ?></td>
                                         <td><?= $value['uraian'] ?></td>
@@ -113,7 +115,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
             processing: true,
             serverSide: false,
             order: [
-                [1, 'asc']
+                [0, 'asc']
             ],
         });
     });

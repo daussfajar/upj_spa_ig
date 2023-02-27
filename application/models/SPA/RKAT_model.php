@@ -127,6 +127,39 @@ class RKAT_model extends CI_Model {
         $this->db->group_by('a1.kode_uraian');
         return $this->db->get()->result_array();
     }
+
+    public function get_list_rkat_admin($kode_pencairan, $year){
+        $this->db->select("
+            a1.kode_pencairan as kode_pencairan, 
+            a1.kode_uraian as kode_uraian,
+            a1.uraian,
+            a1.kpi,
+            a1.renstra_prodi,
+            a1.renstra_univ,
+            a1.pic,
+            a1.tahun,
+            a1.total_agr_stj,
+            a5.nama_lengkap,
+            a6.nama_unit,
+            IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,
+            ifnull( a1.total_agr ,'0') AS total_agr,
+            sum(ifnull( a2.t_aju_agr ,'0')) AS  t_aju_agr,
+            sum(ifnull( a2.t_pyn_agr ,'0')) AS  t_pyn_agr,
+            ifnull( a3.n_in ,'0') AS n_in,
+            ifnull( a4.n_out ,'0') AS n_out,
+            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_agr
+        ");
+        $this->db->from('tbl_uraian as a1');
+        $this->db->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT');
+        $this->db->join('p_in as a3', 'a3.id_uraian_t = a1.kode_uraian', 'LEFT');
+        $this->db->join('p_out as a4', 'a4.id_uraian_f = a1.kode_uraian', 'LEFT');
+        $this->db->join('tbl_karyawan as a5', 'a5.nik = a1.pic', 'LEFT');
+        $this->db->join('tbl_unit as a6', 'a6.kode_unit = a5.kode_unit', 'LEFT');
+        $this->db->where('a1.tahun', $year);
+        $this->db->like('a1.kode_pencairan', $kode_pencairan);
+        $this->db->group_by('a1.kode_uraian');
+        return $this->db->get()->result_array();
+    }
     
 }
 ?>

@@ -62,19 +62,22 @@ class RKAT extends CI_Controller{
     }
 
     public function list_rkat_program_kerja(){
-        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('PK');
+        $year = date('Y');
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('PK', $year);
 
         return view('spa.admin.rkat.list-program-kerja', $data);
     }
 
     public function list_rkat_operasional(){
-        $data['list_rkat'] = $this->m_rkat->get_list_rkat('OPS');
+        $year = date('Y');
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('OPS', $year);
 
         return view('spa.admin.rkat.list-operasional', $data);
     }
 
     public function list_rkat_investasi(){
-        $data['list_rkat'] = $this->m_rkat->get_list_rkat('INV');
+        $year = date('Y');
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('INV', $year);
 
         return view('spa.admin.rkat.list-investasi', $data);
     }
