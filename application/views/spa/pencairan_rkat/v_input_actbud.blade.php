@@ -12,7 +12,8 @@ $session = $CI->session->userdata('user_sessions');
 @endsection
 
 @section('css')
-    
+<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
 @endsection
 
 @section('breadcrumb')
@@ -21,72 +22,74 @@ $session = $CI->session->userdata('user_sessions');
 @endsection
 
 @section('content')    
-    @if ($session['kode_jabatan'] == 7)
-    <div class="col-lg-6 col-xl-4">
-        <div class="card widget-box-three">
-            <div class="card-body">
-                <div class="float-right mt-2">
-                    <i class="mdi mdi-clipboard-multiple-outline text-purple display-4 m-0"></i>
-                </div>
-                <div class="overflow-hidden">
-                    <p class="text-uppercase font-weight-medium text-truncate mb-2">Pengajuan Actbud</p>
-                    <h2 class="mb-0">
-                        <span data-plugin="counterup">
-                            
-                        </span>
-                    </h2>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="float-right">
-                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
-                </div>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                Data Actbud
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive my-4">
+                <table class="table table-striped table-bordered table-hover" id="table-actbud">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="vertical-align:middle;">No</th>
+                            <th style="vertical-align:middle;">Kode Pencairan</th>
+                            <th style="vertical-align:middle;">Uraian</th>                            
+                            <th style="vertical-align:middle;" class="text-center">Kode Pencairan</th>
+                            <th style="vertical-align:middle;" class="text-center">Ganjil</th>
+                            <th style="vertical-align:middle;" class="text-center">Genap</th>
+                            <th style="vertical-align:middle;" class="text-center">Sisa</th>
+                            <th style="vertical-align:middle;" class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-table-actbud">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <div class="col-lg-6 col-xl-4">
-        <div class="card widget-box-three">
-            <div class="card-body">
-                <div class="float-right mt-2">
-                    <i class="mdi mdi-clipboard-multiple-outline text-primary display-4 m-0"></i>
-                </div>
-                <div class="overflow-hidden">
-                    <p class="text-uppercase font-weight-medium text-truncate mb-2">Pengajuan Petty Cash</p>
-                    <h2 class="mb-0">
-                        <span data-plugin="counterup">
-                            
-                        </span>
-                    </h2>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="float-right">
-                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-xl-4">
-        <div class="card widget-box-three">
-            <div class="card-body">
-                <div class="float-right mt-2">
-                    <i class="mdi mdi-progress-close text-danger display-4 m-0"></i>
-                </div>
-                <div class="overflow-hidden">
-                    <p class="text-uppercase font-weight-medium text-truncate mb-2">Actbud Ditolak</p>
-                    <h2 class="mb-0">
-                        <span data-plugin="counterup">
-                            
-                        </span>
-                    </h2>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="float-right">
-                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif    
+</div>
+@endsection
+
+@section('js')
+<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        $("#table-actbud").DataTable({
+            initComplete: function() {
+                var api = this.api();
+                $('#table-pic-rkat-investasi_filter input')
+                    .off('.DT')
+                    .on('input.DT', function() {
+                        api.search(this.value).draw();
+                    });
+            },
+            oLanguage: {
+                sProcessing: "Loading..."
+            },
+            lengthMenu: [
+                [10, 25, 50, 100],
+                [10, 25, 50, 100],
+            ],
+            pageLength: 10,
+            scrollX: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                "url": "<?php echo base_url('SPA/RKAT/get_pic_rkat_investasi') ?>",
+                "type": "POST",
+                "dataType" : "json",
+                "data" : {
+                    'kode-rkat': '<?= $kode_rkat_master ?>',
+                    'periode': '<?= $periode ?>'
+                },
+            },            
+        })
+    })
+</script>
 @endsection

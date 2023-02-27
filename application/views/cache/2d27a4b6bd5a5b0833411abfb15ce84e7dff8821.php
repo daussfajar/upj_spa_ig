@@ -64,19 +64,19 @@ if(!empty($last_login)){
 						<div class="card-body" style="min-height: 360px;max-height:auto;">
 							<p class="mb-0 pb-0 text-white">Selamat datang, <strong><?= $nama ?></strong>!<?= $last_login_message ?></p>
 							<h6 class="text-white">Pilih Modul:</h6>
-							<hr>
+							<hr class="bg-white">
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-spa/dashboard')); ?>'">
 										<div class="card-body">
-											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/RKAT.png')); ?>" alt="SIM RKAT">										
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/icon_RKAT.png')); ?>" alt="SIM RKAT">										
 										</div>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-ig/dashboard')); ?>'">
 										<div class="card-body">
-											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/IG.png')); ?>" alt="SIM IG">
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/icon_IG.png')); ?>" alt="SIM IG">
 										</div>
 									</div>
 								</div>
