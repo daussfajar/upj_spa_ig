@@ -115,7 +115,8 @@ class PencairanRKAT extends CI_Controller
                 'jns_aju_agr' => 'actbud',
                 'kpi' => $data['kpi'],
                 'agr' => $data['sisa_anggaran'],
-                'status_act' => 'send',
+                'fnl_agr' => $data['sisa_anggaran'],
+                'status_act' => null,
                 'st_kabag' => 'Submit',
                 'tgl_m' => $tgl_mulai,
                 'tgl_s' => $tgl_selesai
