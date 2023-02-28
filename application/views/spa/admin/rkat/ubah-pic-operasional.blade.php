@@ -41,7 +41,7 @@ $session = $CI->session->userdata('user_sessions');
                 </li>
             </ul>
             <div class="table-responsive my-4">
-                <table class="table table-striped table-bordered table-hover" id="table-pic-rkat-operasional" style="wdith:100%;">
+                <table class="table table-striped table-bordered table-hover" id="table-pic-rkat-operasional" style="width:100%;">
                     <thead>
                         <tr>
                             <th>Prodi/Unit</th>
