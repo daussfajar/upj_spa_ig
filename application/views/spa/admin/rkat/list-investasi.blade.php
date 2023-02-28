@@ -5,7 +5,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
 @extends('spa.layouts.user')
 
 @section('title')
-    RKAT <?= $tahunRKAT ?> - List Operasional
+    RKAT <?= $tahunRKAT ?> - List Investasi
 @endsection
 
 @section('page-title')
@@ -18,7 +18,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">Operasional</li>
+<li class="breadcrumb-item">Investasi</li>
 <li class="breadcrumb-item active">List</li>
 @endsection
 
@@ -32,19 +32,20 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
         <div class="card-body">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('app/sim-spa/rkat/list/program-kerja') ?>">Program Kerja</a>
+                    <a class="nav-link" href="<?= base_url('app/sim-spa/admin/rkat/list/program-kerja') ?>">Program Kerja</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="<?= base_url('app/sim-spa/rkat/list/operasional') ?>">Operasional</a>
+                    <a class="nav-link" href="<?= base_url('app/sim-spa/admin/rkat/list/operasional') ?>">Operasional</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('app/sim-spa/rkat/list/investasi') ?>">Investasi</a>
+                    <a class="nav-link active" href="<?= base_url('app/sim-spa/admin/rkat/list/investasi') ?>">Investasi</a>
                 </li>
             </ul>
             <div class="table-responsive my-4">
-                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-operasional" style="wdith:100%;">
+                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-investasi">
                     <thead>
                         <tr>
+                            <th>Prodi/Unit</th>
                             <th>Kode Pencairan</th>
                             <th>Kode Kegiatan</th>
                             <th>Uraian dan Tujuan <br>Kegiatan</th>
@@ -66,6 +67,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
                                 foreach($list_rkat as $key => $value){
                         ?>
                                     <tr>
+                                        <td><?= $value['nama_unit'] ?></td>
                                         <td><?= $value['kode_pencairan'] ?></td>
                                         <td><?= $value['renstra_prodi'] ?></td>
                                         <td><?= $value['uraian'] ?></td>
@@ -100,7 +102,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
 <script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function(){
-        $("#table-list-rkat-operasional").DataTable({
+        $("#table-list-rkat-investasi").DataTable({
             oLanguage: {
                 sProcessing: "Loading..."
             },

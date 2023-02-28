@@ -472,6 +472,12 @@ $config['csrf_exclude_uris'] = array(
                                 'SPA/RKAT/get_list_rkat_program_kerja',
                                 'SPA/RKAT/get_list_rkat_operasional',
                                 'SPA/RKAT/get_list_rkat_investasi',
+                                'SPA/Admin/RKAT/get_pic_rkat_program_kerja',
+                                'SPA/Admin/RKAT/get_pic_rkat_operasional',
+                                'SPA/Admin/RKAT/get_pic_rkat_investasi',
+                                'SPA/Admin/RKAT/get_list_rkat_program_kerja',
+                                'SPA/Admin/RKAT/get_list_rkat_operasional',
+                                'SPA/Admin/RKAT/get_list_rkat_investasi',
                                 'SPA/PencairanRKAT/get_actbud',
                             );
 

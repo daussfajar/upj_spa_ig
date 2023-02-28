@@ -42,7 +42,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
                 </li>
             </ul>
             <div class="table-responsive my-4">
-                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-program-kerja">
+                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-program-kerja" style="wdith:100%;">
                     <thead>
                         <tr>
                             <th>Kode Pencairan</th>
@@ -113,7 +113,7 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
             processing: true,
             serverSide: false,
             order: [
-                [1, 'asc']
+                [0, 'asc']
             ],
         });
     });
