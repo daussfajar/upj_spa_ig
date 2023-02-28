@@ -6,8 +6,12 @@ $route['app/sim-spa/dashboard'] = 'SPA/Dashboard';
 $route['app/sim-spa/actbud'] = 'SPA/Actbud';
 
 // PENCAIRAN RKAT
+// Actbud
 $route['app/sim-spa/pencairan-rkat/input-actbud'] = 'SPA/PencairanRKAT/v_input_actbud';
 $route['app/sim-spa/pencairan-rkat/input-actbud/(:num)'] = 'SPA/PencairanRKAT/v_proses_input_actbud/$1';
+//$route['app/sim-spa/pencairan-rkat/input-actbud/(:num)/save-actbud']['POST'] = 'SPA/PencairanRKAT/save_input_actbud/$1';
+$route['app/sim-spa/pencairan-rkat/input-actbud/detail/(:num)/(:num)'] = 'SPA/PencairanRKAT/v_detail_actbud/$1/$2';
+// END PENCAIRAN RKAT
 
 $route['app/sim-spa/pencairan-rkat/view-actbud'] = 'SPA/PencairanRKAT/v_view_actbud';
 $route['app/sim-spa/pencairan-rkat/status-actbud'] = 'SPA/PencairanRKAT/v_status_actbud';

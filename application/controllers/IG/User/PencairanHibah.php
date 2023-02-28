@@ -814,7 +814,7 @@ class PencairanHibah extends CI_Controller {
 			} else {
 				$this->session->set_flashdata('alert', [
 					'message' => 'Gagal submit kegiatan',
-					'type'    => 'success',
+					'type'    => 'error',
 					'title'   => ''
 				]);
 

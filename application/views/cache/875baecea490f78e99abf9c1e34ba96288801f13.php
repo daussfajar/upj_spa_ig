@@ -15,10 +15,13 @@ $session = $CI->session->userdata('user_sessions');
 
 <?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/daterangepicker.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-datepicker.min.css')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Actbud</a></li>
 <li class="breadcrumb-item"><a href="javascript: void(0);">Input Actbud</a></li>
 <li class="breadcrumb-item active"><a href="javascript: void(0);"><?php echo e($data['kode_pencairan']); ?></a></li>
 <?php $__env->stopSection(); ?>
@@ -136,6 +139,23 @@ $session = $CI->session->userdata('user_sessions');
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-lg-2 control-label " for="address2">Tanggal Kegiatan *</label>
+                            <div class="col-lg-10">
+                                <span class="help-block"><small>Tentukan tanggal pelaksanaan kegiatan.</small></span>
+                                <div>
+                                    <div class="input-daterange input-group date-range">
+                                        <input type="text" class="form-control" name="tgl_mulai" autocomplete="off" required />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text bg-primary text-white b-0">s/d</span>
+                                        </div>
+                                        <input type="text" class="form-control" name="tgl_selesai" autocomplete="off" required />
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <?php } ?>
             </div>
@@ -152,12 +172,20 @@ $session = $CI->session->userdata('user_sessions');
 
 <?php $__env->startSection('js'); ?>
 <script src="<?php echo e(base_url('assets/js/select2.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-datepicker.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/daterangepicker.js')); ?>"></script>
 <script>
     $(document).ready(function(){
+        $('.date-range').datepicker({
+            toggleActive:!0,
+            format: 'dd-mm-yyyy',
+            startDate: "<?= date('d-m-Y') ?>",
+        })
+
         $('.select2').select2({
             placeholder: "Cari pelaksana ..."
         })
     })
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/pencairan_rkat/v_proses_input_actbud.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/pencairan_rkat/actbud/v_proses_input_actbud.blade.php ENDPATH**/ ?>

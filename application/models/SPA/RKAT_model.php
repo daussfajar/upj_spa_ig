@@ -101,25 +101,53 @@ class RKAT_model extends CI_Model {
     public function get_detail_uraian($kode_rkat_master, $periode, $where = null)
     {
         $sql = $this->db->select("
+            a1.kode_uraian,
+            a7.kd_act,
+            a1.kode_rkat_master,
+            a1.tahun,
             a1.kode_pencairan as kode_pencairan, 
             a1.kode_uraian as kode_uraian,
+            a1.nama_isu,
             a1.uraian,
+            a7.deskrip_keg,
+            a7.jns_aju_agr,
+            a1.renstra_prodi,
+            a1.renstra_univ,
             a1.pic,
+            a7.pelaksana,
             a1.no_borang,
             a1.kpi,
+            a1.cara_ukur,
+            a1.base_line,
+            a1.target,
+            a1.output,
             a5.nama_lengkap,
-            a1.rp_ganjil,
-            a1.rp_genap,
+            a8.nama_lengkap as nama_pelaksana,
+            a6.kode_unit,
             a6.nama_unit,
-            IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,
-            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran
+            a7.tgl_m,
+            a7.tgl_s,
+            a7.tanggal_pembuatan,
+            IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,            
+            ifnull( a1.rp_ganjil ,'0') AS rp_ganjil,
+            ifnull( a1.rp_genap ,'0') AS rp_genap,
+            ifnull( a1.total_agr ,'0') AS total_agr,            
+            ifnull( a1.total_agr_stj ,'0') AS total_agr_stj,
+            sum(ifnull( a2.t_aju_agr ,'0')) AS  t_aju_agr,
+            sum(ifnull( a2.t_pyn_agr ,'0')) AS  t_pyn_agr,
+            ifnull( a3.n_in ,'0') AS n_in,
+            ifnull( a4.n_out ,'0') AS n_out,
+            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran,
+            a7.agr as t_act_agr,
         ")
         ->from('tbl_uraian as a1')
         ->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT')
+        ->join('tbl_actbud as a7',  'a1.kode_uraian = a7.kode_uraian', 'LEFT')
         ->join('p_in as a3', 'a3.id_uraian_t = a1.kode_uraian', 'LEFT')
         ->join('p_out as a4', 'a4.id_uraian_f = a1.kode_uraian', 'LEFT')
-        ->join('tbl_karyawan as a5', 'a5.nik = a1.pic', 'LEFT')
+        ->join('tbl_karyawan as a5', 'a5.nik = a1.pic')
         ->join('tbl_unit as a6', 'a5.kode_unit = a6.kode_unit')
+        ->join('tbl_karyawan as a8', 'a7.pelaksana = a8.nik')
         ->where($where)
         ->group_by('a1.kode_uraian')
         ->get()
