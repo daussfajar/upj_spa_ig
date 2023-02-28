@@ -66,14 +66,14 @@ if(!empty($last_login)){
 							<h6 class="text-white">Pilih Modul:</h6>
 							<hr class="bg-white">
 							<div class="row">
-								<div class="col-md-2">
+								<div class="col-xl-2 col-xs-6">
 									<div class="card c-option xcm ycm" onclick="document.location='{{ base_url('app/sim-spa/dashboard') }}'">
 										<div class="card-body">
 											<img class="card-img-top img-fluid" src="{{ base_url('assets/images/module/icon_RKAT.png') }}" alt="SIM RKAT">										
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-xl-2 col-xs-6">
 									<div class="card c-option xcm ycm" onclick="document.location='{{ base_url('app/sim-ig/dashboard') }}'">
 										<div class="card-body">
 											<img class="card-img-top img-fluid" src="{{ base_url('assets/images/module/icon_IG.png') }}" alt="SIM IG">

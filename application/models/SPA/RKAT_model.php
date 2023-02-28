@@ -46,7 +46,7 @@ class RKAT_model extends CI_Model {
         return $this->datatables->generate();
     }
 
-    public function get_pic_rkat_by_nik($kode_rkat_master, $periode, $where = null)
+    public function get_where_pic_rkat($kode_rkat_master, $periode, $where = null)
     {
         $this->datatables->select("
             a1.kode_pencairan as kode_pencairan, 
@@ -54,6 +54,8 @@ class RKAT_model extends CI_Model {
             a1.uraian,
             a1.pic,
             a5.nama_lengkap,
+            a1.rp_ganjil,
+            a1.rp_genap,
             IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,
             ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran
         ");
@@ -71,6 +73,36 @@ class RKAT_model extends CI_Model {
         $this->datatables->group_by('a1.kode_uraian');
         $this->datatables->get_num_rows();
         return $this->datatables->generate();
+    }
+
+    public function get_detail_uraian($kode_rkat_master, $periode, $where = null)
+    {
+        $sql = $this->db->select("
+            a1.kode_pencairan as kode_pencairan, 
+            a1.kode_uraian as kode_uraian,
+            a1.uraian,
+            a1.pic,
+            a1.no_borang,
+            a1.kpi,
+            a5.nama_lengkap,
+            a1.rp_ganjil,
+            a1.rp_genap,
+            a6.nama_unit,
+            IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,
+            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran
+        ")
+        ->from('tbl_uraian as a1')
+        ->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT')
+        ->join('p_in as a3', 'a3.id_uraian_t = a1.kode_uraian', 'LEFT')
+        ->join('p_out as a4', 'a4.id_uraian_f = a1.kode_uraian', 'LEFT')
+        ->join('tbl_karyawan as a5', 'a5.nik = a1.pic', 'LEFT')
+        ->join('tbl_unit as a6', 'a5.kode_unit = a6.kode_unit')
+        ->where($where)
+        ->group_by('a1.kode_uraian')
+        ->get()
+        ->row_array();
+        
+        return $sql;
     }
 
     public function get_list_rkat($kode_rkat_master, $periode, $kode_pencairan){

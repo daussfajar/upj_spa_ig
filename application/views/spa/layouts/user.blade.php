@@ -25,7 +25,12 @@
         .left-side-menu-light .navbar-custom .topnav-menu .nav-link {
             padding: 0 15px;
             color: #797979;
-        }        
+        }
+        .badge-disabled{
+            color: #212529;
+            opacity: .65;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body class="left-side-menu-light">
