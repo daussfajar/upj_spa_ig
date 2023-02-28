@@ -466,6 +466,7 @@ $config['csrf_cookie_name'] = '_token';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = TRUE;
 $config['csrf_exclude_uris'] = array(
+                                'SPA/Anggaran/get_pengalihan_anggaran',
                                 'SPA/RKAT/get_pic_rkat_program_kerja',
                                 'SPA/RKAT/get_pic_rkat_operasional',
                                 'SPA/RKAT/get_pic_rkat_investasi',

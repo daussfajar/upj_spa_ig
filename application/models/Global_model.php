@@ -204,6 +204,14 @@ class Global_Model extends CI_Model {
 		$fetch = $query->result();
 		return $fetch;
 	}
+
+    public function get_master_data_karyawan($where = null){
+        if($where != null){
+            return $this->db->select('*')->from('tbl_karyawan')->where('status', 'Aktif')->where($where)->order_by('nama_lengkap')->get()->result_array();
+        } else {
+            return $this->db->select('*')->from('tbl_karyawan')->where('status', 'Aktif')->order_by('nama_lengkap')->get()->result_array();
+        }
+    }
 }
 
 ?>
