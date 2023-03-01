@@ -27,10 +27,6 @@ class Global_Model extends CI_Model {
 		}
     }
 
-    public function get_all_kegiatan(){
-        
-    }
-
     public function is_admin(){
         $session = $this->session->userdata('user_sessions');
         if (!empty($session) && $session['kode_jabatan'] != 0) {

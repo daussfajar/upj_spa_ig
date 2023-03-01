@@ -41,6 +41,9 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
         $route['app/sim-spa/anggaran/pengalihan/tambah'] = 'SPA/Anggaran/tambah_pengalihan';
         $route['app/sim-spa/anggaran/pengalihan/proses/(:num)'] = 'SPA/Anggaran/proses_pengalihan/$1';
         $route['app/sim-spa/anggaran/realisasi'] = 'SPA/Anggaran/realisasi';
+        $route['app/sim-spa/anggaran/realisasi/(:num)'] = 'SPA/Anggaran/realisasi/$1';
+        $route['app/sim-spa/anggaran/realisasi/(:num)/penyesuaian-biaya'] = 'SPA/Anggaran/penyesuaian_biaya/$1';
+        $route['app/sim-spa/anggaran/realisasi/(:num)/finalisasi-penyesuaian-anggaran'] = 'SPA/Anggaran/finalisasi_penyesuaian_anggaran/$1';
     // REALISASI
 // END ANGGARAN
 
