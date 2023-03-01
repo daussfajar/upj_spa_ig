@@ -10,7 +10,10 @@ $route['app/sim-spa/actbud'] = 'SPA/Actbud';
 $route['app/sim-spa/pencairan-rkat/input-actbud'] = 'SPA/PencairanRKAT/v_input_actbud';
 $route['app/sim-spa/pencairan-rkat/input-actbud/(:num)'] = 'SPA/PencairanRKAT/v_proses_input_actbud/$1';
 //$route['app/sim-spa/pencairan-rkat/input-actbud/(:num)/save-actbud']['POST'] = 'SPA/PencairanRKAT/save_input_actbud/$1';
-$route['app/sim-spa/pencairan-rkat/input-actbud/detail/(:num)/(:num)'] = 'SPA/PencairanRKAT/v_detail_actbud/$1/$2';
+$route['app/sim-spa/pencairan-rkat/actbud/input-actbud/(:num)/(:num)'] = 'SPA/PencairanRKAT/v_detail_actbud/$1/$2';
+$route['app/sim-spa/pencairan-rkat/actbud/input-actbud/(:num)/(:num)/upload-dokumen-pendukung']['POST'] = 'SPA/PencairanRKAT/upload_dokumen_pendukung/$1/$2';
+$route['app/sim-spa/pencairan-rkat/actbud/input-actbud/(:num)/(:num)/hapus-dokumen-pendukung']['POST'] = 'SPA/PencairanRKAT/hapus_dokumen_pendukung/$1/$2';
+//$route['app/sim-spa/pencairan-rkat/actbud/input-actbud/(:num)/(:num)/buat-rincian-kegiatan']['POST'] = 'SPA/PencairanRKAT/buat_rincian_kegiatan/$1/$2';
 // END PENCAIRAN RKAT
 
 $route['app/sim-spa/pencairan-rkat/view-actbud'] = 'SPA/PencairanRKAT/v_view_actbud';

@@ -41,20 +41,20 @@
                     </ul>
                 </li>
 
-                <li class="">
-                    <a href="javascript:void(0)" class="waves-effect waves-light">
+                <li class="<?= menu_active(3, 'pencairan-rkat', 'mm-active') ?>">
+                    <a href="javascript:void(0)" class="waves-effect waves-light<?= menu_active(3, 'pencairan-rkat', ' active') ?>">
                         <i class="mdi mdi-file-document-edit-outline"></i>
                         <span>  Pencairan RKAT  </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li class="">
+                        <li class="<?= ($uri3 == "pencairan-rkat" && ($uri4 == "actbud" || $uri4 == "input-actbud")) ? 'mm-active' : '' ?>">
                             <a href="javascript:void(0)" class="waves-effect waves-light">
                                 <span>  Actbud  </span>
                                 <span class="menu-arrow"></span>
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
-                                <li class="">
+                                <li class="<?= (($uri3 == "pencairan-rkat" && ($uri4 == "actbud" || $uri4 == "input-actbud")) || ($uri4 == "actbud" && $uri5 == "input-actbud")) ? 'mm-active' : '' ?>">
                                     <a href="{{ base_url('app/sim-spa/pencairan-rkat/input-actbud') }}" class="">Input Actbud</a>
                                 </li>
                                 <li class="">

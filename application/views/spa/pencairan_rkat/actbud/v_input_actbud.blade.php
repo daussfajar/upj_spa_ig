@@ -18,6 +18,9 @@ $session = $CI->session->userdata('user_sessions');
     .v-middle{
         vertical-align: middle!important;
     }
+    .font-14{
+        font-size: 14px!important;
+    }
 </style>
 @endsection
 
@@ -34,22 +37,24 @@ $session = $CI->session->userdata('user_sessions');
                 Data Actbud
             </h5>
         </div>
-        <div class="card-body">            
-            <table class="table table-striped table-bordered table-hover" id="table-actbud">
-                <thead class="bg-purple text-white">
-                    <tr>
-                        <th style="vertical-align:middle;" class="text-center">No</th>
-                        <th style="vertical-align:middle;">Uraian</th>
-                        <th style="vertical-align:middle;" class="text-center">Kode Pencairan</th>
-                        <th style="vertical-align:middle;" class="text-center">Ganjil</th>
-                        <th style="vertical-align:middle;" class="text-center">Genap</th>
-                        <th style="vertical-align:middle;" class="text-center">Sisa</th>
-                        <th style="vertical-align:middle;" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody-table-actbud">
-                </tbody>
-            </table>            
+        <div class="card-body">    
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="table-actbud">
+                    <thead class="bg-purple text-white">
+                        <tr>
+                            <th style="vertical-align:middle;" class="text-center">No</th>
+                            <th style="vertical-align:middle;">Uraian</th>
+                            <th style="vertical-align:middle;" class="text-center">Kode Pencairan</th>
+                            <th style="vertical-align:middle;" class="text-center">Ganjil</th>
+                            <th style="vertical-align:middle;" class="text-center">Genap</th>
+                            <th style="vertical-align:middle;" class="text-center">Sisa</th>
+                            <th style="vertical-align:middle;" class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-table-actbud">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -83,7 +88,7 @@ $session = $CI->session->userdata('user_sessions');
             scrollX: true,
             processing: true,
             serverSide: true,
-            responsive: true,
+            /*responsive: true,*/
             ajax: {
                 "url": "<?php echo base_url('SPA/PencairanRKAT/get_actbud') ?>",
                 "type": "POST",
@@ -96,7 +101,7 @@ $session = $CI->session->userdata('user_sessions');
             columns: [
                 {
                     "data": "kode_uraian",
-                    "class": "v-middle",
+                    "class": "text-center v-middle font-14",
                     "sortable": false, 
                     render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
@@ -104,16 +109,18 @@ $session = $CI->session->userdata('user_sessions');
                 },
                 {
                     "data": "uraian",
-                    "class": "v-middle",
+                    "class": "v-middle font-14",
                 },
                 {
                     "data": "kode_pencairan",
                     "class": "v-middle",
+                    "render": function(data, type, row){
+                        return '<span class="badge bg-purple p-2">'+data+'</span>'
+                    }
                 },
                 {
                     "data": "rp_ganjil",
-                    "class": "text-center",
-                    "class": "v-middle",
+                    "class": "text-center v-middle",                    
                     "render": function (data, type, row) {
                         if(data == ""){
                             return '-'

@@ -177,18 +177,22 @@
                 <h3 class="card-title mb-0"><i class="mdi mdi-file-document-outline"></i> DETAIL ACTBUD</h3>
             </div>
             <div class="float-right">
+                <span class="badge bg-primary p-2" style="font-weight:bold;">
+                    <i class="mdi mdi-file-document"></i> <?php echo e($data->kode_pencairan); ?>
+
+                </span>
                 <?php switch($data->status):
                     case ('cancel'): ?>
-                        <span class="badge badge-danger">Ditolak</span>
+                        <span class="badge badge-danger p-2">Ditolak</span>
                         <?php break; ?>
                     <?php case ('ongoing'): ?>
-                        <span class="badge badge-warning">Dalam Perencanaan</span>
+                        <span class="badge badge-warning p-2">Dalam Perencanaan</span>
                         <?php break; ?>
                     <?php case ('submitted'): ?>
-                        <span class="badge badge-info">Sedang Berlangsung</span>
+                        <span class="badge badge-info p-2">Sedang Berlangsung</span>
                         <?php break; ?>
                     <?php case ('approved'): ?>
-                        <span class="badge badge-success"><i class="mdi mdi-check-bold"></i> Actbud Disetujui</span>
+                        <span class="badge badge-success p-2"><i class="mdi mdi-check-bold"></i> Actbud Disetujui</span>
                         <?php break; ?>
                     <?php default: ?>
                         
@@ -470,8 +474,8 @@
         <div class="card-header border-purple bg-transparent">
             <h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
         </div>
-        <div class="card-body">                        
-            <?php if(!empty($messages)): ?>                            
+        <div class="card-body">
+            <?php if(!empty($messages)): ?>
                 <div class="messages">                
                     <div class="list-group bs-ui-list-group mb-0 mr-2" id="chat-section">                   
                         <?php $__currentLoopData = $messages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -972,7 +976,8 @@
 </div>
 <?php echo form_close(); ?>-->
 
-<?php echo form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/upload-dokumen-pendukung', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>    
+<?php echo form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/upload-dokumen-pendukung', array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
+
     <div id="modal-upload-dokumen-pendukung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1052,7 +1057,8 @@
 <?php echo form_close(); ?>
 
 
-<?php echo form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/hapus-rincian-kegiatan'); ?>    
+<?php echo form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/hapus-rincian-kegiatan', array('class' => 'myForm')); ?>
+
     <div id="modal-hapus-rincian-kegiatan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1178,7 +1184,7 @@
             $('#modal-hapus-dokumen-pendukung input[name="file_name"]').val($(this).data('file_name'))
             $('#modal-hapus-dokumen-pendukung input[name="id"]').val($(this).data('id'))
             $('#modal-hapus-dokumen-pendukung').modal('show')
-        })        
+        })
 
         function bytesToSize(bytes) {
             const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
@@ -1188,6 +1194,14 @@
                 return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`
         }
         <?php if($data->status !== 'cancel' && $data->status !== 'approved'): ?>
+        $('#total_anggaran').on('input propertychange paste', function (e) {
+            let val = $(this).val()
+            let reg = /^0/gi
+            if (val.match(reg)) {
+                $(this).val(val.replace(reg, ''))
+            }                                     
+        })
+        
         $('.showReply').click(function(e){
             const text = $(this).text() == 'Lihat Balasan' ? 'Sembunyikan Balasan' : 'Lihat Balasan'
             $(this).text(text)

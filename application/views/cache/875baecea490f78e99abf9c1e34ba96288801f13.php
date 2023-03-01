@@ -1,6 +1,6 @@
 <?php
 $session = $CI->session->userdata('user_sessions');
-//pr($data);
+$sisa_agr = ($data['sisa_anggaran'] - $data['s_act_agr']);
 ?>
 
 
@@ -27,7 +27,7 @@ $session = $CI->session->userdata('user_sessions');
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <?php if($data['sisa_anggaran'] != 0){ ?>
+    <?php if($sisa_agr > 0){ ?>
     <?php echo form_open(base_url('app/sim-spa/pencairan-rkat/input-actbud/' . $id), array('class' => 'myForm')); ?>
 
     <?php } ?>    
@@ -78,8 +78,8 @@ $session = $CI->session->userdata('user_sessions');
                         <div class="form-group">
                             <label for="">Sisa Anggaran :</label>
                             <p class="form-control-static">
-                                <span class="badge bg-primary p-2">
-                                    <?= rupiah_1($data['sisa_anggaran']) ?>
+                                <span class="badge bg-<?= $sisa_agr > 0 ? 'primary' : 'danger' ?> p-2">
+                                    <?= rupiah_1($sisa_agr) ?>
                                 </span>
                             </p>
                         </div>
@@ -120,13 +120,13 @@ $session = $CI->session->userdata('user_sessions');
                         </div>                    
                     </div>                        
                 </div>
-                <?php if($data['sisa_anggaran'] != 0){ ?>
+                <?php if($sisa_agr > 0){ ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Nama Kegiatan :</label>
-                            <textarea name="deskripsi_kegiatan" id="deskripsi_kegiatan" cols="3" rows="3" class="form-control" required></textarea>
-                        </div>
+                            <textarea name="deskripsi_kegiatan" id="deskripsi_kegiatan" cols="4" rows="4" class="form-control" required></textarea>
+                        </div>                        
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -138,12 +138,9 @@ $session = $CI->session->userdata('user_sessions');
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="col-lg-2 control-label " for="address2">Tanggal Kegiatan *</label>
-                            <div class="col-lg-10">
-                                <span class="help-block"><small>Tentukan tanggal pelaksanaan kegiatan.</small></span>
+                        <div class="form-group">
+                            <label class=" control-label " for="address2">Tanggal Kegiatan *</label>
+                            <div class="">                                
                                 <div>
                                     <div class="input-daterange input-group date-range">
                                         <input type="text" class="form-control" name="tgl_mulai" autocomplete="off" required />
@@ -155,16 +152,16 @@ $session = $CI->session->userdata('user_sessions');
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 <?php } ?>
             </div>
             <div class="card-footer bg-transparent">
-                <button type="<?= $data['sisa_anggaran'] == 0 ? 'button' : 'submit' ?>" class="btn btn-primary btn-block" style="font-weight:bold;"<?= $data['sisa_anggaran'] == 0 ? ' disabled title="Maaf anggaran sudah habis"' : '' ?>><i class="mdi mdi-file-plus"></i> Input Actbud</button>
+                <button type="<?= $sisa_agr > 0 ? 'submit' : 'button' ?>" class="btn btn-primary btn-block" style="font-weight:bold;"<?= $data['sisa_anggaran'] == 0 ? ' disabled title="Maaf anggaran sudah habis"' : '' ?><?= $sisa_agr > 0 ? '' : ' disabled' ?>><i class="mdi mdi-file-plus"></i> Input Actbud</button>
             </div>
         </div>
     </div>
-    <?php if($data['sisa_anggaran'] != 0){ ?>
+    <?php if($sisa_agr > 0){ ?>
     <?php echo form_close(); ?>
 
     <?php } ?>

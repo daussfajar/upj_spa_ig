@@ -53,13 +53,13 @@ class PencairanRKAT extends CI_Controller
         }
 
         $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id]);
-        if(empty($data['data'])) return show_404();
+        if(empty($data['data'])) return show_404();        
         $data['id'] = $id;
 
         if($method === "post"){
             return $this->save_input_actbud($id, $data['data']);
         }
-
+        
         return view('spa.pencairan_rkat.actbud.v_proses_input_actbud', $data);
     }
 
@@ -90,7 +90,7 @@ class PencairanRKAT extends CI_Controller
             $pelaksana_kegiatan = $this->input->post('pelaksana_kegiatan', true);
             $decrypt_pelaksana_kegiatan = !decrypt($pelaksana_kegiatan) ? show_404() : decrypt($pelaksana_kegiatan);
             
-            if(($data['sisa_anggaran'] - $data['agr_digunakan']) == 0){
+            if($data['sisa_anggaran'] == 0){
                 $this->session->set_flashdata('alert', [
                     'message' => 'Maaf anggaran sudah habis',
                     'type'    => 'error',
@@ -99,7 +99,7 @@ class PencairanRKAT extends CI_Controller
 
                 return redirect($_SERVER['HTTP_REFERER']);
             }
-
+            
             $insert_data = [
                 'kode_uraian' => $data['kode_uraian'],
                 'kode_pencairan' => $data['kode_pencairan'],
@@ -133,7 +133,7 @@ class PencairanRKAT extends CI_Controller
 
                 $insert_id = $this->db->insert_id();
 
-                return redirect(base_url('app/sim-spa/pencairan-rkat/input-actbud/detail/' . $id . '/' . $insert_id));
+                return redirect(base_url('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id . '/' . $insert_id));
             } else {
                 $this->session->set_flashdata('alert', [
                     'message' => 'Gagal membuat actbud',
@@ -160,12 +160,392 @@ class PencairanRKAT extends CI_Controller
             $data['periode'] = '2';
         }
 
-        $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id_uraian]);
+        $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id_uraian]);        
         if (empty($data['data'])) return show_404();
         $data['id_uraian'] = $id_uraian;
         $data['id_actbud'] = $id_actbud;
+        $data['dokumen_pendukung'] = $this->m_rkat->get_act_dokumen_pendukung($id_actbud);
+        $data['rincian_kegiatan'] = $this->m_rkat->get_tjb_act($id_actbud);
+        $data['messages'] = $this->m_rkat->get_data_chat_actbud($id_actbud);
+        
+        if($method === "post" && ($_REQUEST['act'] === "buat_rincian_kegiatan")){
+            return $this->buat_rincian_kegiatan($id_uraian, $id_actbud, $data['data']);
+        } else if($method === "post" && ($_REQUEST['act'] === "delete_rincian_kegiatan")){
+            return $this->delete_rincian_kegiatan($id_uraian, $id_actbud, $data['data']);
+        } else if ($method === "post" && ($_REQUEST['act'] === "send_message")) {
+            return $this->buat_pesan($id_uraian, $id_actbud, $data['data']);
+        } else if ($method === "post" && ($_REQUEST['act'] === "hapus_pesan")) {
+            return $this->hapus_pesan($id_uraian, $id_actbud, $data['data']);
+        } else if ($method === "post" && ($_REQUEST['act'] === "hapus_pesan_reply")) {
+            return $this->hapus_pesan_reply($id_uraian, $id_actbud, $data['data']);
+        }
         
         return view('spa.pencairan_rkat.actbud.v_input_detail_biaya', $data);
+    }
+
+    private function hapus_pesan_reply($id_uraian, $id_actbud, array $arr_data = null){
+        $id = decrypt($this->input->post('id', true));
+        $this->form_validation->set_rules('id', 'ID', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if ($this->form_validation->run() === TRUE) {
+
+            $file_name = $this->input->post('attachment', true);
+
+            if ($file_name != "") {
+                unlink(FCPATH . 'app-data/chat-attachment/' . $file_name);
+            }
+
+            $this->db->where('id_chat', $id);
+            $this->db->delete('tbl_chat_reply');
+
+            $this->session->set_flashdata('alert', [
+                'message' => 'Pesan berhasil dihapus.',
+                'type'    => 'success',
+                'title'   => ''
+            ]);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+        } else {
+            $error = [
+                'form_error' => validation_errors_array()
+            ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+        }
+    }
+
+    private function hapus_pesan($id_uraian, $id_actbud, array $arr_data = null){
+        $id = decrypt($this->input->post('id', true));
+        $this->form_validation->set_rules('id', 'ID', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if ($this->form_validation->run() === TRUE) {
+
+            $file_name = $this->input->post('attachment', true);
+
+            if ($file_name != "") {
+                unlink(FCPATH . 'app-data/chat-attachment/' . $file_name);
+            }
+
+            $this->db->where('id_chat', $id);
+            $this->db->delete('tbl_chat');
+
+            $this->db->where('id_chat', $id);
+            $this->db->delete('tbl_chat_reply');
+
+            $this->session->set_flashdata('alert', [
+                'message' => 'Pesan berhasil dihapus.',
+                'type'    => 'success',
+                'title'   => ''
+            ]);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+        } else {
+            $error = [
+                    'form_error' => validation_errors_array()
+                ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+        }
+    }
+
+    public function buat_pesan($id_uraian, $id_actbud, array $arr_data = null){
+        $pic = decrypt($_SESSION['user_sessions']['nik']);
+        $pesan = $this->input->post('pesan', true);
+
+        if (isset($_POST['reply_pesan'])) {
+            $this->form_validation->set_rules('reply_id', 'ID', 'trim|required', [
+                'required' => '%s tidak boleh kosong.'
+            ]);
+            $this->form_validation->set_rules('reply_pesan', 'Pesan', 'trim|required', [
+                'required' => '%s tidak boleh kosong.'
+            ]);
+
+            if ($this->form_validation->run() === TRUE) {
+                $reply_id = decrypt($this->input->post('reply_id', true));
+                $reply_pesan = $this->input->post('reply_pesan', true);
+                if (!empty($_FILES['reply_attachment']['name'])) {
+
+                    $path = FCPATH . 'app-data/chat-attachment';
+                    $config['upload_path']      = $path;
+                    $config['allowed_types']    = 'jpg|jpeg|png|docx|xlsx|pptx|vsdx|pdf';
+                    $config['file_name']        = uniqid() . time() . '_' . $_FILES['reply_attachment']['name'];
+                    $config['max_size']         = 10000;
+                    $config['max_width']        = 2048;
+                    $config['max_height']       = 1024;
+                    $config['encrypt_name']     = false;
+                    $config['detect_mime']      = true;
+                    $config['remove_spaces']    = true;
+                    $config['mod_mime_fix']     = true;
+                    $this->load->library('upload', $config);
+
+                    if (!$this->upload->do_upload('reply_attachment')) {
+                        return show_error($this->upload->display_errors(), 402, "Error");
+                    } else {
+                        $upload_data = $this->upload->data();
+                        $file_size = $_FILES['reply_attachment']['size'];
+
+                        $data = [
+                            'id_chat' => $reply_id,
+                            'nik' => $pic,
+                            'pesan' => $reply_pesan,
+                            'attachment' => $upload_data['file_name'],
+                            'attachment_size' => $file_size
+                        ];
+
+                        $insert = $this->db->insert('tbl_chat_reply', $data);
+
+                        if($insert === true){
+                            $this->session->set_flashdata('alert', [
+                                'message' => 'Pesan berhasil terkirim.',
+                                'type'    => 'success',
+                                'title'   => ''
+                            ]);
+    
+                            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                        } else {
+                            $this->session->set_flashdata('alert', [
+                                'message' => 'Pesan gagal terkirim.',
+                                'type'    => 'error',
+                                'title'   => ''
+                            ]);
+
+                            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                        }
+                    }
+                } else {
+                    $insert = $this->db->insert('tbl_chat_reply', [
+                        'id_chat' => $reply_id,
+                        'nik' => $pic,
+                        'pesan' => $reply_pesan,
+                    ]);
+
+                    if($insert === true) {
+                        $this->session->set_flashdata('alert', [
+                            'message' => 'Pesan berhasil terkirim.',
+                            'type'    => 'success',
+                            'title'   => ''
+                        ]);
+    
+                        return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                    } else {
+                        $this->session->set_flashdata('alert', [
+                            'message' => 'Pesan gagal terkirim.',
+                            'type'    => 'error',
+                            'title'   => ''
+                        ]);
+
+                        return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                    }
+
+                }
+            } else {
+                $error = [
+                    'form_error' => validation_errors_array()
+                ];
+                $this->session->set_flashdata('error_validation', $error);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+            }
+        } else {
+
+            $this->form_validation->set_rules('pesan', 'Pesan', 'trim|required', [
+                'required' => '%s tidak boleh kosong.'
+            ]);
+
+            if ($this->form_validation->run() === TRUE) {
+
+                if (!empty($_FILES['attachment']['name'])) {
+
+                    $path = FCPATH . 'app-data/chat-attachment';
+                    $config['upload_path']       = $path;
+                    $config['allowed_types']     = 'jpg|jpeg|png|docx|xlsx|pptx|vsdx|pdf';
+                    $config['file_name']         = uniqid() . time() . '_' . $_FILES['attachment']['name'];
+                    $config['max_size']          = 10000;
+                    $config['max_width']         = 2048;
+                    $config['max_height']        = 1024;
+                    $config['encrypt_name']      = false;
+                    $config['detect_mime']       = true;
+                    $config['remove_spaces']     = true;
+                    $config['mod_mime_fix']      = true;
+                    $this->load->library('upload', $config);
+
+                    if (!$this->upload->do_upload('attachment')) {
+                        return show_error($this->upload->display_errors(), 402, "Error");
+                    } else {
+                        $upload_data = $this->upload->data();
+                        $file_size = $_FILES['attachment']['size'];
+
+                        $data = [
+                            'kd_act' => $id_actbud,
+                            'nik' => $pic,
+                            'pesan' => $pesan,
+                            'attachment' => $upload_data['file_name'],
+                            'attachment_size' => $file_size
+                        ];
+
+                        $insert = $this->db->insert('tbl_chat', $data);
+
+                        if($insert === true){
+                            $this->session->set_flashdata('alert', [
+                                'message' => 'Pesan berhasil terkirim.',
+                                'type'    => 'success',
+                                'title'   => ''
+                            ]);
+
+                            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                        } else {
+                            $this->session->set_flashdata('alert', [
+                                'message' => 'Pesan gagal terkirim.',
+                                'type'    => 'error',
+                                'title'   => ''
+                            ]);
+
+                            return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                        }
+                    }
+                } else {
+
+                    $insert = $this->db->insert('tbl_chat', [
+                        'kd_act' => $id_actbud,
+                        'nik' => $pic,
+                        'pesan' => $pesan
+                    ]);
+                    
+                    if($insert === true){
+                        $this->session->set_flashdata('alert', [
+                            'message' => 'Pesan berhasil terkirim.',
+                            'type'    => 'success',
+                            'title'   => ''
+                        ]);
+    
+                        return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                    } else {
+                        $this->session->set_flashdata('alert', [
+                            'message' => 'Pesan gagal terkirim.',
+                            'type'    => 'error',
+                            'title'   => ''
+                        ]);
+
+                        return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+                    }
+                }
+            } else {
+                $error = [
+                    'form_error' => validation_errors_array()
+                ];
+                $this->session->set_flashdata('error_validation', $error);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-chat');
+            }
+        }
+    }
+
+    private function delete_rincian_kegiatan(int $id_uraian = null, int $id_actbud = null, array $data = null){
+        $this->form_validation->set_rules('id', 'ID', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if ($this->form_validation->run() === TRUE) {
+
+            $id = decrypt($this->input->post('id', true));
+            $this->db->where('id', $id);
+            $delete = $this->db->delete('t_j_b_act');
+
+            if($delete === true){                
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Berhasil menghapus kegiatan',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal menghapus kegiatan',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+            }
+        } else {
+            $error = [
+                    'form_error' => validation_errors_array()
+                ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    private function buat_rincian_kegiatan(int $id_uraian, int $id_actbud, array $data = null){
+        $this->form_validation->set_rules('nama_kegiatan', 'Nama kegiatan', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+        $this->form_validation->set_rules('total_anggaran', 'Total Anggaran', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if ($this->form_validation->run() === TRUE) {
+            $total_anggaran = $this->input->post('total_anggaran', true);
+            $replace_total_anggaran = str_ireplace('.', '', $total_anggaran);
+            $nama_kegiatan = $this->input->post('nama_kegiatan', true);
+            $keterangan = $this->input->post('keterangan', true);
+            if(!is_numeric($replace_total_anggaran) || (is_numeric($replace_total_anggaran) && $replace_total_anggaran < 0)) return show_404();
+            $tersisa = ($data['t_act_agr'] - $data['s_tjb_act_agr']);
+            
+            if($replace_total_anggaran > $tersisa){
+                if($tersisa == 0){
+                    $this->session->set_flashdata('alert', [
+                        'message' => 'Maaf anggaran anda sudah habis',
+                        'type'    => 'error',
+                        'title'   => ''
+                    ]);
+                    return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+                } else {
+                    $this->session->set_flashdata('alert', [
+                        'message' => 'Maaf anggaran tidak tersedia, anggaran anda tersisa ' . rupiah_1($tersisa),
+                        'type'    => 'error',
+                        'title'   => ''
+                    ]);
+                    return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+                }                
+            }
+
+            $insert_data = [
+                'kd_act' => $id_actbud,
+                'jns_b' => $nama_kegiatan,
+                'ket' => $keterangan,
+                'pra_pyn' => $replace_total_anggaran,
+                'aju_agr' => $replace_total_anggaran,
+                'tgl_buat' => date('Y-m-d H:i:s'),
+                'status_penyesuaian' => null,
+            ];
+            
+            $insert = $this->db->insert('t_j_b_act', $insert_data);
+
+            if ($insert === true) {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Berhasil membuat kegiatan',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal membuat kegiatan',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-rincian');
+            }
+        } else {
+            $error = [
+                'form_error' => validation_errors_array()
+            ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 
     public function v_view_actbud()
@@ -191,5 +571,119 @@ class PencairanRKAT extends CI_Controller
     public function v_status_pettycash()
     {
         return view('spa.pencairan_rkat.petty_cash.v_status_pettycash');
+    }
+
+    public function upload_dokumen_pendukung(int $id_uraian, int $id_actbud){
+        $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if (empty($_FILES['dokumen']['name'])) {
+            $this->form_validation->set_rules('dokumen', 'Dokumen', 'trim|required', [
+                'required' => '%s tidak boleh kosong.'
+            ]);
+        }
+
+        if ($this->form_validation->run() === TRUE) {            
+            $pic = decrypt($_SESSION['user_sessions']['nik']);
+
+            $path = FCPATH . 'app-data/dokumen-pendukung';
+            $config['upload_path']      = $path;
+            $config['allowed_types']    = 'jpg|jpeg|png|docx|xlsx|pptx|vsdx|pdf';
+            $config['file_name']        = uniqid() . time() . '_' . $_FILES['dokumen']['name'];
+            $config['max_size']         = 10000;
+            $config['max_width']        = 2048;
+            $config['max_height']       = 1024;
+            $config['encrypt_name']     = false;
+            $config['detect_mime']      = true;
+            $config['remove_spaces']    = true;
+            $config['mod_mime_fix']     = true;
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('dokumen')) {
+                return show_error($this->upload->display_errors(), 402, "Error");
+            } else {
+                $upload_data = $this->upload->data();
+                $file_size = $_FILES['dokumen']['size'];
+
+                $data = [
+                        'kd_act' => $id_actbud,
+                        'nama_file' => $upload_data['file_name'],
+                        'ukuran_file' => $file_size,
+                        'deskripsi' => $this->input->post('deskripsi', true),
+                        'user_created' => $pic,
+                        'file' => 'app-data/dokumen-pendukung/' . $upload_data['file_name']
+                    ];
+
+                $insert = $this->db->insert('tbl_upload_act', $data);
+                
+                if($insert === true){
+                    $this->session->set_flashdata('alert', [
+                        'message' => 'Selamat anda berhasil membuat dokumen pendukung.',
+                        'type'    => 'success',
+                        'title'   => ''
+                    ]);
+
+                    return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
+                } else {
+                    $this->session->set_flashdata('alert', [
+                        'message' => 'Anda gagal membuat dokumen pendukung.',
+                        'type'    => 'error',
+                        'title'   => ''
+                    ]);
+
+                    return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
+                }                
+            }
+        } else {
+            $error = [
+                    'form_error' => validation_errors_array()
+                ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    public function hapus_dokumen_pendukung(int $id_uraian, int $id_actbud){
+        $this->form_validation->set_rules('id', 'ID', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+        $this->form_validation->set_rules('file_name', 'File', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if ($this->form_validation->run() === TRUE) {
+            $id = decrypt($this->input->post('id', true));
+            $file_name = $this->input->post('file_name', true);
+
+            if ($file_name != "") {
+                unlink(FCPATH . 'app-data/dokumen-pendukung/' . $file_name);
+            }
+
+            $this->db->where('id', $id);
+            $delete = $this->db->delete('tbl_upload_act');
+
+            if ($delete) {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Dokumen pendukung berhasil dihapus.',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Dokumen pendukung gagal dihapus.',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER'] . '#card-dokumen-pendukung');
+            }
+        } else {
+            $error = [
+                    'form_error' => validation_errors_array()
+                ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 }

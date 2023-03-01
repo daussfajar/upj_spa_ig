@@ -105,8 +105,7 @@ class RKAT_model extends CI_Model {
             a7.kd_act,
             a1.kode_rkat_master,
             a1.tahun,
-            a1.kode_pencairan as kode_pencairan, 
-            a1.kode_uraian as kode_uraian,
+            a1.kode_pencairan as kode_pencairan,             
             a1.nama_isu,
             a1.uraian,
             a7.deskrip_keg,
@@ -128,17 +127,20 @@ class RKAT_model extends CI_Model {
             a7.tgl_m,
             a7.tgl_s,
             a7.tanggal_pembuatan,
-            IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,            
-            ifnull( a1.rp_ganjil ,'0') AS rp_ganjil,
-            ifnull( a1.rp_genap ,'0') AS rp_genap,
-            ifnull( a1.total_agr ,'0') AS total_agr,            
-            ifnull( a1.total_agr_stj ,'0') AS total_agr_stj,
-            sum(ifnull( a2.t_aju_agr ,'0')) AS  t_aju_agr,
-            sum(ifnull( a2.t_pyn_agr ,'0')) AS  t_pyn_agr,
-            ifnull( a3.n_in ,'0') AS n_in,
-            ifnull( a4.n_out ,'0') AS n_out,
+            ifnull(a7.status_act, 'belum dikirim') as status_act,
+            if (a1.periode='1', 'Ganjil', 'Genap') as periode,
+            ifnull( a1.rp_ganjil ,'0') as rp_ganjil,
+            ifnull( a1.rp_genap ,'0') as rp_genap,
+            ifnull( a1.total_agr ,'0') as total_agr,            
+            ifnull( a1.total_agr_stj ,'0') as total_agr_stj,
+            sum(ifnull( a2.t_aju_agr ,'0')) as  t_aju_agr,
+            sum(ifnull( a2.t_pyn_agr ,'0')) as  t_pyn_agr,
+            ifnull( a3.n_in ,'0') as n_in,
+            ifnull( a4.n_out ,'0') as n_out,
             ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran,
             a7.agr as t_act_agr,
+            (select sum(fnl_agr) from tbl_actbud where kode_uraian = a1.kode_uraian and st_kabag != 'Ditolak' group by kode_uraian) as s_act_agr,
+            (select sum(pra_pyn) from t_j_b_act where kd_act = a7.kd_act group by kd_act) as s_tjb_act_agr
         ")
         ->from('tbl_uraian as a1')
         ->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT')
@@ -154,6 +156,25 @@ class RKAT_model extends CI_Model {
         ->row_array();
         
         return $sql;
+    }
+
+    public function get_act_dokumen_pendukung(int $kd_act){
+        $query = "select * from tbl_upload_act where kd_act = ?";
+        $sql = $this->db->query($query, [$kd_act]);
+        return $sql->result();
+    }
+
+    public function get_data_chat_actbud(int $id){
+        $query = sprintf("SELECT a.id_chat,a.nik,a.pesan,a.datetime_chat,b.nama_lengkap sender,a.attachment,a.attachment_size FROM tbl_chat a 
+        INNER JOIN tbl_karyawan b ON a.nik = b.nik WHERE a.kd_act = '%s'", $id);
+        $result = $this->db->query($query)->result();
+        return $result;
+    }
+
+    public function get_tjb_act(int $kd_act){
+        $query = "select * from t_j_b_act where kd_act = ?";
+        $sql = $this->db->query($query, [$kd_act]);
+        return $sql->result();
     }
 
     public function get_list_rkat($kode_rkat_master, $periode, $kode_pencairan){

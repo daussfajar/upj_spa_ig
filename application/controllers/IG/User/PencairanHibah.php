@@ -210,7 +210,7 @@ class PencairanHibah extends CI_Controller {
 		
 		$kode_unit = $data['data']->kode_unit;
 		$data['karyawan'] = $this->db->get_where('tbl_karyawan', ['status' => 'Aktif', 'kode_unit' => $kode_unit]);
-		$data['messages'] = $this->Hibah_model->get_data_chat_actbud($id_actbud);        
+		$data['messages'] = $this->Hibah_model->get_data_chat_actbud($id_actbud);
 		$data['dokumen_pendukung'] = $this->db->get_where('ig_tbl_actbud_upload', ['id_act' => $id_actbud, 'status' => 'Aktif']);
 		$data['rincian_kegiatan'] = $this->db->get_where('ig_t_j_b_act', ['id_actbud' => $id_actbud, 'status' => 'Aktif']);
 		$data['sisa'] = $this->Hibah_model->cek_anggaran_rincian_kegiatan($id_actbud);        

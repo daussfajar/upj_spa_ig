@@ -12,10 +12,10 @@ class Global_Model extends CI_Model {
                 session_destroy();
             }
 
-            if ($_SERVER['HTTP_USER_AGENT'] != $_SESSION['user_sessions']['server']['user_agent']){
-                session_unset();
-                session_destroy();
-            }
+            // if ($_SERVER['HTTP_USER_AGENT'] != $_SESSION['user_sessions']['server']['user_agent']){
+            //     session_unset();
+            //     session_destroy();
+            // }
         }
         
     }
