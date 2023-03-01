@@ -7,15 +7,14 @@ class Global_Model extends CI_Model {
         parent::__construct();
 		$this->load->library('pagination');
         if(isset($_SESSION['user_sessions']) && !empty($_SESSION['user_sessions'])){
-            if ($_SERVER['REMOTE_ADDR'] != $_SESSION['user_sessions']['server']['ip_address']){
-                session_unset();
-                session_destroy();
-            }
-
-            if ($_SERVER['HTTP_USER_AGENT'] != $_SESSION['user_sessions']['server']['user_agent']){
-                session_unset();
-                session_destroy();
-            }
+            // if ($_SERVER['REMOTE_ADDR'] != $_SESSION['user_sessions']['server']['ip_address']){
+            //     session_unset();
+            //     session_destroy();
+            // }
+            // if ($_SERVER['HTTP_USER_AGENT'] != $_SESSION['user_sessions']['server']['user_agent']){
+            //     session_unset();
+            //     session_destroy();
+            // }
         }
         
     }
@@ -25,10 +24,6 @@ class Global_Model extends CI_Model {
         if (!isset($session_exists) || $session_exists == "") {			            
 			redirect(base_url() . '?redirect_url=' . $_SERVER['HTTP_HOST'] . $_SERVER['REDIRECT_URL']);
 		}
-    }
-
-    public function get_all_kegiatan(){
-        
     }
 
     public function is_admin(){

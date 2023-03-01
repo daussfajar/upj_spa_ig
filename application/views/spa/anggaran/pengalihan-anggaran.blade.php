@@ -1,5 +1,6 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
+$year = date('Y');
 ?>
 @extends('spa.layouts.user')
 
@@ -8,7 +9,7 @@ $session = $CI->session->userdata('user_sessions');
 @endsection
 
 @section('page-title')
-    Pengalihan Anggaran
+    Pengalihan Anggaran <?= $year ?>
 @endsection
 
 @section('css')
@@ -27,7 +28,7 @@ $session = $CI->session->userdata('user_sessions');
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Data Pengalihan Anggaran
+            Data Pengalihan Anggaran <?= $year ?>
         </div>
         <div class="card-body">
             <button data-target="#modal-pengalihan-anggaran" data-toggle="modal" class="btn btn-success"><i class="mdi mdi-plus"></i> Input Pengalihan Anggaran</button>

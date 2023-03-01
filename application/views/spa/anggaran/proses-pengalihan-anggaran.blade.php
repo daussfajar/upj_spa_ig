@@ -1,5 +1,6 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
+$year = date('Y');
 ?>
 @extends('spa.layouts.user')
 
@@ -8,7 +9,7 @@ $session = $CI->session->userdata('user_sessions');
 @endsection
 
 @section('page-title')
-    Pengalihan Anggaran
+    Pengalihan Anggaran <?= $year ?>
 @endsection
 
 @section('css')
@@ -25,9 +26,10 @@ $session = $CI->session->userdata('user_sessions');
 @section('content')
 
 <div class="col-lg-12">
-    <div class="card">
+    <a href="<?= base_url('app/sim-spa/anggaran/pengalihan') ?>" class="btn btn-secondary text-white btn-sm"><i class="mdi mdi-arrow-left"></i> Kembali</a>
+    <div class="card mt-3">
         <div class="card-header">
-            Data Pengalihan Anggaran
+            Proses Pengalihan Anggaran
         </div>
         <div class="card-body">
             {!! form_open('app/sim-spa/anggaran/pengalihan/proses/' . $id, array('class' => 'myForm')) !!}
