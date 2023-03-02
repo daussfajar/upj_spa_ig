@@ -242,5 +242,19 @@ class RKAT_model extends CI_Model {
         return $this->db->get()->result_array();
     }
     
+    public function get_laporan_pencairan($where = null){
+        $this->db->select("
+            a.*,
+            b.nama_lengkap
+        ");
+        $this->db->from('tbl_actbud as a');
+        $this->db->join('tbl_karyawan as b', 'b.nik = a.pic', 'LEFT');
+        if($where != null){
+            $this->db->where($where);
+        }
+        $this->db->where('a.status_act', 'send');
+        $this->db->order_by('a.kd_act', 'DESC');
+        return $this->db->get()->result_array();
+    }
 }
 ?>

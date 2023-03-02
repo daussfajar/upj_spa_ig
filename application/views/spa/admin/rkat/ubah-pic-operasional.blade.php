@@ -153,14 +153,14 @@ $session = $CI->session->userdata('user_sessions');
                 },
                 {
                     "data": "rp_ganjil",
-                    "class" : "text-center",
+                    "class" : "text-right",
                     "render": function(data, type, row) {
                         return formatRupiah(data, 'Rp. ');
                     }
                 },
                 {
                     "data": "rp_genap",
-                    "class" : "text-center",
+                    "class" : "text-right",
                     "render": function(data, type, row) {
                         return formatRupiah(data, 'Rp. ');
                     }

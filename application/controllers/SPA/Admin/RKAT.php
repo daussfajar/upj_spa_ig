@@ -114,4 +114,92 @@ class RKAT extends CI_Controller{
             return redirect($_SERVER['HTTP_REFERER']);
         }
     }
+
+    // Laporan Pencairan RKAT
+    public function laporan_pencairan($id = null){
+        if($id == null){
+            $year = date('Y');
+            $year = 2022;
+            $data['laporan_pencairan'] = $this->m_rkat->get_laporan_pencairan(array('a.tahun' => $year));
+
+            return view('spa.admin.rkat.laporan-pencairan', $data);
+        } else {
+            $data['kd_act'] = $id;
+            $data['actbud'] = $this->m_rkat->get_laporan_pencairan(array('a.kd_act' => $id));
+            if(!empty($data['actbud'])){
+                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
+                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
+    
+                return view('spa.admin.rkat.detail-laporan-pencairan', $data);
+            } else {
+                show_404();
+            }
+        }
+    }
+
+    public function kirim_pesan_laporan_pencairan($id){
+        $this->form_validation->set_rules('nik', 'Data Pengirim', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+        $this->form_validation->set_rules('pesan', 'Pesan', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		if($this->form_validation->run() === TRUE){
+            $dataInsert = array(
+                                'kd_act' => decrypt($id),
+                                'nik' => decrypt($this->input->post('nik')),
+                                'pesan' => $this->input->post('pesan')
+                            );
+            $queryInsert = $this->db->insert('tbl_chat', $dataInsert);
+            if($queryInsert){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Berhasil mengirim pesan',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal mengirim pesan',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+            }
+            return redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $error = [
+				'form_error' => validation_errors_array()
+			];
+			$this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    public function cetak_actbud_laporan_pencairan($id){
+        $data['actbud'] = $this->m_rkat->get_laporan_pencairan(array('a.kd_act' => $id));
+        if(!empty($data['actbud'])){
+            $data['t_j_b_act'] = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+            $data['unit'] = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+            $data['nm'] = $this->db->query('SELECT nama_lengkap FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+
+            return view('spa.admin.rkat.cetak-actbud-laporan-pencairan', $data);
+        } else {
+            show_404();
+        }
+    }
+
+    public function cetak_petty_laporan_pencairan($id){
+        $data['actbud'] = $this->m_rkat->get_laporan_pencairan(array('a.kd_act' => $id));
+        if(!empty($data['actbud'])){
+            $data['t_j_b_act'] = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+            $data['unit'] = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+            $data['nm'] = $this->db->query('SELECT nama_lengkap FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+
+            return view('spa.admin.rkat.cetak-petty-cash-laporan-pencairan', $data);
+        } else {
+            show_404();
+        }
+    }
 }

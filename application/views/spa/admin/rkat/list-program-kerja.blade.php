@@ -76,11 +76,11 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
                                         <td><?= $value['nama_lengkap'] ?></td>
                                         <td><?= $value['tahun'] ?></td>
                                         <td><?= $value['periode'] ?></td>
-                                        <td><?= number_format ($value['total_agr_stj'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['n_in'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['n_out'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['t_aju_agr'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['sisa_agr'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format ($value['total_agr_stj'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format ($value['n_in'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format ($value['n_out'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format ($value['t_aju_agr'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format ($value['sisa_agr'],'0',',','.'); ?></td>
                                     </tr>
                         <?php
                                 }
