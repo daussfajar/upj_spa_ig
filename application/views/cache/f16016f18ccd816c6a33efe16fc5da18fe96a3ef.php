@@ -1,5 +1,6 @@
 <?php
 $session = $CI->session->userdata('user_sessions');
+$nama_lengkap = $session['nama_lengkap'];
 ?>
 
 
@@ -26,6 +27,7 @@ $session = $CI->session->userdata('user_sessions');
 
 <?php $__env->startSection('breadcrumb'); ?>
     <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
+    <li class="breadcrumb-item"><a href="javascript: void(0);">Actbud</a></li>
     <li class="breadcrumb-item active"><a href="javascript: void(0);">Input Actbud</a></li>
 <?php $__env->stopSection(); ?>
 
@@ -34,7 +36,12 @@ $session = $CI->session->userdata('user_sessions');
     <div class="card">
         <div class="card-header">
             <h5 class="card-title mb-0">
-                Data Actbud
+                <b>
+                    PIC :
+                    <span class="badge bg-info p-2">
+                        <i class="mdi mdi-account"></i> <?= $nama_lengkap ?>
+                    </span>
+                </b>
             </h5>
         </div>
         <div class="card-body">    
@@ -88,9 +95,9 @@ $session = $CI->session->userdata('user_sessions');
             scrollX: true,
             processing: true,
             serverSide: true,
-            /*responsive: true,*/
+            // responsive: true,
             ajax: {
-                "url": "<?php echo base_url('SPA/PencairanRKAT/get_actbud') ?>",
+                "url": "<?php echo base_url('SPA/PencairanRKAT/get_uraian_by_nik') ?>",
                 "type": "POST",
                 "dataType" : "json",
                 "data" : {
@@ -144,6 +151,7 @@ $session = $CI->session->userdata('user_sessions');
                     "data": "sisa_anggaran",
                     "class": "text-center v-middle",
                     "render": function (data, type, row) {
+                        let sisa;
                         return '<span class="badge bg-secondary p-2">'+formatRupiah(data, 'Rp. ')+'</span>'
                     }
                 },
@@ -152,7 +160,7 @@ $session = $CI->session->userdata('user_sessions');
                     "class": "text-center v-middle",
                     "render": function(data, type, row, meta){
                         let url = base_url + "app/sim-spa/pencairan-rkat/input-actbud/" + data
-                        return '<a href="'+url+'" class="badge bg-primary p-2">Input Actbud</a>'
+                        return '<a href="'+url+'" class="badge bg-primary p-2"><i class="mdi mdi-file-plus"></i> Input Actbud</a>'
                     }
                 }
             ],

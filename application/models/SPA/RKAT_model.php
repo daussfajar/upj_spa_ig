@@ -256,5 +256,31 @@ class RKAT_model extends CI_Model {
         $this->db->order_by('a.kd_act', 'DESC');
         return $this->db->get()->result_array();
     }
+
+    public function get_data_actbud_where_pic($nik = "", $jenis = "", $where = null){
+        // $query = "SELECT a.kd_act, a.kode_uraian, a.kode_pencairan, a.jns_aju_agr, a.kode_unit, a.pic, a.no_borang, 
+        // a.tgl_m, a.tgl_s, a.nama_kegiatan, a.kpi, IF(a.periode = 'ganjil', 'Ganjil', 'Genap') AS periode,
+        // a.tahun, a.agr, a.fnl_agr, a.deskrip_keg, a.pelaksana, IFNULL(a7.status_act, 'belum dikirim') AS status_act,
+        // a.status_penyesuaian, b.nama_lengkap AS nama_pelaksana, a.sign, a.st_kabag, a.c_kabag, a.stamp_kabag, 
+        // a.st_fhb, a.c_fhb, a.stamp_fhb, a.st_ftd, a.c_ftd, a.stamp_ftd, a.st_hrd, a.c_hrd, a.stamp_hrd, a.st_umum, a.c_umum,
+        // a.stamp_umum, a.st_ict, a.c_ict, a.stamp_ict, a.st_bkal, a.c_bkal, a.stamp_bkal, a.st_p2m, a.c_p2m, a.stamp_p2m,
+        // a.st_keu, a.c_keu, a.stamp_keu, a.st_dekan, a.c_dekan, a.stamp_dekan, a.st_warek_1, a.c_warek_1, a.stamp_warek_1,
+        // a.st_warek_2, a.c_warek2, a.stamp_warek2, a.st_rek, a.c_rek, a.stamp_rek, a.st_pres, a.c_pres, a.stamp_pres
+        // FROM tbl_actbud AS a JOIN tbl_karyawan AS b 
+        // ON a.pelaksana = b.nik WHERE";
+        $this->datatables->select("
+            a.*, b.nama_lengkap AS nama_pelaksana
+        ");
+        $this->datatables->from('tbl_actbud AS a');
+        $this->datatables->join('tbl_karyawan AS b', 'a.pelaksana = b.nik');        
+        $this->datatables->where('a.pic', $nik);
+        $this->datatables->where('a.jns_aju_agr', $jenis);
+        if ($where != null) {
+            $this->datatables->where($where);
+        }                        
+                
+        $this->datatables->get_num_rows();
+        return $this->datatables->generate();
+    }
 }
 ?>

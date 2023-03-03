@@ -54,30 +54,24 @@
                                 <span class="menu-arrow"></span>
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
-                                <li class="<?= (($uri3 == "pencairan-rkat" && ($uri4 == "actbud" || $uri4 == "input-actbud")) || ($uri4 == "actbud" && $uri5 == "input-actbud")) ? 'mm-active' : '' ?>">
+                                <li class="<?= (($uri3 == "pencairan-rkat" && $uri4 == "input-actbud") || ($uri4 == "actbud" && $uri5 == "input-actbud")) ? 'mm-active' : '' ?>">
                                     <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/input-actbud')); ?>" class="">Input Actbud</a>
-                                </li>
-                                <li class="">
-                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/view-actbud')); ?>" class="">View Actbud</a>
-                                </li>
-                                <li class="">
+                                </li>                                
+                                <li class="<?= ($uri4 == "actbud" && $uri5 == "status-actbud") ? 'mm-active' : '' ?>">
                                     <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/status-actbud')); ?>" class="">Status Actbud</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="">
+                        <li class="<?= ($uri3 == "pencairan-rkat" && ($uri4 == "petty-cash" || $uri4 == "input-petty-cash")) ? 'mm-active' : '' ?>">
                             <a href="javascript:void(0)" class="waves-effect waves-light">
                                 <span>  Petty Cash  </span>
                                 <span class="menu-arrow"></span>
                             </a>                                  
                             <ul class="nav-second-level" aria-expanded="false">
-                                <li class="">
+                                <li class="<?= (($uri3 == "pencairan-rkat" && $uri4 == "input-petty-cash") || ($uri4 == "petty-cash" && $uri5 == "input-petty-cash")) ? 'mm-active' : '' ?>">
                                     <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/input-petty-cash')); ?>" class="">Input Petty Cash</a>
-                                </li>
-                                <li class="">
-                                    <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/view-petty-cash')); ?>" class="">View Petty Cash</a>
-                                </li>
-                                <li class="">
+                                </li>                                
+                                <li class="<?= ($uri4 == "petty-cash" && $uri5 == "status-petty-cash") ? 'mm-active' : '' ?>">
                                     <a href="<?php echo e(base_url('app/sim-spa/pencairan-rkat/status-petty-cash')); ?>" class="">Status Petty Cash</a>
                                 </li>
                             </ul>

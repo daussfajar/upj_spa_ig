@@ -479,7 +479,8 @@ $config['csrf_exclude_uris'] = array(
                                 'SPA/Admin/RKAT/get_list_rkat_program_kerja',
                                 'SPA/Admin/RKAT/get_list_rkat_operasional',
                                 'SPA/Admin/RKAT/get_list_rkat_investasi',
-                                'SPA/PencairanRKAT/get_actbud',
+                                'SPA/PencairanRKAT/get_uraian_by_nik',
+                                'SPA/PencairanRKAT/get_actbud_by_nik',
                             );
 
 /*

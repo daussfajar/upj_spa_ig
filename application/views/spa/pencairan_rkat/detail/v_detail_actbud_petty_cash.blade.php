@@ -1,14 +1,16 @@
 <?php 
 $agr_tersisa = ($data['t_act_agr'] - $data['s_tjb_act_agr']);
+$uri4 = $CI->uri->segment(4);
+$uri5 = $CI->uri->segment(5);
 ?>
 @extends('spa.layouts.user')
 
 @section('title')
-<?= MOD2 ?> Input Detail Biaya
+<?= MOD2 ?> <?= ($uri5 == 'input-actbud' || $uri5 == 'input-petty-cash') ? 'Input Detail Biaya' : 'Status RKAT'; ?>
 @endsection
 
 @section('page-title')
-Input Detail Biaya
+<?= ($uri5 == 'input-actbud' || $uri5 == 'input-petty-cash') ? 'Input Detail Biaya' : 'Status RKAT'; ?>
 @endsection
 
 @section('css')
@@ -24,8 +26,18 @@ Input Detail Biaya
 
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
+<?php if($uri4 == "petty-cash"){ ?>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Petty Cash</a></li>
+<?php if($uri5 == "status-petty-cash"): ?>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Status Petty Cash</a></li>
+<?php endif; ?>
+<?php } else if($uri4 == "actbud"){ ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);">Actbud</a></li>
-<li class="breadcrumb-item active"><a href="javascript: void(0);">#{{ $id_actbud }}</a></li>
+<?php if($uri5 == "status-actbud"): ?>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Status Actbud</a></li>
+<?php endif; ?>
+<?php } ?>
+<li class="breadcrumb-item active"><a href="javascript: void(0);" style="color:blueviolet;"><i class="mdi mdi-file-document"></i>{{ $id_actbud }}</a></li>
 @endsection
 
 @section('content')
@@ -33,9 +45,18 @@ Input Detail Biaya
 		<div class="card card-border card-teal">
 			<div class="card-header border-teal bg-transparent">
 				<div class="float-left">
-					<h3 class="card-title mb-0"><i class="mdi mdi-file-document-outline"></i> DETAIL ACTBUD</h3>
+					<h3 class="card-title mb-0"><i class="mdi mdi-file-document-outline"></i> DETAIL RKAT</h3>
 				</div>
 				<div class="float-right">
+					<?php if($data['jns_aju_agr'] == 'actbud') { ?>
+					<span class="badge bg-dark p-2" style="font-weight:bold;">
+						<i class="mdi mdi-checkbox-marked-circle-outline"></i> Actbud
+					</span>
+					<?php } else if($data['jns_aju_agr'] == 'petty cash'){ ?>
+					<span class="badge bg-dark p-2" style="font-weight:bold;">
+						<i class="mdi mdi-checkbox-marked-circle-outline"></i> Petty Cash
+					</span>
+					<?php } ?>
 					<span class="badge bg-primary p-2" style="font-weight:bold;">
 						<i class="mdi mdi-file-document"></i> {{ $data['kode_pencairan'] }}
 					</span>
@@ -46,16 +67,16 @@ Input Detail Biaya
 					@case('send')
 						
 						@break
-					@case('belum dikirim')					
+					@case('belum dikirim')
+					<span class="badge bg-warning p-2">
+						<i class="mdi mdi-progress-wrench"></i> Dalam Perencanaan
+					</span>
 					@break
 					@default
 					<span class="badge bg-danger p-2">
 						Unknown
 					</span>
-					@endswitch
-					<span class="badge bg-warning p-2">
-						<i class="mdi mdi-progress-wrench"></i> Dalam Perencanaan
-					</span>
+					@endswitch					
 				</div>
 			</div>
 			<div class="card-body">
@@ -208,11 +229,15 @@ Input Detail Biaya
                                         <ul style="list-style: none;padding-inline-start:0;" class="mb-0">
                                             <li>
                                                 <span style="font-size: 14px;">Warek 1: </span>
-                                                <span style="font-size: 14px;">{{ $item->catatan_wr_1 }}</span>
+                                                <span style="font-size: 14px;">{{ $item->c_jns_b_wr1 }}</span>
                                             </li>
                                             <li>
                                                 <span style="font-size: 14px;">Warek 2: </span>
-                                                <span style="font-size: 14px;">{{ $item->catatan_wr_2 }}</span>
+                                                <span style="font-size: 14px;">{{ $item->c_jns_b_wr2 }}</span>
+                                            </li>
+											<li>
+                                                <span style="font-size: 14px;">Rektor: </span>
+                                                <span style="font-size: 14px;">{{ $item->c_jns_b_rk }}</span>
                                             </li>
                                         </ul>
                                     </td>
@@ -269,9 +294,8 @@ Input Detail Biaya
                                 <td>
                                     <a href="javascript:void(0)">
                                         <i class="mdi mdi-file"></i>
-                                        @php
-                                            $pecah_nama = explode('_', $row->nama_file);
-                                            echo $pecah_nama[1] . ' ('.formatBytes($row->ukuran_file).')';
+                                        @php                                            
+											echo $row->nama_file . ' ('.formatBytes($row->ukuran_file).')';;
                                         @endphp
                                     </a>
                                 </td>
@@ -279,7 +303,7 @@ Input Detail Biaya
                                     {{ $row->deskripsi }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ base_url('app-data/dokumen-pendukung/' . $row->nama_file) }}" class="btn btn-primary btn-xs" download="{{ $pecah_nama[1] }}">
+                                    <a href="{{ base_url('app-data/dokumen-pendukung/' . $row->nama_file) }}" class="btn btn-primary btn-xs" download="{{ $row->nama_file }}">
                                         <i class="mdi mdi-download"></i>
                                     </a>
                                     @if ($data['status_act'] == 'belum dikirim')

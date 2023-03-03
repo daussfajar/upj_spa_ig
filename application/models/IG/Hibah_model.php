@@ -84,11 +84,12 @@ class Hibah_Model extends CI_Model {
         $nik = decrypt($_SESSION['user_sessions']['nik']);
         $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
         $kode_unit = $_SESSION['user_sessions']['kode_unit'];                
-        if($jabatan == 0){
-            $where .= " ORDER BY a.id DESC";
-        } else {
-            $where .= "AND a.pic = '$nik' ORDER BY a.id DESC";
-        }
+        // if($jabatan == 0){
+        //     $where .= " ORDER BY a.id DESC";
+        // } else {
+        //     $where .= "AND a.pic = '$nik' ORDER BY a.id DESC";
+        // }
+        $where .= "AND a.pic = '$nik' ORDER BY a.id DESC";
 
         if($where != '') {            
             $_SESSION['session_where']['value'] = $_SESSION['session_where']['value'] . " " . $where;
@@ -146,11 +147,12 @@ class Hibah_Model extends CI_Model {
         $_SESSION['session_where']['value'] = '';
         $jabatan = $_SESSION['user_sessions']['kode_jabatan'];        
 
-        if($jabatan == 0){
-            $where .= " ORDER BY a.id DESC";
-        } else {
-            $where .= "AND a.pic = '$pic' ORDER BY a.id DESC";
-        }
+        // if($jabatan == 0){
+        //     $where .= " ORDER BY a.id DESC";
+        // } else {
+        //     $where .= "AND a.pic = '$pic' ORDER BY a.id DESC";
+        // }
+        $where .= "AND a.pic = '$pic' ORDER BY a.id DESC";
 
         if($where != '') {            
             $_SESSION['session_where']['value'] = $_SESSION['session_where']['value'] . " " . $where;

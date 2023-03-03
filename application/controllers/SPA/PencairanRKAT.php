@@ -12,14 +12,24 @@ class PencairanRKAT extends CI_Controller
         $this->load->model('SPA/RKAT_model', 'm_rkat');
     }
 
-    public function get_actbud(){
+    public function get_uraian_by_nik(){
         $method                 = $this->input->method();
         if ($method == "post") {
             $nik = decrypt($_SESSION['user_sessions']['nik']);
-            $kode_rkat_master   = $this->input->post('kode-rkat');
-            $periode            = $this->input->post('periode');
+            $kode_rkat_master   = $this->input->post('kode-rkat', true);
+            $periode            = $this->input->post('periode', true);
             header('Content-Type: application/json');
             echo $this->m_rkat->get_where_pic_rkat($kode_rkat_master, $periode, ['a1.pic' => $nik]);
+        } else return show_404();
+    }
+
+    public function get_actbud_by_nik(){
+        $method                 = $this->input->method();
+        if ($method == "post") {            
+            $pic                = $this->input->post('pic', true);
+            $jenis              = $this->input->post('jenis', true);
+            header('Content-Type: application/json');
+            echo $this->m_rkat->get_data_actbud_where_pic($pic, $jenis);
         } else return show_404();
     }
 
@@ -57,13 +67,13 @@ class PencairanRKAT extends CI_Controller
         $data['id'] = $id;
 
         if($method === "post"){
-            return $this->save_input_actbud($id, $data['data']);
+            return $this->save_input_actbud($id, $data['data'], 'actbud');
         }
         
         return view('spa.pencairan_rkat.actbud.v_proses_input_actbud', $data);
     }
 
-    private function save_input_actbud(int $id, array $data){
+    private function save_input_actbud(int $id, array $data, string $jns_aju_agr){
         $this->form_validation->set_rules('deskripsi_kegiatan', 'Deskripsi Kegiatan', 'trim|required|max_length[255]', [
             'required' => '%s tidak boleh kosong.'
         ]);
@@ -112,7 +122,7 @@ class PencairanRKAT extends CI_Controller
                 'periode' => ($data['periode'] == "Ganjil") ? "ganjil" : "genap",
                 'deskrip_keg' => $deskripsi_kegiatan,
                 'pelaksana' => $decrypt_pelaksana_kegiatan,
-                'jns_aju_agr' => 'actbud',
+                'jns_aju_agr' => $jns_aju_agr,
                 'kpi' => $data['kpi'],
                 'agr' => $data['sisa_anggaran'],
                 'fnl_agr' => $data['sisa_anggaran'],
@@ -126,17 +136,21 @@ class PencairanRKAT extends CI_Controller
 
             if($insert === true){
                 $this->session->set_flashdata('alert', [
-                    'message' => 'Berhasil membuat actbud',
+                    'message' => 'Berhasil membuat ' . $jns_aju_agr,
                     'type'    => 'success',
                     'title'   => ''
                 ]);
 
                 $insert_id = $this->db->insert_id();
 
-                return redirect(base_url('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id . '/' . $insert_id));
+                if($jns_aju_agr == 'actbud') {
+                    return redirect(base_url('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id . '/' . $insert_id));
+                } else if($jns_aju_agr == 'petty cash'){
+                    return redirect(base_url('app/sim-spa/pencairan-rkat/petty-cash/input-petty-cash/' . $id . '/' . $insert_id));
+                }
             } else {
                 $this->session->set_flashdata('alert', [
-                    'message' => 'Gagal membuat actbud',
+                    'message' => 'Gagal membuat ' . $jns_aju_agr,
                     'type'    => 'error',
                     'title'   => ''
                 ]);
@@ -160,14 +174,14 @@ class PencairanRKAT extends CI_Controller
             $data['periode'] = '2';
         }
 
-        $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id_uraian]);        
+        $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id_uraian]);
         if (empty($data['data'])) return show_404();
         $data['id_uraian'] = $id_uraian;
         $data['id_actbud'] = $id_actbud;
         $data['dokumen_pendukung'] = $this->m_rkat->get_act_dokumen_pendukung($id_actbud);
         $data['rincian_kegiatan'] = $this->m_rkat->get_tjb_act($id_actbud);
         $data['messages'] = $this->m_rkat->get_data_chat_actbud($id_actbud);
-        
+        // pr($data['rincian_kegiatan'])
         if($method === "post" && ($_REQUEST['act'] === "buat_rincian_kegiatan")){
             return $this->buat_rincian_kegiatan($id_uraian, $id_actbud, $data['data']);
         } else if($method === "post" && ($_REQUEST['act'] === "delete_rincian_kegiatan")){
@@ -180,7 +194,7 @@ class PencairanRKAT extends CI_Controller
             return $this->hapus_pesan_reply($id_uraian, $id_actbud, $data['data']);
         }
         
-        return view('spa.pencairan_rkat.actbud.v_input_detail_biaya', $data);
+        return view('spa.pencairan_rkat.detail.v_detail_actbud_petty_cash', $data);
     }
 
     private function hapus_pesan_reply($id_uraian, $id_actbud, array $arr_data = null){
@@ -548,10 +562,10 @@ class PencairanRKAT extends CI_Controller
         }
     }
 
-    public function v_view_actbud()
-    {
-        return view('spa.pencairan_rkat.actbud.v_view_actbud');
-    }
+    // public function v_view_actbud()
+    // {
+    //     return view('spa.pencairan_rkat.actbud.v_view_actbud');
+    // }
 
     public function v_status_actbud()
     {
@@ -560,17 +574,53 @@ class PencairanRKAT extends CI_Controller
 
     public function v_input_pettycash()
     {
-        return view('spa.pencairan_rkat.petty_cash.v_input_pettycash');
+        $session = $this->session->userdata('user_sessions');
+        $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
+        $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
+        $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
+        $data['periode'] = 0;
+        if ($data['rkat_master']['periode'] == "Ganjil") {
+            $data['periode'] = '1';
+        } else if ($data['rkat_master']['periode'] == "Genap") {
+            $data['periode'] = '2';
+        }
+
+        return view('spa.pencairan_rkat.petty_cash.v_input_pettycash', $data);
     }
 
-    public function v_view_pettycash()
-    {
-        return view('spa.pencairan_rkat.petty_cash.v_view_pettycash');
-    }
+    // public function v_view_pettycash()
+    // {
+    //     return view('spa.pencairan_rkat.petty_cash.v_view_pettycash');
+    // }
 
     public function v_status_pettycash()
     {
         return view('spa.pencairan_rkat.petty_cash.v_status_pettycash');
+    }
+
+    public function v_proses_input_petty_cash(int $id){
+        $method = $this->input->method();
+        $session = $this->session->userdata('user_sessions');
+        $nik = decrypt($session['nik']);
+        $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
+        $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
+        $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
+        $data['periode'] = 0;
+        if ($data['rkat_master']['periode'] == "Ganjil") {
+            $data['periode'] = '1';
+        } else if ($data['rkat_master']['periode'] == "Genap") {
+            $data['periode'] = '2';
+        }
+
+        $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id]);
+        if (empty($data['data'])) return show_404();
+        $data['id'] = $id;
+
+        if ($method === "post") {
+            return $this->save_input_actbud($id, $data['data'], 'petty cash');
+        }
+
+        return view('spa.pencairan_rkat.petty_cash.v_proses_input_petty_cash', $data);
     }
 
     public function upload_dokumen_pendukung(int $id_uraian, int $id_actbud){

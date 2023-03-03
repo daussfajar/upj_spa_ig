@@ -18,8 +18,8 @@ class RKAT extends CI_Controller{
     public function get_pic_rkat_program_kerja(){
         $method                 = $this->input->method();
         if ($method == "post"){
-            $kode_rkat_master   = $this->input->post('kode-rkat');
-            $periode            = $this->input->post('periode');
+            $kode_rkat_master   = $this->input->post('kode-rkat', true);
+            $periode            = $this->input->post('periode', true);
             header('Content-Type: application/json');
             echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'PK');
         } else return show_404();
@@ -28,8 +28,8 @@ class RKAT extends CI_Controller{
     public function get_pic_rkat_operasional(){
         $method                 = $this->input->method();
         if ($method == "post"){
-            $kode_rkat_master   = $this->input->post('kode-rkat');
-            $periode            = $this->input->post('periode');
+            $kode_rkat_master   = $this->input->post('kode-rkat', true);
+            $periode            = $this->input->post('periode', true);
             header('Content-Type: application/json');   
             echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'OPS');
         } else return show_404();
@@ -38,8 +38,8 @@ class RKAT extends CI_Controller{
     public function get_pic_rkat_investasi(){
         $method                 = $this->input->method();
         if($method == "post"){
-            $kode_rkat_master   = $this->input->post('kode-rkat');
-            $periode            = $this->input->post('periode');
+            $kode_rkat_master   = $this->input->post('kode-rkat', true);
+            $periode            = $this->input->post('periode', true);
             header('Content-Type: application/json');
             echo $this->m_rkat->get_pic_rkat($kode_rkat_master, $periode, 'INV');
         } else return show_404();
@@ -144,7 +144,7 @@ class RKAT extends CI_Controller{
 			'required' => '%s tidak boleh kosong'
 		]);
 		if($this->form_validation->run() === TRUE){
-            $kode_uraian = $this->input->post('kode');
+            $kode_uraian = $this->input->post('kode', true);
             $queryUpdate = $this->db->update('tbl_uraian', [ 'pic' => $this->input->post('pic', true) ], array('kode_uraian' => $kode_uraian));
             if($queryUpdate){
                 $this->session->set_flashdata('alert', [

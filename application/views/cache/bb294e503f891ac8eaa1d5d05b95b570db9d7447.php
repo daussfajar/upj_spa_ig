@@ -1,15 +1,16 @@
 <?php 
 $agr_tersisa = ($data['t_act_agr'] - $data['s_tjb_act_agr']);
+$uri4 = $CI->uri->segment(4);
 $uri5 = $CI->uri->segment(5);
 ?>
 
 
 <?php $__env->startSection('title'); ?>
-<?= MOD2 ?> <?= $uri5 == 'input-actbud' ? 'Input Detail Biaya' : 'Status Actbud'; ?>
+<?= MOD2 ?> <?= ($uri5 == 'input-actbud' || $uri5 == 'input-petty-cash') ? 'Input Detail Biaya' : 'Status RKAT'; ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('page-title'); ?>
-<?= $uri5 == 'input-actbud' ? 'Input Detail Biaya' : 'Status Actbud'; ?>
+<?= ($uri5 == 'input-actbud' || $uri5 == 'input-petty-cash') ? 'Input Detail Biaya' : 'Status RKAT'; ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -25,8 +26,18 @@ $uri5 = $CI->uri->segment(5);
 
 <?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
+<?php if($uri4 == "petty-cash"){ ?>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Petty Cash</a></li>
+<?php if($uri5 == "status-petty-cash"): ?>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Status Petty Cash</a></li>
+<?php endif; ?>
+<?php } else if($uri4 == "actbud"){ ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);">Actbud</a></li>
-<li class="breadcrumb-item active"><a href="javascript: void(0);">#<?php echo e($id_actbud); ?></a></li>
+<?php if($uri5 == "status-actbud"): ?>
+<li class="breadcrumb-item"><a href="javascript: void(0);">Status Actbud</a></li>
+<?php endif; ?>
+<?php } ?>
+<li class="breadcrumb-item active"><a href="javascript: void(0);" style="color:blueviolet;"><i class="mdi mdi-file-document"></i><?php echo e($id_actbud); ?></a></li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -34,9 +45,18 @@ $uri5 = $CI->uri->segment(5);
 		<div class="card card-border card-teal">
 			<div class="card-header border-teal bg-transparent">
 				<div class="float-left">
-					<h3 class="card-title mb-0"><i class="mdi mdi-file-document-outline"></i> DETAIL ACTBUD</h3>
+					<h3 class="card-title mb-0"><i class="mdi mdi-file-document-outline"></i> DETAIL RKAT</h3>
 				</div>
 				<div class="float-right">
+					<?php if($data['jns_aju_agr'] == 'actbud') { ?>
+					<span class="badge bg-dark p-2" style="font-weight:bold;">
+						<i class="mdi mdi-checkbox-marked-circle-outline"></i> Actbud
+					</span>
+					<?php } else if($data['jns_aju_agr'] == 'petty cash'){ ?>
+					<span class="badge bg-dark p-2" style="font-weight:bold;">
+						<i class="mdi mdi-checkbox-marked-circle-outline"></i> Petty Cash
+					</span>
+					<?php } ?>
 					<span class="badge bg-primary p-2" style="font-weight:bold;">
 						<i class="mdi mdi-file-document"></i> <?php echo e($data['kode_pencairan']); ?>
 
@@ -944,4 +964,4 @@ $uri5 = $CI->uri->segment(5);
 	})
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/pencairan_rkat/actbud/v_input_detail_biaya.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/pencairan_rkat/detail/v_detail_actbud_petty_cash.blade.php ENDPATH**/ ?>
