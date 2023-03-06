@@ -151,8 +151,12 @@ $nama_lengkap = $session['nama_lengkap'];
                     "data": "sisa_anggaran",
                     "class": "text-center v-middle",
                     "render": function (data, type, row) {
-                        let sisa;
-                        return '<span class="badge bg-secondary p-2">'+formatRupiah(data, 'Rp. ')+'</span>'
+                        let sisa = (row.sisa_anggaran - row.agr_digunakan)   
+                        if(sisa < 0){
+                            sisa = 0
+                        }
+                        
+                        return '<span class="badge bg-secondary p-2">'+formatRupiah(sisa.toString(), 'Rp. ')+'</span>'
                     }
                 },
                 {

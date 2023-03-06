@@ -80,7 +80,8 @@ class RKAT_model extends CI_Model {
             a1.rp_ganjil,
             a1.rp_genap,
             IF (a1.periode='1', 'Ganjil', 'Genap') AS periode,
-            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran
+            ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran,
+            (SELECT SUM(fnl_agr) FROM tbl_actbud WHERE kode_uraian = a1.kode_uraian GROUP BY kode_uraian) agr_digunakan
         ");
         $this->datatables->from('tbl_uraian as a1');
         $this->datatables->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT');
@@ -277,8 +278,7 @@ class RKAT_model extends CI_Model {
         $this->datatables->where('a.jns_aju_agr', $jenis);
         if ($where != null) {
             $this->datatables->where($where);
-        }                        
-                
+        }
         $this->datatables->get_num_rows();
         return $this->datatables->generate();
     }

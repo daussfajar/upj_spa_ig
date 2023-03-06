@@ -25,6 +25,8 @@ $route['app/sim-spa/pencairan-rkat/actbud/status-actbud/(:num)/(:num)/hapus-doku
 $route['app/sim-spa/pencairan-rkat/status-actbud'] = 'SPA/PencairanRKAT/v_status_actbud';
 $route['app/sim-spa/pencairan-rkat/status-petty-cash'] = 'SPA/PencairanRKAT/v_status_pettycash';
 
+$route['app/sim-spa/pencairan-rkat/submit_rkat/(:num)/(:num)']['POST'] = 'SPA/PencairanRKAT/v_detail_actbud/$1/$2';
+
 $route['app/sim-spa/pencairan-rkat/input-petty-cash'] = 'SPA/PencairanRKAT/v_input_pettycash';
 $route['app/sim-spa/pencairan-rkat/input-petty-cash/(:num)'] = 'SPA/PencairanRKAT/v_proses_input_petty_cash/$1';
 $route['app/sim-spa/pencairan-rkat/petty-cash/input-petty-cash/(:num)/(:num)'] = 'SPA/PencairanRKAT/v_detail_actbud/$1/$2';

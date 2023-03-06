@@ -43,7 +43,7 @@ class PencairanRKAT extends CI_Controller
             $data['periode'] = '1';
         } else if ($data['rkat_master']['periode'] == "Genap") {
             $data['periode'] = '2';
-        }
+        }        
         
         return view('spa.pencairan_rkat.actbud.v_input_actbud', $data);
     }
@@ -182,19 +182,91 @@ class PencairanRKAT extends CI_Controller
         $data['rincian_kegiatan'] = $this->m_rkat->get_tjb_act($id_actbud);
         $data['messages'] = $this->m_rkat->get_data_chat_actbud($id_actbud);
         // pr($data['rincian_kegiatan'])
-        if($method === "post" && ($_REQUEST['act'] === "buat_rincian_kegiatan")){
-            return $this->buat_rincian_kegiatan($id_uraian, $id_actbud, $data['data']);
-        } else if($method === "post" && ($_REQUEST['act'] === "delete_rincian_kegiatan")){
-            return $this->delete_rincian_kegiatan($id_uraian, $id_actbud, $data['data']);
-        } else if ($method === "post" && ($_REQUEST['act'] === "send_message")) {
-            return $this->buat_pesan($id_uraian, $id_actbud, $data['data']);
-        } else if ($method === "post" && ($_REQUEST['act'] === "hapus_pesan")) {
-            return $this->hapus_pesan($id_uraian, $id_actbud, $data['data']);
-        } else if ($method === "post" && ($_REQUEST['act'] === "hapus_pesan_reply")) {
-            return $this->hapus_pesan_reply($id_uraian, $id_actbud, $data['data']);
+        if($method == "post"){
+            $act = $this->input->post('act', true);
+            
+            switch ($act) {
+                case 'buat_rincian_kegiatan':
+                    return $this->buat_rincian_kegiatan($id_uraian, $id_actbud, $data['data']);
+                    break;
+                case 'delete_rincian_kegiatan':
+                    return $this->delete_rincian_kegiatan($id_uraian, $id_actbud, $data['data']);
+                    break;
+                case 'send_message':
+                    return $this->buat_pesan($id_uraian, $id_actbud, $data['data']);
+                    break;
+                case 'hapus_pesan':
+                    return $this->hapus_pesan($id_uraian, $id_actbud, $data['data']);
+                    break;
+                case 'hapus_pesan_reply':
+                    return $this->hapus_pesan_reply($id_uraian, $id_actbud, $data['data']);
+                    break;
+                case 'submit_rkat':
+                    return $this->submit_rkat($id_uraian, $id_actbud, $data['data']);
+                    break;
+                default:
+                    return show_error("Bad Request", 400, "400 - Error");
+                    break;
+            }
         }
-        
         return view('spa.pencairan_rkat.detail.v_detail_actbud_petty_cash', $data);
+    }
+
+    private function submit_rkat($id_uraian, $id_actbud, array $arr_data = null){
+        $pre_approval = $this->input->post('pre_approval', true);
+
+        $this->form_validation->set_rules('signature', 'Tanda Tangan', 'trim|required', [
+            'required' => '%s tidak boleh kosong.'
+        ]);
+
+        if ($_REQUEST['pre_approval'] != "") {
+            $this->form_validation->set_rules('pre_approval', 'Pre-Approval', 'trim|required|numeric', [
+                'required' => '%s tidak boleh kosong.'
+            ]);
+        }
+
+        if ($this->form_validation->run() === TRUE) {
+            // ttd
+            $signature = $this->input->post('signature');
+
+            if (check_base64_image($signature) === false) {
+                return show_error("Tanda tangan invalid!");
+            }
+
+            $signature = str_replace('data:image/png;base64,', '', $signature);
+            $signature = str_replace(' ', '+', $signature);
+
+            $this->db->where('kd_act', $id_actbud);
+            $update = $this->db->update('tbl_actbud', [
+                'status_act' => 'send',
+                'ttd_pic' => $signature
+            ]);
+
+            if ($update === true) {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Berhasil submit kegiatan',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+
+                return redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal submit kegiatan',
+                    'type'    => 'error',
+                    'title'   => ''
+                ]);
+
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+
+        } else {
+            $error = [
+                'form_error' => validation_errors_array()
+            ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 
     private function hapus_pesan_reply($id_uraian, $id_actbud, array $arr_data = null){

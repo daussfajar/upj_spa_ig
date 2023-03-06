@@ -47,7 +47,7 @@ $nik = decrypt($session['nik']);
             </div>            
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="table-actbud">
+                    <table class="table table-striped table-bordered table-hover" id="table-status-actbud">
                         <thead class="bg-purple text-white text-center">
                             <tr>
                                 <th width="50" style="vertical-align: middle">No</th>
@@ -61,7 +61,7 @@ $nik = decrypt($session['nik']);
                                 <th style="vertical-align: middle">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody-table-actbud"></tbody>
+                        <tbody id="tbody-table-status-actbud"></tbody>
                     </table>
                 </div>
             </div>
@@ -77,10 +77,10 @@ $nik = decrypt($session['nik']);
 <script>
     $(document).ready(function(){
         let base_url = "<?= base_url() ?>"
-        $("#table-actbud").DataTable({
+        $("#table-status-actbud").DataTable({
             initComplete: function() {
                 var api = this.api();
-                $('#table-actbud_filter input')
+                $('#table-status-actbud_filter input')
                 .off('.DT')
                 .on('input.DT', function() {
                     api.search(this.value).draw();
@@ -112,21 +112,21 @@ $nik = decrypt($session['nik']);
                     "data": "kd_act",
                     "class": "text-center v-middle font-14",
                     "sortable": false, 
-                    render: function (data, type, row, meta) {
+                    "render": function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
                     }  
                 },
                 {
                     "data": "kd_act",
                     "class": "v-middle",
-                    render: function(data, type, row){
+                    "render": function(data, type, row){
                         return '<span class="badge bg-primary p-2">' + 'ACT/' + data + '</span>'
                     }
                 },
                 {
                     "data": "kode_pencairan",
                     "class": "v-middle",
-                    render: function(data, type, row){
+                    "render": function(data, type, row){
                         return '<span class="badge bg-purple p-2">'+ data + '</span>'
                     }
                 },
@@ -159,8 +159,8 @@ $nik = decrypt($session['nik']);
                 {
                     "data": "kd_act",
                     "class": "v-middle text-center",
-                    render: function (data, type, row) {
-                        return ''
+                    "render": function (data, type, row) {
+                        return data;
                     }
                 },
             ],
@@ -169,9 +169,6 @@ $nik = decrypt($session['nik']);
             ],
             columnDefs: [
                 { "targets": 0, "searchable": false },
-                { "targets": 1, "searchable": true },
-                { "targets": 2, "searchable": true },
-                { "targets": 3, "searchable": true },
                 { "targets": 4, "searchable": false },
                 { "targets": 5, "searchable": false, "sortable": false },
                 { "targets": 6, "orderable": false, "searchable": false }

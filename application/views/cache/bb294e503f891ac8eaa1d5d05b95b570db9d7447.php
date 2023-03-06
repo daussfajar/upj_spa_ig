@@ -518,14 +518,14 @@ $uri5 = $CI->uri->segment(5);
 			<br>
 		</div>
         <?php } else { ?>
-		<?php echo form_open('app/sim-ig/hibah/pencairan/v_detail/' . $id_uraian . '/actbud/' . $id_actbud . '/submit', array('id' => 'form-submit-actbud', 'enctype' => 'multipart/form-data')); ?>
+		<?php echo form_open('app/sim-spa/pencairan-rkat/submit_rkat/' . $id_uraian . '/' . $id_actbud, array('id' => 'form-submit-actbud', 'enctype' => 'multipart/form-data')); ?>
 
 			<div class="card-box">        
 				<div class="alert alert-info">
 					<p class="mb-0"><i class="mdi mdi-information-variant"></i> Sebelum submit, pastikan anda sudah mengisi detail biaya dengan benar.</p>                        
 				</div>
 				<div class="float-right">
-					<a href="javasript:void(0)" id="btn-submit-actbud" class="btn btn-primary btn-sm">Submit <i class="mdi mdi-send"></i></a>
+					<a href="javasript:void(0)" id="btn-submit-actbud" class="btn btn-primary btn-sm btn-blo">Submit <i class="mdi mdi-send"></i></a>
 				</div>
 				<br>
 			</div>
@@ -609,6 +609,7 @@ $uri5 = $CI->uri->segment(5);
 								</div>
 							</div>
 						</div>
+						<input type="hidden" name="act" value="submit_rkat">
 						<input type="hidden" name="signature">
 						<div class="modal-footer">
 							<button type="button" data-dismiss="modal" class="btn btn-secondary btn-sm waves-light waves-effect">
@@ -855,10 +856,40 @@ $uri5 = $CI->uri->segment(5);
 <script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
 <script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script src="<?php echo e(base_url('assets/js/bootstrap-filestyle.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/signature-pad.js')); ?>"></script>
 <script>
 	$(document).ready(function(){
 		$('.dataTable').dataTable()
+		
 		<?php if($data['status_act'] == 'belum dikirim'): ?>
+
+		var wrapper = document.getElementById("signature-pad"),
+        clearButton = wrapper.querySelector("[data-action=clear]"),
+        saveButton = wrapper.querySelector("[data-action=save]"),
+        canvas = wrapper.querySelector("canvas"),
+        signaturePad
+
+
+        function resizeCanvas() {
+            var ratio =  window.devicePixelRatio || 1
+            canvas.width = canvas.offsetWidth * ratio
+            canvas.height = canvas.offsetHeight * ratio
+            canvas.getContext("2d").scale(ratio, ratio)
+        }
+
+        signaturePad = new SignaturePad(canvas)
+        clearButton.addEventListener("click", function (event) {
+            signaturePad.clear()
+        })
+
+		$('form#form-submit-actbud').submit(function(){
+            let inp_sig = $('input[type="hidden"][name="signature"]').val(signaturePad.toDataURL())
+            $('button[type="submit"]')
+            .attr('disabled', true)
+            .addClass('disabled')
+            .html('<i class="mdi mdi-spin mdi-loading"></i>')
+        })
+
 		$('#tb-dokumen').on('click', '.btn-hapus-dokumen', function(){
             $('#modal-hapus-dokumen-pendukung input[name="file_name"]').val($(this).data('file_name'))
             $('#modal-hapus-dokumen-pendukung input[name="id"]').val($(this).data('id'))
