@@ -1,4 +1,7 @@
 <?php 
+$session = $CI->session->userdata('user_sessions');
+$kode_unit = $session['kode_unit'];
+$jabatan = $session['kode_jabatan'];
 $agr_tersisa = ($data['t_act_agr'] - $data['s_tjb_act_agr']);
 $uri4 = $CI->uri->segment(4);
 $uri5 = $CI->uri->segment(5);
@@ -680,7 +683,13 @@ $uri5 = $CI->uri->segment(5);
 		}
 		?>
 
-	</div>
+		
+		<?php if($data['status_act'] == 'waiting_for_approval'): ?>
+			<?php if($data['kode_unit'] == $kode_unit && ($jabatan == 22 || $jabatan == 6)): ?>
+				<?php echo $__env->make('spa.partials.approval.form-kepala-unit', ['id_actbud' => $id_actbud], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+			<?php endif; ?>
+		<?php endif; ?>
+	</div>	
 
 	<?php if($data['status_act'] == 'belum dikirim'): ?>
 	<?php echo form_open(base_url('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud . '/upload-dokumen-pendukung'), array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>

@@ -1,16 +1,16 @@
+@extends('spa.layouts.user')
 
-
-<?php $__env->startSection('title'); ?>
+@section('title')
     <?= MOD2 ?> Approval Kepala Unit
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('page-title'); ?>
+@section('page-title')
     Approval Kepala Unit
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('css'); ?>
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+@section('css')
+<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
 <style>
     .v-middle{
         vertical-align: middle!important;
@@ -19,13 +19,13 @@
         font-size: 14px!important;
     }
 </style>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('breadcrumb'); ?>    
+@section('breadcrumb')    
     <li class="breadcrumb-item active"><a href="javascript: void(0);">Approval Kepala Unit</a></li>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('content'); ?>
+@section('content')
     <div class="col-lg-12">
         <div class="card card-border">
             <div class="card-header bg-transparent">
@@ -48,14 +48,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $__currentLoopData = $approval_actbud; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            @foreach ($approval_actbud as $item)
                                 <?php 
                                 $no_dokumen = $item['jns_aju_agr'] == 'actbud' ? 'ACT' : 'PTY';
                                 $date_m = date_create($item['tgl_m']);
                                 $date_s = date_create($item['tgl_s']);
                                 ?>
                                 <tr>
-                                    <th class="text-center v-middle"><?php echo e($loop->iteration); ?></th>
+                                    <th class="text-center v-middle">{{ $loop->iteration }}</th>
                                     <td class="v-middle">
                                         <span class="badge bg-primary p-2">
                                             <?= $no_dokumen . '/' . $item['kd_act'] ?>
@@ -99,20 +99,20 @@
                                         </a>
                                     </td>
                                 </tr>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('js'); ?>
-<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
+@section('js')
+<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function(){
         $(".dataTable").DataTable({
@@ -125,5 +125,4 @@
         })
     })
 </script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/approval/kepala-unit.blade.php ENDPATH**/ ?>
+@endsection

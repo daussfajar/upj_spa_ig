@@ -104,8 +104,8 @@
                     </ul>
                 </li>
                 <?php } ?>
-                <li class="">
-                    <a href="<?php echo e(base_url('app/sim-spa/approval-kepala-unit')); ?>" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                <li class="<?= menu_active(4, 'kepala-unit', 'mm-active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/approval/kepala-unit')); ?>" class="waves-effect waves-light <?= menu_active(4, 'kepala-unit', 'active') ?>">
                         <i class="mdi mdi-folder-outline"></i>
                         <span>  Approval Kepala Unit  </span>
                     </a>

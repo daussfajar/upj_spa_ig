@@ -85,5 +85,9 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
 // END ADMIN
 
 // START APPROVAL
-    $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/approval_warek_1';
+    $route['app/sim-spa/approval/kepala-unit'] = 'SPA/Approval/v_kepala_unit';
+    $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/v_warek_1';
+
+    $route['app/sim-spa/approval/kepala-unit/detail/(:num)'] = 'SPA/Approval/v_detail/$1';
+    $route['app/sim-spa/approval/kepala-unit/detail/(:num)/submit_actbud']['POST'] = 'SPA/Approval/submit_actbud_kabag/$1';
 // END APPROVAL
