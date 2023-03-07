@@ -6,7 +6,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
 @extends('spa.layouts.user')
 
 @section('title')
-    Detail Approval Actbud Wakil Rektor 1
+    Detail Approval Actbud Wakil Rektor 2
 @endsection
 
 @section('page-title')
@@ -36,7 +36,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
 
 @section('breadcrumb')
 <li class="breadcrumb-item">Approval</li>
-<li class="breadcrumb-item">Wakil Rektor 1</li>
+<li class="breadcrumb-item">Wakil Rektor 2</li>
 <li class="breadcrumb-item active">
     <?= $noDokumen; ?>
 </li>
@@ -179,7 +179,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                                         <div class="btn-group text-center" >
                                             <button class="text-white btn btn-primary btn-xs btn-beri-catatan"
                                                 data-id="<?= $data_t_j_b_act['id'] ?>"
-                                                data-catatan-wr1="<?= $data_t_j_b_act['c_jns_b_wr1'] ?>"> Beri Catatan 
+                                                data-catatan-wr2="<?= $data_t_j_b_act['c_jns_b_wr2'] ?>"> Beri Catatan 
                                             </button>
                                         </div>
                                     </td>
@@ -374,7 +374,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
 </div>
 
 <div class="col-lg-12">
-    {!! form_open('app/sim-spa/approval/warek1/kirim-persetujuan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
+    {!! form_open('app/sim-spa/approval/warek2/kirim-persetujuan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
     <div class="card">
         <div class="card-header">
         Form Persetujuan
@@ -385,16 +385,16 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="st_warek_1" id="st_warek_1_1" value="Disetujui Warek 1" checked>
-                            <label class="form-check-label" for="st_warek_1_1">
+                            <input class="form-check-input" type="radio" name="st_warek_2" id="st_warek_2_1" value="Disetujui Warek 2" checked>
+                            <label class="form-check-label" for="st_warek_2_1">
                                 Disetujui
                             </label>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="st_warek_1" id="st_warek_1_2" value="Ditolak Warek 1">
-                            <label class="form-check-label" for="st_warek_1_2">
+                            <input class="form-check-input" type="radio" name="st_warek_2" id="st_warek_2_2" value="Ditolak Warek 2">
+                            <label class="form-check-label" for="st_warek_2_2">
                                 Ditolak
                             </label>
                         </div>
@@ -415,7 +415,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
     {!! form_close() !!}
 </div>
 <div class="col-lg-12">
-    {!! form_open('app/sim-spa/approval/warek1/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
+    {!! form_open('app/sim-spa/approval/warek2/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
         <div class="card">
             <div class="card-header">
                 <span class="mdi mdi-comment"></span> Pesan
@@ -469,7 +469,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
     {!! form_close() !!}
 </div>
 
-{!! form_open('app/sim-spa/approval/warek1/kirim-catatan', array('class' => 'myForm')) !!}
+{!! form_open('app/sim-spa/approval/warek2/kirim-catatan', array('class' => 'myForm')) !!}
     <div id="modal-beri-catatan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -506,7 +506,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
     $(document).ready(function(){
         $('#tbody-table-detail-biaya').on('click', '.btn-beri-catatan', function(){
             var id = $(this).data('id');
-            var catatan = $(this).data('catatan-wr1');
+            var catatan = $(this).data('catatan-wr2');
             $('#modal-beri-catatan input[name="id"]').val(id);
             $('#modal-beri-catatan textarea[name="catatan"]').val(catatan);
             $('#modal-beri-catatan').modal('show');
