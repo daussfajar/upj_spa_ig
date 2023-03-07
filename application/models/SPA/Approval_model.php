@@ -11,8 +11,8 @@ class Approval_model extends CI_Model {
         $query = $this->db->query("
                                     SELECT 
                                         *,
-                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pic) as pic,
-                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pelaksana) as pelaksana
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pic) as nama_pic,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pelaksana) as nama_pelaksana
                                     FROM tbl_actbud
                                     WHERE
                                         tahun = ? AND 
@@ -45,6 +45,21 @@ class Approval_model extends CI_Model {
                                     ORDER BY kd_act desc
                             ", array($year));
         return $query->result_array();
+    }
+
+    public function get_actbud($where = null){
+        $this->db->select("
+            a.*,
+            b.nama_lengkap
+        ");
+        $this->db->from('tbl_actbud as a');
+        $this->db->join('tbl_karyawan as b', 'b.nik = a.pic', 'LEFT');
+        if($where != null){
+            $this->db->where($where);
+        }
+        $this->db->where('a.status_act', 'send');
+        $this->db->order_by('a.kd_act', 'DESC');
+        return $this->db->get()->result_array();
     }
 }
 ?>

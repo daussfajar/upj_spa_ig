@@ -5,11 +5,11 @@ $year = date('Y');
 @extends('spa.layouts.user')
 
 @section('title')
-    RKAT - Laporan Pencairan RKAT (ACTBUD / Petty Cash)
+    Approval Actbud Wakil Rektor 1
 @endsection
 
 @section('page-title')
-    Laporan Pencairan RKAT (ACTBUD / Petty Cash) <?= $year; ?>
+    Approval Actbud
 @endsection
 
 @section('css')
@@ -18,8 +18,8 @@ $year = date('Y');
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">RKAT</li>
-<li class="breadcrumb-item active">Laporan Pencairan</li>
+<li class="breadcrumb-item">Approval</li>
+<li class="breadcrumb-item active">Wakil Rektor 1</li>
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@ $year = date('Y');
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Data Laporan Pencairan RKAT
+            Silahkan Approve Actbud Tersebut
         </div>
         <div class="card-body">
             <div class="table-responsive my-4">
@@ -47,10 +47,30 @@ $year = date('Y');
                     </thead>
                     <tbody>
                         <?php
+                            $no = 1;
                             if(!empty($approval_actbud)){
                                 foreach($approval_actbud as $key => $value){
                         ?>
                                     <tr>
+                                        <td><?= $no++; ?></td>
+                                        <td>
+                                            <?php
+                                                if($value['jns_aju_agr'] == 'actbud'){
+                                                    echo 'ACT/' . $value['kd_act'];
+                                                }else{
+                                                    echo 'PTY/' . $value['kd_act'];
+                                                }
+                                            ?>
+                                        </td>
+                                        <td><?= $value['kode_pencairan']; ?></td>
+                                        <td>
+                                            <textarea cols="20" readonly rows="3"><?= $value['deskrip_keg'];?></textarea>
+                                        </td>
+                                        <td><?= $value['jns_aju_agr']; ?></td>
+                                        <td align="right"><?= number_format($value['fnl_agr'],'0','.','.'); ?></td>
+                                        <td><?= $value['nama_pic']; ?></td>
+                                        <td><?= $value['nama_pelaksana']; ?></td>
+                                        <td><a href="<?= base_url('app/sim-spa/approval/warek1/detail/') . $value['kd_act']; ?> ">Lihat</a> </td>
                                     </tr>
                         <?php
                                 }
