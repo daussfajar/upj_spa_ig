@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class RKAT_model extends CI_Model {    
+class Approval_model extends CI_Model {    
 
     function __construct(){
         parent::__construct();
@@ -11,9 +11,9 @@ class RKAT_model extends CI_Model {
         $query = $this->db->query("
                                     SELECT 
                                         *,
-                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_uraian.pic) as pic,
-                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_uraian.pelaksana) as pelaksana
-                                    FROM tbl_uraian
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pic) as pic,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pelaksana) as pelaksana
+                                    FROM tbl_actbud
                                     WHERE
                                         tahun = ? AND 
                                         (
