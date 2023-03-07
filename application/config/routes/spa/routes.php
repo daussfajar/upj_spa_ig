@@ -83,3 +83,7 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
         $route['app/sim-spa/admin/rkat/laporan-pencairan/kirim-pesan/(:any)'] = 'SPA/Admin/RKAT/kirim_pesan_laporan_pencairan/$1';
     // END RKAT
 // END ADMIN
+
+// START APPROVAL
+    $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/approval_warek_1';
+// END APPROVAL
