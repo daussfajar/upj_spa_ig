@@ -37,46 +37,7 @@ class Approval extends CI_Controller{
                 show_404();
             }
         }
-    }
-
-    public function kirim_pesan($id){
-        $this->form_validation->set_rules('nik', 'Data Pengirim', 'trim|required', [
-			'required' => '%s tidak boleh kosong'
-		]);
-        $this->form_validation->set_rules('pesan', 'Pesan', 'trim|required', [
-			'required' => '%s tidak boleh kosong'
-		]);
-		if($this->form_validation->run() === TRUE){
-            $dataInsert = array(
-                                'kd_act' => decrypt($id),
-                                'nik' => decrypt($this->input->post('nik')),
-                                'pesan' => $this->input->post('pesan')
-                            );
-            $queryInsert = $this->db->insert('tbl_chat', $dataInsert);
-            if($queryInsert){
-                $this->session->set_flashdata('alert', [
-                    'message' => 'Berhasil mengirim pesan',
-                    'type'    => 'success',	
-                    'title'   => ''
-                ]);
-            } else {
-                $this->session->set_flashdata('alert', [
-                    'message' => 'Gagal mengirim pesan',
-                    'type'    => 'error',	
-                    'title'   => ''
-                ]);
-            }
-            return redirect($_SERVER['HTTP_REFERER']);
-        } else {
-            $error = [
-				'form_error' => validation_errors_array()
-			];
-			$this->session->set_flashdata('error_validation', $error);
-            return redirect($_SERVER['HTTP_REFERER']);
-        }
-    }
-
-    public function kirim_catatan(){
+    }public function kirim_catatan_warek_1(){
         $this->form_validation->set_rules('id', 'Data Detail Biaya', 'trim|required', [
 			'required' => '%s tidak boleh kosong'
 		]);
@@ -108,7 +69,7 @@ class Approval extends CI_Controller{
         }
     }
 
-    public function kirim_persetujuan($id){
+    public function kirim_persetujuan_warek_1($id){
         $this->form_validation->set_rules('st_warek_1', 'Persetujuan Actbud', 'trim|required', [
 			'required' => '%s tidak boleh kosong'
 		]);
@@ -137,6 +98,43 @@ class Approval extends CI_Controller{
                 ]);
                 return redirect($_SERVER['HTTP_REFERER']);
             }
+        } else {
+            $error = [
+				'form_error' => validation_errors_array()
+			];
+			$this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    public function kirim_pesan($id){
+        $this->form_validation->set_rules('nik', 'Data Pengirim', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+        $this->form_validation->set_rules('pesan', 'Pesan', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		if($this->form_validation->run() === TRUE){
+            $dataInsert = array(
+                                'kd_act' => decrypt($id),
+                                'nik' => decrypt($this->input->post('nik')),
+                                'pesan' => $this->input->post('pesan')
+                            );
+            $queryInsert = $this->db->insert('tbl_chat', $dataInsert);
+            if($queryInsert){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Berhasil mengirim pesan',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal mengirim pesan',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+            }
+            return redirect($_SERVER['HTTP_REFERER']);
         } else {
             $error = [
 				'form_error' => validation_errors_array()

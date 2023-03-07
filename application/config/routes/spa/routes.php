@@ -87,7 +87,7 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
 // START APPROVAL
     $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/approval_warek_1';
     $route['app/sim-spa/approval/warek1/detail/(:num)'] = 'SPA/Approval/approval_warek_1/$1';
+    $route['app/sim-spa/approval/warek1/kirim-catatan'] = 'SPA/Approval/kirim_catatan_warek_1';
+    $route['app/sim-spa/approval/warek1/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_warek_1/$1';
     $route['app/sim-spa/approval/warek1/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
-    $route['app/sim-spa/approval/warek1/kirim-catatan'] = 'SPA/Approval/kirim_catatan';
-    $route['app/sim-spa/approval/warek1/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan/$1';
 // END APPROVAL
