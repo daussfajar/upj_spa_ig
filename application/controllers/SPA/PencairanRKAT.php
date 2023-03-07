@@ -43,7 +43,7 @@ class PencairanRKAT extends CI_Controller
             $data['periode'] = '1';
         } else if ($data['rkat_master']['periode'] == "Genap") {
             $data['periode'] = '2';
-        }        
+        }
         
         return view('spa.pencairan_rkat.actbud.v_input_actbud', $data);
     }
@@ -641,7 +641,11 @@ class PencairanRKAT extends CI_Controller
 
     public function v_status_actbud()
     {
-        return view('spa.pencairan_rkat.actbud.v_status_actbud');
+        $session = $this->session->userdata('user_sessions');
+        $nik = decrypt($session['nik']);
+        $data['data_actbud'] = $this->m_rkat->get_data_actbud_where_pic($nik, 'actbud');
+        
+        return view('spa.pencairan_rkat.actbud.v_status_actbud', $data);
     }
 
     public function v_input_pettycash()

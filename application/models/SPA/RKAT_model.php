@@ -128,7 +128,9 @@ class RKAT_model extends CI_Model {
             a7.tgl_m,
             a7.tgl_s,
             a7.tanggal_pembuatan,
+            a7.ttd_pic,
             ifnull(a7.status_act, 'belum dikirim') as status_act,
+            a7.status_penyesuaian,
             if (a1.periode='1', 'Ganjil', 'Genap') as periode,
             ifnull( a1.rp_ganjil ,'0') as rp_ganjil,
             ifnull( a1.rp_genap ,'0') as rp_genap,
@@ -141,7 +143,22 @@ class RKAT_model extends CI_Model {
             ((ifnull( a1.total_agr ,'0') + ifnull( a3.n_in ,'0')) - (sum(ifnull( a2.t_pyn_agr ,'0')) + ifnull( a4.n_out ,'0'))) AS sisa_anggaran,
             a7.agr as t_act_agr,
             (select sum(fnl_agr) from tbl_actbud where kode_uraian = a1.kode_uraian and st_kabag != 'Ditolak' group by kode_uraian) as s_act_agr,
-            (select sum(pra_pyn) from t_j_b_act where kd_act = a7.kd_act group by kd_act) as s_tjb_act_agr
+            (select sum(pra_pyn) from t_j_b_act where kd_act = a7.kd_act group by kd_act) as s_tjb_act_agr,
+            a7.sign,
+            a7.st_kabag,a7.c_kabag,a7.stamp_kabag,
+            a7.st_fhb,a7.c_fhb,a7.stamp_fhb,
+            a7.st_ftd,a7.c_ftd,a7.stamp_ftd,
+            a7.st_hrd,a7.c_hrd,a7.stamp_hrd,
+            a7.st_umum,a7.c_umum,a7.stamp_umum,
+            a7.st_ict,a7.c_ict,a7.stamp_ict,
+            a7.st_bkal,a7.c_bkal,a7.stamp_bkal,
+            a7.st_p2m,a7.c_p2m,a7.stamp_p2m,
+            a7.st_keu,a7.c_keu,a7.stamp_keu,
+            a7.st_dekan,a7.c_dekan,a7.stamp_dekan,
+            a7.st_warek_1,a7.c_warek1,a7.stamp_warek1,
+            a7.st_warek_2,a7.c_warek2,a7.stamp_warek2,
+            a7.st_rek,a7.c_rek,a7.stamp_rek,
+            a7.st_pres,a7.c_pres,a7.stamp_pres
         ")
         ->from('tbl_uraian as a1')
         ->join('total_kdact as a2', 'a2.kode_uraian = a1.kode_uraian', 'LEFT')
@@ -259,28 +276,33 @@ class RKAT_model extends CI_Model {
     }
 
     public function get_data_actbud_where_pic($nik = "", $jenis = "", $where = null){
-        // $query = "SELECT a.kd_act, a.kode_uraian, a.kode_pencairan, a.jns_aju_agr, a.kode_unit, a.pic, a.no_borang, 
-        // a.tgl_m, a.tgl_s, a.nama_kegiatan, a.kpi, IF(a.periode = 'ganjil', 'Ganjil', 'Genap') AS periode,
-        // a.tahun, a.agr, a.fnl_agr, a.deskrip_keg, a.pelaksana, IFNULL(a7.status_act, 'belum dikirim') AS status_act,
-        // a.status_penyesuaian, b.nama_lengkap AS nama_pelaksana, a.sign, a.st_kabag, a.c_kabag, a.stamp_kabag, 
-        // a.st_fhb, a.c_fhb, a.stamp_fhb, a.st_ftd, a.c_ftd, a.stamp_ftd, a.st_hrd, a.c_hrd, a.stamp_hrd, a.st_umum, a.c_umum,
-        // a.stamp_umum, a.st_ict, a.c_ict, a.stamp_ict, a.st_bkal, a.c_bkal, a.stamp_bkal, a.st_p2m, a.c_p2m, a.stamp_p2m,
-        // a.st_keu, a.c_keu, a.stamp_keu, a.st_dekan, a.c_dekan, a.stamp_dekan, a.st_warek_1, a.c_warek_1, a.stamp_warek_1,
-        // a.st_warek_2, a.c_warek2, a.stamp_warek2, a.st_rek, a.c_rek, a.stamp_rek, a.st_pres, a.c_pres, a.stamp_pres
-        // FROM tbl_actbud AS a JOIN tbl_karyawan AS b 
-        // ON a.pelaksana = b.nik WHERE";
-        $this->datatables->select("
-            a.*, b.nama_lengkap AS nama_pelaksana
-        ");
-        $this->datatables->from('tbl_actbud AS a');
-        $this->datatables->join('tbl_karyawan AS b', 'a.pelaksana = b.nik');        
-        $this->datatables->where('a.pic', $nik);
-        $this->datatables->where('a.jns_aju_agr', $jenis);
-        if ($where != null) {
-            $this->datatables->where($where);
-        }
-        $this->datatables->get_num_rows();
-        return $this->datatables->generate();
+        $query = "SELECT a.kd_act, a.kode_uraian, a.kode_pencairan, a.jns_aju_agr, a.kode_unit, a.pic, a.no_borang, 
+        a.tgl_m, a.tgl_s, a.nama_kegiatan, a.kpi, IF(a.periode = 'ganjil', 'Ganjil', 'Genap') AS periode,
+        a.tahun, a.agr, a.fnl_agr, a.deskrip_keg, a.pelaksana, IFNULL(a.status_act, 'belum dikirim') AS status_act,
+        a.status_penyesuaian, b.nama_lengkap AS nama_pelaksana, a.sign, a.st_kabag, a.c_kabag, a.stamp_kabag, 
+        a.st_fhb, a.c_fhb, a.stamp_fhb, a.st_ftd, a.c_ftd, a.stamp_ftd, a.st_hrd, a.c_hrd, a.stamp_hrd, a.st_umum, a.c_umum,
+        a.stamp_umum, a.st_ict, a.c_ict, a.stamp_ict, a.st_bkal, a.c_bkal, a.stamp_bkal, a.st_p2m, a.c_p2m, a.stamp_p2m,
+        a.st_keu, a.c_keu, a.stamp_keu, a.st_dekan, a.c_dekan, a.stamp_dekan, a.st_warek_1, a.c_warek1, a.stamp_warek1,
+        a.st_warek_2, a.c_warek2, a.stamp_warek2, a.st_rek, a.c_rek, a.stamp_rek, a.st_pres, a.c_pres, a.stamp_pres
+        FROM tbl_actbud AS a JOIN tbl_karyawan AS b 
+        ON a.pelaksana = b.nik WHERE a. pic = ? AND a.jns_aju_agr = ? 
+        ORDER BY a.kd_act DESC";
+
+        $sql = $this->db->query($query, [$nik, $jenis]);
+        return $sql->result_array();
+        
+        // $this->datatables->select("
+        //     a.*, b.nama_lengkap AS nama_pelaksana
+        // ");
+        // $this->datatables->from('tbl_actbud AS a');
+        // $this->datatables->join('tbl_karyawan AS b', 'a.pelaksana = b.nik');        
+        // $this->datatables->where('a.pic', $nik);
+        // $this->datatables->where('a.jns_aju_agr', $jenis);
+        // if ($where != null) {
+        //     $this->datatables->where($where);
+        // }
+        // $this->datatables->get_num_rows();
+        // return $this->datatables->generate();
     }
 }
 ?>

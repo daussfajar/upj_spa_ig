@@ -42,6 +42,53 @@ $uri5 = $CI->uri->segment(5);
 
 @section('content')
 	<div class="col-md-12">
+		<?php if($data['status_act'] != null){ ?>
+		<h6>Status Approval</h6>
+        <div class="card">
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead class="bg-dark text-white">
+							<tr>
+								<th class="v-middle text-center">Ka.Prodi / Unit</th>
+								<th class="v-middle text-center">Dekan</th>
+								<th class="v-middle text-center">Pre-Approval</th>
+								<th class="v-middle text-center">Bagian Keuangan</th>
+								<th class="v-middle text-center">Wakil Rektor</th>
+								<th class="v-middle text-center">Rektor</th>
+								<th class="v-middle text-center">Presiden</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="v-middle text-center">
+
+								</td>
+								<td class="v-middle text-center">
+
+								</td>
+								<td class="v-middle text-center">
+
+								</td>
+								<td class="v-middle text-center">
+
+								</td>
+								<td class="v-middle text-center">
+
+								</td>
+								<td class="v-middle text-center">
+
+								</td>
+								<td class="v-middle text-center">
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<?php } ?>
 		<div class="card card-border card-teal">
 			<div class="card-header border-teal bg-transparent">
 				<div class="float-left">
@@ -70,6 +117,11 @@ $uri5 = $CI->uri->segment(5);
 					@case('belum dikirim')
 					<span class="badge bg-warning p-2">
 						<i class="mdi mdi-progress-wrench"></i> Dalam Perencanaan
+					</span>
+					@break
+					@case('waiting_for_approval')
+					<span class="badge bg-orange p-2">
+						<i class="mdi mdi-progress-clock"></i> Menunggu Approval
 					</span>
 					@break
 					@default
@@ -445,7 +497,7 @@ $uri5 = $CI->uri->segment(5);
 				</div>
 				@endif
 			</div>
-			@if ($data['status_act'] == 'belum dikirim')
+
 			<input type="hidden" name="act" value="send_message">
 			<div class="card-footer">
 				<div class="list-group-item mb-1 d-none" id="reply-box">
@@ -481,8 +533,7 @@ $uri5 = $CI->uri->segment(5);
 						<button type="submit" name="kirim_pesan" class="btn waves-effect waves-light btn-primary"><i class="mdi mdi-send"></i></button>
 					</span>
 				</div>
-			</div>
-			@endif
+			</div>			
 		</div>
 		{!! form_close() !!}
 
@@ -734,7 +785,9 @@ $uri5 = $CI->uri->segment(5);
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-	{!! form_close() !!}
+	{!! form_close() !!}	
+
+	@endif
 
 	{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')) !!}
     <!-- modal hapus pesan -->
@@ -814,7 +867,6 @@ $uri5 = $CI->uri->segment(5);
     </div>    
 	{!! form_close() !!}
 
-	@endif
 @endsection
 
 @section('js')
@@ -830,6 +882,7 @@ $uri5 = $CI->uri->segment(5);
 		
 		<?php if($data['status_act'] == 'belum dikirim'): ?>
 
+		<?php if (!empty($rincian_kegiatan)){ ?>
 		var wrapper = document.getElementById("signature-pad"),
         clearButton = wrapper.querySelector("[data-action=clear]"),
         saveButton = wrapper.querySelector("[data-action=save]"),
@@ -848,7 +901,8 @@ $uri5 = $CI->uri->segment(5);
         clearButton.addEventListener("click", function (event) {
             signaturePad.clear()
         })
-
+		
+		<?php } ?>
 		$('form#form-submit-actbud').submit(function(){
             let inp_sig = $('input[type="hidden"][name="signature"]').val(signaturePad.toDataURL())
             $('button[type="submit"]')
@@ -886,7 +940,12 @@ $uri5 = $CI->uri->segment(5);
             $('#modal-hapus-rincian-kegiatan').modal('show')
             $('#modal-hapus-rincian-kegiatan input[name="id"]').val(data.id)
             $('#modal-hapus-rincian-kegiatan span#detail').text(data.nama_kegiatan)
+        })		
+
+		$('#btn-submit-actbud').click(function(){
+            $('#modal-submit-actbud').modal('show')
         })
+		<?php endif; ?>
 
 		$('#chat-section').on('click', '.reply-chat', function(event){
             $('#reply-box').removeClass('d-none')
@@ -922,11 +981,6 @@ $uri5 = $CI->uri->segment(5);
             $('#modal-hapus-pesan-reply p#pesan').text($(this).data('pesan'))
             $('#modal-hapus-pesan-reply').modal('show')
         })
-
-		$('#btn-submit-actbud').click(function(){
-            $('#modal-submit-actbud').modal('show')
-        })
-		<?php endif; ?>
 
 		function formatRupiah(angka, prefix){
 			var number_string = angka.replace(/[^,\d]/g, '').toString(),
