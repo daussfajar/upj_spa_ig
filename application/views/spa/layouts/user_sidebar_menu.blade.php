@@ -105,7 +105,7 @@
                 </li>
                 <?php } ?>
                 <li class="">
-                    <a href="javascript:void(0)" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                    <a href="{{ base_url('app/sim-spa/approval-kepala-unit') }}" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
                         <i class="mdi mdi-folder-outline"></i>
                         <span>  Approval Kepala Unit  </span>
                     </a>
