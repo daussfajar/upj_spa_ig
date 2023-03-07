@@ -90,4 +90,17 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
 
     $route['app/sim-spa/approval/kepala-unit/detail/(:num)'] = 'SPA/Approval/v_detail/$1';
     $route['app/sim-spa/approval/kepala-unit/detail/(:num)/submit_actbud']['POST'] = 'SPA/Approval/submit_actbud_kabag/$1';
+    // Approval Warek 1
+    $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/approval_warek_1';
+    $route['app/sim-spa/approval/warek1/detail/(:num)'] = 'SPA/Approval/approval_warek_1/$1';
+    $route['app/sim-spa/approval/warek1/kirim-catatan'] = 'SPA/Approval/kirim_catatan_warek_1';
+    $route['app/sim-spa/approval/warek1/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_warek_1/$1';
+    $route['app/sim-spa/approval/warek1/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
+
+    // Approval Warek 2
+    $route['app/sim-spa/approval/warek2'] = 'SPA/Approval/approval_warek_2';
+    $route['app/sim-spa/approval/warek2/detail/(:num)'] = 'SPA/Approval/approval_warek_2/$1';
+    $route['app/sim-spa/approval/warek2/kirim-catatan'] = 'SPA/Approval/kirim_catatan_warek_2';
+    $route['app/sim-spa/approval/warek2/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_warek_2/$1';
+    $route['app/sim-spa/approval/warek2/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
 // END APPROVAL

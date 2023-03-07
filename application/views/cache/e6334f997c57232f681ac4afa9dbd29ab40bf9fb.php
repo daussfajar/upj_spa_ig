@@ -3,19 +3,19 @@ $session = $CI->session->userdata('user_sessions');
 $year = date('Y');
 $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'] : "PTY-". $actbud[0]['kd_act'];
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
-    RKAT - Detail Laporan Pencairan RKAT - 
-@endsection
 
-@section('page-title')
-    Detail Laporan Pencairan RKAT
-@endsection
+<?php $__env->startSection('title'); ?>
+    Detail Approval Actbud Wakil Rektor 1
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<?php $__env->startSection('page-title'); ?>
+    Detail Approval Actbud
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
 <style>
     .chat{
         margin: 0;
@@ -32,24 +32,24 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
         margin-left: 60px;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
-<li class="breadcrumb-item">RKAT</li>
-<li class="breadcrumb-item">Laporan Pencairan</li>
+<?php $__env->startSection('breadcrumb'); ?>
+<li class="breadcrumb-item">Approval</li>
+<li class="breadcrumb-item">Wakil Rektor 1</li>
 <li class="breadcrumb-item active">
     <?= $noDokumen; ?>
 </li>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Detail Actbud
+            Data Actbud
         </div>
         <div class="card-body">
             <div class="row">
@@ -148,14 +148,14 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                 <table class="table table-striped table-bordered table-hover" border="1" width="100%" align="center" id="table-detail-biaya">
                     <thead>
                         <tr>
-                            <th><center>No </center></th>
-                            <th width="40%"><center>Jenis Biaya</center></th>
-                            <th width="35%"><center>Keterangan</center></th>
-                            <th><center>Anggaran Yang Diajukan</center></th>
-                            <th><center>Catatan Pimpinan</center></th>
+                            <th width="5%"><center>No </center></th>
+                            <th width="30%"><center>Jenis Biaya</center></th>
+                            <th width="30%"><center>Keterangan</center></th>
+                            <th width="15%"><center>Anggaran Yang Diajukan</center></th>
+                            <th width="20%" colspan="2"><center>Catatan Per Detail Biaya</center></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody-table-detail-biaya">
                     <?php
                         $totalTJBActbud = 0;
                         $no =1;
@@ -164,16 +164,24 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                                 $totalTJBActbud += $data_t_j_b_act['aju_agr'];
                     ?>
                                 <tr>
-                                    <td width="5%" align="left" valign="top"><center><?= $no;?></center></td>
-                                    <td width="25%" align="left" valign="top"><?= $data_t_j_b_act['jns_b'];?></td>
-                                    <td width="30%" align="left" valign="top"><?= $data_t_j_b_act['ket'];?></td>
-                                    <td width="20%" align="right" valign="top"><?= number_format($data_t_j_b_act['aju_agr'],'0','.','.'); ?></td>
-                                    <td width="20%" align="right" valign="top">
+                                    <td align="left" valign="top"><center><?= $no;?></center></td>
+                                    <td align="left" valign="top"><?= $data_t_j_b_act['jns_b'];?></td>
+                                    <td align="left" valign="top"><?= $data_t_j_b_act['ket'];?></td>
+                                    <td align="right" valign="top"><?= number_format($data_t_j_b_act['aju_agr'],'0','.','.'); ?></td>
+                                    <td align="right" valign="top">
                                         <?php 
                                             echo '<strong>Warek 1: </strong>'.  $data_t_j_b_act['c_jns_b_wr1'];
                                             echo '<br><strong>Warek 2: </strong>'. $data_t_j_b_act['c_jns_b_wr2'];
                                             echo '<br><strong>Rektor: </strong>'. $data_t_j_b_act['c_jns_b_rk'];
                                         ?>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group text-center" >
+                                            <button class="text-white btn btn-primary btn-xs btn-beri-catatan"
+                                                data-id="<?= $data_t_j_b_act['id'] ?>"
+                                                data-catatan-wr1="<?= $data_t_j_b_act['c_jns_b_wr1'] ?>"> Beri Catatan 
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                     <?php
@@ -364,8 +372,53 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
         </div>
     </div>
 </div>
+
 <div class="col-lg-12">
-    {!! form_open('app/sim-spa/admin/rkat/laporan-pencairan/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
+    <?php echo form_open('app/sim-spa/approval/warek1/kirim-persetujuan/' . encrypt($kd_act), array('class' => 'myForm')); ?>
+
+    <div class="card">
+        <div class="card-header">
+        Form Persetujuan
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="">Persetujuan Actbud: </label>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="st_warek_1" id="st_warek_1_1" value="Disetujui Warek 1" checked>
+                            <label class="form-check-label" for="st_warek_1_1">
+                                Disetujui
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="st_warek_1" id="st_warek_1_2" value="Ditolak Warek 1">
+                            <label class="form-check-label" for="st_warek_1_2">
+                                Ditolak
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">Catatan</label>
+                <textarea name="catatan" cols="30" rows="4" class="form-control" required></textarea>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="form-group">
+                <button class="btn btn-primary" id="btn-chat"><i class="mdi mdi-send"></i> Kirim</button>
+            </div>
+        </div>
+    </div>
+    <?php echo form_close(); ?>
+
+</div>
+<div class="col-lg-12">
+    <?php echo form_open('app/sim-spa/approval/warek1/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')); ?>
+
         <div class="card">
             <div class="card-header">
                 <span class="mdi mdi-comment"></span> Pesan
@@ -416,18 +469,55 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                 </div>
             </div>
         </div>
-    {!! form_close() !!}
+    <?php echo form_close(); ?>
+
 </div>
 
-@endsection
+<?php echo form_open('app/sim-spa/approval/warek1/kirim-catatan', array('class' => 'myForm')); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+    <div id="modal-beri-catatan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0">Catatan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>                
+                <div class="modal-body">
+                    <input type="hidden" name="id" value="">
+                    <div class="form-group">
+                        <label for="">Silahkan Input Catatan</label>
+                        <textarea name="catatan" cols="30" rows="4" class="form-control" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light"><i class="mdi mdi-pencil"></i> Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php echo form_close(); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
+        $('#tbody-table-detail-biaya').on('click', '.btn-beri-catatan', function(){
+            var id = $(this).data('id');
+            var catatan = $(this).data('catatan-wr1');
+            $('#modal-beri-catatan input[name="id"]').val(id);
+            $('#modal-beri-catatan textarea[name="catatan"]').val(catatan);
+            $('#modal-beri-catatan').modal('show');
+        });
+
         $("#table-detail-biaya").DataTable({
             oLanguage: {
                 sProcessing: "Loading..."
@@ -449,4 +539,5 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/approval/detail-approval-warek1.blade.php ENDPATH**/ ?>

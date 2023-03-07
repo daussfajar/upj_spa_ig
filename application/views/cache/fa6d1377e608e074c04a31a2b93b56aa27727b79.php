@@ -3,19 +3,19 @@ $session = $CI->session->userdata('user_sessions');
 $year = date('Y');
 $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'] : "PTY-". $actbud[0]['kd_act'];
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
+
+<?php $__env->startSection('title'); ?>
     RKAT - Detail Laporan Pencairan RKAT - 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-title')
+<?php $__env->startSection('page-title'); ?>
     Detail Laporan Pencairan RKAT
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
 <style>
     .chat{
         margin: 0;
@@ -32,9 +32,9 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
         margin-left: 60px;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item">RKAT</li>
 <li class="breadcrumb-item">Laporan Pencairan</li>
 <li class="breadcrumb-item active">
@@ -42,9 +42,9 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
 </li>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12">
     <div class="card">
@@ -365,7 +365,8 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
     </div>
 </div>
 <div class="col-lg-12">
-    {!! form_open('app/sim-spa/admin/rkat/laporan-pencairan/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
+    <?php echo form_open('app/sim-spa/admin/rkat/laporan-pencairan/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')); ?>
+
         <div class="card">
             <div class="card-header">
                 <span class="mdi mdi-comment"></span> Pesan
@@ -416,16 +417,17 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                 </div>
             </div>
         </div>
-    {!! form_close() !!}
+    <?php echo form_close(); ?>
+
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
         $("#table-detail-biaya").DataTable({
@@ -449,4 +451,5 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/admin/rkat/detail-laporan-pencairan.blade.php ENDPATH**/ ?>
