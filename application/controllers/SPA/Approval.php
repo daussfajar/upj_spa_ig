@@ -245,37 +245,72 @@ class Approval extends CI_Controller{
 
     // START Approval Dekan
     public function approval_keuangan($id = null){
+        $this->Global_model->only_finance_and_admin();
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $data['approval_actbud'] = $this->m_approval->get_actbud_approval_keuangan($this->year);
             return view('spa.approval.approval-keuangan', $data);
         } else {
-            $data['kd_act'] = $id;
-            $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
-            if(!empty($data['actbud'])){
-                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
-                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
-                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
-                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
-                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
-
-                return view('spa.approval.detail-approval-keuangan', $data);
-            } else {
-                show_404();
+            $this->load->model('SPA/RKAT_model', 'm_rkat');
+            $method = $this->input->method();
+            $session = $this->session->userdata('user_sessions');
+            $nik = decrypt($session['nik']);
+            $kode_unit = $session['kode_unit'];
+            $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
+            $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
+            $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
+            $data['periode'] = 0;
+            if ($data['rkat_master']['periode'] == "Ganjil") {
+                $data['periode'] = '1';
+            } else if ($data['rkat_master']['periode'] == "Genap") {
+                $data['periode'] = '2';
             }
+
+            $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a7.kd_act' => $id]);
+            if (empty($data['data'])) return show_404();
+            $data['id_uraian'] = $data['data']['kode_uraian'];
+            $data['id_actbud'] = $id;
+            $data['dokumen_pendukung'] = $this->m_rkat->get_act_dokumen_pendukung($id);
+            $data['rincian_kegiatan'] = $this->m_rkat->get_tjb_act($id);
+            $data['messages'] = $this->m_rkat->get_data_chat_actbud($id);
+
+            if ($method == "post") {
+                $act = $this->input->post('act', true);
+                switch ($act) {
+                    case 'send_message':
+                        return $this->buat_pesan($id_uraian, $id, $data['data']);
+                        break;
+                    case 'hapus_pesan':
+                        return $this->hapus_pesan($id_uraian, $id, $data['data']);
+                        break;
+                    case 'hapus_pesan_reply':
+                        return $this->hapus_pesan_reply($id_uraian, $id, $data['data']);
+                        break;
+                    default:
+                        return show_error("Bad Request", 400, "400 - Error");
+                        break;
+                }
+            }
+            
+            return view('spa.approval.detail.keuangan', $data);
         }
     }
 
     public function kirim_persetujuan_keuangan($id){
-        $this->form_validation->set_rules('st_keuangan', 'Persetujuan Actbud', 'trim|required', [
+        $this->form_validation->set_rules('approval', 'Persetujuan Actbud', 'trim|required', [
             'required' => '%s tidak boleh kosong'
         ]);
-        $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
-            'required' => '%s tidak boleh kosong'
-        ]);
+        // $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+        //     'required' => '%s tidak boleh kosong'
+        // ]);
         if($this->form_validation->run() === TRUE){
+            $approval = $this->input->post('approval', true);
+            if ($approval == "Disetujui" || $approval == "Ditolak") {
+                // return true
+            } else return show_error("Bad Request", 400, "400 - Error");
+
             $dataUpdate = array(
-                            'st_keu' => $this->input->post('st_keuangan'),
+                            'st_keu' => $approval,
                             'c_keu' => $this->input->post('catatan'),
                             'stamp_keu' => date('d-m-Y H:i:s')
                         );
@@ -286,7 +321,7 @@ class Approval extends CI_Controller{
                     'type'    => 'success',	
                     'title'   => ''
                 ]);
-                return redirect(base_url('app/sim-spa/approval/keuangan'));
+                return redirect($_SERVER['HTTP_REFERER']);
             } else {
                 $this->session->set_flashdata('alert', [
                     'message' => 'Gagal melakukan persetujuan kegiatan ini',

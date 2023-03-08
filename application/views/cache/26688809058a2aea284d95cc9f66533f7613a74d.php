@@ -120,8 +120,8 @@
                 </li>
                 <?php endif; ?>
                 <?php if($jabatan == 22 && $kode_unit == 002): ?>
-                <li class="">
-                    <a href="<?php echo e(base_url('app/sim-spa/approval-terkait-anggaran')); ?>" class="waves-effect waves-light">
+                <li class="<?= menu_active(4, 'keuangan', 'mm-active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/approval/keuangan')); ?>" class="waves-effect waves-light <?= menu_active(4, 'keuangan', 'active') ?>">
                         <i class="mdi mdi-folder-outline"></i>
                         <span>  Approval Terkait Anggaran  </span>
                     </a>

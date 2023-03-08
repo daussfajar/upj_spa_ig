@@ -145,6 +145,7 @@ class RKAT_model extends CI_Model {
             (select sum(fnl_agr) from tbl_actbud where kode_uraian = a1.kode_uraian and st_kabag != 'Ditolak' group by kode_uraian) as s_act_agr,
             (select sum(pra_pyn) from t_j_b_act where kd_act = a7.kd_act group by kd_act) as s_tjb_act_agr,
             a7.sign,
+            a9.nama_unit nama_sign,
             a7.st_kabag,a7.c_kabag,a7.stamp_kabag,
             a7.st_fhb,a7.c_fhb,a7.stamp_fhb,
             a7.st_ftd,a7.c_ftd,a7.stamp_ftd,
@@ -167,7 +168,8 @@ class RKAT_model extends CI_Model {
         ->join('p_out as a4', 'a4.id_uraian_f = a1.kode_uraian', 'LEFT')
         ->join('tbl_karyawan as a5', 'a5.nik = a1.pic')
         ->join('tbl_unit as a6', 'a5.kode_unit = a6.kode_unit', 'LEFT')
-        ->join('tbl_karyawan as a8', 'a7.pelaksana = a8.nik', 'LEFT')
+        ->join('tbl_karyawan as a8', 'a7.pelaksana = a8.nik')
+        ->join('tbl_unit as a9', 'a7.sign = a9.kode_unit', 'LEFT')
         ->where($where)
         ->group_by('a1.kode_uraian')
         ->get()

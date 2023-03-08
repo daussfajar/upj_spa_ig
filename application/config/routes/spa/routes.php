@@ -99,15 +99,13 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
     // Approval Keuangan
     $route['app/sim-spa/approval/keuangan'] = 'SPA/Approval/approval_keuangan';
     $route['app/sim-spa/approval/keuangan/detail/(:num)'] = 'SPA/Approval/approval_keuangan/$1';
-    $route['app/sim-spa/approval/keuangan/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_keuangan/$1';
-    $route['app/sim-spa/approval/keuangan/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
+    $route['app/sim-spa/approval/keuangan/kirim-persetujuan/(:any)']['POST'] = 'SPA/Approval/kirim_persetujuan_keuangan/$1';    
 
     // Approval Dekan
     $route['app/sim-spa/approval/dekan'] = 'SPA/Approval/approval_dekan';
     $route['app/sim-spa/approval/dekan/detail/(:num)'] = 'SPA/Approval/approval_dekan/$1';
     $route['app/sim-spa/approval/dekan/kirim-persetujuan-fhb/(:any)'] = 'SPA/Approval/kirim_persetujuan_dekan_fhb/$1';
-    $route['app/sim-spa/approval/dekan/kirim-persetujuan-ftd/(:any)'] = 'SPA/Approval/kirim_persetujuan_dekan_ftd/$1';
-    $route['app/sim-spa/approval/dekan/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
+    $route['app/sim-spa/approval/dekan/kirim-persetujuan-ftd/(:any)'] = 'SPA/Approval/kirim_persetujuan_dekan_ftd/$1';    
 
     // Approval Warek 1
     $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/approval_warek_1';
