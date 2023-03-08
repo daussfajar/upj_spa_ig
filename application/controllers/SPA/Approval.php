@@ -15,16 +15,17 @@ class Approval extends CI_Controller{
     public function index(){
         return show_404();
     }
+
     public function v_kepala_unit(){
         $session = $this->session->userdata('user_sessions');
         $kode_unit = $session['kode_unit'];
         $this->Global_model->is_kabag($kode_unit);
-        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_kepala_unit($this->year, $kode_unit);        
-
+        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_kepala_unit($this->year, $kode_unit);
+        
         return view('spa.approval.kepala-unit', $data);
     }
 
-    public function v_detail(int $id_actbud){
+    public function v_detail_kepala_unit(int $id_actbud){
         $this->Global_model->is_access_approval_module();
         $this->load->model('SPA/RKAT_model', 'm_rkat');
         $method = $this->input->method();
@@ -65,14 +66,18 @@ class Approval extends CI_Controller{
                     return show_error("Bad Request", 400, "400 - Error");
                     break;
             }
-        }
-
-        $data['content'] = [
-            'form_approval' => true,
-            'chat_approval' => true
-        ];
+        }        
         
-        return view('spa.pencairan_rkat.detail.v_detail_actbud_petty_cash', $data);
+        return view('spa.approval.detail.kepala-unit', $data);
+    }
+
+    public function v_pre_approval(){
+        $session = $this->session->userdata('user_sessions');
+        $kode_unit = $session['kode_unit'];
+        $this->Global_model->is_access_pre_approval_module();
+        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_kepala_unit($this->year, $kode_unit);
+
+        return view('spa.approval.approval-pre-approval', $data);
     }
 
     // START Approval Dekan
@@ -101,6 +106,50 @@ class Approval extends CI_Controller{
             } else {
                 show_404();
             }
+        }
+    }
+
+    public function kirim_persetujuan_kepala_unit($id)
+    {
+        $this->form_validation->set_rules('approval', 'Persetujuan Actbud', 'trim|required', [
+            'required' => '%s tidak boleh kosong'
+        ]);
+        // $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+        //     'required' => '%s tidak boleh kosong'
+        // ]);
+        if ($this->form_validation->run() === TRUE) {
+            $approval = $this->input->post('approval', true);
+            if($approval == "Disetujui" || $approval == "Ditolak"){
+                // return true
+            } else return show_error("Bad Request", 400, "400 - Error");
+
+            $dataUpdate = array(
+                'st_kabag' => $approval,
+                'c_kabag' => $this->input->post('catatan', true),
+                'stamp_kabag' => date('d-m-Y H:i:s')
+            );
+            $queryUpdate = $this->db->update('tbl_actbud', $dataUpdate, array('kd_act' => decrypt($id)));
+            if ($queryUpdate) {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Terima Kasih Telah Melakukan Persetujuan Kegiatan ini',
+                    'type'    => 'success',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal melakukan persetujuan kegiatan ini',
+                    'type'    => 'error',
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $error = [
+                'form_error' => validation_errors_array()
+            ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
         }
     }
 

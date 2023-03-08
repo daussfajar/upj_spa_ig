@@ -45,53 +45,9 @@ $uri5 = $CI->uri->segment(5);
 
 @section('content')
 	<div class="col-md-12">
-		<?php if($data['status_act'] != null){ ?>
-		<h6>Status Approval</h6>
-        <div class="card">
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover">
-						<thead class="bg-dark text-white">
-							<tr>
-								<th class="v-middle text-center">Ka.Prodi / Unit</th>
-								<th class="v-middle text-center">Dekan</th>
-								<th class="v-middle text-center">Pre-Approval</th>
-								<th class="v-middle text-center">Bagian Keuangan</th>
-								<th class="v-middle text-center">Wakil Rektor</th>
-								<th class="v-middle text-center">Rektor</th>
-								<th class="v-middle text-center">Presiden</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<?php } ?>
+		@if($data['status_act'] != null)
+		@include('spa.approval.detail.status-approval')
+		@endif
 		<div class="card card-border card-teal">
 			<div class="card-header border-teal bg-transparent">
 				<div class="float-left">
@@ -383,8 +339,8 @@ $uri5 = $CI->uri->segment(5);
             </div>
         	@endif
 		</div>
-
-		{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+		
+		{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}		
 		<div class="card card-border card-purple" id="card-chat">
 			<div class="card-header border-purple bg-transparent">
 				<h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
@@ -580,11 +536,11 @@ $uri5 = $CI->uri->segment(5);
 								<label for="">Pre-Approval</label>
 								<select name="pre_approval" id="pre_approval" class="form-control">
 									<option value="">Pilih Pre-Approval</option>                            
-									<option value="hrd">HRD</option>
-									<option value="ict">ICT</option>
-									<option value="ga">GA</option>
-									<option value="bkal">BKAL</option>
-									<option value="p2m">P2M</option>
+									<option value="006">HRD</option>
+									<option value="004">ICT</option>
+									<option value="003">GA</option>
+									<option value="013">BKAL</option>
+									<option value="016">P2M</option>
 								</select>
 								<span class="help-block">
 									<small>
@@ -662,7 +618,48 @@ $uri5 = $CI->uri->segment(5);
 		<?php 
 			}
 		}
-		?>			
+		?>
+        
+		@if ($data['st_kabag'] == "")					
+        {!! form_open('app/sim-spa/approval/kepala-unit/kirim-persetujuan/' . encrypt($id_actbud), array('id' => 'form-persetujuan', 'class' => 'myForm')) !!}	
+        <div class="card">
+            <div class="card-header bg-transparent">
+                <h5 class="card-title mb-0">FORM PERSETUJUAN</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <p class="mb-0"><i class="mdi mdi-information-variant"></i> Note: Sebelum submit, pastikan anda sudah
+                        membaca dan mengetahui kegiatan ini.</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 control-label">Apakah actbud ini disetujui?</label>
+                    <div class="col-md-9">
+                        <div class="radio radio-success form-check-inline">
+                            <input type="radio" id="chk-setuju" value="Disetujui" name="approval" required>
+                            <label for="chk-setuju"> Ya, Setuju </label>
+                        </div>
+                        <div class="radio radio-danger form-check-inline">
+                            <input type="radio" id="chk-tidak-setuju" value="Ditolak" name="approval" required>
+                            <label for="chk-tidak-setuju"> Tidak Setuju </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 control-label">Catatan (jika ada)</label>
+                    <div class="col-md-9">
+                        <textarea name="catatan" id="catatan" placeholder="Buat catatan disini..." cols="3" rows="3"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-primary btn-block">
+                    Submit
+                </button>
+            </div>
+        </div>
+        {!! form_close() !!}
+		@endif
 	</div>	
 
 	@if ($data['status_act'] == 'belum dikirim')
@@ -792,8 +789,8 @@ $uri5 = $CI->uri->segment(5);
 	{!! form_close() !!}	
 
 	@endif
-
-	{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')) !!}
+	
+	{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}	
     <!-- modal hapus pesan -->
 	<input type="hidden" name="act" value="hapus_pesan">
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -831,8 +828,8 @@ $uri5 = $CI->uri->segment(5);
         </div>        
     </div>    
 	{!! form_close() !!}
-
-	{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')) !!}
+		
+	{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}	
     <!-- modal hapus pesan -->
     <div id="modal-hapus-pesan-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

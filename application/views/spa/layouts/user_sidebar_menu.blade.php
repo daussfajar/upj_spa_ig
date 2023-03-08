@@ -87,7 +87,7 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="javascript:void(0)">Approval Ka.Unit/Prodi</a></li>
+                        <li><a href="{{ base_url('app/sim-spa/admin/') }}">Approval Ka.Unit/Prodi</a></li>
                         <!-- level 2 -->
                         <li><a href="javascript:void(0)">Approval Ka. Umum</a></li>
                         <li><a href="javascript:void(0)">Approval Ka.HRD</a></li>

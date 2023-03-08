@@ -88,8 +88,13 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
 
     // Approval Kepala Unit
     $route['app/sim-spa/approval/kepala-unit'] = 'SPA/Approval/v_kepala_unit';
-    $route['app/sim-spa/approval/kepala-unit/detail/(:num)'] = 'SPA/Approval/v_detail/$1';
-    $route['app/sim-spa/approval/kepala-unit/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_kepala_unit/$1';
+    $route['app/sim-spa/approval/kepala-unit/detail/(:num)'] = 'SPA/Approval/v_detail_kepala_unit/$1';
+    $route['app/sim-spa/approval/kepala-unit/kirim-persetujuan/(:any)']['POST'] = 'SPA/Approval/kirim_persetujuan_kepala_unit/$1';
+
+    // Approval Pre-Approval
+    $route['app/sim-spa/approval/pre-approval'] = 'SPA/Approval/v_pre_approval';
+    $route['app/sim-spa/approval/pre-approval/detail/(:num)'] = 'SPA/Approval/v_detail_pre_approval/$1';
+    $route['app/sim-spa/approval/pre-approval/kirim-persetujuan/(:any)']['POST'] = 'SPA/Approval/kirim_persetujuan_kepala_unit/$1';
 
     // Approval Dekan
     $route['app/sim-spa/approval/dekan'] = 'SPA/Approval/approval_dekan';
