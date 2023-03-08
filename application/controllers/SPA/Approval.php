@@ -13,16 +13,6 @@ class Approval extends CI_Controller{
     public function index(){
         return show_404();
     }
-
-    public function v_warek_1(){
-        $session = $this->session->userdata('user_sessions');
-        $year = date('Y');
-        $year = 2022;
-        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_warek1($year);
-
-        return view('spa.approval.warek-1', $data);
-    }
-
     public function v_kepala_unit(){
         $session = $this->session->userdata('user_sessions');
         $kode_unit = $session['kode_unit'];
@@ -74,8 +64,6 @@ class Approval extends CI_Controller{
         return view('spa.pencairan_rkat.detail.v_detail_actbud_petty_cash', $data);
     }
 
-    public function submit_actbud_kabag(){
-        pr($_REQUEST);
     // START Approval Warek 1
     public function approval_warek_1($id = null){
         if($id == null){
@@ -177,7 +165,6 @@ class Approval extends CI_Controller{
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $year = date('Y');
-            $year = 2021;
             $data['approval_actbud'] = $this->m_approval->get_actbud_approval_warek2($year);
 
             return view('spa.approval.approval-warek2', $data);
@@ -268,6 +255,104 @@ class Approval extends CI_Controller{
         }
     }
     // END Approval Warek 2
+
+    // START Approval Rektor
+    
+    public function approval_rektor($id = null){
+        if($id == null){
+            $session = $this->session->userdata('user_sessions');
+            $year = date('Y');
+            $year = 2021;
+            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_rektor($year);
+
+            return view('spa.approval.approval-rektor', $data);
+        } else {
+            $data['kd_act'] = $id;
+            $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
+            if(!empty($data['actbud'])){
+                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
+                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
+    
+                return view('spa.approval.detail-approval-rektor', $data);
+            } else {
+                show_404();
+            }
+        }
+    }
+    
+    public function kirim_catatan_rektor(){
+        $this->form_validation->set_rules('id', 'Data Detail Biaya', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+        $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		if($this->form_validation->run() === TRUE){
+            $queryUpdate = $this->db->update('t_j_b_act', array('c_jns_b_rk' => $this->input->post('catatan')), array('id' => $this->input->post('id')));
+            if($queryUpdate){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Berhasil beri catatan',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal beri catatan',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+            }
+            return redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            $error = [
+				'form_error' => validation_errors_array()
+			];
+			$this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    public function kirim_persetujuan_rektor($id){
+        $this->form_validation->set_rules('st_rek', 'Persetujuan Actbud', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+        $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		if($this->form_validation->run() === TRUE){
+            $dataUpdate = array(
+                            'st_rek' => $this->input->post('st_rek'),
+                            'c_rek' => $this->input->post('catatan'),
+                            'stamp_rek' => date('d-m-Y H:i:s')
+                        );
+            $queryUpdate = $this->db->update('tbl_actbud', $dataUpdate, array('kd_act' => decrypt($id)));
+            if($queryUpdate){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Terima Kasih Telah Melakukan Persetujuan Kegiatan ini',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+                return redirect(base_url('app/sim-spa/approval/rektor'));
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal melakukan persetujuan kegiatan ini',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $error = [
+				'form_error' => validation_errors_array()
+			];
+			$this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+    // END Approval Rektor
 
     public function kirim_pesan($id){
         $this->form_validation->set_rules('nik', 'Data Pengirim', 'trim|required', [

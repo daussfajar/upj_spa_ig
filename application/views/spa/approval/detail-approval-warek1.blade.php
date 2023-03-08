@@ -171,8 +171,8 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                                     <td align="right" valign="top">
                                         <?php 
                                             echo '<strong>Warek 1: </strong><br>'.  $data_t_j_b_act['c_jns_b_wr1'];
-                                            echo '<br><strong>Warek 2: </strong><br>'. $data_t_j_b_act['c_jns_b_wr2'];
-                                            echo '<br><strong>Rektor: </strong><br>'. $data_t_j_b_act['c_jns_b_rk'];
+                                            echo '<br><br><strong>Warek 2: </strong><br>'. $data_t_j_b_act['c_jns_b_wr2'];
+                                            echo '<br><br><strong>Rektor: </strong><br>'. $data_t_j_b_act['c_jns_b_rk'];
                                         ?>
                                     </td>
                                     <td>
@@ -334,7 +334,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                     <thead>
                         <tr>
                             <th><center>No</center></th>
-                            <th><center>nm Dokumen</center></th>
+                            <th><center>Nama Dokumen</center></th>
                             <th colspan="1"><center>Aksi</center></th>
                         </tr>
                     </thead>
