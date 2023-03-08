@@ -257,12 +257,10 @@ class Approval extends CI_Controller{
     // END Approval Warek 2
 
     // START Approval Rektor
-    
     public function approval_rektor($id = null){
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $year = date('Y');
-            $year = 2021;
             $data['approval_actbud'] = $this->m_approval->get_actbud_approval_rektor($year);
 
             return view('spa.approval.approval-rektor', $data);
@@ -353,6 +351,71 @@ class Approval extends CI_Controller{
         }
     }
     // END Approval Rektor
+
+    // START Approval Presiden
+    public function approval_presiden($id = null){
+        if($id == null){
+            $session = $this->session->userdata('user_sessions');
+            $year = date('Y');
+            $year = 2021;
+            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_presiden($year);
+
+            return view('spa.approval.approval-presiden', $data);
+        } else {
+            $data['kd_act'] = $id;
+            $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
+            if(!empty($data['actbud'])){
+                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
+                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
+    
+                return view('spa.approval.detail-approval-presiden', $data);
+            } else {
+                show_404();
+            }
+        }
+    }
+
+    public function kirim_persetujuan_presiden($id){
+        $this->form_validation->set_rules('st_pres', 'Persetujuan Actbud', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+        $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+			'required' => '%s tidak boleh kosong'
+		]);
+		if($this->form_validation->run() === TRUE){
+            $dataUpdate = array(
+                            'st_pres' => $this->input->post('st_pres'),
+                            'c_pres' => $this->input->post('catatan'),
+                            'stamp_pres' => date('d-m-Y H:i:s')
+                        );
+            $queryUpdate = $this->db->update('tbl_actbud', $dataUpdate, array('kd_act' => decrypt($id)));
+            if($queryUpdate){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Terima Kasih Telah Melakukan Persetujuan Kegiatan ini',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+                return redirect(base_url('app/sim-spa/approval/presiden'));
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal melakukan persetujuan kegiatan ini',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $error = [
+				'form_error' => validation_errors_array()
+			];
+			$this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+    // END Approval Presiden
 
     public function kirim_pesan($id){
         $this->form_validation->set_rules('nik', 'Data Pengirim', 'trim|required', [

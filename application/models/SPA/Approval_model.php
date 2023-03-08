@@ -148,6 +148,42 @@ class Approval_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_actbud_approval_presiden($year){
+        $query = $this->db->query("
+                                    SELECT 
+                                        *,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pic) as nama_pic,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pelaksana) as nama_pelaksana
+                                    FROM tbl_actbud
+                                    WHERE
+                                        tahun = ? AND 
+                                        (   
+                                            fnl_agr >= 10000000 
+                                            AND st_rek ='Disetujui'
+                                            AND ((st_pres NOT LIKE 'Disetujui') AND (st_pres NOT LIKE 'Ditolak'))
+                                        ) OR 
+                                        ( 
+                                            kd_act >= 2510
+                                            AND fnl_agr > 500000
+                                            AND st_keu ='Disetujui' 
+                                            AND jns_aju_agr = 'petty cash' 
+                                            AND (kode_unit = '003' OR kode_unit ='005' OR kode_unit ='006') 
+                                            AND (
+                                                (st_warek_1 NOT LIKE 'Disetujui Warek 1')
+                                                AND (st_warek_1 NOT LIKE 'Ditolak Warek 1') 
+                                                AND (st_warek_2 NOT LIKE 'Disetujui Warek 2')
+                                                AND (st_warek_2 NOT LIKE 'Ditolak Warek 2') 
+                                                AND (st_rek NOT LIKE 'Disetujui')
+                                                AND (st_rek NOT LIKE 'Ditolak') 
+                                                AND (st_pres NOT LIKE 'Disetujui')
+                                                AND (st_pres NOT LIKE 'Ditolak')
+                                            ) 
+                                        )
+                                    ORDER BY kd_act desc
+                            ", array($year));
+        return $query->result_array();
+    }
+
     public function get_actbud($where = null){
         $this->db->select("
             a.*,

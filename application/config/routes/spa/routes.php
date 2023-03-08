@@ -112,4 +112,10 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
     $route['app/sim-spa/approval/rektor/kirim-catatan'] = 'SPA/Approval/kirim_catatan_rektor';
     $route['app/sim-spa/approval/rektor/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_rektor/$1';
     $route['app/sim-spa/approval/rektor/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
+
+    // Approval Presiden
+    $route['app/sim-spa/approval/presiden'] = 'SPA/Approval/approval_presiden';
+    $route['app/sim-spa/approval/presiden/detail/(:num)'] = 'SPA/Approval/approval_presiden/$1';
+    $route['app/sim-spa/approval/presiden/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_presiden/$1';
+    $route['app/sim-spa/approval/presiden/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
 // END APPROVAL
