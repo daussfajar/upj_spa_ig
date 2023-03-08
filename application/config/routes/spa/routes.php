@@ -90,6 +90,7 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
     $route['app/sim-spa/approval/kepala-unit'] = 'SPA/Approval/v_kepala_unit';
     $route['app/sim-spa/approval/kepala-unit/detail/(:num)'] = 'SPA/Approval/v_detail/$1';
     $route['app/sim-spa/approval/kepala-unit/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_kepala_unit/$1';
+    $route['app/sim-spa/approval/kepala-unit/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
 
     // Approval Warek 1
     $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/approval_warek_1';
