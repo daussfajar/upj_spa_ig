@@ -199,37 +199,6 @@ class Approval extends CI_Controller{
         }
     }
 
-    // START Approval Dekan
-    public function approval_dekan($id = null){
-        if($id == null){
-            $session = $this->session->userdata('user_sessions');
-
-            if($session['kode_unit'] == "105" || $session['kode_unit'] == "106" || $session['kode_unit'] == "107" || $session['kode_unit'] == "108" || $session['kode_unit'] == "109" || $session['kode_unit'] == "110" || $session['kode_unit'] == "018" || $session['kode_unit'] == "020"){
-                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_ftd($this->year);
-            } else if ($session['kode_unit'] == "101" || $session['kode_unit'] == "102" || $session['kode_unit'] == "103" || $session['kode_unit'] == "104" || $session['kode_unit'] == "019" || $session['kode_unit'] == "112" || $session['kode_unit'] == "017") {
-                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_fhb($this->year);
-            } else {
-                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan($this->year);
-            }
-
-            return view('spa.approval.approval-dekan', $data);
-        } else {
-            $data['kd_act'] = $id;
-            $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
-            if(!empty($data['actbud'])){
-                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
-                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
-                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
-                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
-                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
-
-                return view('spa.approval.detail-approval-dekan', $data);
-            } else {
-                show_404();
-            }
-        }
-    }
-
     public function kirim_persetujuan_kepala_unit($id)
     {
         $this->form_validation->set_rules('approval', 'Persetujuan Actbud', 'trim|required', [
@@ -271,6 +240,98 @@ class Approval extends CI_Controller{
             ];
             $this->session->set_flashdata('error_validation', $error);
             return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    // START Approval Dekan
+    public function approval_keuangan($id = null){
+        if($id == null){
+            $session = $this->session->userdata('user_sessions');
+            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_keuangan($this->year);
+            return view('spa.approval.approval-keuangan', $data);
+        } else {
+            $data['kd_act'] = $id;
+            $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
+            if(!empty($data['actbud'])){
+                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
+                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
+
+                return view('spa.approval.detail-approval-keuangan', $data);
+            } else {
+                show_404();
+            }
+        }
+    }
+
+    public function kirim_persetujuan_keuangan($id){
+        $this->form_validation->set_rules('st_keuangan', 'Persetujuan Actbud', 'trim|required', [
+            'required' => '%s tidak boleh kosong'
+        ]);
+        $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+            'required' => '%s tidak boleh kosong'
+        ]);
+        if($this->form_validation->run() === TRUE){
+            $dataUpdate = array(
+                            'st_keu' => $this->input->post('st_keuangan'),
+                            'c_keu' => $this->input->post('catatan'),
+                            'stamp_keu' => date('d-m-Y H:i:s')
+                        );
+            $queryUpdate = $this->db->update('tbl_actbud', $dataUpdate, array('kd_act' => decrypt($id)));
+            if($queryUpdate){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Terima Kasih Telah Melakukan Persetujuan Kegiatan ini',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+                return redirect(base_url('app/sim-spa/approval/keuangan'));
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal melakukan persetujuan kegiatan ini',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $error = [
+                'form_error' => validation_errors_array()
+            ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    // START Approval Dekan
+    public function approval_dekan($id = null){
+        if($id == null){
+            $session = $this->session->userdata('user_sessions');
+
+            if($session['kode_unit'] == "105" || $session['kode_unit'] == "106" || $session['kode_unit'] == "107" || $session['kode_unit'] == "108" || $session['kode_unit'] == "109" || $session['kode_unit'] == "110" || $session['kode_unit'] == "018" || $session['kode_unit'] == "020"){
+                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_ftd($this->year);
+            } else if ($session['kode_unit'] == "101" || $session['kode_unit'] == "102" || $session['kode_unit'] == "103" || $session['kode_unit'] == "104" || $session['kode_unit'] == "019" || $session['kode_unit'] == "112" || $session['kode_unit'] == "017") {
+                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_fhb($this->year);
+            } else {
+                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan($this->year);
+            }
+
+            return view('spa.approval.approval-dekan', $data);
+        } else {
+            $data['kd_act'] = $id;
+            $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
+            if(!empty($data['actbud'])){
+                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
+                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
+
+                return view('spa.approval.detail-approval-dekan', $data);
+            } else {
+                show_404();
+            }
         }
     }
 

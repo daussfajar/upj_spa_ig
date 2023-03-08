@@ -32,6 +32,42 @@ class Approval_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_actbud_approval_keuangan($year){
+        $query = $this->db->query("
+                                    SELECT 
+                                        *,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pic) as nama_pic,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pelaksana) as nama_pelaksana
+                                    FROM tbl_actbud
+                                    WHERE
+                                        st_kabag ='Disetujui' 
+                                        AND (st_hrd = 'Disetujui HRD' OR st_umum = 'Disetujui GA' OR st_ict = 'Disetujui ICT' OR st_bkal = 'Disetujui BKAL'OR st_p2m = 'Disetujui P2M') 
+                                        AND ((st_keu NOT LIKE 'Disetujui') AND (st_keu NOT LIKE 'Ditolak'))
+                                        OR 
+                                        (
+                                            sign ='' 
+                                            AND st_kabag='Disetujui'
+                                            AND (kode_unit = 001 or kode_unit = 002 or kode_unit = 003 or kode_unit = 004 or kode_unit = 005
+                                                or kode_unit = 006 or kode_unit = 007 or kode_unit = 008 or kode_unit = 009 or kode_unit = 010
+                                                or kode_unit = 011 or kode_unit = 012 or kode_unit = 013 or kode_unit = 014 or kode_unit = 015
+                                                or kode_unit = 016 or kode_unit = 017 or kode_unit = 018 or kode_unit = 020 or kode_unit = 021 or kode_unit = 022 or kode_unit = 023)
+                                            AND ((st_keu NOT LIKE 'Disetujui') AND (st_keu NOT LIKE 'Ditolak'))
+                                        )
+                                        OR 
+                                        (
+                                            sign ='' 
+                                            AND st_kabag ='Disetujui' 
+                                            AND (kode_unit = 101 or kode_unit = 102 or kode_unit = 103 or kode_unit = 104 or kode_unit = 105 or 
+                                                kode_unit = 106 or kode_unit = 107 or kode_unit = 108 or kode_unit = 109 or kode_unit = 110  or kode_unit = 019 or kode_unit = 112) 
+                                            AND (st_ftd='Disetujui FTD' OR st_fhb='Disetujui FHB')
+                                            AND ((st_keu NOT LIKE 'Disetujui') AND (st_keu NOT LIKE 'Ditolak'))
+                                        )
+                                        AND tahun = ?
+                                    ORDER BY kd_act desc
+                            ", array($year));
+        return $query->result_array();
+    }
+
     public function get_actbud_approval_dekan_ftd($year){
         $query = $this->db->query("
                                     SELECT 
