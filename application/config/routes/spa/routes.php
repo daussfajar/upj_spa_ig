@@ -93,9 +93,10 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
 
     // Approval Dekan
     $route['app/sim-spa/approval/dekan'] = 'SPA/Approval/approval_dekan';
-    $route['app/sim-spa/approval/dekan/detail/(:num)'] = 'SPA/Approval/v_detail/$1';
+    $route['app/sim-spa/approval/dekan/detail/(:num)'] = 'SPA/Approval/approval_dekan/$1';
     $route['app/sim-spa/approval/dekan/kirim-persetujuan-fhb/(:any)'] = 'SPA/Approval/kirim_persetujuan_dekan_fhb/$1';
     $route['app/sim-spa/approval/dekan/kirim-persetujuan-ftd/(:any)'] = 'SPA/Approval/kirim_persetujuan_dekan_ftd/$1';
+    $route['app/sim-spa/approval/dekan/kirim-pesan/(:any)'] = 'SPA/Approval/kirim_pesan/$1';
 
     // Approval Warek 1
     $route['app/sim-spa/approval/warek1'] = 'SPA/Approval/approval_warek_1';

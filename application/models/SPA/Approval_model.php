@@ -76,6 +76,40 @@ class Approval_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_actbud_approval_dekan($year){
+        $query = $this->db->query("
+                                    SELECT 
+                                        *,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pic) as nama_pic,
+                                        (SELECT nama_lengkap FROM tbl_karyawan WHERE nik=tbl_actbud.pelaksana) as nama_pelaksana
+                                    FROM tbl_actbud
+                                    WHERE
+                                        (
+                                            kode_unit = 101 
+                                            OR kode_unit = 102 
+                                            OR kode_unit = 103 
+                                            OR kode_unit = 104 
+                                            OR kode_unit = 019 
+                                            OR kode_unit = 112 
+                                            OR kode_unit = 017
+                                            OR kode_unit = 101 
+                                            OR kode_unit = 102 
+                                            OR kode_unit = 103 
+                                            OR kode_unit = 104 
+                                            OR kode_unit = 019 
+                                            OR kode_unit = 112 
+                                            OR kode_unit = 017
+                                        )
+                                        AND st_kabag ='Disetujui' 
+                                        AND ((st_ftd NOT LIKE 'Disetujui ftd') AND (st_ftd NOT LIKE 'Ditolak ftd'))
+                                        AND ((st_fhb NOT LIKE 'Disetujui fhb') AND (st_fhb NOT LIKE 'Ditolak fhb'))
+                                        AND st_keu = ''
+                                        AND tahun = ?
+                                    ORDER BY kd_act desc
+                            ", array($year));
+        return $query->result_array();
+    }
+
     public function get_actbud_approval_warek1($year){
         $query = $this->db->query("
                                     SELECT 

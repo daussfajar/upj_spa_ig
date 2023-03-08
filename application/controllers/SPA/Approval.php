@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Approval extends CI_Controller{
 
-    var $year = 2021;
+    var $year = 2022;
 
     function __construct(){
         parent::__construct();
@@ -82,8 +82,10 @@ class Approval extends CI_Controller{
 
             if($session['kode_unit'] == "105" || $session['kode_unit'] == "106" || $session['kode_unit'] == "107" || $session['kode_unit'] == "108" || $session['kode_unit'] == "109" || $session['kode_unit'] == "110" || $session['kode_unit'] == "018" || $session['kode_unit'] == "020"){
                 $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_ftd($this->year);
-            } else {
+            } else if ($session['kode_unit'] == "101" || $session['kode_unit'] == "102" || $session['kode_unit'] == "103" || $session['kode_unit'] == "104" || $session['kode_unit'] == "019" || $session['kode_unit'] == "112" || $session['kode_unit'] == "017") {
                 $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_fhb($this->year);
+            } else {
+                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan($this->year);
             }
 
             return view('spa.approval.approval-dekan', $data);
@@ -97,7 +99,7 @@ class Approval extends CI_Controller{
                 $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
                 $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
 
-                return view('spa.approval.detail-dekan', $data);
+                return view('spa.approval.detail-approval-dekan', $data);
             } else {
                 show_404();
             }

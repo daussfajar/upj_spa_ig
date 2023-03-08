@@ -2,11 +2,17 @@
 $session = $CI->session->userdata('user_sessions');
 $year = date('Y');
 $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'] : "PTY-". $actbud[0]['kd_act'];
+$urlKirimPersetujuan = "";
+if($actbud[0]['kode_unit'] == "105" || $actbud[0]['kode_unit'] == "106" || $actbud[0]['kode_unit'] == "107" || $actbud[0]['kode_unit'] == "108" || $actbud[0]['kode_unit'] == "109" || $actbud[0]['kode_unit'] == "110" || $actbud[0]['kode_unit'] == "018" || $actbud[0]['kode_unit'] == "020"){
+    $urlKirimPersetujuan = 'app/sim-spa/approval/dekan/kirim-persetujuan-ftd/' . encrypt($kd_act);
+} else {
+    $urlKirimPersetujuan = 'app/sim-spa/approval/dekan/kirim-persetujuan-fhb/' . encrypt($kd_act);
+}
 ?>
 @extends('spa.layouts.user')
 
 @section('title')
-    Detail Approval Actbud Presiden
+    Detail Approval Actbud Dekan
 @endsection
 
 @section('page-title')
@@ -36,7 +42,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
 
 @section('breadcrumb')
 <li class="breadcrumb-item">Approval</li>
-<li class="breadcrumb-item">Presiden</li>
+<li class="breadcrumb-item">Dekan</li>
 <li class="breadcrumb-item active">
     <?= $noDokumen; ?>
 </li>
@@ -358,7 +364,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
 </div>
 
 <div class="col-lg-12">
-    {!! form_open('app/sim-spa/approval/presiden/kirim-persetujuan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
+    {!! form_open($urlKirimPersetujuan, array('class' => 'myForm')) !!}
     <div class="card">
         <div class="card-header">
         Form Persetujuan
@@ -369,16 +375,16 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="st_pres" id="st_presiden_1" value="Disetujui" checked>
-                            <label class="form-check-label" for="st_presiden_1">
+                            <input class="form-check-input" type="radio" name="st_dekan" id="st_dekan_1" value="Disetujui" checked>
+                            <label class="form-check-label" for="st_dekan_1">
                                 Disetujui
                             </label>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="st_pres" id="st_presiden_2" value="Ditolak">
-                            <label class="form-check-label" for="st_presiden_2">
+                            <input class="form-check-input" type="radio" name="st_dekan" id="st_dekan_2" value="Ditolak">
+                            <label class="form-check-label" for="st_dekan_2">
                                 Ditolak
                             </label>
                         </div>
@@ -399,7 +405,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
     {!! form_close() !!}
 </div>
 <div class="col-lg-12">
-    {!! form_open('app/sim-spa/approval/presiden/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
+    {!! form_open('app/sim-spa/approval/dekan/kirim-pesan/' . encrypt($kd_act), array('class' => 'myForm')) !!}
         <div class="card">
             <div class="card-header">
                 <span class="mdi mdi-comment"></span> Pesan
@@ -464,7 +470,7 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
     $(document).ready(function(){
         $('#tbody-table-detail-biaya').on('click', '.btn-beri-catatan', function(){
             var id = $(this).data('id');
-            var catatan = $(this).data('catatan-presiden');
+            var catatan = $(this).data('catatan-dekan');
             $('#modal-beri-catatan input[name="id"]').val(id);
             $('#modal-beri-catatan textarea[name="catatan"]').val(catatan);
             $('#modal-beri-catatan').modal('show');
