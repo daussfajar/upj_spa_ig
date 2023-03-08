@@ -6,28 +6,28 @@ $agr_tersisa = ($data['t_act_agr'] - $data['s_tjb_act_agr']);
 $uri4 = $CI->uri->segment(4);
 $uri5 = $CI->uri->segment(5);
 ?>
+@extends('spa.layouts.user')
 
-
-<?php $__env->startSection('title'); ?>
+@section('title')
 <?= MOD2 ?> <?= ($uri5 == 'input-actbud' || $uri5 == 'input-petty-cash') ? 'Input Detail Biaya' : 'Status RKAT'; ?>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('page-title'); ?>
+@section('page-title')
 <?= ($uri5 == 'input-actbud' || $uri5 == 'input-petty-cash') ? 'Input Detail Biaya' : 'Status RKAT'; ?>
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('css'); ?>
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/daterangepicker.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-datepicker.min.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/tooltipster.css')); ?>">
-<link rel="stylesheet" href="<?php echo e(base_url('assets/css/custom.css')); ?>">
-<?php $__env->stopSection(); ?>
+@section('css')
+<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-datepicker.min.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/tooltipster.css') }}">
+<link rel="stylesheet" href="{{ base_url('assets/css/custom.css') }}">
+@endsection
 
-<?php $__env->startSection('breadcrumb'); ?>
+@section('breadcrumb')
 <li class="breadcrumb-item"><a href="javascript: void(0);">Pencairan RKAT</a></li>
 <?php if($uri4 == "petty-cash"){ ?>
 <li class="breadcrumb-item"><a href="javascript: void(0);">Petty Cash</a></li>
@@ -40,58 +40,14 @@ $uri5 = $CI->uri->segment(5);
 <li class="breadcrumb-item"><a href="javascript: void(0);">Status Actbud</a></li>
 <?php endif; ?>
 <?php } ?>
-<li class="breadcrumb-item active"><a href="javascript: void(0);" style="color:blueviolet;"><i class="mdi mdi-file-document"></i><?php echo e($id_actbud); ?></a></li>
-<?php $__env->stopSection(); ?>
+<li class="breadcrumb-item active"><a href="javascript: void(0);" style="color:blueviolet;"><i class="mdi mdi-file-document"></i>{{ $id_actbud }}</a></li>
+@endsection
 
-<?php $__env->startSection('content'); ?>
+@section('content')
 	<div class="col-md-12">
-		<?php if($data['status_act'] != null){ ?>
-		<h6>Status Approval</h6>
-        <div class="card">
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover">
-						<thead class="bg-dark text-white">
-							<tr>
-								<th class="v-middle text-center">Ka.Prodi / Unit</th>
-								<th class="v-middle text-center">Dekan</th>
-								<th class="v-middle text-center">Pre-Approval</th>
-								<th class="v-middle text-center">Bagian Keuangan</th>
-								<th class="v-middle text-center">Wakil Rektor</th>
-								<th class="v-middle text-center">Rektor</th>
-								<th class="v-middle text-center">Presiden</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		<?php } ?>
+		@if($data['status_act'] != null)
+		@include('spa.approval.detail.status-approval')
+		@endif
 		<div class="card card-border card-teal">
 			<div class="card-header border-teal bg-transparent">
 				<div class="float-left">
@@ -108,34 +64,32 @@ $uri5 = $CI->uri->segment(5);
 					</span>
 					<?php } ?>
 					<span class="badge bg-primary p-2" style="font-weight:bold;">
-						<i class="mdi mdi-file-document"></i> <?php echo e($data['kode_pencairan']); ?>
-
+						<i class="mdi mdi-file-document"></i> {{ $data['kode_pencairan'] }}
 					</span>
 					<span class="badge bg-info p-2" style="font-weight:bold;">
-						<i class="mdi mdi-clipboard-check"></i> <?php echo e(($data['jns_aju_agr'] == "actbud") ? "ACT" : "PTY"); ?>/<?php echo e($id_actbud); ?>
-
+						<i class="mdi mdi-clipboard-check"></i> {{ ($data['jns_aju_agr'] == "actbud") ? "ACT" : "PTY" }}/{{ $id_actbud }}
 					</span>
-					<?php switch($data['status_act']):
-					case ('send'): ?>
+					@switch($data['status_act'])
+					@case('send')
 						<span class="badge bg-success p-2">
 							<i class="mdi mdi-send-check"></i> Terkirim
 						</span>
-						<?php break; ?>
-					<?php case ('belum dikirim'): ?>
+						@break
+					@case('belum dikirim')
 					<span class="badge bg-warning p-2">
 						<i class="mdi mdi-progress-wrench"></i> Dalam Perencanaan
 					</span>
-					<?php break; ?>
-					<?php case ('waiting_for_approval'): ?>
+					@break
+					@case('waiting_for_approval')
 					<span class="badge bg-orange p-2">
 						<i class="mdi mdi-progress-clock"></i> Menunggu Approval
 					</span>
-					<?php break; ?>
-					<?php default: ?>
+					@break
+					@default
 					<span class="badge bg-danger p-2">
 						Unknown
 					</span>
-					<?php endswitch; ?>					
+					@endswitch					
 				</div>
 			</div>
 			<div class="card-body">
@@ -143,19 +97,19 @@ $uri5 = $CI->uri->segment(5);
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">Prodi / Bagian / Unit</label>
-							<p class="form-control-static" style="font-size: 14px;"><?php echo e($data['nama_unit']); ?></p>
+							<p class="form-control-static" style="font-size: 14px;">{{ $data['nama_unit'] }}</p>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">Nama Kegiatan</label>
-							<p class="form-control-static" style="font-size: 14px;"><?php echo e($data['deskrip_keg']); ?></p>
+							<p class="form-control-static" style="font-size: 14px;">{{ $data['deskrip_keg'] }}</p>
 						</div>
 					</div>                
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">KPI</label>
-							<p class="form-control-static" style="font-size: 14px;"><?php echo e($data['kpi']); ?></p>
+							<p class="form-control-static" style="font-size: 14px;">{{ $data['kpi'] }}</p>
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -163,8 +117,7 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">PIC</label>
 							<p class="form-control-static">
 								<span class="" style="font-size: 14px;">
-									<?php echo e($data['nama_lengkap'] . ' (' . $data['pic'] . ')'); ?>
-
+									{{ $data['nama_lengkap'] . ' (' . $data['pic'] . ')' }}
 								</span>
 							</p>
 						</div>
@@ -174,8 +127,7 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">Pelaksana</label>
 							<p class="form-control-static">
 								<span class="" style="font-size: 14px;">
-									<?php echo e($data['nama_pelaksana'] . ' (' . $data['pelaksana'] . ')'); ?>
-
+									{{ $data['nama_pelaksana'] . ' (' . $data['pelaksana'] . ')' }}
 								</span>
 							</p>
 						</div>
@@ -189,8 +141,7 @@ $uri5 = $CI->uri->segment(5);
 									$tgl_m = date_create($data['tgl_m']);									
 									$tgl_s = date_create($data['tgl_s']);
 									?>
-									<i class="mdi mdi-calendar"></i> <?php echo e(tanggal_indo(date_format($tgl_m, "Y-m-d")) . ' s/d ' . tanggal_indo(date_format($tgl_s, "Y-m-d"))); ?>
-
+									<i class="mdi mdi-calendar"></i> {{ tanggal_indo(date_format($tgl_m, "Y-m-d")) . ' s/d ' . tanggal_indo(date_format($tgl_s, "Y-m-d")) }}
 								</span>
 							</p>
 						</div>
@@ -200,8 +151,7 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">Periode</label>
 							<p class="form-control-static">
 								<span class="badge bg-warning p-2">
-									<?php echo e($data['periode']); ?>
-
+									{{ $data['periode'] }}
 								</span>
 							</p>
 						</div>
@@ -211,8 +161,7 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">Total Anggaran</label>
 							<p class="form-control-static">
 								<span class="badge bg-purple p-2">
-									<?php echo e(rupiah_1($data['t_act_agr'])); ?>
-
+									{{ rupiah_1($data['t_act_agr']) }}
 								</span>
 							</p>
 						</div>
@@ -221,17 +170,16 @@ $uri5 = $CI->uri->segment(5);
 						<div class="form-group">
 							<label for="">Tanggal Pengajuan</label>
 							<p class="form-control-static">
-								<?php if(!empty($data['tanggal_pembuatan'])): ?>
+								@if (!empty($data['tanggal_pembuatan']))
 									<?php 
 									$ex_tgl_buat = explode(' ', $data['tanggal_pembuatan']);
 									?>
 									<span class="badge p-2 bg-teal text-white">
-										<i class="mdi mdi-clock-check-outline"></i> <?php echo e(tanggal_indo($ex_tgl_buat[0]) . ', ' . $ex_tgl_buat[1]); ?>
-
+										<i class="mdi mdi-clock-check-outline"></i> {{ tanggal_indo($ex_tgl_buat[0]) . ', ' . $ex_tgl_buat[1] }}
 									</span>
-								<?php else: ?>
+								@else
 									-
-								<?php endif; ?>
+								@endif
 							</p>
 						</div>
 					</div>
@@ -254,91 +202,87 @@ $uri5 = $CI->uri->segment(5);
 								<th>Nama Kegiatan</th>
 								<th class="text-center">Keterangan</th>
 								<th class="text-center">Total Anggaran</th>
-								<?php if($data['status_act'] == 'belum dikirim'): ?>
+								@if ($data['status_act'] == 'belum dikirim')
 									<th class="text-center">Aksi</th>
-								<?php endif; ?>
+								@endif
 
-								<?php if($data['status_act'] == 'send'): ?>
+								@if ($data['status_act'] == 'send')
 									<th class="text-center">Catatan Pimpinan</th>
-								<?php endif; ?>
+								@endif
 							</tr>
 						</thead>
 						<tbody id="tb-rincian-kegiatan">
-						<?php $__currentLoopData = $rincian_kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						@foreach ($rincian_kegiatan as $item)
                             <tr>
-                                <th class="text-center" style="vertical-align: middle;"><?php echo e($loop->iteration); ?></th>
+                                <th class="text-center" style="vertical-align: middle;">{{ $loop->iteration }}</th>
                                 <td style="vertical-align: middle;">
                                     <span class="" style="font-size: 14px;">
-                                        <?php echo e($item->jns_b); ?>
-
+                                        {{ $item->jns_b }}
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <span class="" style="font-size: 14px;">
-                                        <?php echo e($item->ket); ?>
-
+                                        {{ $item->ket }}
                                     </span>
                                 </td>
                                 <td class="text-center" style="vertical-align: middle;">
                                     <span class="badge bg-purple p-2">
-                                        <?php echo e(rupiah_1($item->aju_agr)); ?>
-
+                                        {{ rupiah_1($item->aju_agr) }}
                                     </span>
                                 </td>
-                                <?php if($data['status_act'] == 'belum dikirim'): ?>
+                                @if ($data['status_act'] == 'belum dikirim')
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <a href="javascript:void(0)" data-id="<?php echo e(encrypt($item->id)); ?>" 
-                                        data-nama_kegiatan="<?php echo e($item->jns_b); ?>" class="btn btn-danger btn-sm btn-hapus"><i class="mdi mdi-trash-can"></i></a>
+                                        <a href="javascript:void(0)" data-id="{{ encrypt($item->id) }}" 
+                                        data-nama_kegiatan="{{ $item->jns_b }}" class="btn btn-danger btn-sm btn-hapus"><i class="mdi mdi-trash-can"></i></a>
                                     </td>
-                                <?php endif; ?>
+                                @endif
                                 
-                                <?php if($data['status_act'] == 'send'): ?>
+                                @if ($data['status_act'] == 'send')
                                     <td style="vertical-align: middle;">
                                         <ul style="list-style: none;padding-inline-start:0;" class="mb-0">
                                             <li>
                                                 <span style="font-size: 14px;">Warek 1: </span>
-                                                <span style="font-size: 14px;"><?php echo e($item->c_jns_b_wr1); ?></span>
+                                                <span style="font-size: 14px;">{{ $item->c_jns_b_wr1 }}</span>
                                             </li>
                                             <li>
                                                 <span style="font-size: 14px;">Warek 2: </span>
-                                                <span style="font-size: 14px;"><?php echo e($item->c_jns_b_wr2); ?></span>
+                                                <span style="font-size: 14px;">{{ $item->c_jns_b_wr2 }}</span>
                                             </li>
 											<li>
                                                 <span style="font-size: 14px;">Rektor: </span>
-                                                <span style="font-size: 14px;"><?php echo e($item->c_jns_b_rk); ?></span>
+                                                <span style="font-size: 14px;">{{ $item->c_jns_b_rk }}</span>
                                             </li>
                                         </ul>
                                     </td>
-                                <?php endif; ?>
+                                @endif
                             </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        @endforeach
 						</tbody>
 						<tfoot>
 							<th></th>
 							<th class="text-right" colspan="2">Total Anggaran : </th>
 							<td class="text-center">
 								<span class="badge bg-primary p-2">
-									<?php echo e(rupiah_1($data['s_tjb_act_agr'])); ?>
-
+									{{ rupiah_1($data['s_tjb_act_agr']) }}
 								</span>
 							</td>
-							<?php if($data['status_act'] == 'belum dikirim'): ?>
+							@if ($data['status_act'] == 'belum dikirim')
 								<td></td>
-							<?php endif; ?>                        
-							<?php if($data['status_act'] == 'send'): ?>
+							@endif                        
+							@if ($data['status_act'] == 'send')
 								<td></td>
-							<?php endif; ?>
+							@endif
 						</tfoot>
 					</table>
 				</div>
 			</div>
-			<?php if($data['status_act'] == 'belum dikirim'): ?>                
+			@if ($data['status_act'] == 'belum dikirim')                
             <div class="card-footer">
                 <div class="float-right">
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-buat-kegiatan" class="btn btn-primary btn-sm"><i class="mdi mdi-plus"></i> Buat Kegiatan</a>
                 </div>
             </div>
-        	<?php endif; ?>
+        	@endif
 		</div>
 
 		<div class="card card-border card-info" id="card-dokumen-pendukung">
@@ -357,80 +301,76 @@ $uri5 = $CI->uri->segment(5);
 							</tr>
 						</thead>
 						<tbody id="tb-dokumen">
-						<?php $__currentLoopData = $dokumen_pendukung; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						@foreach ($dokumen_pendukung as $row)
                             <tr>
-                                <th class="text-center"><?php echo e($loop->iteration); ?></th>
+                                <th class="text-center">{{ $loop->iteration }}</th>
                                 <td>
                                     <a href="javascript:void(0)">
                                         <i class="mdi mdi-file"></i>
-                                        <?php                                            
+                                        @php                                            
 											echo $row->nama_file . ' ('.formatBytes($row->ukuran_file).')';;
-                                        ?>
+                                        @endphp
                                     </a>
                                 </td>
                                 <td>
-                                    <?php echo e($row->deskripsi); ?>
-
+                                    {{ $row->deskripsi }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="<?php echo e(base_url('app-data/dokumen-pendukung/' . $row->nama_file)); ?>" class="btn btn-primary btn-xs" download="<?php echo e($row->nama_file); ?>">
+                                    <a href="{{ base_url('app-data/dokumen-pendukung/' . $row->nama_file) }}" class="btn btn-primary btn-xs" download="{{ $row->nama_file }}">
                                         <i class="mdi mdi-download"></i>
                                     </a>
-                                    <?php if($data['status_act'] == 'belum dikirim'): ?>
-                                        <a href="javascript:void(0)" data-id="<?php echo e(encrypt($row->id)); ?>" data-file_name="<?php echo e($row->nama_file); ?>" class="btn btn-danger btn-xs btn-hapus-dokumen">
+                                    @if ($data['status_act'] == 'belum dikirim')
+                                        <a href="javascript:void(0)" data-id="{{ encrypt($row->id) }}" data-file_name="{{ $row->nama_file }}" class="btn btn-danger btn-xs btn-hapus-dokumen">
                                             <i class="mdi mdi-trash-can"></i>
                                         </a>
-                                    <?php endif; ?>
+                                    @endif
                                 </td>
                             </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        @endforeach
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<?php if($data['status_act'] == 'belum dikirim'): ?>
+			@if ($data['status_act'] == 'belum dikirim')
             <div class="card-footer">
                 <div class="float-right">
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-upload-dokumen-pendukung" class="btn btn-teal btn-sm"><i class="mdi mdi-upload"></i> Upload Dokumen</a>
                 </div>
             </div>
-        	<?php endif; ?>
+        	@endif
 		</div>
-
-		<?php echo form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
-
+		
+		{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}		
 		<div class="card card-border card-purple" id="card-chat">
 			<div class="card-header border-purple bg-transparent">
 				<h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
 			</div>
 			<div class="card-body">
-				<?php if(!empty($messages)): ?>
+				@if (!empty($messages))
 				<div class="messages">                
                     <div class="list-group bs-ui-list-group mb-0 mr-2" id="chat-section">                   
-                        <?php $__currentLoopData = $messages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php
+                        @foreach ($messages as $item)
+                            @php
                                 $reply_data = $CI->db->query("SELECT a.id_chat as id,a.nik,a.pesan,a.datetime_chat,a.attachment,a.attachment_size,b.nama_lengkap sender FROM tbl_chat_reply a 
                                 INNER JOIN tbl_karyawan b ON a.nik = b.nik WHERE a.id_chat = '".$item->id_chat."' AND a.status = 'Aktif'")->result();
-                            ?>
+                            @endphp
                             <div class="list-group-item" style="border-left: 2px solid rgba(0,0,0,.125);/*border-top:none;border-bottom:none;border-right:none;*/margin-bottom:10px;">
                                 <div class="list-group-item-heading font-16 mt-0 mb-1 pb-1 border-bottom">
                                     <span style="font-weight: bold;">
                                         <img src="<?= base_url() ?>assets/images/user-icon.png" alt="" srcset="" width="20" style="margin-bottom: 5px;">
-                                        <?php echo e($item->sender); ?>
-
+                                        {{ $item->sender }}
                                     </span>                                
                                     <span style="font-size: 13px;float: right;">
-                                        <i class="mdi mdi-calendar-clock"></i> <?php echo e($item->datetime_chat); ?>                                        
+                                        <i class="mdi mdi-calendar-clock"></i> {{ $item->datetime_chat }}                                        
                                     </span>
                                 </div>                                
                                 <p class="list-group-item-text m-0">
-                                    <?php echo e($item->pesan); ?>
-
+                                    {{ $item->pesan }}
                                 </p>                  
-                                <?php if(!empty($item->attachment)): ?>
-                                    <?php
+                                @if (!empty($item->attachment))
+                                    @php
                                         $pecah_attachment = explode('_', $item->attachment);                                        
-                                    ?>
+                                    @endphp
                                     <div class="mt-2">
                                         <span style="font-size: 13px;">Attachment:</span>
                                         <div class="d-flex flex-row">
@@ -438,52 +378,50 @@ $uri5 = $CI->uri->segment(5);
                                                 <i class="mdi mdi-file mdi-24px text-primary"></i>
                                             </div>
                                             <div class="ml-2 pt-2">
-                                                <span class="text-primary"><?php echo e($pecah_attachment[1]); ?></span>
-                                                <span style="font-size: 12px;color:black"><?php echo e(formatBytes($item->attachment_size)); ?></span>
-                                                <a href="<?php echo e(base_url('app-data/chat-attachment/' . $item->attachment)); ?>" class="btn btn-info btn-xs" download="<?php echo e($pecah_attachment[1]); ?>"><i class="mdi mdi-download"></i> Unduh</a>
+                                                <span class="text-primary">{{ $pecah_attachment[1] }}</span>
+                                                <span style="font-size: 12px;color:black">{{ formatBytes($item->attachment_size) }}</span>
+                                                <a href="{{ base_url('app-data/chat-attachment/' . $item->attachment) }}" class="btn btn-info btn-xs" download="{{ $pecah_attachment[1] }}"><i class="mdi mdi-download"></i> Unduh</a>
                                             </div>                    
                                         </div>                                        
                                     </div>        
-                                <?php endif; ?>
-                                <span style="font-size: 11px;"><?php echo e(get_time_ago(strtotime($item->datetime_chat))); ?></span>                                          
+                                @endif
+                                <span style="font-size: 11px;">{{ get_time_ago(strtotime($item->datetime_chat)) }}</span>                                          
                                 <br>
                                 <span style="font-size: 12px;">
                                     <a href="javascript:void(0)" class="reply-chat" data-id="<?= encrypt($item->id_chat) ?>" 
                                         data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>" 
                                         data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>" data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-reply"></i> Reply</a>
-                                    <?php if($item->nik == decrypt($_SESSION['user_sessions']['nik'])): ?>                                        
+                                    @if ($item->nik == decrypt($_SESSION['user_sessions']['nik']))                                        
                                         <a href="javascript:void(0)" class="hapus-chat" data-id="<?= encrypt($item->id_chat) ?>" 
                                             data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>" 
                                             data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>" data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-trash-can"></i> Hapus</a>
-                                    <?php endif; ?>
+                                    @endif
                                 </span>
 
-                                <?php if(!empty($reply_data)): ?>
+                                @if (!empty($reply_data))
                                     <br>
                                     <a href="#collapse-reply-message-<?= $item->id_chat ?>" class="showReply" data-toggle="collapse" style="font-size: 12px;">Lihat Balasan</a>
                                     <div class="collapse" id="collapse-reply-message-<?= $item->id_chat ?>">
-                                        <?php $__currentLoopData = $reply_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        @foreach ($reply_data as $item)
                                         <div class="list-group-item mt-1" style="border-left: none;border-top:none;border-bottom:none;border-right:none;padding-bottom:0;">
                                             <div class="list-group-item-heading font-16 mt-0 mb-1 pb-1 border-bottom">                                    
                                                 <span>
                                                     <img src="<?= base_url() ?>assets/images/logo/logo.png" alt="" srcset="" width="20">
-                                                    <?php echo e($item->sender); ?>
-
+                                                    {{ $item->sender }}
                                                 </span>                                
                                                 <span style="font-size: 13px;float: right;">
-                                                    <i class="mdi mdi-calendar-clock"></i> <?php echo e($item->datetime_chat); ?>                                        
+                                                    <i class="mdi mdi-calendar-clock"></i> {{ $item->datetime_chat }}                                        
                                                 </span>
                                             </div>
 
                                             <p class="list-group-item-text m-0">
-                                                <?php echo e($item->pesan); ?>
-
+                                                {{ $item->pesan }}
                                             </p>
 
-                                            <?php if(!empty($item->attachment)): ?>
-                                                <?php
+                                            @if (!empty($item->attachment))
+                                                @php
                                                     $pecah_attachment = explode('_', $item->attachment);                                        
-                                                ?>
+                                                @endphp
                                                 <div class="mt-2">
                                                     <span style="font-size: 13px;">Attachment:</span>
                                                     <div class="d-flex flex-row">
@@ -491,34 +429,34 @@ $uri5 = $CI->uri->segment(5);
                                                             <i class="mdi mdi-file mdi-24px text-primary"></i>
                                                         </div>
                                                         <div class="ml-2 pt-2">
-                                                            <span class="text-primary"><?php echo e($pecah_attachment[1]); ?></span>
-                                                            <span style="font-size: 12px;color:black"><?php echo e(formatBytes($item->attachment_size)); ?></span>
-                                                            <a href="<?php echo e(base_url('app-data/chat-attachment/' . $item->attachment)); ?>" class="btn btn-info btn-xs" download="<?php echo e($pecah_attachment[1]); ?>"><i class="mdi mdi-download"></i> Unduh</a>
+                                                            <span class="text-primary">{{ $pecah_attachment[1] }}</span>
+                                                            <span style="font-size: 12px;color:black">{{ formatBytes($item->attachment_size) }}</span>
+                                                            <a href="{{ base_url('app-data/chat-attachment/' . $item->attachment) }}" class="btn btn-info btn-xs" download="{{ $pecah_attachment[1] }}"><i class="mdi mdi-download"></i> Unduh</a>
                                                         </div>                    
                                                     </div>                                        
                                                 </div>        
-                                            <?php endif; ?>
-                                            <span style="font-size: 11px;"><?php echo e(get_time_ago(strtotime($item->datetime_chat))); ?></span>
-                                            <?php if($item->nik == decrypt($_SESSION['user_sessions']['nik'])): ?>
+                                            @endif
+                                            <span style="font-size: 11px;">{{ get_time_ago(strtotime($item->datetime_chat)) }}</span>
+                                            @if ($item->nik == decrypt($_SESSION['user_sessions']['nik']))
                                             <br>
                                             <a href="javascript:void(0)" class="hapus-chat-reply" data-id="<?= encrypt($item->id) ?>" 
                                                 data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>" 
                                                 data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>" data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-trash-can"></i> Hapus</a>
-                                            <?php endif; ?>
+                                            @endif
                                         </div>                                      
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        @endforeach
                                     </div>
-                                <?php endif; ?>
+                                @endif
 
                             </div>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                        
+                        @endforeach                        
                     </div>
                 </div>
-				<?php else: ?>
+				@else
 				<div class="alert alert-info">
 					<p class="mb-0"><i class="mdi mdi-exclamation"></i> Tidak ada pesan</p>
 				</div>
-				<?php endif; ?>
+				@endif
 			</div>
 
 			<input type="hidden" name="act" value="send_message">
@@ -558,8 +496,7 @@ $uri5 = $CI->uri->segment(5);
 				</div>
 			</div>			
 		</div>
-		<?php echo form_close(); ?>
-
+		{!! form_close() !!}
 
 		<?php 
 		if ($data['status_act'] == 'belum dikirim'){
@@ -574,8 +511,7 @@ $uri5 = $CI->uri->segment(5);
 			<br>
 		</div>
         <?php } else { ?>
-		<?php echo form_open('app/sim-spa/pencairan-rkat/submit_rkat/' . $id_uraian . '/' . $id_actbud, array('id' => 'form-submit-actbud', 'enctype' => 'multipart/form-data')); ?>
-
+		{!! form_open('app/sim-spa/pencairan-rkat/submit_rkat/' . $id_uraian . '/' . $id_actbud, array('id' => 'form-submit-actbud', 'enctype' => 'multipart/form-data')) !!}
 			<div class="card-box">        
 				<div class="alert alert-info">
 					<p class="mb-0"><i class="mdi mdi-information-variant"></i> Sebelum submit, pastikan anda sudah mengisi detail biaya dengan benar.</p>                        
@@ -620,15 +556,15 @@ $uri5 = $CI->uri->segment(5);
 									</small>
 								</span>
 							</div>
-							<?php if($agr_tersisa > 0): ?>
+							@if ($agr_tersisa > 0)
 								<div class="alert alert-info">
 									<p class="mb-0">
-										Anggaran masih tersisa <b><?php echo e(rupiah_1($agr_tersisa)); ?></b>, apakah anda yakin ingin tetap melakukan submit?                                                                                        
+										Anggaran masih tersisa <b>{{ rupiah_1($agr_tersisa) }}</b>, apakah anda yakin ingin tetap melakukan submit?                                                                                        
 									</p>               
 								</div>                                    
-							<?php else: ?>                                
+							@else                                
 							<b>Catatan</b>: setelah submit anda sudah tidak dapat lagi melakukan perubahan. 
-							<?php endif; ?>
+							@endif
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Tutup</button>
@@ -678,17 +614,57 @@ $uri5 = $CI->uri->segment(5);
 					</div>
 				</div>
 			</div>
-		<?php echo form_close(); ?>
-
+		{!! form_close() !!}
 		<?php 
 			}
 		}
-		?>			
+		?>
+        
+		@if ($data['sign'] == $kode_unit && ($data['st_hrd'] == "" && $data['st_umum'] == "" && $data['st_ict'] == "" 
+        && $data['st_bkal'] == "" && $data['st_p2m'] == ""))
+        {!! form_open('app/sim-spa/approval/pre-approval/kirim-persetujuan/' . encrypt($id_actbud), array('id' => 'form-persetujuan', 'class' => 'myForm')) !!}	
+        <div class="card">
+            <div class="card-header bg-transparent">
+                <h5 class="card-title mb-0">FORM PERSETUJUAN</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <p class="mb-0"><i class="mdi mdi-information-variant"></i> Note: Sebelum submit, pastikan anda sudah
+                        membaca dan mengetahui kegiatan ini.</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 control-label">Apakah actbud ini disetujui?</label>
+                    <div class="col-md-9">
+                        <div class="radio radio-success form-check-inline">
+                            <input type="radio" id="chk-setuju" value="Disetujui" name="approval" required>
+                            <label for="chk-setuju"> Ya, Setuju </label>
+                        </div>
+                        <div class="radio radio-danger form-check-inline">
+                            <input type="radio" id="chk-tidak-setuju" value="Ditolak" name="approval" required>
+                            <label for="chk-tidak-setuju"> Tidak Setuju </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 control-label">Catatan (jika ada)</label>
+                    <div class="col-md-9">
+                        <textarea name="catatan" id="catatan" placeholder="Buat catatan disini..." cols="3" rows="3"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-md btn-primary btn-block">
+                    Submit
+                </button>
+            </div>
+        </div>
+        {!! form_close() !!}
+		@endif
 	</div>	
 
-	<?php if($data['status_act'] == 'belum dikirim'): ?>
-	<?php echo form_open(base_url('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud . '/upload-dokumen-pendukung'), array('enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>
-
+	@if ($data['status_act'] == 'belum dikirim')
+	{!! form_open(base_url('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud . '/upload-dokumen-pendukung'), array('enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
 	<div id="modal-upload-dokumen-pendukung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -717,11 +693,9 @@ $uri5 = $CI->uri->segment(5);
             </div>        
         </div>        
     </div>
-	<?php echo form_close(); ?>
+	{!! form_close() !!}
 
-
-	<?php echo form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud . '/hapus-dokumen-pendukung', array('class' => 'myForm')); ?>
-
+	{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud . '/hapus-dokumen-pendukung', array('class' => 'myForm')) !!}
 	<div id="modal-hapus-dokumen-pendukung" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -743,11 +717,9 @@ $uri5 = $CI->uri->segment(5);
             </div>            
         </div>        
     </div>
-	<?php echo form_close(); ?>
+	{!! form_close() !!}
 
-
-	<?php echo form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm', 'autocomplete' => 'off')); ?>
-
+	{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm', 'autocomplete' => 'off')) !!}
 	<div class="modal fade" id="modal-buat-kegiatan" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -788,11 +760,9 @@ $uri5 = $CI->uri->segment(5);
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-	<?php echo form_close(); ?>
+	{!! form_close() !!}
 
-
-	<?php echo form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')); ?>
-
+	{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')) !!}
     <div id="modal-hapus-rincian-kegiatan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -817,12 +787,11 @@ $uri5 = $CI->uri->segment(5);
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-	<?php echo form_close(); ?>	
+	{!! form_close() !!}	
 
-	<?php endif; ?>
-
-	<?php echo form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')); ?>
-
+	@endif
+	
+	{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}	
     <!-- modal hapus pesan -->
 	<input type="hidden" name="act" value="hapus_pesan">
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -859,11 +828,9 @@ $uri5 = $CI->uri->segment(5);
             </div>            
         </div>        
     </div>    
-	<?php echo form_close(); ?>
-
-
-	<?php echo form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')); ?>
-
+	{!! form_close() !!}
+		
+	{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}	
     <!-- modal hapus pesan -->
     <div id="modal-hapus-pesan-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -900,18 +867,17 @@ $uri5 = $CI->uri->segment(5);
             </div>            
         </div>        
     </div>    
-	<?php echo form_close(); ?>
+	{!! form_close() !!}
 
+@endsection
 
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('js'); ?>
-<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/bootstrap-filestyle.min.js')); ?>"></script>
-<script src="<?php echo e(base_url('assets/js/signature-pad.js')); ?>"></script>
+@section('js')
+<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ base_url('assets/js/bootstrap-filestyle.min.js') }}"></script>
+<script src="{{ base_url('assets/js/signature-pad.js') }}"></script>
 <script>
 	$(document).ready(function(){
 		$('.dataTable').dataTable()
@@ -1051,5 +1017,4 @@ $uri5 = $CI->uri->segment(5);
         })
 	})
 </script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/pencairan_rkat/detail/v_detail_actbud_petty_cash.blade.php ENDPATH**/ ?>
+@endsection

@@ -108,6 +108,25 @@ class Global_Model extends CI_Model {
 		}
 	}
 
+	public function only_finance_and_admin(){
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if (($session['kode_unit'] == 002 && $session['kode_jabatan'] == 22) || $session['kode_jabatan'] == 0) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			$this->session->set_flashdata('alert', [
+				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
+				'type'    => 'error',
+				'title'   => ''
+			]);
+			return redirect(base_url('app/sim-spa/dashboard'));
+		}
+	}
+
 	public function is_access_pre_approval_module(){
 		$access = false;		
 		$session = $this->session->userdata('user_sessions');

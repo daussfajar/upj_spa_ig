@@ -48,58 +48,60 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if (!empty($approval_actbud))
                             @foreach ($approval_actbud as $item)
-                                <?php 
-                                $no_dokumen = $item['jns_aju_agr'] == 'actbud' ? 'ACT' : 'PTY';
-                                $date_m = date_create($item['tgl_m']);
-                                $date_s = date_create($item['tgl_s']);
-                                ?>
-                                <tr>
-                                    <th class="text-center v-middle">{{ $loop->iteration }}</th>
-                                    <td class="v-middle">
-                                        <span class="badge bg-primary p-2">
-                                            <?= $no_dokumen . '/' . $item['kd_act'] ?>
-                                        </span>
-                                    </td>
-                                    <td class="v-middle">
-                                        <span class="badge bg-purple p-2">
-                                            <?= $item['kode_pencairan'] ?>
-                                        </span>
-                                    </td>
-                                    <td class="v-middle font-14">
-                                        <?= $item['nama_kegiatan'] ?>
-                                        <hr class="mt-1 mb-2">
-                                        <span class="badge bg-secondary p-2" style="font-size:12px;">
-                                            <i class="mdi mdi-calendar"></i> <?= tanggal_indo(date_format($date_m, 'Y-m-d')) . ' - ' . tanggal_indo(date_format($date_s, 'Y-m-d')) ?>
-                                        </span>
-                                    </td>
-                                    <td class="v-middle text-center">
-                                        <span class="badge bg-dark p-2">
-                                            <i class="mdi mdi-checkbox-marked-circle-outline"></i> <?= ucwords($item['jns_aju_agr']) ?>
-                                        </span>
-                                    </td>
-                                    <td class="v-middle text-center">
-                                        <span class="badge bg-success p-2">
-                                            <?= rupiah_1($item['agr']) ?>
-                                        </span>
-                                    </td>
-                                    <td class="v-middle text-center">
-                                        <span class="badge bg-teal p-2">
-                                            <?= $item['nama_pic'] ?>
-                                        </span>
-                                    </td>
-                                    <td class="v-middle text-center">
-                                        <span class="badge bg-teal p-2">
-                                            <?= $item['nama_pelaksana'] ?>
-                                        </span>
-                                    </td>
-                                    <td class="v-middle text-center">
-                                        <a href="<?= base_url('app/sim-spa/approval/kepala-unit/detail/' . $item['kd_act']) ?>" class="badge bg-info p-2">
-                                            Detail <i class="mdi mdi-arrow-right"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <?php 
+                            $no_dokumen = $item['jns_aju_agr'] == 'actbud' ? 'ACT' : 'PTY';
+                            $date_m = date_create($item['tgl_m']);
+                            $date_s = date_create($item['tgl_s']);
+                            ?>
+                            <tr>
+                                <th class="text-center v-middle">{{ $loop->iteration }}</th>
+                                <td class="v-middle">
+                                    <span class="badge bg-primary p-2">
+                                        <?= $no_dokumen . '/' . $item['kd_act'] ?>
+                                    </span>
+                                </td>
+                                <td class="v-middle">
+                                    <span class="badge bg-purple p-2">
+                                        <?= $item['kode_pencairan'] ?>
+                                    </span>
+                                </td>
+                                <td class="v-middle font-14">
+                                    <?= $item['nama_kegiatan'] ?>
+                                    <hr class="mt-1 mb-2">
+                                    <span class="badge bg-secondary p-2" style="font-size:12px;">
+                                        <i class="mdi mdi-calendar"></i> <?= tanggal_indo(date_format($date_m, 'Y-m-d')) . ' - ' . tanggal_indo(date_format($date_s, 'Y-m-d')) ?>
+                                    </span>
+                                </td>
+                                <td class="v-middle text-center">
+                                    <span class="badge bg-dark p-2">
+                                        <i class="mdi mdi-checkbox-marked-circle-outline"></i> <?= ucwords($item['jns_aju_agr']) ?>
+                                    </span>
+                                </td>
+                                <td class="v-middle text-center">
+                                    <span class="badge bg-success p-2">
+                                        <?= rupiah_1($item['agr']) ?>
+                                    </span>
+                                </td>
+                                <td class="v-middle text-center">
+                                    <span class="badge bg-teal p-2">
+                                        <?= $item['nama_pic'] ?>
+                                    </span>
+                                </td>
+                                <td class="v-middle text-center">
+                                    <span class="badge bg-teal p-2">
+                                        <?= $item['nama_pelaksana'] ?>
+                                    </span>
+                                </td>
+                                <td class="v-middle text-center">
+                                    <a href="<?= base_url('app/sim-spa/approval/kepala-unit/detail/' . $item['kd_act']) ?>" class="badge bg-info p-2">
+                                        Detail <i class="mdi mdi-arrow-right"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach                                
+                            @endif
                         </tbody>
                     </table>
                 </div>

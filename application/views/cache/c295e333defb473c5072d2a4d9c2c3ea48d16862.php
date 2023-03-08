@@ -4,19 +4,19 @@ $kode_unit = $session['kode_unit'];
 $jabatan = $session['kode_jabatan'];
 $nama_unit = $_SESSION['user_sessions']['nama_unit'];
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
+
+<?php $__env->startSection('title'); ?>
     <?= MOD2 ?> Approval Terkait <?= $nama_unit ?>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-title')
+<?php $__env->startSection('page-title'); ?>
     Approval Terkait <?= $nama_unit ?>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
 <style>
     .v-middle{
         vertical-align: middle!important;
@@ -25,13 +25,13 @@ $nama_unit = $_SESSION['user_sessions']['nama_unit'];
         font-size: 14px!important;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')    
+<?php $__env->startSection('breadcrumb'); ?>    
     <li class="breadcrumb-item active"><a href="javascript: void(0);">Approval Terkait <?= $nama_unit ?></a></li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-lg-12">
         <div class="card card-border">
             <div class="card-header bg-transparent">
@@ -54,15 +54,15 @@ $nama_unit = $_SESSION['user_sessions']['nama_unit'];
                             </tr>
                         </thead>
                         <tbody>
-                            @if (!empty($approval_actbud))
-                                @foreach ($approval_actbud as $item)
+                            <?php if(!empty($approval_actbud)): ?>
+                                <?php $__currentLoopData = $approval_actbud; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php 
                                 $no_dokumen = $item['jns_aju_agr'] == 'actbud' ? 'ACT' : 'PTY';
                                 $date_m = date_create($item['tgl_m']);
                                 $date_s = date_create($item['tgl_s']);
                                 ?>
                                 <tr>
-                                    <th class="text-center v-middle">{{ $loop->iteration }}</th>
+                                    <th class="text-center v-middle"><?php echo e($loop->iteration); ?></th>
                                     <td class="v-middle">
                                         <span class="badge bg-primary p-2">
                                             <?= $no_dokumen . '/' . $item['kd_act'] ?>
@@ -106,21 +106,21 @@ $nama_unit = $_SESSION['user_sessions']['nama_unit'];
                                         </a>
                                     </td>
                                 </tr>
-                                @endforeach
-                            @endif
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
         $(".dataTable").DataTable({
@@ -133,4 +133,5 @@ $nama_unit = $_SESSION['user_sessions']['nama_unit'];
         })
     })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp_php_7\htdocs\hibah_upj\application\views/spa/approval/approval-pre-approval.blade.php ENDPATH**/ ?>

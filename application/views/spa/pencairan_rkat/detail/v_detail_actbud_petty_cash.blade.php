@@ -580,11 +580,11 @@ $uri5 = $CI->uri->segment(5);
 								<label for="">Pre-Approval</label>
 								<select name="pre_approval" id="pre_approval" class="form-control">
 									<option value="">Pilih Pre-Approval</option>                            
-									<option value="hrd">HRD</option>
-									<option value="ict">ICT</option>
-									<option value="ga">GA</option>
-									<option value="bkal">BKAL</option>
-									<option value="p2m">P2M</option>
+									<option value="006">HRD</option>
+									<option value="004">ICT</option>
+									<option value="003">GA</option>
+									<option value="013">BKAL</option>
+									<option value="016">P2M</option>
 								</select>
 								<span class="help-block">
 									<small>

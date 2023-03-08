@@ -7,6 +7,7 @@ class Anggaran extends CI_Controller{
         parent::__construct();
         $this->load->model('SPA/Anggaran_model', 'm_anggaran');
         $this->Global_model->is_logged_in();
+        $this->Global_model->only_finance_and_admin();
         header("X-XSS-Protection: 1; mode=block");
     }
 

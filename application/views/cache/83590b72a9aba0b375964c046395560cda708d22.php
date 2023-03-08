@@ -79,7 +79,15 @@ $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'
                     <label for="">Nama Kegiatan:</label>
                 </div>
                 <div class="col-md-10">
-                    <textarea class="form-control" rows="3" readonly><?= $actbud[0]['nama_kegiatan'] ?></textarea>
+                    <textarea class="form-control" rows="4" readonly><?= $actbud[0]['nama_kegiatan'] ?></textarea>
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col-md-2">
+                    <label for="">KPI yang Dicapai:</label>
+                </div>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="4" readonly><?= $actbud[0]['kpi'] ?></textarea>
                 </div>
             </div>
             <div class="row my-4">

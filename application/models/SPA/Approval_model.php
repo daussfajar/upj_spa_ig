@@ -262,6 +262,78 @@ class Approval_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function get_rkat_approval_sign($year, $kode_unit){
+        $query = $this->db->query("SELECT
+                tbl_actbud.*,
+                c.nama_lengkap AS nama_pic,
+                d.nama_lengkap AS nama_pelaksana  
+            FROM
+                tbl_actbud
+                JOIN tbl_karyawan AS c ON tbl_actbud.pic = c.nik
+                JOIN tbl_karyawan AS d ON tbl_actbud.pelaksana = d.nik
+            WHERE
+                tbl_actbud.tahun = ?
+                AND
+                (
+                    sign = '$kode_unit' 
+                    AND st_kabag = 'Disetujui' 
+                    AND (
+                        tbl_actbud.kode_unit = 001 
+                        OR tbl_actbud.kode_unit = 002 
+                        OR tbl_actbud.kode_unit = 003 
+                        OR tbl_actbud.kode_unit = 004 
+                        OR tbl_actbud.kode_unit = 005 
+                        OR tbl_actbud.kode_unit = 006 
+                        OR tbl_actbud.kode_unit = 007 
+                        OR tbl_actbud.kode_unit = 008 
+                        OR tbl_actbud.kode_unit = 009 
+                        OR tbl_actbud.kode_unit = 010 
+                        OR tbl_actbud.kode_unit = 011 
+                        OR tbl_actbud.kode_unit = 012 
+                        OR tbl_actbud.kode_unit = 013 
+                        OR tbl_actbud.kode_unit = 014 
+                        OR tbl_actbud.kode_unit = 015 
+                        OR tbl_actbud.kode_unit = 016 
+                        OR tbl_actbud.kode_unit = 017 
+                        OR tbl_actbud.kode_unit = 018 
+                        OR tbl_actbud.kode_unit = 020 
+                        OR tbl_actbud.kode_unit = 021 
+                        OR tbl_actbud.kode_unit = 022 
+                        OR tbl_actbud.kode_unit = 023 
+                    ) 
+                    AND ((
+                            st_ict NOT LIKE 'Disetujui ICT' 
+                            ) 
+                    AND ( st_ict NOT LIKE 'Ditolak ICT' )) 
+                ) 
+                OR (
+                    sign = '$kode_unit' 
+                    AND st_kabag = 'Disetujui' 
+                    AND (
+                        tbl_actbud.kode_unit = 101 
+                        OR tbl_actbud.kode_unit = 102 
+                        OR tbl_actbud.kode_unit = 103 
+                        OR tbl_actbud.kode_unit = 104 
+                        OR tbl_actbud.kode_unit = 105 
+                        OR tbl_actbud.kode_unit = 106 
+                        OR tbl_actbud.kode_unit = 107 
+                        OR tbl_actbud.kode_unit = 108 
+                        OR tbl_actbud.kode_unit = 109 
+                        OR tbl_actbud.kode_unit = 110 
+                        OR tbl_actbud.kode_unit = 019 
+                        OR tbl_actbud.kode_unit = 112 
+                    ) 
+                    AND ( st_ftd = 'Disetujui FTD' OR st_fhb = 'Disetujui FHB' ) 
+                    AND ((
+                            st_ict NOT LIKE 'Disetujui ICT' 
+                            ) 
+                    AND ( st_ict NOT LIKE 'Ditolak ICT' )) 
+                ) 
+            ORDER BY
+                kd_act DESC", array($year));
+        return $query->result_array();
+    }
+
     public function get_actbud($where = null){
         $this->db->select("
             a.*,

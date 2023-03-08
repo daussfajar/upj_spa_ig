@@ -7,9 +7,10 @@
     }
     $jabatan = $_SESSION['user_sessions']['kode_jabatan'];
     $unit = $_SESSION['user_sessions']['nama_unit'];
+    $kode_unit = $_SESSION['user_sessions']['kode_unit'];
     $uri3 = $CI->uri->segment(3);
     $uri4 = $CI->uri->segment(4);
-    $uri5 = $CI->uri->segment(5);
+    $uri5 = $CI->uri->segment(5);    
 ?>
 
 <div class="left-side-menu" >
@@ -86,7 +87,7 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="javascript:void(0)">Approval Ka.Unit/Prodi</a></li>
+                        <li><a href="<?php echo e(base_url('app/sim-spa/admin/')); ?>">Approval Ka.Unit/Prodi</a></li>
                         <!-- level 2 -->
                         <li><a href="javascript:void(0)">Approval Ka. Umum</a></li>
                         <li><a href="javascript:void(0)">Approval Ka.HRD</a></li>
@@ -110,30 +111,40 @@
                         <span>  Approval Kepala Unit  </span>
                     </a>
                 </li>
+                <?php if(($jabatan == 6 || $jabatan == 22) && ($kode_unit == 006 || $kode_unit == 004 || $kode_unit == 003 || $kode_unit == 013 || $kode_unit == 016)): ?>
+                <li class="<?= menu_active(4, 'pre-approval', 'mm-active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>" class="waves-effect waves-light <?= menu_active(4, 'pre-approval', 'active') ?>">
+                        <i class="mdi mdi-folder-open-outline"></i>
+                        <span>  Approval Terkait <?= $unit ?>  </span>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <?php if($jabatan == 22 && $kode_unit == 002): ?>
                 <li class="">
-                    <a href="javascript:void(0)" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/approval-terkait-anggaran')); ?>" class="waves-effect waves-light">
                         <i class="mdi mdi-folder-outline"></i>
                         <span>  Approval Terkait Anggaran  </span>
                     </a>
                 </li>
                 <li class="">
-                    <a href="javascript:void(0)" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/anggaran/pengalihan')); ?>" class="waves-effect waves-light">
                         <i class="mdi mdi-cash-plus"></i>
                         <span>  Pengalihan Anggaran  </span>
                     </a>
                 </li>
                 <li class="">
-                    <a href="javascript:void(0)" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/anggaran/realisasi')); ?>" class="waves-effect waves-light">
                         <i class="mdi mdi-cash-register"></i>
                         <span>  Realisasi Anggaran  </span>
                     </a>
                 </li>
                 <li class="">
-                    <a href="javascript:void(0)" class="waves-effect waves-light <?= menu_active(2, 'dashboard', 'active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/admin/rkat/laporan-pencairan')); ?>" class="waves-effect waves-light">
                         <i class="mdi mdi-file-document-outline"></i>
                         <span>  Laporan Pencairan RKAT  </span>
                     </a>
                 </li>
+                <?php endif; ?>
             </ul>                            
         </div>
     </div>

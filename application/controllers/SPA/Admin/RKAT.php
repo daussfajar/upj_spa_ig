@@ -117,6 +117,7 @@ class RKAT extends CI_Controller{
 
     // Laporan Pencairan RKAT
     public function laporan_pencairan($id = null){
+        $this->Global_model->only_finance_and_admin();
         if($id == null){
             $year = date('Y');
             $year = 2022;
