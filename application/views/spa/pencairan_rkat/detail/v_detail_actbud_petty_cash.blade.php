@@ -115,7 +115,9 @@ $uri5 = $CI->uri->segment(5);
 					</span>
 					@switch($data['status_act'])
 					@case('send')
-						
+						<span class="badge bg-success p-2">
+							<i class="mdi mdi-send-check"></i> Terkirim
+						</span>
 						@break
 					@case('belum dikirim')
 					<span class="badge bg-warning p-2">
@@ -663,9 +665,13 @@ $uri5 = $CI->uri->segment(5);
 		?>
 
 		
-		@if ($data['status_act'] == 'waiting_for_approval')
-			@if ($data['kode_unit'] == $kode_unit && ($jabatan == 22 || $jabatan == 6))
-				@include('spa.partials.approval.form-kepala-unit', ['id_actbud' => $id_actbud])
+		@if (!empty($content))
+			@if ($data['status_act'] == 'waiting_for_approval')
+				@if ($content['form_approval'] === true)
+					@if ($data['kode_unit'] == $kode_unit && ($jabatan == 22 || $jabatan == 6))
+						@include('spa.partials.approval.form-kepala-unit', ['id_actbud' => $id_actbud])
+					@endif
+				@endif
 			@endif
 		@endif
 	</div>	

@@ -16,18 +16,21 @@ class Approval extends CI_Controller{
     public function v_kepala_unit(){
         $session = $this->session->userdata('user_sessions');
         $kode_unit = $session['kode_unit'];
+        $this->Global_model->is_kabag($kode_unit);
         $year = date('Y');
         // $year = 2022;
-        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_kepala_unit($year, $kode_unit);
-        
+        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_kepala_unit($year, $kode_unit);        
+
         return view('spa.approval.kepala-unit', $data);
     }
 
     public function v_detail(int $id_actbud){
+        $this->Global_model->is_access_approval_module();
         $this->load->model('SPA/RKAT_model', 'm_rkat');
         $method = $this->input->method();
         $session = $this->session->userdata('user_sessions');
         $nik = decrypt($session['nik']);
+        $kode_unit = $session['kode_unit'];        
         $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
         $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
         $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
@@ -61,6 +64,10 @@ class Approval extends CI_Controller{
             }
         }
 
+        $data['content'] = [
+            'form_approval' => true
+        ];
+        
         return view('spa.pencairan_rkat.detail.v_detail_actbud_petty_cash', $data);
     }
 

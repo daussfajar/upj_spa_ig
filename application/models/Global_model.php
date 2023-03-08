@@ -108,6 +108,47 @@ class Global_Model extends CI_Model {
 		}
 	}
 
+	public function is_access_approval_module()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] != 7) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			$this->session->set_flashdata('alert', [
+				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
+				'type'    => 'error',
+				'title'   => ''
+			]);
+			return redirect(base_url('app/sim-spa/dashboard'));
+		}
+	}
+
+	public function is_kabag(string $kode_unit = "")
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_unit'] == $kode_unit && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			$this->session->set_flashdata('alert', [
+				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
+				'type'    => 'error',
+				'title'   => ''
+			]);
+			
+			return redirect(base_url('app/sim-spa/dashboard'));
+		}
+	}
+
 	public function upload_excel($filename)
 	{
 		$this->load->library('upload');
