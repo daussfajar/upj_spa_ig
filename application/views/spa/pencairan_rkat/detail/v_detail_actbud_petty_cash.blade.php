@@ -383,8 +383,11 @@ $uri5 = $CI->uri->segment(5);
             </div>
         	@endif
 		</div>
-
+		@if (!empty($content['chat_approval']) && $content['chat_approval'] === true)
+		{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+		@else
 		{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+		@endif
 		<div class="card card-border card-purple" id="card-chat">
 			<div class="card-header border-purple bg-transparent">
 				<h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
@@ -666,11 +669,9 @@ $uri5 = $CI->uri->segment(5);
 
 		
 		@if (!empty($content))
-			@if ($data['status_act'] == 'waiting_for_approval')
-				@if ($content['form_approval'] === true)
-					@if ($data['kode_unit'] == $kode_unit && ($jabatan == 22 || $jabatan == 6))
-						@include('spa.partials.approval.form-kepala-unit', ['id_actbud' => $id_actbud])
-					@endif
+			@if ($content['form_approval'] === true)
+				@if ($data['kode_unit'] == $kode_unit && ($jabatan == 22 || $jabatan == 6))
+					@include('spa.partials.approval.form-kepala-unit', ['id_actbud' => $id_actbud])
 				@endif
 			@endif
 		@endif
@@ -804,7 +805,11 @@ $uri5 = $CI->uri->segment(5);
 
 	@endif
 
+	@if (!empty($content['chat_approval']) && $content['chat_approval'] === true)
+	{!! form_open('app/sim-spa/approval/'.$CI->uri->segment(4).'/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}
+	@else
 	{!! form_open('app/sim-spa/pencairan-rkat/actbud/input-actbud/' . $id_uraian . '/' . $id_actbud, array('class' => 'myForm')) !!}
+	@endif
     <!-- modal hapus pesan -->
 	<input type="hidden" name="act" value="hapus_pesan">
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
