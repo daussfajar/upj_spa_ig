@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Approval extends CI_Controller{
 
+    var $year = 2021;
+
     function __construct(){
         parent::__construct();
         $this->load->model('SPA/Approval_model', 'm_approval');
@@ -17,9 +19,7 @@ class Approval extends CI_Controller{
         $session = $this->session->userdata('user_sessions');
         $kode_unit = $session['kode_unit'];
         $this->Global_model->is_kabag($kode_unit);
-        $year = date('Y');
-        // $year = 2022;
-        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_kepala_unit($year, $kode_unit);        
+        $data['approval_actbud'] = $this->m_approval->get_rkat_approval_kepala_unit($this->year, $kode_unit);        
 
         return view('spa.approval.kepala-unit', $data);
     }
@@ -75,12 +75,117 @@ class Approval extends CI_Controller{
         return view('spa.pencairan_rkat.detail.v_detail_actbud_petty_cash', $data);
     }
 
+    // START Approval Dekan
+    public function approval_dekan($id = null){
+        if($id == null){
+            $session = $this->session->userdata('user_sessions');
+
+            if($session['kode_unit'] == "105" || $session['kode_unit'] == "106" || $session['kode_unit'] == "107" || $session['kode_unit'] == "108" || $session['kode_unit'] == "109" || $session['kode_unit'] == "110" || $session['kode_unit'] == "018" || $session['kode_unit'] == "020"){
+                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_ftd($this->year);
+            } else {
+                $data['approval_actbud'] = $this->m_approval->get_actbud_approval_dekan_fhb($this->year);
+            }
+
+            return view('spa.approval.approval-dekan', $data);
+        } else {
+            $data['kd_act'] = $id;
+            $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
+            if(!empty($data['actbud'])){
+                $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
+                $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
+                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
+                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
+                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
+
+                return view('spa.approval.detail-dekan', $data);
+            } else {
+                show_404();
+            }
+        }
+    }
+
+    public function kirim_persetujuan_dekan_ftd($id){
+        $this->form_validation->set_rules('st_dekan', 'Persetujuan Actbud', 'trim|required', [
+            'required' => '%s tidak boleh kosong'
+        ]);
+        $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+            'required' => '%s tidak boleh kosong'
+        ]);
+        if($this->form_validation->run() === TRUE){
+            $dataUpdate = array(
+                            'st_ftd' => $this->input->post('st_dekan'),
+                            'c_ftd' => $this->input->post('catatan'),
+                            'stamp_ftd' => date('d-m-Y H:i:s')
+                        );
+            $queryUpdate = $this->db->update('tbl_actbud', $dataUpdate, array('kd_act' => decrypt($id)));
+            if($queryUpdate){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Terima Kasih Telah Melakukan Persetujuan Kegiatan ini',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+                return redirect(base_url('app/sim-spa/approval/dekan'));
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal melakukan persetujuan kegiatan ini',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $error = [
+                'form_error' => validation_errors_array()
+            ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    public function kirim_persetujuan_dekan_fhb($id){
+        $this->form_validation->set_rules('st_dekan', 'Persetujuan Actbud', 'trim|required', [
+            'required' => '%s tidak boleh kosong'
+        ]);
+        $this->form_validation->set_rules('catatan', 'Catatan', 'trim|required', [
+            'required' => '%s tidak boleh kosong'
+        ]);
+        if($this->form_validation->run() === TRUE){
+            $dataUpdate = array(
+                            'st_fhb' => $this->input->post('st_dekan'),
+                            'c_fhb' => $this->input->post('catatan'),
+                            'stamp_fhb' => date('d-m-Y H:i:s')
+                        );
+            $queryUpdate = $this->db->update('tbl_actbud', $dataUpdate, array('kd_act' => decrypt($id)));
+            if($queryUpdate){
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Terima Kasih Telah Melakukan Persetujuan Kegiatan ini',
+                    'type'    => 'success',	
+                    'title'   => ''
+                ]);
+                return redirect(base_url('app/sim-spa/approval/dekan'));
+            } else {
+                $this->session->set_flashdata('alert', [
+                    'message' => 'Gagal melakukan persetujuan kegiatan ini',
+                    'type'    => 'error',	
+                    'title'   => ''
+                ]);
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $error = [
+                'form_error' => validation_errors_array()
+            ];
+            $this->session->set_flashdata('error_validation', $error);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+    // END Approval Dekan
+
     // START Approval Warek 1
     public function approval_warek_1($id = null){
         if($id == null){
             $session = $this->session->userdata('user_sessions');
-            $year = date('Y');
-            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_warek1($year);
+            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_warek1($this->year);
                         
             return view('spa.approval.approval-warek1', $data);
         } else {
@@ -175,8 +280,7 @@ class Approval extends CI_Controller{
     public function approval_warek_2($id = null){
         if($id == null){
             $session = $this->session->userdata('user_sessions');
-            $year = date('Y');
-            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_warek2($year);
+            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_warek2($this->year);
 
             return view('spa.approval.approval-warek2', $data);
         } else {
@@ -272,7 +376,7 @@ class Approval extends CI_Controller{
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $year = date('Y');
-            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_rektor($year);
+            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_rektor($this->year);
 
             return view('spa.approval.approval-rektor', $data);
         } else {
@@ -367,9 +471,7 @@ class Approval extends CI_Controller{
     public function approval_presiden($id = null){
         if($id == null){
             $session = $this->session->userdata('user_sessions');
-            $year = date('Y');
-            $year = 2021;
-            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_presiden($year);
+            $data['approval_actbud'] = $this->m_approval->get_actbud_approval_presiden($this->year);
 
             return view('spa.approval.approval-presiden', $data);
         } else {
