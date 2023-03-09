@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class RKAT extends CI_Controller{
 
+    var $year = 2022;
+
     function __construct(){
         parent::__construct();
         $this->load->model('SPA/RKAT_model', 'm_rkat');
@@ -19,8 +21,7 @@ class RKAT extends CI_Controller{
         $method = $this->input->method();
         if ($method == "post"){
             header('Content-Type: application/json');
-            $year = date('Y');
-            echo $this->m_rkat->get_pic_rkat_admin('PK', $year);
+            echo $this->m_rkat->get_pic_rkat_admin('PK', $this->year);
         } else return show_404();
     }
     
@@ -28,8 +29,7 @@ class RKAT extends CI_Controller{
         $method = $this->input->method();
         if ($method == "post"){
             header('Content-Type: application/json');
-            $year = date('Y');
-            echo $this->m_rkat->get_pic_rkat_admin('OPS', $year);
+            echo $this->m_rkat->get_pic_rkat_admin('OPS', $this->year);
         } else return show_404();
     }
     
@@ -37,8 +37,7 @@ class RKAT extends CI_Controller{
         $method = $this->input->method();
         if($method == "post"){
             header('Content-Type: application/json');
-            $year = date('Y');
-            echo $this->m_rkat->get_pic_rkat_admin('INV', $year);
+            echo $this->m_rkat->get_pic_rkat_admin('INV', $this->year);
         } else return show_404();
     }
 
@@ -62,22 +61,19 @@ class RKAT extends CI_Controller{
     }
 
     public function list_rkat_program_kerja(){
-        $year = date('Y');
-        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('PK', $year);
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('PK', $this->year);
 
         return view('spa.admin.rkat.list-program-kerja', $data);
     }
 
     public function list_rkat_operasional(){
-        $year = date('Y');
-        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('OPS', $year);
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('OPS', $this->year);
 
         return view('spa.admin.rkat.list-operasional', $data);
     }
 
     public function list_rkat_investasi(){
-        $year = date('Y');
-        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('INV', $year);
+        $data['list_rkat'] = $this->m_rkat->get_list_rkat_admin('INV', $this->year);
 
         return view('spa.admin.rkat.list-investasi', $data);
     }
@@ -119,9 +115,7 @@ class RKAT extends CI_Controller{
     public function laporan_pencairan($id = null){
         $this->Global_model->only_finance_and_admin();
         if($id == null){
-            $year = date('Y');
-            $year = 2022;
-            $data['laporan_pencairan'] = $this->m_rkat->get_laporan_pencairan(array('a.tahun' => $year));
+            $data['laporan_pencairan'] = $this->m_rkat->get_laporan_pencairan(array('a.tahun' => $this->year));
 
             return view('spa.admin.rkat.laporan-pencairan', $data);
         } else {
