@@ -46,51 +46,7 @@ $uri5 = $CI->uri->segment(5);
 <?php $__env->startSection('content'); ?>
 	<div class="col-md-12">
 		<?php if($data['status_act'] != null){ ?>
-		<h6>Status Approval</h6>
-        <div class="card">
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover">
-						<thead class="bg-dark text-white">
-							<tr>
-								<th class="v-middle text-center">Ka.Prodi / Unit</th>
-								<th class="v-middle text-center">Dekan</th>
-								<th class="v-middle text-center">Pre-Approval</th>
-								<th class="v-middle text-center">Bagian Keuangan</th>
-								<th class="v-middle text-center">Wakil Rektor</th>
-								<th class="v-middle text-center">Rektor</th>
-								<th class="v-middle text-center">Presiden</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-								<td class="v-middle text-center">
-
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+		<?php echo $__env->make('spa.pencairan_rkat.detail.status_approval', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 		<?php } ?>
 		<div class="card card-border card-teal">
 			<div class="card-header border-teal bg-transparent">

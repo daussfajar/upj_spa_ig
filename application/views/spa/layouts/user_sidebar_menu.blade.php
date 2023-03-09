@@ -36,7 +36,9 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
+                        <?php if($jabatan == 22 && $kode_unit == 002): ?>
                         <li><a href="javascript:void(0)">Input RKAT</a></li>
+                        <?php endif; ?>
                         <li <?= ($uri3 == "rkat" && $uri4 == "pic") ? 'class="mm-active"' : ''?>><a href="{{ base_url('app/sim-spa/rkat/pic/program-kerja') }}">Ubah PIC</a></li>
                         <li <?= ($uri3 == "rkat" && $uri4 == "list") ? 'class="mm-active"' : ''?>><a href="{{ base_url('app/sim-spa/rkat/list/program-kerja') }}">List RKAT</a></li>
                     </ul>

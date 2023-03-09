@@ -15,6 +15,14 @@ $session = $CI->session->userdata('user_sessions');
 <link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
 <link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
 <link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<style>
+    .v-middle{
+        vertical-align: middle!important;
+    }
+    .font-14{
+        font-size: 14px!important;
+    }
+</style>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('breadcrumb'); ?>
@@ -45,12 +53,13 @@ $session = $CI->session->userdata('user_sessions');
                 <table class="table table-striped table-bordered table-hover" id="table-pic-rkat-program-kerja" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Kode Pencairan</th>
-                            <th>Uraian dan Tujuan Kegiatan</th>
-                            <th>PIC</th>
-                            <th>Periode</th>
-                            <th>Sisa Anggaran</th>
-                            <th>Aksi</th>
+                            <th class="v-middle text-center">No</th>
+                            <th class="v-middle text-center">Kode Pencairan</th>
+                            <th class="v-middle">Uraian dan Tujuan Kegiatan</th>
+                            <th class="v-middle text-center">PIC</th>
+                            <th class="v-middle text-center">Periode</th>
+                            <th class="v-middle text-center">Sisa Anggaran</th>
+                            <th class="v-middle text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="tbody-pic-rkat-program-kerja">
@@ -147,47 +156,72 @@ $session = $CI->session->userdata('user_sessions');
             },
             columns: [
                 {
-                    "data": "kode_pencairan"
+                    "data": "kode_pencairan",
+                    "class": "text-center v-middle font-16",
+                    "sortable": false, 
+                    render: function (data, type, row, meta) {
+                        return `<span class="font-14">`+(meta.row + meta.settings._iDisplayStart + 1)+`</span>`;
+                    }  
                 },
                 {
-                    "data": "uraian"
+                    "data": "kode_pencairan",
+                    "class" : "text-center v-middle font-16",
+                    "render": function(data, type, row) {
+                        return `<span class="font-14">${data}</span>`;
+                    }
                 },
                 {
-                    "data": "nama_lengkap"
+                    "data": "uraian",
+                    "class" : "v-middle font-16",
+                    "render": function(data, type, row) {
+                        return `<span class="font-14">${data}</span>`;
+                    }
                 },
                 {
-                    "data": "periode"
+                    "data": "nama_lengkap",
+                    "class" : "text-center v-middle font-16",
+                    "render": function(data, type, row) {
+                        return `<span class="font-14">${data == null ? '-' : data}</span>`;
+                    }
+                },
+                {
+                    "data": "periode",
+                    "class" : "text-center v-middle font-16",
+                    "render": function(data, type, row) {
+                        return `<span class="font-14">${data}</span>`;
+                    }
                 },
                 {
                     "data": "sisa_anggaran",
-                    "class" : "text-center",
+                    "class" : "text-center v-middle font-16",
                     "render": function(data, type, row) {
-                        return formatRupiah(data, 'Rp. ');
+                        return '<span class="badge bg-success p-2 font-12">'+formatRupiah(data, 'Rp. ')+'</span>';
                     }
                 },
                 {
                     "data": "kode_uraian",
-                    "class" : "text-center",
+                    "class" : "text-center font-16",
                     "render": function(data, type, row) {
-                            return `<div class="btn-group text-center" >
-                                        <button class="text-white btn btn-primary btn-xs btn-edit"
-                                            data-kode-uraian="${ row.kode_uraian }" 
-                                            data-pic="${ row.pic }"> Ubah PIC 
-                                        </button>
-                                    </div>`;
+                        return `<div class="btn-group text-center" >
+                                    <button class="text-white btn btn-primary btn-xs btn-edit"
+                                        data-kode-uraian="${ row.kode_uraian }" 
+                                        data-pic="${ row.pic }"> Ubah PIC 
+                                    </button>
+                                </div>`;
                     }
                 },
             ],
             order: [
-                [0, 'desc']
+                [1, 'desc']
             ],
             columnDefs: [
-                { "targets": 0, "searchable": true },
+                { "targets": 0, "sortable": false, "searchable": false },
                 { "targets": 1, "searchable": true },
                 { "targets": 2, "searchable": true },
-                { "targets": 3, "searchable": false },
+                { "targets": 3, "searchable": true },
                 { "targets": 4, "searchable": false },
-                { "targets": 5, "orderable": false, "searchable": false }
+                { "targets": 5, "searchable": false },
+                { "targets": 6, "orderable": false, "searchable": false }
             ],
             rowCallback: function(row, data, iDisplayIndex) {
                 $('td:eq(0)', row).html();

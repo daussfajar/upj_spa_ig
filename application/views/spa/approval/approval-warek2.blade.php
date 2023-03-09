@@ -15,6 +15,14 @@ $year = date('Y');
 @section('css')
 <link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<style>
+    .v-middle{
+        vertical-align: middle!important;
+    }
+    .font-14{
+        font-size: 14px!important;
+    }
+</style>
 @endsection
 
 @section('breadcrumb')
@@ -31,18 +39,18 @@ $year = date('Y');
         </div>
         <div class="card-body">
             <div class="table-responsive my-4">
-                <table class="table table-striped table-bordered table-hover" id="table-approval-warek-2" width="100%">
+                <table class="table table-striped table-bordered table-hover" id="table-approval-warek-1" width="100%">
                     <thead>
                         <tr>
-                            <th><center>No.</center></th>
-                            <th><center>No Dokumen</center></th>
-                            <th><center>Kode Pencairan</center></th>
-                            <th><center>Nama Kegiatan</center></th>
-                            <th><center>Jenis Pencairan</center></th>
-                            <th><center>Anggaran</center></th>
-                            <th><center>PIC</center></th>
-                            <th><center>Pelaksana</center></th>
-                            <th><center>Detail</center></th>
+                            <th class="v-middle text-center">No.</th>
+                            <th class="v-middle text-center">No Dokumen</th>
+                            <th class="v-middle text-center">Kode Pencairan</th>
+                            <th class="v-middle">Nama Kegiatan</th>
+                            <th class="v-middle text-center">Jenis Pencairan</th>
+                            <th class="v-middle text-center">Anggaran</th>
+                            <th class="v-middle text-center">PIC</th>
+                            <th class="v-middle text-center">Pelaksana</th>
+                            <th class="v-middle text-center">Detail</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,27 +58,60 @@ $year = date('Y');
                             $no = 1;
                             if(!empty($approval_actbud)){
                                 foreach($approval_actbud as $key => $value){
+                                    $no_dokumen = $value['jns_aju_agr'] == 'actbud' ? 'ACT' : 'PTY';
+                                    $date_m = date_create($value['tgl_m']);
+                                    $date_s = date_create($value['tgl_s']);
                         ?>
                                     <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td>
-                                            <?php
-                                                if($value['jns_aju_agr'] == 'actbud'){
-                                                    echo 'ACT/' . $value['kd_act'];
-                                                }else{
-                                                    echo 'PTY/' . $value['kd_act'];
-                                                }
+                                        <td class="v-middle text-center font-14">
+                                            <?= $no++; ?>
+                                        </td>
+                                        <td class="v-middle text-center font-14">
+                                            <?= $no_dokumen . '/' . $value['kd_act'] ?>
+                                        </td>
+                                        <td class="v-middle text-center font-14">
+                                            <?= $value['kode_pencairan']; ?>
+                                        </td>
+                                        <td class="v-middle font-14">
+                                            <?= $value['nama_kegiatan'] ?>
+                                            <hr class="mt-1 mb-2">
+                                            <span class="badge bg-secondary p-2" style="font-size:12px;">
+                                                <i class="mdi mdi-calendar"></i> <?= tanggal_indo(date_format($date_m, 'Y-m-d')) . ' - ' . tanggal_indo(date_format($date_s, 'Y-m-d')) ?>
+                                            </span>
+                                        </td>
+                                        <td class="v-middle text-center">
+                                            <span class="badge bg-dark p-2">
+                                                <i class="mdi mdi-checkbox-marked-circle-outline"></i> <?= ucwords($value['jns_aju_agr']) ?>
+                                            </span>
+                                        </td>
+                                        <td class="v-middle text-center">
+                                            <?php 
+                                            $color = "";
+                                            if($value['agr'] < 10000000){
+                                                $color .= "teal";
+                                            } else if($value['agr'] >= 10000000 && $value['agr'] < 20000000){
+                                                $color .= "secondary";
+                                            } else if($value['agr'] >= 20000000 && $value['agr'] < 50000000){
+                                                $color .= "dark";
+                                            } else if($value['agr'] >= 50000000){
+                                                $color .= "danger";
+                                            }
                                             ?>
+                                            <span class="badge bg-<?= $color ?> p-2">
+                                                <?= rupiah_1($value['agr']) ?>
+                                            </span>
                                         </td>
-                                        <td><?= $value['kode_pencairan']; ?></td>
-                                        <td>
-                                            <textarea cols="20" readonly rows="3"><?= $value['deskrip_keg'];?></textarea>
+                                        <td class="v-middle text-center font-14">
+                                            <?= $value['nama_pic']; ?>
                                         </td>
-                                        <td><?= $value['jns_aju_agr']; ?></td>
-                                        <td align="right"><?= number_format($value['fnl_agr'],'0','.','.'); ?></td>
-                                        <td><?= $value['nama_pic']; ?></td>
-                                        <td><?= $value['nama_pelaksana']; ?></td>
-                                        <td><a href="<?= base_url('app/sim-spa/approval/warek2/detail/') . $value['kd_act']; ?> ">Lihat</a> </td>
+                                        <td class="v-middle text-center font-14">
+                                            <?= $value['nama_pelaksana']; ?>
+                                        </td>
+                                        <td class="v-middle text-center">                                            
+                                            <a href="<?= base_url('app/sim-spa/approval/warek2/detail/') . $value['kd_act']; ?>" class="badge bg-info p-2">
+                                                Detail <i class="mdi mdi-arrow-right"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                         <?php
                                 }
@@ -92,7 +133,7 @@ $year = date('Y');
 <script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
 <script>
     $(document).ready(function(){
-        $("#table-approval-warek-2").DataTable({
+        $("#table-approval-warek-1").DataTable({
             oLanguage: {
                 sProcessing: "Loading..."
             },

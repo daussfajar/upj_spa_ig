@@ -27,11 +27,12 @@ $session = $CI->session->userdata('user_sessions');
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Silahkan Approve Actbud Tersebut
+            <h5 class="card-title mb-0">
+                Silakan Lakukan Approval
+            </h5>            
         </div>
         <div class="card-body">
             <div class="table-responsive my-4">
@@ -41,7 +42,7 @@ $session = $CI->session->userdata('user_sessions');
                             <th class="v-middle text-center">No.</th>
                             <th class="v-middle text-center">No Dokumen</th>
                             <th class="v-middle text-center">Kode Pencairan</th>
-                            <th class="v-middle text-center">Nama Kegiatan</th>
+                            <th class="v-middle">Nama Kegiatan</th>
                             <th class="v-middle text-center">Jenis Pencairan</th>
                             <th class="v-middle text-center">Anggaran</th>
                             <th class="v-middle text-center">PIC</th>
@@ -57,20 +58,16 @@ $session = $CI->session->userdata('user_sessions');
                         ?>
                                     <tr>
                                         <td class="v-middle text-center font-14"><?= $no++; ?></td>
-                                        <td class="v-middle text-center">
+                                        <td class="v-middle text-center font-14">
                                             <?php
                                                 $no_dokumen = $value['jns_aju_agr'] == 'actbud' ? 'ACT' : 'PTY';
                                                 $date_m = date_create($value['tgl_m']);
                                                 $date_s = date_create($value['tgl_s']);                                                
                                             ?>
-                                            <span class="badge bg-primary p-2">
-                                                <?= $no_dokumen . '/' . $value['kd_act'] ?>
-                                            </span>
+                                            <?= $no_dokumen . '/' . $value['kd_act'] ?>                                            
                                         </td>
-                                        <td class="v-middle text-center">
-                                            <span class="badge bg-purple p-2">
-                                                <?= $value['kode_pencairan'] ?>
-                                            </span>
+                                        <td class="v-middle text-center font-14">
+                                            <?= $value['kode_pencairan'] ?>                                            
                                         </td>
                                         <td class="v-middle font-14">
                                             <?= $value['nama_kegiatan'] ?>
@@ -85,19 +82,27 @@ $session = $CI->session->userdata('user_sessions');
                                             </span>
                                         </td>
                                         <td class="v-middle" align="center">
-                                            <span class="badge bg-success p-2">
+                                            <?php 
+                                            $color = "";
+                                            if($value['agr'] < 10000000){
+                                                $color .= "teal";
+                                            } else if($value['agr'] >= 10000000 && $value['agr'] < 20000000){
+                                                $color .= "secondary";
+                                            } else if($value['agr'] >= 20000000 && $value['agr'] < 50000000){
+                                                $color .= "dark";
+                                            } else if($value['agr'] >= 50000000){
+                                                $color .= "danger";
+                                            }
+                                            ?>
+                                            <span class="badge bg-<?= $color ?> p-2">
                                                 <?= rupiah_1($value['agr']) ?>
                                             </span>
                                         </td>
-                                        <td class="v-middle text-center">
-                                            <span class="badge bg-teal p-2">
-                                                <?= ucwords($value['nama_pic']) ?>
-                                            </span>
+                                        <td class="v-middle text-center font-14">                                            
+                                            <?= ucwords($value['nama_pic']) ?>                                            
                                         </td>
-                                        <td class="v-middle text-center">
-                                            <span class="badge bg-teal p-2">
-                                                <?= ucwords($value['nama_pelaksana']) ?>
-                                            </span>
+                                        <td class="v-middle text-center font-14">
+                                            <?= ucwords($value['nama_pelaksana']) ?>                                            
                                         </td>
                                         <td class="v-middle text-center">                                            
                                             <a href="<?= base_url('app/sim-spa/approval/keuangan/detail/') . $value['kd_act']; ?>" class="badge bg-info p-2">

@@ -47,15 +47,15 @@ $nama_lengkap = $session['nama_lengkap'];
         <div class="card-body">    
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover" id="table-actbud">
-                    <thead class="bg-purple text-white">
+                    <thead class="">
                         <tr>
-                            <th style="vertical-align:middle;" class="text-center">No</th>
-                            <th style="vertical-align:middle;">Uraian</th>
-                            <th style="vertical-align:middle;" class="text-center">Kode Pencairan</th>
-                            <th style="vertical-align:middle;" class="text-center">Ganjil</th>
-                            <th style="vertical-align:middle;" class="text-center">Genap</th>
-                            <th style="vertical-align:middle;" class="text-center">Sisa</th>
-                            <th style="vertical-align:middle;" class="text-center">Aksi</th>
+                            <th class="text-center v-middle">No</th>
+                            <th class="v-middle">Uraian</th>
+                            <th class="text-center v-middle">Kode Pencairan</th>
+                            <th class="text-center v-middle font-14">Ganjil</th>
+                            <th class="text-center v-middle font-14">Genap</th>
+                            <th class="text-center v-middle font-14">Sisa</th>
+                            <th class="text-center v-middle font-14">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="tbody-table-actbud">
@@ -120,9 +120,9 @@ $nama_lengkap = $session['nama_lengkap'];
                 },
                 {
                     "data": "kode_pencairan",
-                    "class": "v-middle",
+                    "class": "v-middle font-14 text-center",
                     "render": function(data, type, row){
-                        return '<span class="badge bg-purple p-2">'+data+'</span>'
+                        return data
                     }
                 },
                 {

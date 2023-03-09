@@ -99,31 +99,110 @@ class Global_Model extends CI_Model {
 		}
 			
 		if($access == false){
-			$this->session->set_flashdata('alert', [
-				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
-				'type'    => 'error',	
-				'title'   => ''
-			]);
-			return redirect(base_url('app/sim-ig/dashboard'));
+			return shor_404();
 		}
 	}
 
 	public function only_finance_and_admin(){
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if (($session['kode_unit'] == 002 && $session['kode_jabatan'] == 22) || $session['kode_jabatan'] == 0) {
+		if (($session['kode_unit'] == 002 && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) || $session['kode_jabatan'] == 0) {
 			$access = true;
 		} else {
 			$access = false;
 		}
 
 		if ($access == false) {
-			$this->session->set_flashdata('alert', [
-				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
-				'type'    => 'error',
-				'title'   => ''
-			]);
-			return redirect(base_url('app/sim-spa/dashboard'));
+			return show_404();
+		}
+	}
+
+	public function only_dekan_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] == 5 || $session['kode_jabatan'] == 0) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_warek_1_2_dekan_and_admin(){
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] == 33 || $session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 3 || $session['kode_jabatan'] == 4) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_warek_1_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 3) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_warek_2_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 4) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_presiden_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 1) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_rektor_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 2) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
 		}
 	}
 
@@ -139,12 +218,7 @@ class Global_Model extends CI_Model {
 		}
 
 		if ($access == false) {
-			$this->session->set_flashdata('alert', [
-				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
-				'type'    => 'error',
-				'title'   => ''
-			]);
-			return redirect(base_url('app/sim-spa/dashboard'));
+			return show_404();
 		}
 	}
 
@@ -159,12 +233,7 @@ class Global_Model extends CI_Model {
 		}
 
 		if ($access == false) {
-			$this->session->set_flashdata('alert', [
-				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
-				'type'    => 'error',
-				'title'   => ''
-			]);
-			return redirect(base_url('app/sim-spa/dashboard'));
+			return show_404();
 		}
 	}
 
@@ -179,13 +248,7 @@ class Global_Model extends CI_Model {
 		}
 
 		if ($access == false) {
-			$this->session->set_flashdata('alert', [
-				'message' => 'Maaf anda tidak diperbolehkan mengakses modul tersebut.',
-				'type'    => 'error',
-				'title'   => ''
-			]);
-			
-			return redirect(base_url('app/sim-spa/dashboard'));
+			return show_404();
 		}
 	}
 

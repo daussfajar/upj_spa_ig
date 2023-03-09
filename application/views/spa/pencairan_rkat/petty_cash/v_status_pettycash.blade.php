@@ -48,7 +48,7 @@ $nik = decrypt($session['nik']);
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="table-actbud">
-                        <thead class="bg-purple text-white text-center">
+                        <thead class="">
                             <tr>
                                 <th width="50" style="vertical-align: middle">No</th>
                                 <th style="vertical-align: middle">No Dokumen</th>
@@ -61,7 +61,52 @@ $nik = decrypt($session['nik']);
                                 <th style="vertical-align: middle">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody-table-actbud"></tbody>
+                        <tbody id="tbody-table-actbud">
+                            <?php 
+                            $no = 1;
+                            foreach ($data_actbud as $item){
+                                $date_m = date_create($item['tgl_m']);
+                                $date_s = date_create($item['tgl_s']);
+                                ?>
+                                <tr>
+                                    <th class="text-center v-middle font-14">{{ $no++ }}</th>
+                                    <td class="v-middle font-14 text-center">
+                                        ACT/<?= $item['kd_act'] ?>                                        
+                                    </td>
+                                    <td class="v-middle font-14 text-center">
+                                        <?= $item['kode_pencairan'] ?>                                        
+                                    </td>
+                                    <td class="v-middle font-14">
+                                        <?= $item['nama_kegiatan'] ?>
+                                        <hr class="mt-1 mb-2">
+                                        <span class="badge bg-secondary p-2" style="font-size:12px;">
+                                            <i class="mdi mdi-calendar"></i> <?= tanggal_indo(date_format($date_m, 'Y-m-d')) . ' - ' . tanggal_indo(date_format($date_s, 'Y-m-d')) ?>
+                                        </span>
+                                    </td>
+                                    <td class="v-middle text-center">
+                                        <?php 
+                                        $color = "";
+                                        if($item['agr'] < 10000000){
+                                            $color .= "teal";
+                                        } else if($item['agr'] >= 10000000 && $item['agr'] < 20000000){
+                                            $color .= "secondary";
+                                        } else if($item['agr'] >= 20000000 && $item['agr'] < 50000000){
+                                            $color .= "dark";
+                                        } else if($item['agr'] >= 50000000){
+                                            $color .= "danger";
+                                        }
+                                        ?>
+                                        <span class="badge bg-<?= $color ?> p-2">
+                                            <?= rupiah_1($item['agr']) ?>
+                                        </span>
+                                    </td>
+                                    <td class="v-middle text-center">
+                                        <a href="<?= base_url('app/sim-spa/pencairan-rkat/actbud/status-actbud/' . $item['kode_uraian'] . '/' . $item['kd_act']) ?>" class="badge bg-info p-2">Lihat</a>
+                                    </td>
+                                    <td class="v-middle"></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -78,107 +123,13 @@ $nik = decrypt($session['nik']);
     $(document).ready(function(){
         let base_url = "<?= base_url() ?>"
         $("#table-actbud").DataTable({
-            initComplete: function() {
-                var api = this.api();
-                $('#table-actbud_filter input')
-                .off('.DT')
-                .on('input.DT', function() {
-                    api.search(this.value).draw();
-                });
-            },
             oLanguage: {
                 sProcessing: "Loading..."
             },
-            lengthMenu: [
-                [10, 25, 50, 100],
-                [10, 25, 50, 100],
-            ],
             pageLength: 10,
             scrollX: true,
+            serverSide: false,
             processing: true,
-            serverSide: true,
-            // responsive: true,
-            ajax: {
-                "url": "<?php echo base_url('SPA/PencairanRKAT/get_actbud_by_nik') ?>",
-                "type": "POST",
-                "dataType" : "json",
-                "data" : {
-                    'pic': '<?= $nik ?>',
-                    'jenis': 'petty cash'
-                },
-            },
-            columns: [
-                {
-                    "data": "kd_act",
-                    "class": "text-center v-middle font-14",
-                    "sortable": false, 
-                    render: function (data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }  
-                },
-                {
-                    "data": "kd_act",
-                    "class": "v-middle",
-                    render: function(data, type, row){
-                        return '<span class="badge bg-primary p-2">' + 'ACT/' + data + '</span>'
-                    }
-                },
-                {
-                    "data": "kode_pencairan",
-                    "class": "v-middle",
-                    render: function(data, type, row){
-                        return '<span class="badge bg-purple p-2">'+ data + '</span>'
-                    }
-                },
-                {
-                    "data": "nama_kegiatan",
-                    "class": "v-middle font-14",
-                    "render": function (data, type, row) {
-                        return row.nama_kegiatan + `
-                        <hr class="mt-1 mb-2">
-                        <span class="badge bg-secondary p-2" style="font-size:12px;">
-                            <i class="mdi mdi-calendar"></i>  `+row.tgl_m+` s/d `+row.tgl_s+`
-                        </span>
-                        `
-                    }
-                },
-                {
-                    "data": "agr",
-                    "class": "v-middle",
-                    "render": function (data, type, row) {
-                        return '<span class="badge bg-success p-2">'+formatRupiah(data, 'Rp. ')+'</span>'
-                    }
-                },
-                {
-                    "data": "kode_uraian",
-                    "class": "v-middle text-center",
-                    "render": function (data, type, row) {
-                        return '<a href="'+base_url+'app/sim-spa/pencairan-rkat/petty-cash/status-petty-cash/'+row.kode_uraian+'/'+row.kd_act+'" class="badge bg-info p-2">Lihat</a>'
-                    }
-                },
-                {
-                    "data": "kd_act",
-                    "class": "v-middle text-center",
-                    render: function (data, type, row) {
-                        return ''
-                    }
-                },
-            ],
-            order: [
-                [1, 'desc']
-            ],
-            columnDefs: [
-                { "targets": 0, "searchable": false },
-                { "targets": 1, "searchable": true },
-                { "targets": 2, "searchable": true },
-                { "targets": 3, "searchable": true },
-                { "targets": 4, "searchable": false },
-                { "targets": 5, "searchable": false, "sortable": false },
-                { "targets": 6, "orderable": false, "searchable": false }
-            ],
-            rowCallback: function(row, data, iDisplayIndex) {
-                $('td:eq(0)', row).html()
-            }
         })
     })
 

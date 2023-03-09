@@ -341,6 +341,7 @@ class Approval extends CI_Controller{
 
     // START Approval Dekan
     public function approval_dekan($id = null){
+        $this->Global_model->only_dekan_and_admin();
         if($id == null){
             $session = $this->session->userdata('user_sessions');
 
@@ -449,6 +450,7 @@ class Approval extends CI_Controller{
 
     // START Approval Warek 1
     public function approval_warek_1($id = null){
+        $this->Global_model->only_warek_1_and_admin();
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $data['approval_actbud'] = $this->m_approval->get_actbud_approval_warek1($this->year);
@@ -544,6 +546,7 @@ class Approval extends CI_Controller{
 
     // START Approval Warek 2
     public function approval_warek_2($id = null){
+        $this->Global_model->only_warek_2_and_admin();
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $data['approval_actbud'] = $this->m_approval->get_actbud_approval_warek2($this->year);
@@ -639,6 +642,7 @@ class Approval extends CI_Controller{
 
     // START Approval Rektor
     public function approval_rektor($id = null){
+        $this->Global_model->only_rektor_and_admin();
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $year = date('Y');
@@ -735,6 +739,7 @@ class Approval extends CI_Controller{
 
     // START Approval Presiden
     public function approval_presiden($id = null){
+        $this->Global_model->only_presiden_and_admin();
         if($id == null){
             $session = $this->session->userdata('user_sessions');
             $data['approval_actbud'] = $this->m_approval->get_actbud_approval_presiden($this->year);

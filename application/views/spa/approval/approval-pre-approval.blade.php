@@ -40,11 +40,11 @@ $nama_unit = $_SESSION['user_sessions']['nama_unit'];
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped dataTable">
-                        <thead class="bg-purple text-white">
+                        <thead class="">
                             <tr>
                                 <th class="v-middle text-center">No</th>
-                                <th class="v-middle">No Dokumen</th>
-                                <th class="v-middle">Kode Pencairan</th>
+                                <th class="v-middle text-center">No Dokumen</th>
+                                <th class="v-middle text-center">Kode Pencairan</th>
                                 <th class="v-middle">Nama Kegiatan</th>
                                 <th class="v-middle text-center">Jenis Kegiatan</th>
                                 <th class="v-middle text-center">Anggaran</th>
@@ -62,16 +62,12 @@ $nama_unit = $_SESSION['user_sessions']['nama_unit'];
                                 $date_s = date_create($item['tgl_s']);
                                 ?>
                                 <tr>
-                                    <th class="text-center v-middle">{{ $loop->iteration }}</th>
-                                    <td class="v-middle">
-                                        <span class="badge bg-primary p-2">
-                                            <?= $no_dokumen . '/' . $item['kd_act'] ?>
-                                        </span>
+                                    <th class="text-center v-middle font-14">{{ $loop->iteration }}</th>
+                                    <td class="v-middle text-center font-14">
+                                        <?= $no_dokumen . '/' . $item['kd_act'] ?>
                                     </td>
-                                    <td class="v-middle">
-                                        <span class="badge bg-purple p-2">
-                                            <?= $item['kode_pencairan'] ?>
-                                        </span>
+                                    <td class="v-middle text-center font-14">
+                                        <?= $item['kode_pencairan'] ?>                                        
                                     </td>
                                     <td class="v-middle font-14">
                                         <?= $item['nama_kegiatan'] ?>
@@ -86,19 +82,27 @@ $nama_unit = $_SESSION['user_sessions']['nama_unit'];
                                         </span>
                                     </td>
                                     <td class="v-middle text-center">
-                                        <span class="badge bg-success p-2">
+                                        <?php 
+                                        $color = "";
+                                        if($item['agr'] < 10000000){
+                                            $color .= "teal";
+                                        } else if($item['agr'] >= 10000000 && $item['agr'] < 20000000){
+                                            $color .= "secondary";
+                                        } else if($item['agr'] >= 20000000 && $item['agr'] < 50000000){
+                                            $color .= "dark";
+                                        } else if($item['agr'] >= 50000000){
+                                            $color .= "danger";
+                                        }
+                                        ?>
+                                        <span class="badge bg-<?= $color ?> p-2">
                                             <?= rupiah_1($item['agr']) ?>
                                         </span>
                                     </td>
-                                    <td class="v-middle text-center">
-                                        <span class="badge bg-teal p-2">
-                                            <?= $item['nama_pic'] ?>
-                                        </span>
+                                    <td class="v-middle text-center font-14">
+                                        <?= $item['nama_pic'] ?>                                        
                                     </td>
-                                    <td class="v-middle text-center">
-                                        <span class="badge bg-teal p-2">
-                                            <?= $item['nama_pelaksana'] ?>
-                                        </span>
+                                    <td class="v-middle text-center font-14">
+                                        <?= $item['nama_pelaksana'] ?>                                        
                                     </td>
                                     <td class="v-middle text-center">
                                         <a href="<?= base_url('app/sim-spa/approval/pre-approval/detail/' . $item['kd_act']) ?>" class="badge bg-info p-2">

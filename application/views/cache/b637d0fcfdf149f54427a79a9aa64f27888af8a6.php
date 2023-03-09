@@ -48,17 +48,17 @@ $nik = decrypt($session['nik']);
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="table-actbud">
-                        <thead class="bg-purple text-white text-center">
+                        <thead class="">
                             <tr>
-                                <th width="50" style="vertical-align: middle">No</th>
-                                <th style="vertical-align: middle">No Dokumen</th>
-                                <th style="vertical-align: middle">Kode Pencairan</th>
-                                <th style="vertical-align: middle">Nama Kegiatan</th>
-                                <th class="text-center" style="vertical-align: middle">
+                                <th width="50" class="v-middle text-center">No</th>
+                                <th class="v-middle text-center">No Dokumen</th>
+                                <th class="v-middle text-center">Kode Pencairan</th>
+                                <th class="v-middle">Nama Kegiatan</th>
+                                <th class="v-middle text-center">
                                     Anggaran
                                 </th>
-                                <th style="vertical-align: middle">Status Approval</th>
-                                <th style="vertical-align: middle">Aksi</th>
+                                <th class="v-middle text-center">Status Approval</th>
+                                <th class="v-middle text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-table-actbud">
@@ -70,11 +70,11 @@ $nik = decrypt($session['nik']);
                                 ?>
                                 <tr>
                                     <th class="text-center v-middle font-14"><?php echo e($no++); ?></th>
-                                    <td class="v-middle">
-                                        <span class="badge bg-primary p-2">ACT/<?= $item['kd_act'] ?></span>
+                                    <td class="v-middle font-14 text-center">
+                                        ACT/<?= $item['kd_act'] ?>                                        
                                     </td>
-                                    <td class="v-middle">
-                                        <span class="badge bg-purple p-2"><?= $item['kode_pencairan'] ?></span>
+                                    <td class="v-middle font-14 text-center">
+                                        <?= $item['kode_pencairan'] ?>                                        
                                     </td>
                                     <td class="v-middle font-14">
                                         <?= $item['nama_kegiatan'] ?>
@@ -84,7 +84,19 @@ $nik = decrypt($session['nik']);
                                         </span>
                                     </td>
                                     <td class="v-middle text-center">
-                                        <span class="badge bg-success p-2">
+                                        <?php 
+                                        $color = "";
+                                        if($item['agr'] < 10000000){
+                                            $color .= "teal";
+                                        } else if($item['agr'] >= 10000000 && $item['agr'] < 20000000){
+                                            $color .= "secondary";
+                                        } else if($item['agr'] >= 20000000 && $item['agr'] < 50000000){
+                                            $color .= "dark";
+                                        } else if($item['agr'] >= 50000000){
+                                            $color .= "danger";
+                                        }
+                                        ?>
+                                        <span class="badge bg-<?= $color ?> p-2">
                                             <?= rupiah_1($item['agr']) ?>
                                         </span>
                                     </td>

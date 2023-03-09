@@ -176,6 +176,8 @@ class PencairanRKAT extends CI_Controller
 
         $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id_uraian]);
         if (empty($data['data'])) return show_404();
+        if($data['data']['kd_act'] != $id_actbud) return show_404();
+        
         $data['id_uraian'] = $id_uraian;
         $data['id_actbud'] = $id_actbud;
         $data['dokumen_pendukung'] = $this->m_rkat->get_act_dokumen_pendukung($id_actbud);
@@ -671,7 +673,11 @@ class PencairanRKAT extends CI_Controller
 
     public function v_status_pettycash()
     {
-        return view('spa.pencairan_rkat.petty_cash.v_status_pettycash');
+        $session = $this->session->userdata('user_sessions');
+        $nik = decrypt($session['nik']);
+        $data['data_actbud'] = $this->m_rkat->get_data_actbud_where_pic($nik, 'petty cash');
+
+        return view('spa.pencairan_rkat.petty_cash.v_status_pettycash', $data);
     }
 
     public function v_proses_input_petty_cash(int $id){

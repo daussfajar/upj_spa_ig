@@ -15,6 +15,14 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
 @section('css')
 <link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<style>
+    .v-middle{
+        vertical-align: middle!important;
+    }
+    .font-14{
+        font-size: 14px!important;
+    }
+</style>
 @endsection
 
 @section('breadcrumb')
@@ -45,40 +53,62 @@ $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
                 <table class="table table-striped table-bordered table-hover" id="table-list-rkat-program-kerja" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Kode Pencairan</th>
-                            <th>Kode Kegiatan</th>
-                            <th>Uraian dan Tujuan <br>Kegiatan</th>
-                            <th>Kode KPI</th>
-                            <th>KPI</th>
-                            <th>PIC</th>
-                            <th>Tahun Anggaran</th>
-                            <th>Periode</th>
-                            <th>Total RKAT</th>
-                            <th>Pengalihan Masuk</th>
-                            <th>Pengalihan Keluar</th>
-                            <th>Pencairan</th>
-                            <th>Sisa</th>
+                            <th class="text-center v-middle">No</th>
+                            <th class="text-center v-middle">Kode Pencairan</th>
+                            <th class="text-center v-middle">Kode Kegiatan</th>
+                            <th class="text-center v-middle">Uraian dan Tujuan <br>Kegiatan</th>
+                            <th class="text-center v-middle">Kode KPI</th>
+                            <th class="text-center v-middle">KPI</th>
+                            <th class="text-center v-middle">PIC</th>
+                            <th class="text-center v-middle">Tahun Anggaran</th>
+                            <th class="text-center v-middle">Periode</th>
+                            <th class="text-center v-middle">Total RKAT</th>
+                            <th class="text-center v-middle">Pengalihan Masuk</th>
+                            <th class="text-center v-middle">Pengalihan Keluar</th>
+                            <th class="text-center v-middle">Pencairan</th>
+                            <th class="text-center v-middle">Sisa</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                             if(!empty($list_rkat)){
+                                $no = 1;
                                 foreach($list_rkat as $key => $value){
                         ?>
                                     <tr>
-                                        <td><?= $value['kode_pencairan'] ?></td>
-                                        <td><?= $value['renstra_prodi'] ?></td>
-                                        <td><?= $value['uraian'] ?></td>
-                                        <td><?= $value['renstra_univ'] ?></td>
-                                        <td><?= $value['kpi'] ?></td>
-                                        <td><?= $value['nama_lengkap'] ?></td>
-                                        <td><?= $value['tahun'] ?></td>
-                                        <td><?= $value['periode'] ?></td>
-                                        <td><?= number_format ($value['total_agr_stj'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['n_in'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['n_out'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['t_aju_agr'],'0',',','.'); ?></td>
-                                        <td><?= number_format ($value['sisa_agr'],'0',',','.'); ?></td>
+                                        <th class="text-center v-middle font-14"><?= $no++ ?></th>
+                                        <td class="text-center v-middle font-14"><?= $value['kode_pencairan'] ?></td>
+                                        <td class="text-center v-middle font-14"><?= $value['renstra_prodi'] ?></td>
+                                        <td class="v-middle font-14"><?= $value['uraian'] ?></td>
+                                        <td class="text-center v-middle font-14"><?= $value['renstra_univ'] ?></td>
+                                        <td class="text-center v-middle font-14"><?= $value['kpi'] ?></td>
+                                        <td class="text-center v-middle font-14"><?= $value['nama_lengkap'] ?></td>
+                                        <td class="text-center v-middle font-14"><?= $value['tahun'] ?></td>
+                                        <td class="text-center v-middle font-14"><?= $value['periode'] ?></td>
+                                        <td class="text-center v-middle">
+                                            <span class="badge bg-success p-2">
+                                                <?= rupiah_1($value['total_agr_stj']) ?>
+                                            </span>
+                                        </td>
+                                        <td class="text-center v-middle">                                            
+                                            <span class="badge bg-success p-2">
+                                                <?= rupiah_1($value['n_in']) ?>
+                                            </span>
+                                        <td class="text-center v-middle">                                            
+                                            <span class="badge bg-success p-2">
+                                                <?= rupiah_1($value['n_out']) ?>
+                                            </span>
+                                        </td>
+                                        <td class="text-center v-middle">                                            
+                                            <span class="badge bg-success p-2">
+                                                <?= rupiah_1($value['t_aju_agr']) ?>
+                                            </span>
+                                        </td>
+                                        <td class="text-center v-middle">                                            
+                                            <span class="badge bg-success p-2">
+                                                <?= rupiah_1($value['sisa_agr']) ?>
+                                            </span>
+                                        </td>
                                     </tr>
                         <?php
                                 }

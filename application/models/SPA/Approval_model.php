@@ -41,7 +41,7 @@ class Approval_model extends CI_Model {
                                     FROM tbl_actbud
                                     WHERE
                                         st_kabag ='Disetujui' 
-                                        AND (st_hrd = 'Disetujui HRD' OR st_umum = 'Disetujui GA' OR st_ict = 'Disetujui ICT' OR st_bkal = 'Disetujui BKAL'OR st_p2m = 'Disetujui P2M') 
+                                        AND (st_hrd = 'Disetujui HRD' OR st_umum = 'Disetujui GA' OR st_ict = 'Disetujui ICT' OR st_bkal = 'Disetujui BKAL' OR st_p2m = 'Disetujui P2M') 
                                         AND ((st_keu NOT LIKE 'Disetujui') AND (st_keu NOT LIKE 'Ditolak'))
                                         OR 
                                         (
