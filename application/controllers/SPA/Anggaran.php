@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Anggaran extends CI_Controller{
 
+    var $year = 2022;
+
     function __construct(){
         parent::__construct();
         $this->load->model('SPA/Anggaran_model', 'm_anggaran');
@@ -19,8 +21,7 @@ class Anggaran extends CI_Controller{
         $method = $this->input->method();
         if ($method == "post"){
             header('Content-Type: application/json');
-            $year = date('Y');
-            echo $this->m_anggaran->get_pengalihan_anggaran($year);
+            echo $this->m_anggaran->get_pengalihan_anggaran($this->year);
         } else return show_404();
     }
 
@@ -190,8 +191,7 @@ class Anggaran extends CI_Controller{
 
     public function realisasi($id = null){
         if($id == null){
-            $year = date('Y');
-            $data['actbud_realisasi'] = $this->m_anggaran->get_realisasi_anggaran($year);
+            $data['actbud_realisasi'] = $this->m_anggaran->get_realisasi_anggaran($this->year);
             return view('spa.anggaran.realisasi-anggaran', $data);
         } else {
             $data['id'] = $id;
