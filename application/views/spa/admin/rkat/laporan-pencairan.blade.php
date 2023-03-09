@@ -35,7 +35,9 @@ $year = date('Y');
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Data Laporan Pencairan RKAT
+            <h5 class="card-title mb-0">
+                Data Laporan Pencairan RKAT
+            </h5>
         </div>
         <div class="card-body">
             <div class="table-responsive my-4">
@@ -339,7 +341,6 @@ $year = date('Y');
                 $(this).attr('hidden', true)  
                 $(this).parent().find('.btn-rd_more').removeAttr('hidden')
             })
-            e.preventDefault()
         })
 
         $('#table-laporan-pencairan-rkat td.deskrip_keg').on('click', '.btn-rd_more', function(e){
@@ -357,8 +358,53 @@ $year = date('Y');
                 $(this).attr('hidden', true)  
                 $(this).parent().find('.btn-rd_more').removeAttr('hidden')
             })
-            e.preventDefault()
+        })
+
+        $(".paginate_button").on('click', function(e){
+            $('.paginate_button').attr('onclick', 'return click_paginate_button()')
+        })
+
+        $(".paginate_button a").on('click', function(e){
+            $('.paginate_button').attr('onclick', 'return click_paginate_button()')
         })
     });
+
+    function click_paginate_button(){
+        $('#table-laporan-pencairan-rkat td.nama_keg').on('click', '.btn-rd_more', function(e){
+            const data = {
+                message: $(this).data('message'),
+                el_rd_more: $(this).data('sp_class'),
+                el_rd_less: $(this).data('sp_rd_less')
+            }
+
+            $(this).attr('hidden', true)
+            $('td.nama_keg span.' + data.el_rd_more).text(data.message)
+            $('td.nama_keg a.' + data.el_rd_less).removeAttr('hidden')
+            $('td.nama_keg a.' + data.el_rd_less).on('click', function(){
+                $('td.nama_keg span.' + data.el_rd_more).text('')
+                $(this).attr('hidden', true)  
+                $(this).parent().find('.btn-rd_more').removeAttr('hidden')
+            })
+        })
+
+        $('#table-laporan-pencairan-rkat td.deskrip_keg').on('click', '.btn-rd_more', function(e){
+            const data = {
+                message: $(this).data('message'),
+                el_rd_more: $(this).data('sp_class'),
+                el_rd_less: $(this).data('sp_rd_less')
+            }
+
+            $(this).attr('hidden', true)
+            $('td.deskrip_keg span.' + data.el_rd_more).text(data.message)
+            $('td.deskrip_keg a.' + data.el_rd_less).removeAttr('hidden')
+            $('td.deskrip_keg a.' + data.el_rd_less).on('click', function(){
+                $('td.deskrip_keg span.' + data.el_rd_more).text('')
+                $(this).attr('hidden', true)  
+                $(this).parent().find('.btn-rd_more').removeAttr('hidden')
+            })
+        })
+    }
+
+    
 </script>
 @endsection

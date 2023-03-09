@@ -28,7 +28,9 @@ $year = date('Y');
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Data Pengalihan Anggaran <?= $year ?>
+            <h5 class="card-title mb-0">
+                Data Pengalihan Anggaran <?= $year ?>
+            </h5>
         </div>
         <div class="card-body">
             <button data-target="#modal-pengalihan-anggaran" data-toggle="modal" class="btn btn-success"><i class="mdi mdi-plus"></i> Input Pengalihan Anggaran</button>

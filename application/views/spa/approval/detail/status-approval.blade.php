@@ -11,35 +11,69 @@ if($data['nama_sign'] != ""){
             $ex_stamp = explode(' ', $data['stamp_ict']);
             $time = "";
             if(!empty($ex_stamp) && (count($ex_stamp) > 1)){
-                $time .= $ex_stamp[1];
-            }
-            $st_pre_approval .= '
-            <span class="font-weight-bold">
-                <i class="mdi mdi-check-bold"></i> '.$approval.'
-            </span>
-            <br>
-            <span class="font-12">
-                '.tanggal_indo($stamp).', '.$time.'
-            </span>
-            ';
+                $time .= ', ' . $ex_stamp[1];
+            }            
             break;
-        
+        case 006:
+            $approval = ($data['st_hrd'] == "Disetujui HRD" ? "Disetujui" : "Ditolak");
+            $stamp = date_create($data['stamp_hrd']);
+            $ex_stamp = explode(' ', $data['stamp_hrd']);
+            $time = "";
+            if(!empty($ex_stamp) && (count($ex_stamp) > 1)){
+                $time .= ', ' . $ex_stamp[1];
+            }
+            break;
+        case 003:
+            $approval = ($data['st_umum'] == "Disetujui GA" ? "Disetujui" : "Ditolak");
+            $stamp = date_create($data['stamp_umum']);
+            $ex_stamp = explode(' ', $data['stamp_umum']);
+            $time = "";
+            if(!empty($ex_stamp) && (count($ex_stamp) > 1)){
+                $time .= ', ' . $ex_stamp[1];
+            }
+            break;
+        case 013:
+            $approval = ($data['st_bkal'] == "Disetujui BKAL" ? "Disetujui" : "Ditolak");
+            $stamp = date_create($data['stamp_bkal']);
+            $ex_stamp = explode(' ', $data['stamp_bkal']);
+            $time = "";
+            if(!empty($ex_stamp) && (count($ex_stamp) > 1)){
+                $time .= ', ' . $ex_stamp[1];
+            }
+            break;
+        case 016:
+            $approval = ($data['st_p2m'] == "Disetujui P2M" ? "Disetujui" : "Ditolak");
+            $stamp = date_create($data['stamp_p2m']);
+            $ex_stamp = explode(' ', $data['stamp_p2m']);
+            $time = "";
+            if(!empty($ex_stamp) && (count($ex_stamp) > 1)){
+                $time .= ', ' . $ex_stamp[1];
+            }
+            break;
         default:
-            # code...
+            $st_pre_approval .= "-";
             break;
     }
+    $st_pre_approval .= '
+    <span class="font-weight-bold">
+        <i class="mdi mdi-check-bold"></i> '.$approval.'
+    </span>
+    <br>
+    <span class="font-12">
+        '.tanggal_indo($stamp).$time.'
+    </span>
+    ';
 } else {
-    $n_pre_approval .= "<br>(Tidak Ada Pre-Approval)";
+    $n_pre_approval .= "";
     $st_pre_approval .= "-";
-
 }
 
 ?>
-<div class="card">
+<div class="card card-border">
     <div class="card-header border-success bg-transparent">
-        <h3 class="card-title mb-0"><i class="mdi mdi-clock"></i> HISTORY APPROVAL</h3>
+        <h3 class="card-title mb-0"><i class="mdi mdi-calendar-clock"></i> HISTORY APPROVAL</h3>
     </div>
-	<div class="card-body">
+	<div class="card-body pt-0">
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover">
 				<thead class="bg-dark text-white">

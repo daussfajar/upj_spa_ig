@@ -146,6 +146,81 @@ class Global_Model extends CI_Model {
 		}
 	}
 
+	public function only_ga_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_unit'] == 003 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_hrd_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_unit'] != 006 && $session['kode_jabatan'] != 0 && $session['kode_jabatan'] != 22) {
+			$access = false;
+		} else {
+			$access = true;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_ict_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_unit'] == 004 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_bkal_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_unit'] == 013 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_p2m_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_unit'] == 016 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+	
 	public function only_warek_1_and_admin()
 	{
 		$access = false;
@@ -181,6 +256,36 @@ class Global_Model extends CI_Model {
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
 		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 1) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_dekan_fhb_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if (($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 5) && $session['kode_unit'] == 017) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
+	public function only_dekan_ftb_and_admin()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if (($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 5) && $session['kode_unit'] == "018") {
 			$access = true;
 		} else {
 			$access = false;
@@ -237,11 +342,26 @@ class Global_Model extends CI_Model {
 		}
 	}
 
+	public function except_dosen_staff()
+	{
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_jabatan'] != 7) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
 	public function is_kabag(string $kode_unit = "")
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] == $kode_unit && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) {
+		if (($session['kode_unit'] == $kode_unit && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) || $session['kode_jabatan'] == 0) {
 			$access = true;
 		} else {
 			$access = false;

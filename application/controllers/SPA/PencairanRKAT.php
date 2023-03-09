@@ -115,7 +115,7 @@ class PencairanRKAT extends CI_Controller
                 'kode_pencairan' => $data['kode_pencairan'],
                 'kode_unit' => $data['kode_unit'],
                 'nama_kegiatan' => $data['uraian'],
-                'no_borang' => $data['no_borang'],
+                'no_borang' => ($data['no_borang'] == null || $data['no_borang'] == "") ? "-" : $data['no_borang'],
                 'pic' => $data['pic'],
                 'tahun' => date('Y'),
                 'tanggal_pembuatan' => date('Y-m-d H:i:s'),
@@ -164,6 +164,7 @@ class PencairanRKAT extends CI_Controller
         $method = $this->input->method();
         $session = $this->session->userdata('user_sessions');
         $nik = decrypt($session['nik']);
+        
         $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
         $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
         $data['kode_rkat_master'] = $data['rkat_master']['kode_rkat_master'];
@@ -176,7 +177,7 @@ class PencairanRKAT extends CI_Controller
 
         $data['data'] = $this->m_rkat->get_detail_uraian($data['kode_rkat_master'], $data['periode'], ['a1.pic' => $nik, 'a1.kode_uraian' => $id_uraian]);
         if (empty($data['data'])) return show_404();
-        if($data['data']['kd_act'] != $id_actbud) return show_404();
+        // if($data['data']['kd_act'] != $id_actbud) return show_404();
         
         $data['id_uraian'] = $id_uraian;
         $data['id_actbud'] = $id_actbud;

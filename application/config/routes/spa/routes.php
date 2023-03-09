@@ -128,10 +128,11 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
     // Approval Presiden
     $route['app/sim-spa/approval/presiden'] = 'SPA/Approval/approval_presiden';
     $route['app/sim-spa/approval/presiden/detail/(:num)'] = 'SPA/Approval/v_detail/$1';
-    $route['app/sim-spa/approval/presiden/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_presiden/$1';    
+    $route['app/sim-spa/approval/presiden/kirim-persetujuan/(:any)'] = 'SPA/Approval/kirim_persetujuan_presiden/$1';
 // END APPROVAL
-  
+
 // START History Approval
-    $route['app/sim-spa/history-approval/(:any)'] = 'SPA/HistoryApproval/index/$1';
-    $route['app/sim-spa/history-approval/(:any)/detail/(:num)'] = 'SPA/HistoryApproval/detail/$1/$2';
+    $route['app/sim-spa/history-approval'] = 'SPA/HistoryApproval/index';
+    // $route['app/sim-spa/history-approval/(:any)'] = 'SPA/HistoryApproval/index/$1';
+    $route['app/sim-spa/history-approval/detail/(:num)'] = 'SPA/HistoryApproval/detail/$1/$2';
 // END History Approval

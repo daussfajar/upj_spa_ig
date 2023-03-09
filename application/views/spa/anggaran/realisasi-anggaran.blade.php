@@ -15,6 +15,14 @@ $year = date('Y');
 @section('css')
 <link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
+<style>
+    .v-middle{
+        vertical-align: middle!important;
+    }
+    .font-14{
+        font-size: 14px!important;
+    }
+</style>
 @endsection
 
 @section('breadcrumb')
@@ -27,19 +35,21 @@ $year = date('Y');
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Data Realisasi Anggaran <?= $year ?>
+            <h5 class="card-title mb-0">
+                Data Realisasi Anggaran <?= $year ?>
+            </h5>
         </div>
         <div class="card-body">
             <div class="table-responsive my-4">
                 <table class="table table-striped table-bordered table-hover" id="table-realisasi-anggaran" style="width:100%;">
                     <thead>
                         <tr>
-                            <th width="5%">No</th>
-                            <th width="10%"><center>Kode Realisasi</center></th>
-                            <th width="50%"><center>Nama Kegiatan</center></th>
-                            <th width="15%"><center>Anggaran</center></th>
-                            <th width="20%"><center>Kode Pencairan& Jenis Pencairan</center></th>
-                            <th width="5%"></th>
+                            <th class="v-middle" width="5%">No</th>
+                            <th class="v-middle" width="10%"><center>Kode Realisasi</center></th>
+                            <th class="v-middle" width="50%"><center>Nama Kegiatan</center></th>
+                            <th class="v-middle" width="15%"><center>Anggaran</center></th>
+                            <th class="v-middle" width="20%"><center>Kode Pencairan& Jenis Pencairan</center></th>
+                            <th class="v-middle" width="5%"></th>
                         </tr>
                     </thead>
                     <tbody id="tbody-table-realisasi-anggaran">
@@ -50,8 +60,8 @@ $year = date('Y');
                                     $classI = $key['status_penyesuaian'] == '' ? 'mdi mdi-lock-open' : 'mdi mdi-lock';
                         ?>
                                     <tr>
-                                        <td align="center"><?= $no++; ?></td>
-                                        <td align="center">
+                                        <td class="v-middle font-14" align="center"><?= $no++; ?></td>
+                                        <td class="v-middle font-14" align="center">
                                             <?php
                                                 if($key['jns_aju_agr'] == 'actbud'){
                                             ?>
@@ -64,14 +74,18 @@ $year = date('Y');
                                                 }
                                             ?>
                                         </td>
-                                        <td align="left"><?= $key['nama_kegiatan'] ?></td>
-                                        <td align="right"><?= number_format($key['fnl_agr'],0,',','.'); ?></td>
-                                        <td align="center">
+                                        <td class="v-middle font-14" align="left"><?= $key['nama_kegiatan'] ?></td>
+                                        <td class="v-middle" align="right">
+                                            <span class="badge bg-success p-2">
+                                                <?= rupiah_1($key['fnl_agr']) ?>
+                                            </span>
+                                        </td>
+                                        <td class="v-middle font-14" align="center">
                                             <strong><?php echo $key['kode_pencairan']?></strong>
                                             <br>
                                             <?php echo $key['nama_lengkap']?>
                                         </td>
-                                        <td align="center">
+                                        <td class="v-middle font-14" align="center">
                                             <a class="text-white btn btn-primary" href="<?= base_url('app/sim-spa/anggaran/realisasi/' . $key['kd_act']) ?>">
                                                 <i class="<?= $classI ?>"></i>
                                             </a>

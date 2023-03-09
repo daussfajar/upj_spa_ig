@@ -13,6 +13,11 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
+        $session = $this->session->userdata('user_sessions');
+        $nik = decrypt($session['nik']);
+        $kode_unit = $session['kode_unit'];
+
+        $count_actbud = $this->db->query("SELECT COUNT(id) tot_actbud FROM tbl_actbud WHERE pic = ?", [$nik]);
         return view('spa.dashboard.dashboard');
     }
 }

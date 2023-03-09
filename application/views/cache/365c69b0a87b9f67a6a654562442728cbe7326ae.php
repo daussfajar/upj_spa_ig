@@ -81,7 +81,7 @@ $session = $CI->session->userdata('user_sessions');
                                                 <i class="mdi mdi-checkbox-marked-circle-outline"></i> <?= ucwords($value['jns_aju_agr']) ?>
                                             </span>
                                         </td>
-                                        <td class="v-middle" align="center">
+                                        <td class="v-middle text-center">
                                             <?php 
                                             $color = "";
                                             if($value['agr'] < 10000000){

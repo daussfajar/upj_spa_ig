@@ -47,6 +47,7 @@ class RKAT extends CI_Controller{
 
     // view
     public function pic_rkat_program_kerja(){
+        $this->Global_model->except_dosen_staff();
         $session = $this->session->userdata('user_sessions');
         $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
         $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
@@ -62,6 +63,7 @@ class RKAT extends CI_Controller{
     }
 
     public function pic_rkat_operasional(){
+        $this->Global_model->except_dosen_staff();
         $session = $this->session->userdata('user_sessions');
         $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
         $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
@@ -77,6 +79,7 @@ class RKAT extends CI_Controller{
     }
 
     public function pic_rkat_investasi(){
+        $this->Global_model->except_dosen_staff();
         $session = $this->session->userdata('user_sessions');
         $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
         $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();

@@ -12,71 +12,60 @@ class HistoryApproval extends CI_Controller{
         header("X-XSS-Protection: 1; mode=block");
     }
 
-    public function index($as){
+    public function index(){
         $session = $this->session->userdata('user_sessions');
         $kode_unit = $session['kode_unit'];
-        $data['as'] = $as;
-        if($as == "kepala-unit"){
-            $this->Global_model->is_kabag($kode_unit);
-            $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_kepala_unit($this->year, $kode_unit);
-        } else if($as == "umum"){
+        $jabatan = $session['kode_jabatan'];
+        if($kode_unit == "003") {
+            $this->Global_model->only_ga_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_umum($this->year);
-        } else if($as == "hrd"){
+        } else if($kode_unit == "006") {
+            $this->Global_model->only_hrd_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_hrd($this->year);
-        } else if($as == "ict"){
+        } else if($kode_unit == "004") {
+            $this->Global_model->only_ict_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_ict($this->year);
-        } else if($as == "bkal"){
+        } else if($kode_unit == "013") {
+            $this->Global_model->only_bkal_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_bkal($this->year);
-        } else if($as == "p2m"){
+        } else if($kode_unit == "016") {
+            $this->Global_model->only_p2m_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_p2m($this->year);
-        } else if($as == "keuangan"){
+        } else if($kode_unit == "002"){
             $this->Global_model->only_finance_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_keuangan($this->year);
-        } else if($as == "dekan-ftd"){
+        } else if($kode_unit == "018"){
+            $this->Global_model->only_dekan_ftd_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_dekan_ftd($this->year);
-        } else if($as == "dekan-fhb"){
+        } else if($kode_unit == "017"){
+            $this->Global_model->only_dekan_fhb_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_dekan_fhb($this->year);
-        } else if($as == "warek1"){
+        } else if($kode_unit == "007" && $jabatan == 3){
+            $this->Global_model->only_warek_1_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_warek1($this->year);
-        } else if($as == "warek2"){
+        } else if($kode_unit == "007" && $jabatan == 4){
+            $this->Global_model->only_warek_4_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_warek2($this->year);
-        } else if($as == "rektor"){
+        } else if($kode_unit == "007" && $jabatan == 2){
+            $this->Global_model->only_rektor_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_rektor($this->year);
-        } else if($as == "presiden"){
+        } else if($kode_unit == "007" && $jabatan == 1){
+            $this->Global_model->only_presiden_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_presiden($this->year);
         } else {
-            show_404();
-            exit();
+            $this->Global_model->is_kabag($kode_unit);
+            $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_kepala_unit($this->year, $kode_unit);
         }
         
         return view('spa.approval.history-approval', $data);
     }
 
-    public function detail($as, int $id_actbud){
+    public function detail(int $id_actbud)
+    {
+        $this->Global_model->except_dosen_staff();
         $this->load->model('SPA/RKAT_model', 'm_rkat');
-        $session = $this->session->userdata('user_sessions');
-        $method = $this->input->method();
-        $kode_unit = $session['kode_unit'];
-        $data['as'] = $as;
-        if($as == "kepala-unit"){
-            $this->Global_model->is_kabag($kode_unit);
-        } else if($as == "umum"){
-        } else if($as == "hrd"){
-        } else if($as == "ict"){
-        } else if($as == "bkal"){
-        } else if($as == "p2m"){
-        } else if($as == "keuangan"){
-            $this->Global_model->only_finance_and_admin();
-        } else if($as == "dekan-ftd"){
-        } else if($as == "dekan-fhb"){
-        } else if($as == "warek1"){
-        } else if($as == "warek2"){
-        } else if($as == "rektor"){
-        } else if($as == "presiden"){
-        } else {
-            show_404();
-            exit();
-        }
+        $session = $this->session->userdata('user_sessions');        
+        $method = $this->input->method();        
              
         $data['karyawan'] = $this->m_rkat->get_master_data_karyawan(array('kode_unit' => $session['kode_unit']));
         $data['rkat_master'] = $this->m_rkat->get_rkat_master(array('unit' => $session['kode_unit']))->row_array();
@@ -112,7 +101,15 @@ class HistoryApproval extends CI_Controller{
                     return show_error("Bad Request", 400, "400 - Error");
                     break;
             }
-        }        
+        }
+
+
+        $session = $this->session->userdata('user_sessions');
+        if ($session['kode_unit'] == "006" && ($session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "22")) {
+            $access = true;
+        } else {
+            $access = false;
+        }
         
         return view('spa.approval.detail.detail-history-approval', $data);
     }

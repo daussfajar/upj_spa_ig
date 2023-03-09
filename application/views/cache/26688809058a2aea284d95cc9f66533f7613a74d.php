@@ -10,7 +10,7 @@
     $kode_unit = $_SESSION['user_sessions']['kode_unit'];
     $uri3 = $CI->uri->segment(3);
     $uri4 = $CI->uri->segment(4);
-    $uri5 = $CI->uri->segment(5);    
+    $uri5 = $CI->uri->segment(5);
 ?>
 
 <div class="left-side-menu" >
@@ -39,7 +39,9 @@
                         <?php if($jabatan == 22 && $kode_unit == 002): ?>
                         <li><a href="javascript:void(0)">Input RKAT</a></li>
                         <?php endif; ?>
+                        <?php if($jabatan == 22 || $jabatan == 6): ?>
                         <li <?= ($uri3 == "rkat" && $uri4 == "pic") ? 'class="mm-active"' : ''?>><a href="<?php echo e(base_url('app/sim-spa/rkat/pic/program-kerja')); ?>">Ubah PIC</a></li>
+                        <?php endif; ?>
                         <li <?= ($uri3 == "rkat" && $uri4 == "list") ? 'class="mm-active"' : ''?>><a href="<?php echo e(base_url('app/sim-spa/rkat/list/program-kerja')); ?>">List RKAT</a></li>
                     </ul>
                 </li>
@@ -89,7 +91,7 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="<?php echo e(base_url('app/sim-spa/admin/')); ?>">Approval Ka.Unit/Prodi</a></li>
+                        <li><a href="<?php echo e(base_url('app/sim-spa/approval/')); ?>">Approval Ka.Unit/Prodi</a></li>
                         <!-- level 2 -->
                         <li><a href="javascript:void(0)">Approval Ka. Umum</a></li>
                         <li><a href="javascript:void(0)">Approval Ka.HRD</a></li>
@@ -110,14 +112,20 @@
                 <li class="<?= menu_active(4, 'kepala-unit', 'mm-active') ?>">
                     <a href="<?php echo e(base_url('app/sim-spa/approval/kepala-unit')); ?>" class="waves-effect waves-light <?= menu_active(4, 'kepala-unit', 'active') ?>">
                         <i class="mdi mdi-folder-outline"></i>
-                        <span>  Approval Kepala Unit  </span>
+                        <span>Approval Kepala Unit</span>
                     </a>
                 </li>
                 <?php if(($jabatan == 6 || $jabatan == 22) && ($kode_unit == 006 || $kode_unit == 004 || $kode_unit == 003 || $kode_unit == 013 || $kode_unit == 016)): ?>
                 <li class="<?= menu_active(4, 'pre-approval', 'mm-active') ?>">
                     <a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>" class="waves-effect waves-light <?= menu_active(4, 'pre-approval', 'active') ?>">
                         <i class="mdi mdi-folder-open-outline"></i>
-                        <span>  Approval Terkait <?= $unit ?>  </span>
+                        <span>Approval Terkait <?= $unit ?></span>
+                    </a>
+                </li>
+                <li class="<?= menu_active(3, 'history-approval', 'mm-active') ?>">
+                    <a href="<?php echo e(base_url('app/sim-spa/history-approval')); ?>" class="waves-effect waves-light <?= menu_active(3, 'history-approval', 'active') ?>">
+                        <i class="mdi mdi-history"></i>
+                        <span>History Approval</span>
                     </a>
                 </li>
                 <?php endif; ?>
