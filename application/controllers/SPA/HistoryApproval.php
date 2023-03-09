@@ -58,7 +58,7 @@ class HistoryApproval extends CI_Controller{
         $method = $this->input->method();
         $kode_unit = $session['kode_unit'];
         $data['as'] = $as;
-        if($as == "kabag"){
+        if($as == "kepala-unit"){
             $this->Global_model->is_kabag($kode_unit);
         } else if($as == "umum"){
         } else if($as == "hrd"){
