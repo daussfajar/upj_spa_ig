@@ -26,6 +26,7 @@
                         <span>  Dashboard  </span>
                     </a>
                 </li>
+                
                 <?php
                 if($jabatan == 0) {
                     // ADMIN
@@ -244,9 +245,8 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="nav-second-level" aria-expanded="false">
-                            
-                            <li <?= ($uri3 == "admin" && $uri4 == "rkat" && $uri5 == "pic") ? 'class="mm-active"' : ''?>><a href="{{ base_url('app/sim-spa/admin/rkat/pic/program-kerja') }}">Ubah PIC</a></li>
-                            <li <?= ($uri3 == "admin" && $uri4 == "rkat" && $uri5 == "list") ? 'class="mm-active"' : ''?>><a href="{{ base_url('app/sim-spa/admin/rkat/list/program-kerja') }}">List RKAT</a></li>
+                            <li <?= ($uri3 == "rkat" && $uri4 == "pic") ? 'class="mm-active"' : ''?>><a href="{{ base_url('app/sim-spa/rkat/pic/program-kerja') }}">Ubah PIC</a></li>
+                            <li <?= ($uri3 == "rkat" && $uri4 == "list") ? 'class="mm-active"' : ''?>><a href="{{ base_url('app/sim-spa/rkat/list/program-kerja') }}">List RKAT</a></li>
                         </ul>
                     </li>
 
@@ -301,6 +301,14 @@
                         <a href="{{ base_url('app/sim-spa/history-approval') }}" class="waves-effect waves-light <?= menu_active(3, 'history-approval', 'active') ?>">
                             <i class="mdi mdi-history"></i>
                             <span>History Approval</span>
+                        </a>
+                    </li>
+
+                    <li class="<?= menu_active(5, 'laporan-pencairan', 'mm-active') ?>">
+                        <a href="{{ base_url('app/sim-spa/admin/rkat/laporan-pencairan') }}" class="waves-effect waves-light <?= menu_active(5, 'laporan-pencairan', 'active') ?>" style="display:flex">
+                            <i class="mdi mdi-file-document-outline" style="margin-top:5px;"></i>
+                            &nbsp;&nbsp;
+                            <span>  Laporan Pencairan RKAT  </span>
                         </a>
                     </li>
 

@@ -263,15 +263,23 @@ class RKAT_model extends CI_Model {
     }
     
     public function get_laporan_pencairan($where = null){
+		$session = $this->session->userdata('user_sessions');
         $this->db->select("
             a.*,
             b.nama_lengkap
         ");
         $this->db->from('tbl_actbud as a');
         $this->db->join('tbl_karyawan as b', 'b.nik = a.pic', 'LEFT');
+
+        if($session['kode_jabatan'] == 5){
+            $this->db->join('tbl_unit as c', 'c.kode_unit = b.kode_unit', 'LEFT');
+            $this->db->where('c.Biro_Fakultas', $session['kode_unit']);
+        }
+
         if($where != null){
             $this->db->where($where);
         }
+        
         $this->db->where('a.status_act', 'send');
         $this->db->order_by('a.kd_act', 'DESC');
         return $this->db->get()->result_array();

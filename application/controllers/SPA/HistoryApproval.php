@@ -35,10 +35,10 @@ class HistoryApproval extends CI_Controller{
             $this->Global_model->only_finance_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_keuangan($this->year);
         } else if($kode_unit == "018"){
-            $this->Global_model->only_dekan_ftd_and_admin();
+            $this->Global_model->only_dekan_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_dekan_ftd($this->year);
         } else if($kode_unit == "017"){
-            $this->Global_model->only_dekan_fhb_and_admin();
+            $this->Global_model->only_dekan_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_dekan_fhb($this->year);
         } else if($kode_unit == "007" && $jabatan == 3){
             $this->Global_model->only_warek_1_and_admin();
