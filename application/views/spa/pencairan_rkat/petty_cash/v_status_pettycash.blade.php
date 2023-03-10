@@ -47,7 +47,7 @@ $nik = decrypt($session['nik']);
             </div>            
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover" id="table-actbud">
+                    <table class="table table-striped table-bordered table-hover" id="table-actbud" style="width:100% !important;">
                         <thead class="">
                             <tr>
                                 <th width="50" style="vertical-align: middle">No</th>

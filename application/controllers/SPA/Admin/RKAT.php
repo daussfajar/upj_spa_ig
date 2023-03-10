@@ -113,7 +113,7 @@ class RKAT extends CI_Controller{
 
     // Laporan Pencairan RKAT
     public function laporan_pencairan($id = null){
-        $this->Global_model->only_finance_and_admin();
+        $this->Global_model->only_finance_warek1_warek2_rektor_presiden_and_admin();
         if($id == null){
             $data['laporan_pencairan'] = $this->m_rkat->get_laporan_pencairan(array('a.tahun' => $this->year));
 

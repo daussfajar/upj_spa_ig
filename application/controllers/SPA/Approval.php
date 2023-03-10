@@ -243,7 +243,7 @@ class Approval extends CI_Controller{
         }
     }
 
-    // START Approval Dekan
+    // START Approval Keuangan
     public function approval_keuangan($id = null){
         $this->Global_model->only_finance_and_admin();
         if($id == null){
@@ -645,7 +645,6 @@ class Approval extends CI_Controller{
         $this->Global_model->only_rektor_and_admin();
         if($id == null){
             $session = $this->session->userdata('user_sessions');
-            $year = date('Y');
             $data['approval_actbud'] = $this->m_approval->get_actbud_approval_rektor($this->year);
 
             return view('spa.approval.approval-rektor', $data);

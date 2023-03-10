@@ -89,6 +89,20 @@ class Global_Model extends CI_Model {
 	}
 
 	// function hanya keuangan dan admin dan warek yang bisa akses
+	public function only_finance_warek1_warek2_rektor_presiden_and_admin(){
+		$access = false;
+		$session = $this->session->userdata('user_sessions');
+		if ($session['kode_unit'] == 002 || $session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 1 || $session['kode_jabatan'] == 2 || $session['kode_jabatan'] == 3 || $session['kode_jabatan'] == 4) {
+			$access = true;
+		} else {
+			$access = false;
+		}
+
+		if ($access == false) {
+			return show_404();
+		}
+	}
+
 	public function is_finance(){
 		$access = false;
 		$session = $this->session->userdata('user_sessions');			
@@ -106,7 +120,7 @@ class Global_Model extends CI_Model {
 	public function only_finance_and_admin(){
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if (($session['kode_unit'] == 002 && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) || $session['kode_jabatan'] == 0) {
+		if ($session['kode_unit'] == 002 || $session['kode_jabatan'] == 0) {
 			$access = true;
 		} else {
 			$access = false;

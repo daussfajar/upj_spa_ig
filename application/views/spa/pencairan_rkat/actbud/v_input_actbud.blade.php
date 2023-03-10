@@ -46,7 +46,7 @@ $nama_lengkap = $session['nama_lengkap'];
         </div>
         <div class="card-body">    
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover" id="table-actbud">
+                <table class="table table-striped table-bordered table-hover" id="table-actbud" style="width:100% !important;">
                     <thead class="">
                         <tr>
                             <th class="text-center v-middle">No</th>

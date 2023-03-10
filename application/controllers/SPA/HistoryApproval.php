@@ -44,12 +44,12 @@ class HistoryApproval extends CI_Controller{
             $this->Global_model->only_warek_1_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_warek1($this->year);
         } else if($kode_unit == "007" && $jabatan == 4){
-            $this->Global_model->only_warek_4_and_admin();
+            $this->Global_model->only_warek_2_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_warek2($this->year);
         } else if($kode_unit == "007" && $jabatan == 2){
             $this->Global_model->only_rektor_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_rektor($this->year);
-        } else if($kode_unit == "007" && $jabatan == 1){
+        } else if($kode_unit == "011" && $jabatan == 1){
             $this->Global_model->only_presiden_and_admin();
             $data['approval_actbud'] = $this->m_history_approval->get_rkat_history_approval_presiden($this->year);
         } else {

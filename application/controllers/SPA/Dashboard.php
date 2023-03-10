@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller
         $nik = decrypt($session['nik']);
         $kode_unit = $session['kode_unit'];
 
-        $count_actbud = $this->db->query("SELECT COUNT(id) tot_actbud FROM tbl_actbud WHERE pic = ?", [$nik]);
+        $count_actbud = $this->db->query("SELECT COUNT(*) as tot_actbud FROM tbl_actbud WHERE pic = ?", [$nik]);
         return view('spa.dashboard.dashboard');
     }
 }

@@ -28,7 +28,7 @@ class Anggaran extends CI_Controller{
     public function pengalihan($id = null){
         if($id == null){
             $data['karyawan'] = $this->Global_model->get_master_data_karyawan();
-            $data['uraian'] = $this->m_anggaran->get_data_uraian(array('tahun' => date('Y')));
+            $data['uraian'] = $this->m_anggaran->get_data_uraian(array('tahun' => $this->year));
     
             return view('spa.anggaran.pengalihan-anggaran', $data);
         } else {
