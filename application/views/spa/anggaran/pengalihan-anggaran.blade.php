@@ -1,6 +1,5 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
-$year = date('Y');
 ?>
 @extends('spa.layouts.user')
 
@@ -228,10 +227,10 @@ $year = date('Y');
                 },
             ],
             order: [
-                [0, 'desc']
+                [0, 'DESC']
             ],
             columnDefs: [
-                { "targets": 8, "orderable": false, "searchable": false }
+                // { "targets": 8, "orderable": false, "searchable": false }
             ],
             rowCallback: function(row, data, iDisplayIndex) {
                 $('td:eq(0)', row).html();

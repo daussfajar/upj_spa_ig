@@ -91,7 +91,7 @@ class Global_Model extends CI_Model {
 	public function only_finance_dekan_warek1_warek2_rektor_presiden_and_admin(){
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] == 002 || $session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 1 || $session['kode_jabatan'] == 2 || $session['kode_jabatan'] == 3 || $session['kode_jabatan'] == 4 || $session['kode_jabatan'] == 5) {
+		if ($session['kode_unit'] == "002" || $session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "1" || $session['kode_jabatan'] == "2" || $session['kode_jabatan'] == "3" || $session['kode_jabatan'] == "4" || $session['kode_jabatan'] == "5") {
 			$access = true;
 		} else {
 			$access = false;
@@ -105,7 +105,7 @@ class Global_Model extends CI_Model {
 	public function is_finance(){
 		$access = false;
 		$session = $this->session->userdata('user_sessions');			
-        if(($session['kode_unit'] == 002 && $session['kode_jabatan'] == 22) || $session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 3 || $session['kode_jabatan'] == 4 || $session['kode_jabatan'] == 6){
+        if(($session['kode_unit'] == "002" && ($session['kode_jabatan'] == "22" || $session['kode_jabatan'] == "6")) || $session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "22" || $session['kode_jabatan'] == "3" || $session['kode_jabatan'] == "4" || $session['kode_jabatan'] == "6"){
 			$access = true;
 		} else {
 			$access = false;
@@ -119,7 +119,7 @@ class Global_Model extends CI_Model {
 	public function only_finance_and_admin(){
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] == 002 || $session['kode_jabatan'] == 0) {
+		if ($session['kode_unit'] == "002" || $session['kode_jabatan'] == "0") {
 			$access = true;
 		} else {
 			$access = false;
@@ -134,7 +134,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] == 5 || $session['kode_jabatan'] == 0) {
+		if ($session['kode_jabatan'] == "5" || $session['kode_jabatan'] == "0") {
 			$access = true;
 		} else {
 			$access = false;
@@ -148,7 +148,7 @@ class Global_Model extends CI_Model {
 	public function only_warek_1_2_dekan_and_admin(){
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] == 33 || $session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 3 || $session['kode_jabatan'] == 4) {
+		if ($session['kode_jabatan'] == "33" || $session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "3" || $session['kode_jabatan'] == "4") {
 			$access = true;
 		} else {
 			$access = false;
@@ -163,7 +163,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] == 003 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+		if (($session['kode_unit'] == "003" && ($session['kode_jabatan'] == "6" || $session['kode_jabatan'] == "22")) || $session['kode_jabatan'] == "0") {
 			$access = true;
 		} else {
 			$access = false;
@@ -178,7 +178,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] != 006 && $session['kode_jabatan'] != 0 && $session['kode_jabatan'] != 22) {
+		if (($session['kode_unit'] == "006" && ($session['kode_jabatan'] == "6" || $session['kode_jabatan'] == "22")) || $session['kode_jabatan'] == "0") {
 			$access = false;
 		} else {
 			$access = true;
@@ -193,7 +193,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] == 004 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+		if (($session['kode_unit'] == "004" && ($session['kode_jabatan'] == "6" || $session['kode_jabatan'] == "22")) || $session['kode_jabatan'] == "0") {
 			$access = true;
 		} else {
 			$access = false;
@@ -208,7 +208,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] == 013 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+		if (($session['kode_unit'] == "013" && ($session['kode_jabatan'] == "6" || $session['kode_jabatan'] == "22")) || $session['kode_jabatan'] == "0") {
 			$access = true;
 		} else {
 			$access = false;
@@ -223,7 +223,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_unit'] == 016 && ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 22)) {
+		if (($session['kode_unit'] == "016" && ($session['kode_jabatan'] == "6" || $session['kode_jabatan'] == "22")) || $session['kode_jabatan'] == "0") {
 			$access = true;
 		} else {
 			$access = false;
@@ -238,7 +238,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 3) {
+		if ($session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "3") {
 			$access = true;
 		} else {
 			$access = false;
@@ -253,7 +253,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 4) {
+		if ($session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "4") {
 			$access = true;
 		} else {
 			$access = false;
@@ -268,7 +268,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 1) {
+		if ($session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "1") {
 			$access = true;
 		} else {
 			$access = false;
@@ -283,7 +283,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if (($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 5) && $session['kode_unit'] == 017) {
+		if (($session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "5") && $session['kode_unit'] == "017") {
 			$access = true;
 		} else {
 			$access = false;
@@ -298,7 +298,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if (($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 5) && $session['kode_unit'] == "018") {
+		if (($session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "5") && $session['kode_unit'] == "018") {
 			$access = true;
 		} else {
 			$access = false;
@@ -313,7 +313,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 2) {
+		if ($session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "2") {
 			$access = true;
 		} else {
 			$access = false;
@@ -329,7 +329,7 @@ class Global_Model extends CI_Model {
 		$session = $this->session->userdata('user_sessions');
 		$jabatan = $session['kode_jabatan'];
 		$kode_unit = $session['kode_unit'];
-		if (($jabatan == 22 || $jabatan == 6) && ($kode_unit == 004 || $kode_unit == 006 || $kode_unit == 003 || $kode_unit == 013 || $kode_unit == 016)) {
+		if (($jabatan == "22" || $jabatan == "6") && ($kode_unit == "004" || $kode_unit == "006" || $kode_unit == "003" || $kode_unit == "013" || $kode_unit == "016")) {
 			$access = true;
 		} else {
 			$access = false;
@@ -344,7 +344,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] != 7) {
+		if ($session['kode_jabatan'] != "7") {
 			$access = true;
 		} else {
 			$access = false;
@@ -359,7 +359,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if ($session['kode_jabatan'] != 7) {
+		if ($session['kode_jabatan'] != "7") {
 			$access = true;
 		} else {
 			$access = false;
@@ -374,7 +374,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if (($session['kode_unit'] == $kode_unit && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) || $session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 5) {
+		if (($session['kode_unit'] == $kode_unit && ($session['kode_jabatan'] == "22" || $session['kode_jabatan'] == "6")) || $session['kode_jabatan'] == "0" || $session['kode_jabatan'] == "5") {
 			$access = true;
 		} else {
 			$access = false;

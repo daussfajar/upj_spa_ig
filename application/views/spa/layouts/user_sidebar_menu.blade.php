@@ -169,7 +169,18 @@
                     </li>
 
                 <?php
-                } else if ($jabatan == "22" && $jabatan == "6"){
+                    if($jabatan == "22" || $jabatan == "6"){
+                ?>
+                        <li class="<?= menu_active(4, 'kepala-unit', 'mm-active') ?>">
+                            <a href="{{ base_url('app/sim-spa/approval/kepala-unit') }}" class="waves-effect waves-light <?= menu_active(4, 'kepala-unit', 'active') ?>">
+                                <i class="mdi mdi-folder-outline"></i>
+                                <span>Approval Kepala Unit</span>
+                            </a>
+                        </li>
+                <?php
+                    }
+
+                } else if ($jabatan == "22" || $jabatan == "6"){
                 ?>
 
                     <!-- RKAT -->
@@ -530,8 +541,9 @@
                 ?>
 
                     <li class="<?= menu_active(4, 'pre-approval', 'mm-active') ?>">
-                        <a href="{{ base_url('app/sim-spa/approval/pre-approval') }}" class="waves-effect waves-light <?= menu_active(4, 'pre-approval', 'active') ?>">
-                            <i class="mdi mdi-folder-open-outline"></i>
+                        <a href="{{ base_url('app/sim-spa/approval/pre-approval') }}" class="waves-effect waves-light <?= menu_active(4, 'pre-approval', 'active') ?>" style="display:flex;">
+                            <i class="mdi mdi-folder-open-outline" style="margin-top:5px;"></i>
+                            &nbsp;&nbsp;
                             <span>Approval Terkait <?= $unit ?></span>
                         </a>
                     </li>
@@ -546,7 +558,7 @@
                 <?php endif; ?>
 
                 <?php 
-                if($kode_unit == "002" || $jabatan == "0"):
+                if(($kode_unit == "002" && ($jabatan == "6" || $jabatan == "22")) || $jabatan == "0"):
                 ?>
 
                     <li class="<?= menu_active(4, 'keuangan', 'mm-active') ?>">

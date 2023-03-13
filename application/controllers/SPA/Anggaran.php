@@ -26,6 +26,8 @@ class Anggaran extends CI_Controller{
     }
 
     public function pengalihan($id = null){
+        $data['year'] = $this->year;
+        
         if($id == null){
             $data['karyawan'] = $this->Global_model->get_master_data_karyawan();
             $data['uraian'] = $this->m_anggaran->get_data_uraian(array('tahun' => $this->year));
@@ -41,20 +43,20 @@ class Anggaran extends CI_Controller{
                 $getSisaF = $this->db->query('select sisa_agr from view_sisa_agr where kode_pencairan = ?', array($data['pengalihan']['kd_pencairan_f']))->row_array();
                 $getSisaT = $this->db->query('select sisa_agr from view_sisa_agr where kode_pencairan = ?', array($data['pengalihan']['kd_pencairan_t']))->row_array();
 
-                if(count($getSisaF) > 0){
+                if(!empty($getSisaF)){
                     $data['saldo_f'] = $getSisaF['sisa_agr'];
                 } else {
-                    $getViewAgrRkat = mysql_fetch_array(mysql_query("select total_agr from view_agr_rkat where kode_pencairan = ?", array($data['pengalihan']['kd_pencairan_f'])));
-                    if(count($getViewAgrRkat) > 0){
+                    $getViewAgrRkat = $this->db->query("select total_agr from view_agr_rkat where kode_pencairan = ?", array($data['pengalihan']['kd_pencairan_f']))->result_array();
+                    if(!empty($getViewAgrRkat)){
                         $data['saldo_f'] = $getViewAgrRkat['total_agr'];
                     }
                 }
 
-                if(count($getSisaT) > 0){
+                if(!empty($getSisaT)){
                     $data['saldo_t'] = $getSisaT['sisa_agr'];
                 } else {
-                    $getViewAgrRkat = mysql_fetch_array(mysql_query("select total_agr from view_agr_rkat where kode_pencairan = ?", array($data['pengalihan']['kd_pencairan_t'])));
-                    if(count($getViewAgrRkat) > 0){
+                    $getViewAgrRkat = $this->db->query("select total_agr from view_agr_rkat where kode_pencairan = ?", array($data['pengalihan']['kd_pencairan_t']))->result_array();
+                    if(!empty($getViewAgrRkat)){
                         $data['saldo_t'] = $getViewAgrRkat['total_agr'];
                     }
                 }

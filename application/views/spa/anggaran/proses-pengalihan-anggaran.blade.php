@@ -1,6 +1,6 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
-$year = date('Y');
+$pengalihanNominal = $pengalihan['nominal'] != "" && $pengalihan != null ? $pengalihan['nominal'] : 0;
 ?>
 @extends('spa.layouts.user')
 
@@ -42,7 +42,7 @@ $year = date('Y');
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="">Saldo</label>
-                        <input class="form-control" name="saldo_asal" type="text" value="Rp. <?= number_format($saldo_f,'0',',','.'); ?>" required readonly/>
+                        <input class="form-control" name="saldo_asal" type="text" value="Rp. <?= number_format($saldo_f,0,',','.'); ?>" required readonly/>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="">Kode Pencairan Tujuan</label>
@@ -50,10 +50,10 @@ $year = date('Y');
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="">Saldo</label>
-                        <input class="form-control" name="saldo_tujuan" type="text" value="Rp. <?= number_format($saldo_t,'0',',','.'); ?>" required readonly/>
+                        <input class="form-control" name="saldo_tujuan" type="text" value="Rp. <?= number_format($saldo_t,0,',','.'); ?>" required readonly/>
                     </div>
                     <div class="col-md-12">
-                        <p><strong>Saldo Yang Dialihkan: Rp. <?= number_format($pengalihan['nominal'],'0',',','.'); ?></strong></p>
+                        <p><strong>Saldo Yang Dialihkan: Rp. <?= number_format($pengalihanNominal,0,',','.'); ?></strong></p>
                     </div>
                     <div class="col-md-6 form-group">
                         <input type="submit" name="proses" class="btn btn-success btn-block" value="Proses"/>

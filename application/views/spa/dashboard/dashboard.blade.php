@@ -75,13 +75,13 @@ $kode_unit = $_SESSION['user_sessions']['kode_unit'];
             </div>
         </div>
     </div>
-    <!-- <div class="col-lg-6 col-xl-3">
+    <div class="col-lg-6 col-xl-3">
         <div class="card widget-box-three">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="mx-1">
                         <p class="text-uppercase font-weight-medium mb-2">
-                            Actbud Ditolak
+                            Actbud<br>Ditolak<br>&nbsp;<br>&nbsp;
                         </p>
                         <h2 class="mb-0">
                             <span data-plugin="counterup"><?= $total_actbud_ditolak; ?></span>
@@ -94,7 +94,7 @@ $kode_unit = $_SESSION['user_sessions']['kode_unit'];
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    <a href="<?= base_url('app/sim-spa/pencairan-rkat/status-actbud'); ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@ $kode_unit = $_SESSION['user_sessions']['kode_unit'];
                 <div class="d-flex justify-content-between">
                     <div class="mx-1">
                         <p class="text-uppercase font-weight-medium mb-2">
-                            Petty Cash Ditolak
+                            Petty Cash Ditolak<br>&nbsp;<br>&nbsp;
                         </p>
                         <h2 class="mb-0">
                             <span data-plugin="counterup"><?= $total_petty_cash_ditolak; ?></span>
@@ -118,11 +118,11 @@ $kode_unit = $_SESSION['user_sessions']['kode_unit'];
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    <a href="" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                    <a href="<?= base_url('app/sim-spa/pencairan-rkat/status-actbud'); ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <?php
     }
@@ -260,7 +260,7 @@ $kode_unit = $_SESSION['user_sessions']['kode_unit'];
                                         Approval Anggaran Fakultas FHB
                                     </p>
                                     <h2 class="mb-0">
-                                        <span data-plugin="counterup"><?= $get_total_approval_kabag['jumlah'] ?></span>
+                                        <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
                                     </h2>
                                 </div>
                                 <div class="mx-1">
@@ -311,7 +311,7 @@ $kode_unit = $_SESSION['user_sessions']['kode_unit'];
                                         Approval Anggaran Fakultas FTD
                                     </p>
                                     <h2 class="mb-0">
-                                        <span data-plugin="counterup"><?= $get_total_approval_kabag['jumlah'] ?></span>
+                                        <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
                                     </h2>
                                 </div>
                                 <div class="mx-1">
@@ -352,6 +352,408 @@ $kode_unit = $_SESSION['user_sessions']['kode_unit'];
                 </div>
     <?php
         }
+    }
+
+    if($jabatan == "6" || $jabatan == "22"){
+        // Ka.Unit
+    ?>
+
+    <?php
+        if($kode_unit == "002"){
+            // Ka.keuangan
+    ?>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card widget-box-three">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mx-1">
+                                        <p class="text-uppercase font-weight-medium mb-2">
+                                            Approval Ka.Unit<br>&nbsp;
+                                        </p>
+                                        <h2 class="mb-0">
+                                            <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
+                                        </h2>
+                                    </div>
+                                    <div class="mx-1">
+                                        <i class="mdi mdi-briefcase-outline text-purple display-4 m-0"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <a href="<?= base_url('app/sim-spa/approval/kepala-unit') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card widget-box-three">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mx-1">
+                                        <p class="text-uppercase font-weight-medium mb-2">
+                                            Approval Terkait Anggaran
+                                        </p>
+                                        <h2 class="mb-0">
+                                            <span data-plugin="counterup"><?= $total_approval_keuangan['jumlah'] ?></span>
+                                        </h2>
+                                    </div>
+                                    <div class="mx-1">
+                                        <i class="mdi mdi-briefcase-outline text-secondary display-4 m-0"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <a href="<?= base_url('app/sim-spa/approval/keuangan') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card widget-box-three">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mx-1">
+                                        <p class="text-uppercase font-weight-medium mb-2">
+                                            Permohonan Pengalihan Anggaran
+                                        </p>
+                                        <h2 class="mb-0">
+                                            <span data-plugin="counterup"><?= $total_approval_pengalihan_anggaran['jumlah'] ?></span>
+                                        </h2>
+                                    </div>
+                                    <div class="mx-1">
+                                        <i class="mdi mdi-briefcase-outline text-warning display-4 m-0"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <a href="<?= base_url('app/sim-spa/anggaran/pengalihan') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <?php
+        } else if ($kode_unit == "003") {
+    ?>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card widget-box-three">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mx-1">
+                                        <p class="text-uppercase font-weight-medium mb-2">
+                                            Approval Ka.Unit<br>&nbsp;
+                                        </p>
+                                        <h2 class="mb-0">
+                                            <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
+                                        </h2>
+                                    </div>
+                                    <div class="mx-1">
+                                        <i class="mdi mdi-briefcase-outline text-purple display-4 m-0"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <a href="<?= base_url('app/sim-spa/approval/kepala-unit') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card widget-box-three">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mx-1">
+                                        <p class="text-uppercase font-weight-medium mb-2">
+                                            Approval Terkait<br>Umum
+                                        </p>
+                                        <h2 class="mb-0">
+                                            <span data-plugin="counterup"><?= $total_approval_umum['jumlah'] ?></span>
+                                        </h2>
+                                    </div>
+                                    <div class="mx-1">
+                                        <i class="mdi mdi-briefcase-outline text-secondary display-4 m-0"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <a href="<?= base_url('app/sim-spa/approval/pre-approval') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <?php
+        } else if ($kode_unit == "004") {
+    ?>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card widget-box-three">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mx-1">
+                                        <p class="text-uppercase font-weight-medium mb-2">
+                                            Approval Ka.Unit<br>&nbsp;
+                                        </p>
+                                        <h2 class="mb-0">
+                                            <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
+                                        </h2>
+                                    </div>
+                                    <div class="mx-1">
+                                        <i class="mdi mdi-briefcase-outline text-purple display-4 m-0"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <a href="<?= base_url('app/sim-spa/approval/kepala-unit') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card widget-box-three">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mx-1">
+                                        <p class="text-uppercase font-weight-medium mb-2">
+                                            Approval Terkait<br>Unit ICT
+                                        </p>
+                                        <h2 class="mb-0">
+                                            <span data-plugin="counterup"><?= $total_approval_ict['jumlah'] ?></span>
+                                        </h2>
+                                    </div>
+                                    <div class="mx-1">
+                                        <i class="mdi mdi-briefcase-outline text-secondary display-4 m-0"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="float-right">
+                                    <a href="<?= base_url('app/sim-spa/approval/pre-approval') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php
+    } else if ($kode_unit == "006") {
+?>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card widget-box-three">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="mx-1">
+                                    <p class="text-uppercase font-weight-medium mb-2">
+                                        Approval Ka.Unit<br>&nbsp;
+                                    </p>
+                                    <h2 class="mb-0">
+                                        <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
+                                    </h2>
+                                </div>
+                                <div class="mx-1">
+                                    <i class="mdi mdi-briefcase-outline text-purple display-4 m-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <a href="<?= base_url('app/sim-spa/approval/kepala-unit') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card widget-box-three">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="mx-1">
+                                    <p class="text-uppercase font-weight-medium mb-2">
+                                        Approval Terkait<br>HRD
+                                    </p>
+                                    <h2 class="mb-0">
+                                        <span data-plugin="counterup"><?= $total_approval_hrd['jumlah'] ?></span>
+                                    </h2>
+                                </div>
+                                <div class="mx-1">
+                                    <i class="mdi mdi-briefcase-outline text-secondary display-4 m-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <a href="<?= base_url('app/sim-spa/approval/pre-approval') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<?php
+    } else if ($kode_unit == "013") {
+?>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card widget-box-three">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="mx-1">
+                                    <p class="text-uppercase font-weight-medium mb-2">
+                                        Approval Ka.Unit<br>&nbsp;
+                                    </p>
+                                    <h2 class="mb-0">
+                                        <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
+                                    </h2>
+                                </div>
+                                <div class="mx-1">
+                                    <i class="mdi mdi-briefcase-outline text-purple display-4 m-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <a href="<?= base_url('app/sim-spa/approval/kepala-unit') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card widget-box-three">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="mx-1">
+                                    <p class="text-uppercase font-weight-medium mb-2">
+                                        Approval Terkait<br>BKAL
+                                    </p>
+                                    <h2 class="mb-0">
+                                        <span data-plugin="counterup"><?= $total_approval_bkal['jumlah'] ?></span>
+                                    </h2>
+                                </div>
+                                <div class="mx-1">
+                                    <i class="mdi mdi-briefcase-outline text-secondary display-4 m-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <a href="<?= base_url('app/sim-spa/approval/pre-approval') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<?php
+    } else if ($kode_unit == "016") {
+?>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card widget-box-three">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="mx-1">
+                                    <p class="text-uppercase font-weight-medium mb-2">
+                                        Approval Ka.Unit<br>&nbsp;
+                                    </p>
+                                    <h2 class="mb-0">
+                                        <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
+                                    </h2>
+                                </div>
+                                <div class="mx-1">
+                                    <i class="mdi mdi-briefcase-outline text-purple display-4 m-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <a href="<?= base_url('app/sim-spa/approval/kepala-unit') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card widget-box-three">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="mx-1">
+                                    <p class="text-uppercase font-weight-medium mb-2">
+                                        Approval Terkait<br>LPPM
+                                    </p>
+                                    <h2 class="mb-0">
+                                        <span data-plugin="counterup"><?= $total_approval_p2m['jumlah'] ?></span>
+                                    </h2>
+                                </div>
+                                <div class="mx-1">
+                                    <i class="mdi mdi-briefcase-outline text-secondary display-4 m-0"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <a href="<?= base_url('app/sim-spa/approval/pre-approval') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php
+        } else {
+    ?>
+            <div class="col-md-3">
+                <div class="card widget-box-three">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="mx-1">
+                                <p class="text-uppercase font-weight-medium mb-2">
+                                    Approval Ka.Unit<br>&nbsp;
+                                </p>
+                                <h2 class="mb-0">
+                                    <span data-plugin="counterup"><?= $total_approval_kabag['jumlah'] ?></span>
+                                </h2>
+                            </div>
+                            <div class="mx-1">
+                                <i class="mdi mdi-briefcase-outline text-purple display-4 m-0"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="float-right">
+                            <a href="<?= base_url('app/sim-spa/approval/kepala-unit') ?>" target="_blank" class="btn btn-info btn-xs">Lihat <i class="mdi mdi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <?php
+        }
+
     }
     
     if($jabatan != "7"){
