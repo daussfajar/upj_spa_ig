@@ -5,11 +5,11 @@ $year = date('Y');
 
 
 <?php $__env->startSection('title'); ?>
-    Approval - Wakil Rektor 1
+    Approval - Wakil Rektor 2
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('page-title'); ?>
-    Approval - Wakil Rektor 1
+    Approval - Wakil Rektor 2
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -27,7 +27,7 @@ $year = date('Y');
 
 <?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item">Approval</li>
-<li class="breadcrumb-item active">Wakil Rektor 1</li>
+<li class="breadcrumb-item active">Wakil Rektor 2</li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -108,7 +108,7 @@ $year = date('Y');
                                             <?= $value['nama_pelaksana']; ?>
                                         </td>
                                         <td class="v-middle text-center">                                            
-                                            <a href="<?= base_url('app/sim-spa/approval/warek1/detail/') . $value['kd_act']; ?>" class="badge bg-info p-2">
+                                            <a href="<?= base_url('app/sim-spa/approval/warek2/detail/') . $value['kd_act']; ?>" class="badge bg-info p-2">
                                                 Detail <i class="mdi mdi-arrow-right"></i>
                                             </a>
                                         </td>
@@ -155,4 +155,4 @@ $year = date('Y');
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/approval/approval-warek1.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/approval/approval-warek2.blade.php ENDPATH**/ ?>

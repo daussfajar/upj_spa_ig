@@ -1,6 +1,6 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
-$tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
+$tahunRKAT = $year;
 ?>
 @extends('spa.layouts.user')
 

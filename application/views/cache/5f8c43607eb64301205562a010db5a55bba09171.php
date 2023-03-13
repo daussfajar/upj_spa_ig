@@ -5,11 +5,11 @@ $year = date('Y');
 
 
 <?php $__env->startSection('title'); ?>
-    Approval - Wakil Rektor 1
+    Approval - Dekan
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('page-title'); ?>
-    Approval - Wakil Rektor 1
+    Approval - Dekan
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -27,7 +27,7 @@ $year = date('Y');
 
 <?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item">Approval</li>
-<li class="breadcrumb-item active">Wakil Rektor 1</li>
+<li class="breadcrumb-item active">Dekan</li>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -35,11 +35,13 @@ $year = date('Y');
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            Silahkan Approve Actbud Tersebut
+            <h5 class="card-title mb-0">
+                Silakan Lakukan Approval
+            </h5>
         </div>
         <div class="card-body">
             <div class="table-responsive my-4">
-                <table class="table table-striped table-bordered table-hover" id="table-approval-warek-1" width="100%">
+                <table class="table table-striped table-bordered table-hover" id="table-approval-dekan" width="100%">
                     <thead>
                         <tr>
                             <th class="v-middle text-center">No.</th>
@@ -58,20 +60,21 @@ $year = date('Y');
                             $no = 1;
                             if(!empty($approval_actbud)){
                                 foreach($approval_actbud as $key => $value){
-                                    $no_dokumen = $value['jns_aju_agr'] == 'actbud' ? 'ACT' : 'PTY';
                                     $date_m = date_create($value['tgl_m']);
                                     $date_s = date_create($value['tgl_s']);
                         ?>
                                     <tr>
+                                        <td class="v-middle text-center font-14"><?= $no++; ?></td>
                                         <td class="v-middle text-center font-14">
-                                            <?= $no++; ?>
+                                            <?php
+                                                if($value['jns_aju_agr'] == 'actbud'){
+                                                    echo 'ACT/' . $value['kd_act'];
+                                                }else{
+                                                    echo 'PTY/' . $value['kd_act'];
+                                                }
+                                            ?>
                                         </td>
-                                        <td class="v-middle text-center font-14">
-                                            <?= $no_dokumen . '/' . $value['kd_act'] ?>
-                                        </td>
-                                        <td class="v-middle text-center font-14">
-                                            <?= $value['kode_pencairan']; ?>
-                                        </td>
+                                        <td class="v-middle text-center font-14"><?= $value['kode_pencairan']; ?></td>
                                         <td class="v-middle font-14">
                                             <?= $value['nama_kegiatan'] ?>
                                             <hr class="mt-1 mb-2">
@@ -101,14 +104,10 @@ $year = date('Y');
                                                 <?= rupiah_1($value['agr']) ?>
                                             </span>
                                         </td>
-                                        <td class="v-middle text-center font-14">
-                                            <?= $value['nama_pic']; ?>
-                                        </td>
-                                        <td class="v-middle text-center font-14">
-                                            <?= $value['nama_pelaksana']; ?>
-                                        </td>
+                                        <td class="v-middle text-center font-14"><?= $value['nama_pic']; ?></td>
+                                        <td class="v-middle text-center font-14"><?= $value['nama_pelaksana']; ?></td>
                                         <td class="v-middle text-center">                                            
-                                            <a href="<?= base_url('app/sim-spa/approval/warek1/detail/') . $value['kd_act']; ?>" class="badge bg-info p-2">
+                                            <a href="<?= base_url('app/sim-spa/approval/dekan/detail/') . $value['kd_act']; ?>" class="badge bg-info p-2">
                                                 Detail <i class="mdi mdi-arrow-right"></i>
                                             </a>
                                         </td>
@@ -133,7 +132,7 @@ $year = date('Y');
 <script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
-        $("#table-approval-warek-1").DataTable({
+        $("#table-approval-dekan").DataTable({
             oLanguage: {
                 sProcessing: "Loading..."
             },
@@ -155,4 +154,4 @@ $year = date('Y');
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/approval/approval-warek1.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/approval/approval-dekan.blade.php ENDPATH**/ ?>

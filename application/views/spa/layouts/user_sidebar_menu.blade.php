@@ -28,7 +28,7 @@
                 </li>
                 
                 <?php
-                if($jabatan == 0) {
+                if($jabatan == "0") {
                     // ADMIN
                 ?>
 
@@ -110,7 +110,7 @@
                     </li>
 
                 <?php
-                } else if($kode_unit == 002){ 
+                } else if($kode_unit == "002"){ 
                     // KEUANGAN
                 ?>
                 
@@ -169,7 +169,7 @@
                     </li>
 
                 <?php
-                } else if ($jabatan == 22 && $jabatan == 6){
+                } else if ($jabatan == "22" && $jabatan == "6"){
                 ?>
 
                     <!-- RKAT -->
@@ -233,7 +233,7 @@
                     </li>
 
                 <?php
-                } else if ($jabatan == 5){
+                } else if ($jabatan == "5"){
                     // Dekan
                 ?>
 
@@ -289,18 +289,26 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="<?= menu_active(4, 'kepala-unit', 'mm-active') ?>">
+                        <a href="{{ base_url('app/sim-spa/approval/kepala-unit') }}" class="waves-effect waves-light <?= menu_active(4, 'kepala-unit', 'active') ?>">
+                            <i class="mdi mdi-folder-outline"></i>
+                            <span>Approval Kepala Unit</span>
+                        </a>
+                    </li>
                     
-                    <li class="<?= menu_active(3, 'approval', 'mm-active') ?>">
-                        <a href="{{ base_url('app/sim-spa/approval/dekan') }}" class="waves-effect waves-light <?= menu_active(3, 'approval', 'active') ?>">
+                    <li class="<?= menu_active(4, 'dekan', 'mm-active') ?>">
+                        <a href="{{ base_url('app/sim-spa/approval/dekan') }}" class="waves-effect waves-light <?= menu_active(3, 'dekan', 'active') ?>">
                             <i class="mdi mdi-folder-open-outline"></i>
-                            <span>Approval</span>
+                            <span>Approval Dekan</span>
                         </a>
                     </li>
 
                     <li class="<?= menu_active(3, 'history-approval', 'mm-active') ?>">
-                        <a href="{{ base_url('app/sim-spa/history-approval') }}" class="waves-effect waves-light <?= menu_active(3, 'history-approval', 'active') ?>">
-                            <i class="mdi mdi-history"></i>
-                            <span>History Approval</span>
+                        <a href="{{ base_url('app/sim-spa/history-approval') }}" class="waves-effect waves-light <?= menu_active(3, 'history-approval', 'active') ?>" style="display:flex">
+                            <i class="mdi mdi-history" style="margin-top:5px;"></i>
+                            &nbsp;
+                            <span>History Approval Dekan</span>
                         </a>
                     </li>
 
@@ -313,7 +321,7 @@
                     </li>
 
                 <?php
-                } else if ($kode_unit == "007" && $jabatan == 4){
+                } else if ($kode_unit == "007" && $jabatan == "4"){
                     // Wakil Rektor 2
                 ?>
 
@@ -352,7 +360,7 @@
                     </li>
 
                 <?php
-                } else if ($kode_unit == "007" && $jabatan == 3){
+                } else if ($kode_unit == "007" && $jabatan == "3"){
                     // Wakil Rektor 1
                 ?>
                     
@@ -391,7 +399,7 @@
                     </li>
 
                 <?php
-                } else if ($kode_unit == "007" && $jabatan == 2){
+                } else if ($kode_unit == "007" && $jabatan == "2"){
                     // Rektor
                 ?>
                     
@@ -430,7 +438,7 @@
                     </li>
 
                 <?php
-                } else if ($kode_unit == "011" && $jabatan == 1){
+                } else if ($kode_unit == "011" && $jabatan == "1"){
                     // Presiden
                 ?>
 
@@ -461,7 +469,7 @@
                     </li>
 
                 <?php
-                } else if($jabatan == 7) {
+                } else if($jabatan == "7") {
                     // staff
                 ?>
 
@@ -518,7 +526,7 @@
                 <?php
                 }
 
-                if(($jabatan == 6 || $jabatan == 22) && ($kode_unit == 006 || $kode_unit == 004 || $kode_unit == 003 || $kode_unit == 013 || $kode_unit == 016)): 
+                if(($jabatan == "6" || $jabatan == "22") && ($kode_unit == "006" || $kode_unit == "004" || $kode_unit == "003" || $kode_unit == "013" || $kode_unit == "016")): 
                 ?>
 
                     <li class="<?= menu_active(4, 'pre-approval', 'mm-active') ?>">
@@ -538,7 +546,7 @@
                 <?php endif; ?>
 
                 <?php 
-                if($kode_unit == 002 || $jabatan == 0):
+                if($kode_unit == "002" || $jabatan == "0"):
                 ?>
 
                     <li class="<?= menu_active(4, 'keuangan', 'mm-active') ?>">

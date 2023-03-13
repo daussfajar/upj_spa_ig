@@ -6,38 +6,38 @@ $agr_tersisa = ($data['t_act_agr'] - $data['s_tjb_act_agr']);
 $uri4 = $CI->uri->segment(4);
 $uri5 = $CI->uri->segment(5);
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
+
+<?php $__env->startSection('title'); ?>
     History Approval - Detail Actbud
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-title')
+<?php $__env->startSection('page-title'); ?>
     Detail History Approval
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-select.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/daterangepicker.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/bootstrap-datepicker.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/tooltipster.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/custom.css') }}">
-@endsection
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/select2.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-select.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/daterangepicker.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/bootstrap-datepicker.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/tooltipster.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/custom.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item">History Approval</li>
 <li class="breadcrumb-item">Detail</li>
-<li class="breadcrumb-item active"><i class="mdi mdi-file-document"></i> {{ ($data['jns_aju_agr'] == "actbud") ? "ACT" : "PTY" }}-{{ $id_actbud }}</li>
-@endsection
+<li class="breadcrumb-item active"><i class="mdi mdi-file-document"></i> <?php echo e(($data['jns_aju_agr'] == "actbud") ? "ACT" : "PTY"); ?>-<?php echo e($id_actbud); ?></li>
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 	<div class="col-md-12">
-		@if($data['status_act'] != null)
-		@include('spa.approval.detail.status-approval')
-		@endif
+		<?php if($data['status_act'] != null): ?>
+		<?php echo $__env->make('spa.approval.detail.status-approval', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+		<?php endif; ?>
 		<div class="card card-border card-teal">
 			<div class="card-header border-teal bg-transparent">
 				<div class="float-left">
@@ -54,32 +54,34 @@ $uri5 = $CI->uri->segment(5);
 					</span>
 					<?php } ?>
 					<span class="badge bg-primary p-2" style="font-weight:bold;">
-						<i class="mdi mdi-file-document"></i> {{ $data['kode_pencairan'] }}
+						<i class="mdi mdi-file-document"></i> <?php echo e($data['kode_pencairan']); ?>
+
 					</span>
 					<span class="badge bg-info p-2" style="font-weight:bold;">
-						<i class="mdi mdi-clipboard-check"></i> {{ ($data['jns_aju_agr'] == "actbud") ? "ACT" : "PTY" }}/{{ $id_actbud }}
+						<i class="mdi mdi-clipboard-check"></i> <?php echo e(($data['jns_aju_agr'] == "actbud") ? "ACT" : "PTY"); ?>/<?php echo e($id_actbud); ?>
+
 					</span>
-					@switch($data['status_act'])
-					@case('send')
+					<?php switch($data['status_act']):
+					case ('send'): ?>
 						<span class="badge bg-success p-2">
 							<i class="mdi mdi-send-check"></i> Terkirim
 						</span>
-						@break
-					@case('belum dikirim')
+						<?php break; ?>
+					<?php case ('belum dikirim'): ?>
 					<span class="badge bg-warning p-2">
 						<i class="mdi mdi-progress-wrench"></i> Dalam Perencanaan
 					</span>
-					@break
-					@case('waiting_for_approval')
+					<?php break; ?>
+					<?php case ('waiting_for_approval'): ?>
 					<span class="badge bg-orange p-2">
 						<i class="mdi mdi-progress-clock"></i> Menunggu Approval
 					</span>
-					@break
-					@default
+					<?php break; ?>
+					<?php default: ?>
 					<span class="badge bg-danger p-2">
 						Unknown
 					</span>
-					@endswitch					
+					<?php endswitch; ?>					
 				</div>
 			</div>
 			<div class="card-body">
@@ -87,19 +89,19 @@ $uri5 = $CI->uri->segment(5);
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">Prodi / Bagian / Unit</label>
-							<p class="form-control-static" style="font-size: 14px;">{{ $data['nama_unit'] }}</p>
+							<p class="form-control-static" style="font-size: 14px;"><?php echo e($data['nama_unit']); ?></p>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">Nama Kegiatan</label>
-							<p class="form-control-static" style="font-size: 14px;">{{ $data['deskrip_keg'] }}</p>
+							<p class="form-control-static" style="font-size: 14px;"><?php echo e($data['deskrip_keg']); ?></p>
 						</div>
 					</div>                
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">KPI</label>
-							<p class="form-control-static" style="font-size: 14px;">{{ $data['kpi'] }}</p>
+							<p class="form-control-static" style="font-size: 14px;"><?php echo e($data['kpi']); ?></p>
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -107,7 +109,8 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">PIC</label>
 							<p class="form-control-static">
 								<span class="" style="font-size: 14px;">
-									{{ $data['nama_lengkap'] . ' (' . $data['pic'] . ')' }}
+									<?php echo e($data['nama_lengkap'] . ' (' . $data['pic'] . ')'); ?>
+
 								</span>
 							</p>
 						</div>
@@ -117,7 +120,8 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">Pelaksana</label>
 							<p class="form-control-static">
 								<span class="" style="font-size: 14px;">
-									{{ $data['nama_pelaksana'] . ' (' . $data['pelaksana'] . ')' }}
+									<?php echo e($data['nama_pelaksana'] . ' (' . $data['pelaksana'] . ')'); ?>
+
 								</span>
 							</p>
 						</div>
@@ -131,7 +135,8 @@ $uri5 = $CI->uri->segment(5);
 									$tgl_m = date_create($data['tgl_m']);									
 									$tgl_s = date_create($data['tgl_s']);
 									?>
-									<i class="mdi mdi-calendar"></i> {{ tanggal_indo(date_format($tgl_m, "Y-m-d")) . ' s/d ' . tanggal_indo(date_format($tgl_s, "Y-m-d")) }}
+									<i class="mdi mdi-calendar"></i> <?php echo e(tanggal_indo(date_format($tgl_m, "Y-m-d")) . ' s/d ' . tanggal_indo(date_format($tgl_s, "Y-m-d"))); ?>
+
 								</span>
 							</p>
 						</div>
@@ -141,7 +146,8 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">Periode</label>
 							<p class="form-control-static">
 								<span class="badge bg-warning p-2">
-									{{ $data['periode'] }}
+									<?php echo e($data['periode']); ?>
+
 								</span>
 							</p>
 						</div>
@@ -151,7 +157,8 @@ $uri5 = $CI->uri->segment(5);
 							<label for="">Total Anggaran</label>
 							<p class="form-control-static">
 								<span class="badge bg-purple p-2">
-									{{ rupiah_1($data['t_act_agr']) }}
+									<?php echo e(rupiah_1($data['t_act_agr'])); ?>
+
 								</span>
 							</p>
 						</div>
@@ -160,16 +167,17 @@ $uri5 = $CI->uri->segment(5);
 						<div class="form-group">
 							<label for="">Tanggal Pengajuan</label>
 							<p class="form-control-static">
-								@if (!empty($data['tanggal_pembuatan']))
+								<?php if(!empty($data['tanggal_pembuatan'])): ?>
 									<?php 
 									$ex_tgl_buat = explode(' ', $data['tanggal_pembuatan']);
 									?>
 									<span class="badge p-2 bg-teal text-white">
-										<i class="mdi mdi-clock-check-outline"></i> {{ tanggal_indo($ex_tgl_buat[0]) . ', ' . $ex_tgl_buat[1] }}
+										<i class="mdi mdi-clock-check-outline"></i> <?php echo e(tanggal_indo($ex_tgl_buat[0]) . ', ' . $ex_tgl_buat[1]); ?>
+
 									</span>
-								@else
+								<?php else: ?>
 									-
-								@endif
+								<?php endif; ?>
 							</p>
 						</div>
 					</div>
@@ -196,49 +204,53 @@ $uri5 = $CI->uri->segment(5);
 							</tr>
 						</thead>
 						<tbody id="tb-rincian-kegiatan">
-						@foreach ($rincian_kegiatan as $item)
+						<?php $__currentLoopData = $rincian_kegiatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th class="text-center" style="vertical-align: middle;">{{ $loop->iteration }}</th>
+                                <th class="text-center" style="vertical-align: middle;"><?php echo e($loop->iteration); ?></th>
                                 <td style="vertical-align: middle;">
                                     <span class="" style="font-size: 14px;">
-                                        {{ $item->jns_b }}
+                                        <?php echo e($item->jns_b); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <span class="" style="font-size: 14px;">
-                                        {{ $item->ket }}
+                                        <?php echo e($item->ket); ?>
+
                                     </span>
                                 </td>
                                 <td class="text-center" style="vertical-align: middle;">
                                     <span class="badge bg-purple p-2">
-                                        {{ rupiah_1($item->aju_agr) }}
+                                        <?php echo e(rupiah_1($item->aju_agr)); ?>
+
                                     </span>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <ul style="list-style: none;padding-inline-start:0;" class="mb-0">
                                         <li>
                                             <span style="font-size: 14px;">Warek 1: </span>
-                                            <span style="font-size: 14px;">{{ $item->c_jns_b_wr1 }}</span>
+                                            <span style="font-size: 14px;"><?php echo e($item->c_jns_b_wr1); ?></span>
                                         </li>
                                         <li>
                                             <span style="font-size: 14px;">Warek 2: </span>
-                                            <span style="font-size: 14px;">{{ $item->c_jns_b_wr2 }}</span>
+                                            <span style="font-size: 14px;"><?php echo e($item->c_jns_b_wr2); ?></span>
                                         </li>
                                         <li>
                                             <span style="font-size: 14px;">Rektor: </span>
-                                            <span style="font-size: 14px;">{{ $item->c_jns_b_rk }}</span>
+                                            <span style="font-size: 14px;"><?php echo e($item->c_jns_b_rk); ?></span>
                                         </li>
                                     </ul>
                                 </td>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</tbody>
 						<tfoot>
 							<th></th>
 							<th class="text-right" colspan="2">Total Anggaran : </th>
 							<td class="text-center">
 								<span class="badge bg-primary p-2">
-									{{ rupiah_1($data['s_tjb_act_agr']) }}
+									<?php echo e(rupiah_1($data['s_tjb_act_agr'])); ?>
+
 								</span>
 							</td>
 							<td></td>
@@ -264,76 +276,79 @@ $uri5 = $CI->uri->segment(5);
 							</tr>
 						</thead>
 						<tbody id="tb-dokumen">
-						@foreach ($dokumen_pendukung as $row)
+						<?php $__currentLoopData = $dokumen_pendukung; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th class="text-center">{{ $loop->iteration }}</th>
+                                <th class="text-center"><?php echo e($loop->iteration); ?></th>
                                 <td>
                                     <a href="javascript:void(0)">
                                         <i class="mdi mdi-file"></i>
-                                        @php                                            
+                                        <?php                                            
 											echo $row->nama_file . ' ('.formatBytes($row->ukuran_file).')';;
-                                        @endphp
+                                        ?>
                                     </a>
                                 </td>
                                 <td>
-                                    {{ $row->deskripsi }}
+                                    <?php echo e($row->deskripsi); ?>
+
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ base_url('app-data/dokumen-pendukung/' . $row->nama_file) }}" class="btn btn-primary btn-xs" download="{{ $row->nama_file }}">
+                                    <a href="<?php echo e(base_url('app-data/dokumen-pendukung/' . $row->nama_file)); ?>" class="btn btn-primary btn-xs" download="<?php echo e($row->nama_file); ?>">
                                         <i class="mdi mdi-download"></i>
                                     </a>
-                                    @if ($data['status_act'] == 'belum dikirim')
-                                        <a href="javascript:void(0)" data-id="{{ encrypt($row->id) }}" data-file_name="{{ $row->nama_file }}" class="btn btn-danger btn-xs btn-hapus-dokumen">
+                                    <?php if($data['status_act'] == 'belum dikirim'): ?>
+                                        <a href="javascript:void(0)" data-id="<?php echo e(encrypt($row->id)); ?>" data-file_name="<?php echo e($row->nama_file); ?>" class="btn btn-danger btn-xs btn-hapus-dokumen">
                                             <i class="mdi mdi-trash-can"></i>
                                         </a>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			@if ($data['status_act'] == 'belum dikirim')
+			<?php if($data['status_act'] == 'belum dikirim'): ?>
             <div class="card-footer">
                 <div class="float-right">
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-upload-dokumen-pendukung" class="btn btn-teal btn-sm"><i class="mdi mdi-upload"></i> Upload Dokumen</a>
                 </div>
             </div>
-        	@endif
+        	<?php endif; ?>
 		</div>
 		
-		{!! form_open('app/sim-spa/history-approval/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}		
+		<?php echo form_open('app/sim-spa/history-approval/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>		
 		<div class="card card-border card-purple" id="card-chat">
 			<div class="card-header border-purple bg-transparent">
 				<h3 class="card-title mb-0"><i class="mdi mdi-message-text-outline"></i> PESAN</h3>
 			</div>
 			<div class="card-body">
-				@if (!empty($messages))
+				<?php if(!empty($messages)): ?>
 				<div class="messages">                
                     <div class="list-group bs-ui-list-group mb-0 mr-2" id="chat-section">                   
-                        @foreach ($messages as $item)
-                            @php
+                        <?php $__currentLoopData = $messages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
                                 $reply_data = $CI->db->query("SELECT a.id_chat as id,a.nik,a.pesan,a.datetime_chat,a.attachment,a.attachment_size,b.nama_lengkap sender FROM tbl_chat_reply a 
                                 INNER JOIN tbl_karyawan b ON a.nik = b.nik WHERE a.id_chat = '".$item->id_chat."' AND a.status = 'Aktif'")->result();
-                            @endphp
+                            ?>
                             <div class="list-group-item" style="border-left: 2px solid rgba(0,0,0,.125);/*border-top:none;border-bottom:none;border-right:none;*/margin-bottom:10px;">
                                 <div class="list-group-item-heading font-16 mt-0 mb-1 pb-1 border-bottom">
                                     <span style="font-weight: bold;">
                                         <img src="<?= base_url() ?>assets/images/user-icon.png" alt="" srcset="" width="20" style="margin-bottom: 5px;">
-                                        {{ $item->sender }}
+                                        <?php echo e($item->sender); ?>
+
                                     </span>                                
                                     <span style="font-size: 13px;float: right;">
-                                        <i class="mdi mdi-calendar-clock"></i> {{ $item->datetime_chat }}                                        
+                                        <i class="mdi mdi-calendar-clock"></i> <?php echo e($item->datetime_chat); ?>                                        
                                     </span>
                                 </div>                                
                                 <p class="list-group-item-text m-0">
-                                    {{ $item->pesan }}
+                                    <?php echo e($item->pesan); ?>
+
                                 </p>                  
-                                @if (!empty($item->attachment))
-                                    @php
+                                <?php if(!empty($item->attachment)): ?>
+                                    <?php
                                         $pecah_attachment = explode('_', $item->attachment);                                        
-                                    @endphp
+                                    ?>
                                     <div class="mt-2">
                                         <span style="font-size: 13px;">Attachment:</span>
                                         <div class="d-flex flex-row">
@@ -341,50 +356,52 @@ $uri5 = $CI->uri->segment(5);
                                                 <i class="mdi mdi-file mdi-24px text-primary"></i>
                                             </div>
                                             <div class="ml-2 pt-2">
-                                                <span class="text-primary">{{ $pecah_attachment[1] }}</span>
-                                                <span style="font-size: 12px;color:black">{{ formatBytes($item->attachment_size) }}</span>
-                                                <a href="{{ base_url('app-data/chat-attachment/' . $item->attachment) }}" class="btn btn-info btn-xs" download="{{ $pecah_attachment[1] }}"><i class="mdi mdi-download"></i> Unduh</a>
+                                                <span class="text-primary"><?php echo e($pecah_attachment[1]); ?></span>
+                                                <span style="font-size: 12px;color:black"><?php echo e(formatBytes($item->attachment_size)); ?></span>
+                                                <a href="<?php echo e(base_url('app-data/chat-attachment/' . $item->attachment)); ?>" class="btn btn-info btn-xs" download="<?php echo e($pecah_attachment[1]); ?>"><i class="mdi mdi-download"></i> Unduh</a>
                                             </div>                    
                                         </div>                                        
                                     </div>        
-                                @endif
-                                <span style="font-size: 11px;">{{ get_time_ago(strtotime($item->datetime_chat)) }}</span>                                          
+                                <?php endif; ?>
+                                <span style="font-size: 11px;"><?php echo e(get_time_ago(strtotime($item->datetime_chat))); ?></span>                                          
                                 <br>
                                 <span style="font-size: 12px;">
                                     <a href="javascript:void(0)" class="reply-chat" data-id="<?= encrypt($item->id_chat) ?>" 
                                         data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>" 
                                         data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>" data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-reply"></i> Reply</a>
-                                    @if ($item->nik == decrypt($_SESSION['user_sessions']['nik']))                                        
+                                    <?php if($item->nik == decrypt($_SESSION['user_sessions']['nik'])): ?>                                        
                                         <a href="javascript:void(0)" class="hapus-chat" data-id="<?= encrypt($item->id_chat) ?>" 
                                             data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>" 
                                             data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>" data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-trash-can"></i> Hapus</a>
-                                    @endif
+                                    <?php endif; ?>
                                 </span>
 
-                                @if (!empty($reply_data))
+                                <?php if(!empty($reply_data)): ?>
                                     <br>
                                     <a href="#collapse-reply-message-<?= $item->id_chat ?>" class="showReply" data-toggle="collapse" style="font-size: 12px;">Lihat Balasan</a>
                                     <div class="collapse" id="collapse-reply-message-<?= $item->id_chat ?>">
-                                        @foreach ($reply_data as $item)
+                                        <?php $__currentLoopData = $reply_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="list-group-item mt-1" style="border-left: none;border-top:none;border-bottom:none;border-right:none;padding-bottom:0;">
                                             <div class="list-group-item-heading font-16 mt-0 mb-1 pb-1 border-bottom">                                    
                                                 <span>
                                                     <img src="<?= base_url() ?>assets/images/logo/logo.png" alt="" srcset="" width="20">
-                                                    {{ $item->sender }}
+                                                    <?php echo e($item->sender); ?>
+
                                                 </span>                                
                                                 <span style="font-size: 13px;float: right;">
-                                                    <i class="mdi mdi-calendar-clock"></i> {{ $item->datetime_chat }}                                        
+                                                    <i class="mdi mdi-calendar-clock"></i> <?php echo e($item->datetime_chat); ?>                                        
                                                 </span>
                                             </div>
 
                                             <p class="list-group-item-text m-0">
-                                                {{ $item->pesan }}
+                                                <?php echo e($item->pesan); ?>
+
                                             </p>
 
-                                            @if (!empty($item->attachment))
-                                                @php
+                                            <?php if(!empty($item->attachment)): ?>
+                                                <?php
                                                     $pecah_attachment = explode('_', $item->attachment);                                        
-                                                @endphp
+                                                ?>
                                                 <div class="mt-2">
                                                     <span style="font-size: 13px;">Attachment:</span>
                                                     <div class="d-flex flex-row">
@@ -392,34 +409,34 @@ $uri5 = $CI->uri->segment(5);
                                                             <i class="mdi mdi-file mdi-24px text-primary"></i>
                                                         </div>
                                                         <div class="ml-2 pt-2">
-                                                            <span class="text-primary">{{ $pecah_attachment[1] }}</span>
-                                                            <span style="font-size: 12px;color:black">{{ formatBytes($item->attachment_size) }}</span>
-                                                            <a href="{{ base_url('app-data/chat-attachment/' . $item->attachment) }}" class="btn btn-info btn-xs" download="{{ $pecah_attachment[1] }}"><i class="mdi mdi-download"></i> Unduh</a>
+                                                            <span class="text-primary"><?php echo e($pecah_attachment[1]); ?></span>
+                                                            <span style="font-size: 12px;color:black"><?php echo e(formatBytes($item->attachment_size)); ?></span>
+                                                            <a href="<?php echo e(base_url('app-data/chat-attachment/' . $item->attachment)); ?>" class="btn btn-info btn-xs" download="<?php echo e($pecah_attachment[1]); ?>"><i class="mdi mdi-download"></i> Unduh</a>
                                                         </div>                    
                                                     </div>                                        
                                                 </div>        
-                                            @endif
-                                            <span style="font-size: 11px;">{{ get_time_ago(strtotime($item->datetime_chat)) }}</span>
-                                            @if ($item->nik == decrypt($_SESSION['user_sessions']['nik']))
+                                            <?php endif; ?>
+                                            <span style="font-size: 11px;"><?php echo e(get_time_ago(strtotime($item->datetime_chat))); ?></span>
+                                            <?php if($item->nik == decrypt($_SESSION['user_sessions']['nik'])): ?>
                                             <br>
                                             <a href="javascript:void(0)" class="hapus-chat-reply" data-id="<?= encrypt($item->id) ?>" 
                                                 data-attachment="<?= $item->attachment ?>" data-sender="<?= $item->sender ?>" 
                                                 data-time="<?= $item->datetime_chat ?>" data-attachment="<?= $item->attachment ?>" data-pesan="<?= $item->pesan ?>"><i class="mdi mdi-trash-can"></i> Hapus</a>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>                                      
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </div>
-                                @endif
+                                <?php endif; ?>
 
                             </div>
-                        @endforeach                        
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                        
                     </div>
                 </div>
-				@else
+				<?php else: ?>
 				<div class="alert alert-info">
 					<p class="mb-0"><i class="mdi mdi-exclamation"></i> Tidak ada pesan</p>
 				</div>
-				@endif
+				<?php endif; ?>
 			</div>
 
 			<input type="hidden" name="act" value="send_message">
@@ -459,10 +476,11 @@ $uri5 = $CI->uri->segment(5);
 				</div>
 			</div>			
 		</div>
-		{!! form_close() !!}
+		<?php echo form_close(); ?>
+
 	</div>
 	
-	{!! form_open('app/sim-spa/history-approval/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}	
+	<?php echo form_open('app/sim-spa/history-approval/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>	
     <!-- modal hapus pesan -->
 	<input type="hidden" name="act" value="hapus_pesan">
     <div id="modal-hapus-pesan" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -499,9 +517,10 @@ $uri5 = $CI->uri->segment(5);
             </div>            
         </div>        
     </div>    
-	{!! form_close() !!}
+	<?php echo form_close(); ?>
+
 		
-	{!! form_open('app/sim-spa/history-approval/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')) !!}	
+	<?php echo form_open('app/sim-spa/history-approval/detail/' . $id_actbud, array('id' => 'form-pesan', 'enctype' => 'multipart/form-data', 'class' => 'myForm')); ?>	
     <!-- modal hapus pesan -->
     <div id="modal-hapus-pesan-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -538,17 +557,18 @@ $uri5 = $CI->uri->segment(5);
             </div>            
         </div>        
     </div>    
-	{!! form_close() !!}
+	<?php echo form_close(); ?>
 
-@endsection
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/bootstrap-filestyle.min.js') }}"></script>
-<script src="{{ base_url('assets/js/signature-pad.js') }}"></script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/bootstrap-filestyle.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/signature-pad.js')); ?>"></script>
 <script>
 	$(document).ready(function(){
 		$('.dataTable').dataTable();
@@ -621,4 +641,5 @@ $uri5 = $CI->uri->segment(5);
         })
 	})
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/approval/detail/detail-history-approval.blade.php ENDPATH**/ ?>

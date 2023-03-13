@@ -1,15 +1,14 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
-$year = date('Y');
 ?>
 @extends('spa.layouts.user')
 
 @section('title')
-    Approval Actbud Rektor
+    Approval - Rektor
 @endsection
 
 @section('page-title')
-    Approval Actbud
+    Approval - Rektor
 @endsection
 
 @section('css')

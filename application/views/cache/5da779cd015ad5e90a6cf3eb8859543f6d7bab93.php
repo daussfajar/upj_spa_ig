@@ -1,29 +1,28 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
-// $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
-$tahunRKAT = $year;
+$tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
+
+<?php $__env->startSection('title'); ?>
     RKAT <?= $tahunRKAT ?> - List Program Kerja
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-title')
+<?php $__env->startSection('page-title'); ?>
     RKAT <?= $tahunRKAT ?>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-@endsection
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item">Program Kerja</li>
 <li class="breadcrumb-item active">List</li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12">
     <div class="card">
@@ -94,13 +93,13 @@ $tahunRKAT = $year;
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
         $("#table-list-rkat-program-kerja").DataTable({
@@ -121,4 +120,5 @@ $tahunRKAT = $year;
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/admin/rkat/list-program-kerja.blade.php ENDPATH**/ ?>

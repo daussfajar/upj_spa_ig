@@ -1,29 +1,28 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
-// $tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
 $tahunRKAT = $year;
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
-    RKAT <?= $tahunRKAT ?> - List Program Kerja
-@endsection
 
-@section('page-title')
+<?php $__env->startSection('title'); ?>
+    RKAT <?= $tahunRKAT ?> - List Investasi
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('page-title'); ?>
     RKAT <?= $tahunRKAT ?>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-@endsection
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
-<li class="breadcrumb-item">Program Kerja</li>
+<?php $__env->startSection('breadcrumb'); ?>
+<li class="breadcrumb-item">Investasi</li>
 <li class="breadcrumb-item active">List</li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12">
     <div class="card">
@@ -33,17 +32,17 @@ $tahunRKAT = $year;
         <div class="card-body">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="<?= base_url('app/sim-spa/admin/rkat/list/program-kerja') ?>">Program Kerja</a>
+                    <a class="nav-link" href="<?= base_url('app/sim-spa/admin/rkat/list/program-kerja') ?>">Program Kerja</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('app/sim-spa/admin/rkat/list/operasional') ?>">Operasional</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('app/sim-spa/admin/rkat/list/investasi') ?>">Investasi</a>
+                    <a class="nav-link active" href="<?= base_url('app/sim-spa/admin/rkat/list/investasi') ?>">Investasi</a>
                 </li>
             </ul>
             <div class="table-responsive my-4">
-                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-program-kerja" style="width:100%;">
+                <table class="table table-striped table-bordered table-hover" id="table-list-rkat-investasi" style="width:100%;">
                     <thead>
                         <tr>
                             <th>Prodi/Unit</th>
@@ -77,11 +76,11 @@ $tahunRKAT = $year;
                                         <td><?= $value['nama_lengkap'] ?></td>
                                         <td><?= $value['tahun'] ?></td>
                                         <td><?= $value['periode'] ?></td>
-                                        <td class="text-right"><?= number_format ($value['total_agr_stj'],'0',',','.'); ?></td>
-                                        <td class="text-right"><?= number_format ($value['n_in'],'0',',','.'); ?></td>
-                                        <td class="text-right"><?= number_format ($value['n_out'],'0',',','.'); ?></td>
-                                        <td class="text-right"><?= number_format ($value['t_aju_agr'],'0',',','.'); ?></td>
-                                        <td class="text-right"><?= number_format ($value['sisa_agr'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format($value['total_agr_stj'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format($value['n_in'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format($value['n_out'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format($value['t_aju_agr'],'0',',','.'); ?></td>
+                                        <td class="text-right"><?= number_format($value['sisa_agr'],'0',',','.'); ?></td>
                                     </tr>
                         <?php
                                 }
@@ -94,16 +93,16 @@ $tahunRKAT = $year;
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
-        $("#table-list-rkat-program-kerja").DataTable({
+        $("#table-list-rkat-investasi").DataTable({
             oLanguage: {
                 sProcessing: "Loading..."
             },
@@ -121,4 +120,5 @@ $tahunRKAT = $year;
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/admin/rkat/list-investasi.blade.php ENDPATH**/ ?>

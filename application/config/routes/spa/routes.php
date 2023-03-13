@@ -133,6 +133,5 @@ $route['app/sim-spa/rkat/list/investasi'] = 'SPA/RKAT/list_rkat_investasi';
 
 // START History Approval
     $route['app/sim-spa/history-approval'] = 'SPA/HistoryApproval/index';
-    // $route['app/sim-spa/history-approval/(:any)'] = 'SPA/HistoryApproval/index/$1';
     $route['app/sim-spa/history-approval/detail/(:num)'] = 'SPA/HistoryApproval/detail/$1/$2';
 // END History Approval

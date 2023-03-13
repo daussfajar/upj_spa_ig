@@ -374,7 +374,7 @@ class Global_Model extends CI_Model {
 	{
 		$access = false;
 		$session = $this->session->userdata('user_sessions');
-		if (($session['kode_unit'] == $kode_unit && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) || $session['kode_jabatan'] == 0) {
+		if (($session['kode_unit'] == $kode_unit && ($session['kode_jabatan'] == 22 || $session['kode_jabatan'] == 6)) || $session['kode_jabatan'] == 0 || $session['kode_jabatan'] == 5) {
 			$access = true;
 		} else {
 			$access = false;

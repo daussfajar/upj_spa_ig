@@ -1,15 +1,14 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
-$tahunRKAT = date('Y', strtotime(date('Y-m-d') . ' -1 year')) . '/' . date('Y');
 ?>
 @extends('spa.layouts.user')
 
 @section('title')
-    RKAT <?= $tahunRKAT ?> - List Program Kerja
+    RKAT - List Program Kerja
 @endsection
 
 @section('page-title')
-    RKAT <?= $tahunRKAT ?>
+    RKAT
 @endsection
 
 @section('css')

@@ -4,11 +4,11 @@ $session = $CI->session->userdata('user_sessions');
 @extends('spa.layouts.user')
 
 @section('title')
-    Approval Actbud Keuangan
+    Approval - Keuangan
 @endsection
 
 @section('page-title')
-    Approval Actbud
+    Approval - Keuangan
 @endsection
 
 @section('css')

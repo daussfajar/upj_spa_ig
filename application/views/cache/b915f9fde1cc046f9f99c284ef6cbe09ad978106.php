@@ -1,27 +1,27 @@
 <?php 
 $session = $CI->session->userdata('user_sessions');
 ?>
-@extends('spa.layouts.user')
 
-@section('title')
+
+<?php $__env->startSection('title'); ?>
     Approval - Presiden
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-title')
+<?php $__env->startSection('page-title'); ?>
     Approval - Presiden
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
-<link rel="stylesheet" href="{{ base_url('assets/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ base_url('assets/css/responsive.bootstrap4.min.css') }}">
-@endsection
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/dataTables.bootstrap4.min.css')); ?>">
+<link rel="stylesheet" href="<?php echo e(base_url('assets/css/responsive.bootstrap4.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('breadcrumb')
+<?php $__env->startSection('breadcrumb'); ?>
 <li class="breadcrumb-item">Approval</li>
 <li class="breadcrumb-item active">Presiden</li>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12">
     <div class="card">
@@ -82,13 +82,13 @@ $session = $CI->session->userdata('user_sessions');
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-<script src="{{ base_url('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ base_url('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ base_url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<?php $__env->startSection('js'); ?>
+<script src="<?php echo e(base_url('assets/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(base_url('assets/js/responsive.bootstrap4.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
         $("#table-approval-presiden").DataTable({
@@ -112,4 +112,5 @@ $session = $CI->session->userdata('user_sessions');
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('spa.layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\upj_spa_ig\application\views/spa/approval/approval-presiden.blade.php ENDPATH**/ ?>
