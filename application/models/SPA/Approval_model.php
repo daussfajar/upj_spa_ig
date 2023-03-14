@@ -330,7 +330,7 @@ class Approval_model extends CI_Model {
                 tbl_actbud.tahun = ?
                 AND
                 (
-                    (sign = '$kode_unit' OR sign = ?)
+                    (sign = '$kode_unit' OR sign = '$whereSign')
                     AND st_kabag = 'Disetujui' 
                     AND (
                         tbl_actbud.kode_unit = 001 
@@ -359,7 +359,7 @@ class Approval_model extends CI_Model {
                     $whereStPreApproval 
                 ) 
                 OR (
-                    (sign = '$kode_unit' OR sign = ?)
+                    (sign = '$kode_unit' OR sign = '$whereSign')
                     AND st_kabag = 'Disetujui' 
                     AND (
                         tbl_actbud.kode_unit = 101 
@@ -379,7 +379,7 @@ class Approval_model extends CI_Model {
                     $whereStPreApproval 
                 ) 
             ORDER BY
-                kd_act DESC", array($year, $whereSign, $whereSign));
+                kd_act DESC", array($year));
         return $query->result_array();
     }
 
