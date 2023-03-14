@@ -299,6 +299,19 @@ class Approval_model extends CI_Model {
     }
 
     public function get_rkat_approval_sign($year, $kode_unit){
+        $whereStPreApproval = "";
+        if($kode_unit == "003"){
+            $whereStPreApproval = " AND ((st_umum NOT LIKE 'Disetujui GA') AND ( st_umum NOT LIKE 'Ditolak GA' ))";
+        } else if($kode_unit == "004"){
+            $whereStPreApproval = " AND ((st_ict NOT LIKE 'Disetujui ICT') AND ( st_ict NOT LIKE 'Ditolak ICT' ))";
+        } else if ($kode_unit == "006") {
+            $whereStPreApproval = " AND ((st_hrd NOT LIKE 'Disetujui HRD') AND ( st_hrd NOT LIKE 'Ditolak HRD' ))";
+        } else if ($kode_unit == "013") {
+            $whereStPreApproval = " AND ((st_bkal NOT LIKE 'Disetujui BKAL') AND ( st_bkal NOT LIKE 'Ditolak BKAL' ))";
+        } else if ($kode_unit == "016") {
+            $whereStPreApproval = " AND ((st_p2m NOT LIKE 'Disetujui P2M') AND ( st_p2m NOT LIKE 'Ditolak P2M' ))";
+        }
+
         $query = $this->db->query("SELECT
                 tbl_actbud.*,
                 c.nama_lengkap AS nama_pic,
@@ -337,10 +350,7 @@ class Approval_model extends CI_Model {
                         OR tbl_actbud.kode_unit = 022 
                         OR tbl_actbud.kode_unit = 023 
                     ) 
-                    AND ((
-                            st_ict NOT LIKE 'Disetujui ICT' 
-                            ) 
-                    AND ( st_ict NOT LIKE 'Ditolak ICT' )) 
+                    $whereStPreApproval 
                 ) 
                 OR (
                     sign = '$kode_unit' 
@@ -360,10 +370,7 @@ class Approval_model extends CI_Model {
                         OR tbl_actbud.kode_unit = 112 
                     ) 
                     AND ( st_ftd = 'Disetujui FTD' OR st_fhb = 'Disetujui FHB' ) 
-                    AND ((
-                            st_ict NOT LIKE 'Disetujui ICT' 
-                            ) 
-                    AND ( st_ict NOT LIKE 'Ditolak ICT' )) 
+                    $whereStPreApproval 
                 ) 
             ORDER BY
                 kd_act DESC", array($year));
