@@ -64,19 +64,19 @@ if(!empty($last_login)){
 						<div class="card-body" style="min-height: 360px;max-height:auto;">
 							<p class="mb-0 pb-0 text-white">Selamat datang, <strong><?= $nama ?></strong>!<?= $last_login_message ?></p>
 							<h6 class="text-white">Pilih Modul:</h6>
-							<hr>
+							<hr class="bg-white">
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-xl-2 col-xs-6">
 									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-spa/dashboard')); ?>'">
 										<div class="card-body">
-											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/RKAT.png')); ?>" alt="SIM RKAT">										
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/icon_RKAT.png')); ?>" alt="SIM RKAT">										
 										</div>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-xl-2 col-xs-6">
 									<div class="card c-option xcm ycm" onclick="document.location='<?php echo e(base_url('app/sim-ig/dashboard')); ?>'">
 										<div class="card-body">
-											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/IG.png')); ?>" alt="SIM IG">
+											<img class="card-img-top img-fluid" src="<?php echo e(base_url('assets/images/module/icon_IG.png')); ?>" alt="SIM IG">
 										</div>
 									</div>
 								</div>
@@ -117,10 +117,20 @@ if(!empty($last_login)){
     <!-- End Modal Logout -->
 
 	<!-- end page -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="<?php echo e(base_url('assets/js/jquery-3.6.0.slim.js')); ?>"></script>
     
     <script src="<?php echo e(base_url('assets/js/vendor.min.js')); ?>"></script>    
     <script src="<?php echo e(base_url('assets/js/toastr.min.js')); ?>"></script> 
+	<script>
+		$(document).ready(function(){
+			$('form.myForm').submit(function(){
+                $('button[type="submit"]')
+                .attr('disabled', true)
+                .addClass('disabled')
+                .html('<i class="mdi mdi-spin mdi-loading"></i>')
+            })
+		})
+	</script>
 </body>
 
 </html>

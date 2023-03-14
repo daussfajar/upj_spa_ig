@@ -95,11 +95,11 @@
                         </a>
                         <ul class="nav-second-level" aria-expanded="false">
                             <li><a href="{{ base_url('app/sim-spa/approval/kepala-unit') }}">Approval Ka.Unit/Prodi</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka. Umum</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.HRD</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.ICT</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.BKAL</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.P2M</a></li>
+                            <li><a href="{{ base_url('app/sim-spa/approval/pre-approval') }}">Approval Ka. Umum</a></li>
+                            <li><a href="{{ base_url('app/sim-spa/approval/pre-approval') }}">Approval Ka.HRD</a></li>
+                            <li><a href="{{ base_url('app/sim-spa/approval/pre-approval') }}">Approval Ka.ICT</a></li>
+                            <li><a href="{{ base_url('app/sim-spa/approval/pre-approval') }}">Approval Ka.BKAL</a></li>
+                            <li><a href="{{ base_url('app/sim-spa/approval/pre-approval') }}">Approval Ka.P2M</a></li>
                             <li><a href="{{ base_url('app/sim-spa/approval/keuangan') }}">Approval Ka.Keuangan</a></li> 
                             <li><a href="{{ base_url('app/sim-spa/approval/dekan') }}">Approval Dekan</a></li>
                             <li><a href="{{ base_url('app/sim-spa/approval/warek1') }}">Approval Wakil Rektor 1</a></li>

@@ -329,7 +329,7 @@ class Global_Model extends CI_Model {
 		$session = $this->session->userdata('user_sessions');
 		$jabatan = $session['kode_jabatan'];
 		$kode_unit = $session['kode_unit'];
-		if (($jabatan == "22" || $jabatan == "6") && ($kode_unit == "004" || $kode_unit == "006" || $kode_unit == "003" || $kode_unit == "013" || $kode_unit == "016")) {
+		if (($jabatan == "22" || $jabatan == "6") && ($kode_unit == "004" || $kode_unit == "006" || $kode_unit == "003" || $kode_unit == "013" || $kode_unit == "016") || $jabatan == "0") {
 			$access = true;
 		} else {
 			$access = false;

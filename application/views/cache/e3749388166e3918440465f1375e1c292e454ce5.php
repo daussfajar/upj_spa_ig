@@ -95,11 +95,11 @@
                         </a>
                         <ul class="nav-second-level" aria-expanded="false">
                             <li><a href="<?php echo e(base_url('app/sim-spa/approval/kepala-unit')); ?>">Approval Ka.Unit/Prodi</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka. Umum</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.HRD</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.ICT</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.BKAL</a></li>
-                            <li><a href="javascript:void(0)">Approval Ka.P2M</a></li>
+                            <li><a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>">Approval Ka. Umum</a></li>
+                            <li><a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>">Approval Ka.HRD</a></li>
+                            <li><a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>">Approval Ka.ICT</a></li>
+                            <li><a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>">Approval Ka.BKAL</a></li>
+                            <li><a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>">Approval Ka.P2M</a></li>
                             <li><a href="<?php echo e(base_url('app/sim-spa/approval/keuangan')); ?>">Approval Ka.Keuangan</a></li> 
                             <li><a href="<?php echo e(base_url('app/sim-spa/approval/dekan')); ?>">Approval Dekan</a></li>
                             <li><a href="<?php echo e(base_url('app/sim-spa/approval/warek1')); ?>">Approval Wakil Rektor 1</a></li>
@@ -169,7 +169,18 @@
                     </li>
 
                 <?php
-                } else if ($jabatan == "22" && $jabatan == "6"){
+                    if($jabatan == "22" || $jabatan == "6"){
+                ?>
+                        <li class="<?= menu_active(4, 'kepala-unit', 'mm-active') ?>">
+                            <a href="<?php echo e(base_url('app/sim-spa/approval/kepala-unit')); ?>" class="waves-effect waves-light <?= menu_active(4, 'kepala-unit', 'active') ?>">
+                                <i class="mdi mdi-folder-outline"></i>
+                                <span>Approval Kepala Unit</span>
+                            </a>
+                        </li>
+                <?php
+                    }
+
+                } else if ($jabatan == "22" || $jabatan == "6"){
                 ?>
 
                     <!-- RKAT -->
@@ -530,8 +541,9 @@
                 ?>
 
                     <li class="<?= menu_active(4, 'pre-approval', 'mm-active') ?>">
-                        <a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>" class="waves-effect waves-light <?= menu_active(4, 'pre-approval', 'active') ?>">
-                            <i class="mdi mdi-folder-open-outline"></i>
+                        <a href="<?php echo e(base_url('app/sim-spa/approval/pre-approval')); ?>" class="waves-effect waves-light <?= menu_active(4, 'pre-approval', 'active') ?>" style="display:flex;">
+                            <i class="mdi mdi-folder-open-outline" style="margin-top:5px;"></i>
+                            &nbsp;&nbsp;
                             <span>Approval Terkait <?= $unit ?></span>
                         </a>
                     </li>
@@ -546,7 +558,7 @@
                 <?php endif; ?>
 
                 <?php 
-                if($kode_unit == "002" || $jabatan == "0"):
+                if(($kode_unit == "002" && ($jabatan == "6" || $jabatan == "22")) || $jabatan == "0"):
                 ?>
 
                     <li class="<?= menu_active(4, 'keuangan', 'mm-active') ?>">
