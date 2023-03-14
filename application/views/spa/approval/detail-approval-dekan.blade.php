@@ -3,10 +3,16 @@ $session = $CI->session->userdata('user_sessions');
 $year = date('Y');
 $noDokumen = $actbud[0]['jns_aju_agr'] == 'actbud' ? "ACT-". $actbud[0]['kd_act'] : "PTY-". $actbud[0]['kd_act'];
 $urlKirimPersetujuan = "";
+$persetujuanSetuju = "";
+$persetujuanTolak = "";
 if($actbud[0]['kode_unit'] == "105" || $actbud[0]['kode_unit'] == "106" || $actbud[0]['kode_unit'] == "107" || $actbud[0]['kode_unit'] == "108" || $actbud[0]['kode_unit'] == "109" || $actbud[0]['kode_unit'] == "110" || $actbud[0]['kode_unit'] == "018" || $actbud[0]['kode_unit'] == "020"){
     $urlKirimPersetujuan = 'app/sim-spa/approval/dekan/kirim-persetujuan-ftd/' . encrypt($kd_act);
+    $persetujuanSetuju = "Disetujui ftd";
+    $persetujuanTolak = "Ditolak ftd";
 } else {
     $urlKirimPersetujuan = 'app/sim-spa/approval/dekan/kirim-persetujuan-fhb/' . encrypt($kd_act);
+    $persetujuanSetuju = "Disetujui fhb";
+    $persetujuanTolak = "Ditolak fhb";
 }
 ?>
 @extends('spa.layouts.user')
@@ -375,7 +381,7 @@ if($actbud[0]['kode_unit'] == "105" || $actbud[0]['kode_unit'] == "106" || $actb
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="st_dekan" id="st_dekan_1" value="Disetujui" checked>
+                            <input class="form-check-input" type="radio" name="st_dekan" id="st_dekan_1" value="<?= $persetujuanSetuju ?>" checked>
                             <label class="form-check-label" for="st_dekan_1">
                                 Disetujui
                             </label>
@@ -383,7 +389,7 @@ if($actbud[0]['kode_unit'] == "105" || $actbud[0]['kode_unit'] == "106" || $actb
                     </div>
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="st_dekan" id="st_dekan_2" value="Ditolak">
+                            <input class="form-check-input" type="radio" name="st_dekan" id="st_dekan_2" value="<?= $persetujuanTolak ?>">
                             <label class="form-check-label" for="st_dekan_2">
                                 Ditolak
                             </label>

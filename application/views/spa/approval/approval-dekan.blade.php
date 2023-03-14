@@ -41,7 +41,7 @@ $session = $CI->session->userdata('user_sessions');
         <div class="card-body">
             <div class="table-responsive my-4">
                 <table class="table table-striped table-bordered table-hover" id="table-approval-dekan" width="100%">
-                    <thead>
+                    <thead class="bg-purple text-white">
                         <tr>
                             <th class="v-middle text-center">No.</th>
                             <th class="v-middle text-center">No Dokumen</th>

@@ -319,7 +319,7 @@
                         <a href="<?php echo e(base_url('app/sim-spa/history-approval')); ?>" class="waves-effect waves-light <?= menu_active(3, 'history-approval', 'active') ?>" style="display:flex">
                             <i class="mdi mdi-history" style="margin-top:5px;"></i>
                             &nbsp;
-                            <span>History Approval Dekan</span>
+                            <span>History Approval</span>
                         </a>
                     </li>
 

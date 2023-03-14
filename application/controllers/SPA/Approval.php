@@ -355,16 +355,36 @@ class Approval extends CI_Controller{
 
             return view('spa.approval.approval-dekan', $data);
         } else {
+            $this->load->model('SPA/RKAT_model', 'm_rkat');
             $data['kd_act'] = $id;
             $data['actbud'] = $this->m_approval->get_actbud(array('a.kd_act' => $id));
             if(!empty($data['actbud'])){
                 $data['unit']       = $this->db->query('SELECT nama_unit FROM tbl_unit WHERE kode_unit=?', array($data['actbud'][0]['kode_unit']))->row_array();
                 $data['nm']         = $this->db->query('SELECT * FROM tbl_karyawan WHERE nik=?', array($data['actbud'][0]['pelaksana']))->row_array();
-                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result_array();
-                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result_array();
-                $data['chat']       = $this->db->query('SELECT * FROM tbl_chat a LEFT JOIN tbl_karyawan b on a.nik=b.nik WHERE a.kd_act=?', array($id))->result_array();
+                $data['upload_act'] = $this->db->query('SELECT * FROM tbl_upload_act WHERE kd_act=?', array($id))->result();
+                $data['t_j_b_act']  = $this->db->query('SELECT * FROM t_j_b_act WHERE kd_act=?', array($id))->result();
+                $data['messages'] = $this->m_rkat->get_data_chat_actbud($id);
 
-                return view('spa.approval.detail-approval-dekan', $data);
+                if ($this->input->method() == "post") {
+                    $act = $this->input->post('act', true);
+                    switch ($act) {
+                        case 'send_message':
+                            return $this->buat_pesan($data['actbud'][0]['kode_uraian'], $id);
+                            break;
+                        case 'hapus_pesan':
+                            return $this->hapus_pesan($data['actbud'][0]['kode_uraian'], $id);
+                            break;
+                        case 'hapus_pesan_reply':
+                            return $this->hapus_pesan_reply($data['actbud'][0]['kode_uraian'], $id);
+                            break;
+                        default:
+                            return show_error("Bad Request", 400, "400 - Error");
+                            break;
+                    }
+                }
+
+                // return view('spa.approval.detail-approval-dekan', $data);
+                return view('spa.approval.detail.dekan', $data);
             } else {
                 show_404();
             }
