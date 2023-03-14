@@ -299,16 +299,22 @@ class Approval_model extends CI_Model {
     }
 
     public function get_rkat_approval_sign($year, $kode_unit){
+        $whereSign = "";
         $whereStPreApproval = "";
         if($kode_unit == "003"){
+            $whereSign = "ga";
             $whereStPreApproval = " AND ((st_umum NOT LIKE 'Disetujui GA') AND ( st_umum NOT LIKE 'Ditolak GA' ))";
         } else if($kode_unit == "004"){
+            $whereSign = "ict";
             $whereStPreApproval = " AND ((st_ict NOT LIKE 'Disetujui ICT') AND ( st_ict NOT LIKE 'Ditolak ICT' ))";
         } else if ($kode_unit == "006") {
+            $whereSign = "hrd";
             $whereStPreApproval = " AND ((st_hrd NOT LIKE 'Disetujui HRD') AND ( st_hrd NOT LIKE 'Ditolak HRD' ))";
         } else if ($kode_unit == "013") {
+            $whereSign = "bkal";
             $whereStPreApproval = " AND ((st_bkal NOT LIKE 'Disetujui BKAL') AND ( st_bkal NOT LIKE 'Ditolak BKAL' ))";
         } else if ($kode_unit == "016") {
+            $whereSign = "p2m";
             $whereStPreApproval = " AND ((st_p2m NOT LIKE 'Disetujui P2M') AND ( st_p2m NOT LIKE 'Ditolak P2M' ))";
         }
 
@@ -324,7 +330,7 @@ class Approval_model extends CI_Model {
                 tbl_actbud.tahun = ?
                 AND
                 (
-                    sign = '$kode_unit' 
+                    (sign = '$kode_unit' OR sign = ?)
                     AND st_kabag = 'Disetujui' 
                     AND (
                         tbl_actbud.kode_unit = 001 
@@ -353,7 +359,7 @@ class Approval_model extends CI_Model {
                     $whereStPreApproval 
                 ) 
                 OR (
-                    sign = '$kode_unit' 
+                    (sign = '$kode_unit' OR sign = ?)
                     AND st_kabag = 'Disetujui' 
                     AND (
                         tbl_actbud.kode_unit = 101 
@@ -373,7 +379,7 @@ class Approval_model extends CI_Model {
                     $whereStPreApproval 
                 ) 
             ORDER BY
-                kd_act DESC", array($year));
+                kd_act DESC", array($year, $whereSign, $whereSign));
         return $query->result_array();
     }
 
